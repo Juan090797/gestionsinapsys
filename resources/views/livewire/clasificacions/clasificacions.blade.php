@@ -1,16 +1,8 @@
 <div>
-    <div class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-12">
-                    <h1 class="m-0">
-                        <a href="javascript:void(0)" class="btn btn-primary float-right" data-toggle="modal" data-target="#theModal">Agregar</a>
-                        <h1>Lista de Clasificaciones</h1>
-                    </h1>
-                </div>
-            </div>
-        </div>
-    </div>
+    @section('cabezera-contenido')
+        <a href="javascript:void(0)" class="btn btn-primary float-right" data-toggle="modal" data-target="#theModal">Agregar</a>
+        <h1>Lista de Clasificaciones</h1>
+    @endsection
     <div class="content-fluid">
         <div class="card">
             <div class="card-header">

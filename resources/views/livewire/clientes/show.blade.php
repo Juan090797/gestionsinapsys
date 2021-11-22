@@ -1,17 +1,9 @@
 @extends('layouts.tema.app')
+@section('cabezera-contenido')
+    <a href="{{ url('clientes') }}" class="btn btn-primary float-right">Atras</a>
+    <h1>Informacion del Cliente #{{$cliente->id}}</h1>
+@endsection
 @section('content')
-    <div class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-12">
-                    <h1 class="m-0">
-                        <a href="{{ url('clientes') }}" class="btn btn-primary float-right">Atras</a>
-                        <h1>Informacion del Cliente #{{$cliente->id}}</h1>
-                    </h1>
-                </div>
-            </div>
-        </div>
-    </div>
     <div class="content-fluid">
         <div class="row">
             <div class="col-12">

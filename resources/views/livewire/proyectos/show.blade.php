@@ -1,26 +1,15 @@
 <div>
-    <div class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-12">
-                    <h1 class="m-0">
-                        <a href="{{url('proyectos')}}" class="btn btn-primary float-right">Atras</a>
-                        <h1>Proyecto #{{$proyecto->id }}</h1>
-                    </h1>
-                </div>
-            </div>
-        </div>
-    </div>
+    @section('cabezera-contenido')
+        <a href="{{url('proyectos')}}" class="btn btn-primary float-right">Atras</a>
+        <h1>Proyecto #{{$proyecto->id }}</h1>
+    @endsection
     <div class="content-fluid">
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title">Detalle del Proyecto</h3>
-
                 <div class="card-tools">
-                    <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
-                        <i class="fas fa-minus"></i></button>
-                    <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
-                        <i class="fas fa-times"></i></button>
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fas fa-minus"></i></button>
+                    <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove"><i class="fas fa-times"></i></button>
                 </div>
             </div>
             <div class="card-body">
@@ -69,14 +58,11 @@
                                         <div class="user-block">
                                             <img class="img-circle img-bordered-sm" src="{{ $comentario->user->profile_photo_url }}" alt="user image">
                                             <span class="username">
-                                            <a href="#" wire:model="{{$comentario->user->name}}">{{$comentario->user->name}}</a>
-                                        </span>
-                                            <span class="description">{{$comentario->created_at->diffForHumans()}}</span>
+                                                <a href="#" wire:model="{{$comentario->user->name}}">{{$comentario->user->name}}</a>
+                                            </span>
+                                            <span class="description">{{$comentario->created_at->diffForHumans()}}</span>s
                                         </div>
-                                        <!-- /.user-block -->
-                                        <p>
-                                            {{$comentario->contenido}}
-                                        </p>
+                                        <p>{{$comentario->contenido}}</p>
                                     </div>
                                 @empty
                                     <p class="text-danger">0 comentarios</p>
@@ -86,7 +72,7 @@
                         </div>
                     </div>
                     <div class="col-12 col-md-12 col-lg-4 order-1 order-md-2">
-                        <h3 class="text-primary"><i class="fas fa-paint-brush"></i> {{$proyecto->nombre}}</h3>
+                        <h3 class="text-primary"><i class="fas fa-paint-brush"></i>{{$proyecto->nombre}}</h3>
                         <br>
                         <div class="text-muted">
                             <p class="text-sm">Empresa Cliente

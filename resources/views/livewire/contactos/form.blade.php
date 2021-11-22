@@ -47,8 +47,8 @@
                             <label>Estado</label>
                             <select wire:model.defer="estado_cont" class="form-control">
                                 <option value="ELEGIR" selected>Elegir</option>
-                                <option value="ACTIVO" >Activo</option>
-                                <option value="INACTIVO" >Bloqueado</option>
+                                <option value="ACTIVO">Activo</option>
+                                <option value="INACTIVO">Bloqueado</option>
                             </select>
                         </div>
                         @error('estado_cont') <span class="text-danger er">{{ $message }}</span>@enderror

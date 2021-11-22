@@ -1,15 +1,7 @@
 <div>
-    <div class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-12">
-                    <h1 class="m-0">
-                        <h1>Configuracion de la Empresa</h1>
-                    </h1>
-                </div>
-            </div>
-        </div>
-    </div>
+    @section('cabezera-contenido')
+        <h1>Configuracion de la Empresa</h1>
+    @endsection
     <div class="content-fluid">
         <div class="row">
             <div class="col-5">

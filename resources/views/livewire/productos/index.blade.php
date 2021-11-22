@@ -94,12 +94,8 @@
                             <td class="text-center">S/ {{$producto->precio}}</td>
                             <td class="text-center">{{$producto->tipo}}</td>
                             <td class="text-center">
-                                <a href="javascript:void(0)"  wire:click="Edit({{ $producto->id }})" class="btn btn-primary" title="Edit">
-                                    <i class="fas fa-pencil-alt" aria-hidden="true"></i>
-                                </a>
-                                <a href="javascript:void(0)" onclick="Confirm('{{ $producto->id }}')" class="btn btn-danger" title="Delet">
-                                    <i class="fa fa-trash" aria-hidden="true"></i>
-                                </a>
+                                <a href="javascript:void(0)"  wire:click="Edit({{ $producto->id }})" class="btn btn-primary" title="Edit"><i class="fas fa-pencil-alt" aria-hidden="true"></i></a>
+                                <a href="javascript:void(0)" onclick="Confirm('{{ $producto->id }}')" class="btn btn-danger" title="Delet"><i class="fa fa-trash" aria-hidden="true"></i></a>
                             </td>
                         </tr>
                     @endforeach

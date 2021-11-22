@@ -1,16 +1,8 @@
 <div>
-    <div class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-12">
-                    <h1 class="m-0">
-                        <a href="javascript:void(0)" class="btn btn-primary float-right" data-toggle="modal" data-target="#theModal">Agregar</a>
-                        <h1>Lista de Tipo Equipos</h1>
-                    </h1>
-                </div>
-            </div>
-        </div>
-    </div>
+    @section('cabezera-contenido')
+        <a href="javascript:void(0)" class="btn btn-primary float-right" data-toggle="modal" data-target="#theModal">Agregar</a>
+        <h1>Lista de Tipo Equipos</h1>
+    @endsection
     <div class="content-fluid">
         <div class="card">
             <div class="card-header">
@@ -33,7 +25,7 @@
                     <tbody>
                     @foreach($familias as $index => $familia)
                         <tr>
-                            <th scope="row">{{$familia->firstItem() + $index}}</th>
+                            <th scope="row">{{$familias->firstItem() + $index}}</th>
                             <td class="text-center">{{$familia->nombre}}</td>
                             <td class="text-center"><span class="badge {{ $familia->estado == 'ACTIVO' ? 'badge-success' : 'badge-danger'}}">{{$familia->estado}}</span></td>
                             <td class="text-center">

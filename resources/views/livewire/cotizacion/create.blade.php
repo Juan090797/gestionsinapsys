@@ -1,16 +1,8 @@
 <div>
-    <div class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-12">
-                    <h1 class="m-0">
-                        <a href="{{route('proyecto.show', $proyecto)}}" class="btn btn-primary float-right">Atras</a>
-                        <h1>Cotizacion del proyecto # {{$proyecto->id}}</h1>
-                    </h1>
-                </div>
-            </div>
-        </div>
-    </div>
+    @section('cabezera-contenido')
+        <a href="{{route('proyecto.show', $proyecto)}}" class="btn btn-primary float-right">Atras</a>
+        <h1>Cotizacion del proyecto # {{$proyecto->id}}</h1>
+    @endsection
     <div class="content-fluid">
         <form wire:submit.prevent="createInvoice">
         <section class="invoice p-3 mb-3" wire:ignore.self>
