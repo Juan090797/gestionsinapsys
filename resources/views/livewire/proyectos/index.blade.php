@@ -92,7 +92,7 @@
             $('.select2').select2();
             $('.select2').on('change', function () {
                 let data = $(this).val();
-                @this.set('team', $(this).val());
+                @this.set('state.team', $(this).val());
             });
 
             window.Livewire.on('show-modal', msg =>{

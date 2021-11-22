@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use App\Models\Cliente;
 use App\Models\Proyecto;
 use App\Models\User;
+use Illuminate\Support\Facades\Validator;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -12,13 +13,13 @@ class Proyectos extends Component
 {
     use WithPagination;
 
-    public $nombre, $prioridad, $ingreso_estimado, $gasto_estimado, $fecha_inicio, $fecha_fin, $clienteid, $userid, $search, $selected_id, $team;
+    public $selected_id, $search;
+    public $state=[];
     Private $pagination = 5;
     protected $paginationTheme = 'bootstrap';
 
     public function mount()
     {
-        $this->team = [];
         $this->selected_id = 0;
     }
 
@@ -43,48 +44,34 @@ class Proyectos extends Component
 
     public function Store()
     {
-        $rules = [
+        $validated = Validator::make($this->state, [
             'nombre' => 'required|unique:proyectos|min:3',
             'prioridad' => 'required',
-        ];
-        $messages =[
+            'team'  => '',
+            'ingreso_estimado' => '',
+            'gasto_estimado'   => '',
+            'fecha_inicio' => '',
+            'fecha_fin' => '',
+            'cliente_id' => '',
+            'user_id' => ''
+        ],[
             'nombre.required' => 'Nombre del proyecto es requerido',
             'nombre.unique' => 'Ya existe el nombre del proyecto',
             'nombre.min' => 'El nombre del proyecto debe tener al menos 3 caracteres',
             'prioridad.required' => 'La prioridad es requerida',
-        ];
 
-        $this->validate($rules, $messages);
+        ])->validate();
 
-        $proyecto = Proyecto::create([
-            'nombre' => $this->nombre,
-            'prioridad' => $this->prioridad,
-            'ingreso_estimado' => $this->ingreso_estimado,
-            'team'             => $this->team,
-            'gasto_estimado' => $this->gasto_estimado,
-            'fecha_inicio' => $this->fecha_inicio,
-            'fecha_fin' => $this->fecha_fin,
-            'cliente_id' => $this->clienteid,
-            'user_id' => $this->userid,
-        ]);
+        Proyecto::create($validated);
 
         $this->resetUI();
         $this->emit('proyecto-added', 'Proyecto Registrado');
     }
 
-    public function Edit($id)
+    public function Edit(Proyecto $proyecto)
     {
-        $record = Proyecto::find($id, ['id', 'nombre', 'prioridad', 'ingreso_estimado', 'gasto_estimado', 'fecha_inicio', 'fecha_fin', 'cliente_id', 'user_id', 'team']);
-        $this->nombre = $record->nombre;
-        $this->prioridad = $record->prioridad;
-        $this->selected_id = $record->id;
-        $this->ingreso_estimado = $record->ingreso_estimado;
-        $this->gasto_estimado = $record->gasto_estimado;
-        $this->fecha_inicio = $record->fecha_inicio;
-        $this->fecha_fin = $record->fecha_fin;
-        $this->team = $record->team;
-        $this->clienteid = $record->cliente_id;
-        $this->userid = $record->user_id;
+        $this->selected_id = $proyecto->id;
+        $this->state = $proyecto->toArray();
 
         $this->emit('show-modal', 'show-modal!');
     }
@@ -92,29 +79,26 @@ class Proyectos extends Component
 
     public function Update()
     {
-        $rules = [
+        $validated = Validator::make($this->state, [
             'nombre' => "required||min:3|unique:proyectos,nombre,{$this->selected_id}",
-            'prioridad' => 'required|not_in:Elegir',
-        ];
-        $messages =[
+            'prioridad' => 'required',
+            'team'  => '',
+            'ingreso_estimado' => '',
+            'gasto_estimado'   => '',
+            'fecha_inicio' => '',
+            'fecha_fin' => '',
+            'cliente_id' => '',
+            'user_id' => ''
+        ],[
             'nombre.required' => 'Nombre del proyecto es requerido',
             'nombre.unique' => 'Ya existe el nombre del proyecto',
             'nombre.min' => 'El nombre del proyecto debe tener al menos 3 caracteres',
             'prioridad.required' => 'La prioridad es requerida',
-        ];
-        $this->validate($rules, $messages);
-        $proyecto = Proyecto::find($this->selected_id);
-        $proyecto->update([
-            'nombre' => $this->nombre,
-            'prioridad' => $this->prioridad,
-            'ingreso_estimado' => $this->ingreso_estimado,
-            'gasto_estimado' => $this->gasto_estimado,
-            'fecha_inicio' => $this->fecha_inicio,
-            'team'             => $this->team,
-            'fecha_fin' => $this->fecha_fin,
-            'cliente_id' => $this->clienteid,
-            'user_id' => $this->userid,
-        ]);
+
+        ])->validate();
+
+        $proyecto = Proyecto::findOrFail($this->state['id']);
+        $proyecto->update($validated);
 
         $this->resetUI();
         $this->emit('proyecto-updated', 'Proyecto Actualizado');
@@ -123,16 +107,8 @@ class Proyectos extends Component
 
     public function resetUI()
     {
-        $this->nombre = '';
-        $this->prioridad = 'ELEGIR';
-        $this->ingreso_estimado = '';
-        $this->gasto_estimado = '';
-        $this->fecha_inicio = '';
-        $this->fecha_fin = '';
-        $this->clienteid = 'ELEGIR';
-        $this->userid = 'ELEGIR';
+        $this->state=[];
         $this->search = '';
-        $this->team = '';
         $this->selected_id = 0;
         $this->resetValidation();
     }
