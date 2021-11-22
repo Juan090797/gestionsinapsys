@@ -24,7 +24,7 @@ class UpdateCotizacion implements UpdatesCotizaciones
                 'impuesto' => $input['impuesto'],
                 'subtotal' => $input['subtotal'],
                 'codigo'        => $input['codigo'],
-                'foto'          => $input['foto']
+                'foto'          => $input['foto'] ?? ''
             ]);
             $cotizacion->CotizacionItem->each(function($item) {
                 $item->delete();

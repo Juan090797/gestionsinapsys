@@ -40,7 +40,7 @@
                         </table>
                     @endif
                     <h1 class="m-0">
-                        <a href="javascript:void(0)" class="btn btn-primary float-right" data-toggle="modal" data-target="#theModal"><i wire.target="refresh" class="fas fa-plus-square"></i> Agregar</a>
+                        <a href="javascript:void(0)" class="btn btn-primary float-right" data-toggle="modal" data-target="#theModal">Agregar</a>
                         <h1>Lista de Productos</h1>
                     </h1>
                 </div>

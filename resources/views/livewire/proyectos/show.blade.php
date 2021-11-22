@@ -60,7 +60,7 @@
                                             <span class="username">
                                                 <a href="#" wire:model="{{$comentario->user->name}}">{{$comentario->user->name}}</a>
                                             </span>
-                                            <span class="description">{{$comentario->created_at->diffForHumans()}}</span>s
+                                            <span class="description">{{$comentario->created_at->diffForHumans()}}</span>
                                         </div>
                                         <p>{{$comentario->contenido}}</p>
                                     </div>

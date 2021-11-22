@@ -9,14 +9,14 @@
                 <div class="row">
                     <div class="col-sm-12 col-md-6">
                         <div class="form-group">
-                            <label>Nombre</label>
+                            <label>Nombre*</label>
                             <input type="text" wire:model.defer="state.nombre" class="form-control" placeholder="ej: Proyecto A">
                         </div>
                         @error('nombre') <span class="text-danger er">{{ $message }}</span>@enderror
                     </div>
                     <div class="col-sm-12 col-md-6">
                         <div class="form-group">
-                            <label>Prioridad</label>
+                            <label>Prioridad*</label>
                             <select wire:model.defer="state.prioridad" class="form-control">
                                 <option value="ELEGIR" selected>Elegir</option>
                                 <option value="ALTA" >Alta</option>
@@ -62,28 +62,28 @@
                     </div>
                     <div class="col-sm-12 col-md-6">
                         <div class="form-group">
-                            <label>Gasto Estimado</label>
+                            <label>Gasto Estimado*</label>
                             <input type="number" wire:model.defer="state.gasto_estimado" class="form-control" placeholder="ej: 100000.00">
                         </div>
                         @error('gasto_estimado') <span class="text-danger er">{{ $message }}</span>@enderror
                     </div>
                     <div class="col-sm-12 col-md-6">
                         <div class="form-group">
-                            <label>Ingreso Estimado</label>
+                            <label>Ingreso Estimado*</label>
                             <input type="number" wire:model.defer="state.ingreso_estimado" class="form-control" placeholder="ej: 900000.00">
                         </div>
                         @error('ingreso_estimado') <span class="text-danger er">{{ $message }}</span>@enderror
                     </div>
                     <div class="col-sm-12 col-md-6">
                         <div class="form-group">
-                            <label>Fecha Inicio</label>
+                            <label>Fecha Inicio*</label>
                             <input type="date" wire:model.defer="state.fecha_inicio" class="form-control">
                         </div>
                         @error('fecha_inicio') <span class="text-danger er">{{ $message }}</span>@enderror
                     </div>
                     <div class="col-sm-12 col-md-6">
                         <div class="form-group">
-                            <label>Fecha Fin</label>
+                            <label>Fecha Fin*</label>
                             <input type="date" wire:model.defer="state.fecha_fin" class="form-control">
                         </div>
                         @error('fecha_fin') <span class="text-danger er">{{ $message }}</span>@enderror
