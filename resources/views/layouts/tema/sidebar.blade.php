@@ -108,8 +108,8 @@
                         </li>
                     </ul>
                 </li>
-                <li class="nav-item {{ request()->is('impuestos') ? 'menu-open' : '' }}">
-                    <a href="#" class="nav-link {{ request()->is('impuestos') ? 'active' : '' }}">
+                <li class="nav-item {{ request()->is('impuestos') ? 'menu-open' : '' }} {{ request()->is('empresa') ? 'menu-open' : '' }}">
+                    <a href="#" class="nav-link {{ request()->is('impuestos') ? 'active' : '' }} {{ request()->is('empresa') ? 'active' : '' }}">
                         <i class="nav-icon fa fa-users"></i>
                         <p>
                             Configuracion

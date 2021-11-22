@@ -44,11 +44,9 @@
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', function (){
-
             window.livewire.on('empresa-ok', msg =>{
                 noty(msg)
             })
         });
-
     </script>
 </div>

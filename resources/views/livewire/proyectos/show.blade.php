@@ -93,7 +93,7 @@
                         </div>
                         <div class="row">
                             <div class="col-6">
-                                <h5 class="mt-3 text-muted">Archivos</h5>
+                                <h5 class="mt-3 text-muted">Archivos({{$archivos->count()}})</h5>
                                 <ul class="list-unstyled">
                                     @forelse($archivos as $a)
                                     <li>
@@ -106,7 +106,7 @@
                                 </ul>
                             </div>
                             <div class="col-6">
-                                <h5 class="mt-3 text-muted">Cotizaciones</h5>
+                                <h5 class="mt-3 text-muted">Cotizaciones({{$cotizaciones->count()}})</h5>
                                 <ul class="list-unstyled">
                                     @forelse($cotizaciones as $cotizacion)
                                         <li>
@@ -156,6 +156,7 @@
                 </div>
             </div>
         </div>
+
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', function (){
