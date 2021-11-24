@@ -38,6 +38,5 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::post('productos/imports/', [\App\Http\Controllers\ImportController::class, 'importProducto']);
     Route::get('impuestos', \App\Http\Livewire\Impuestos::class);
     Route::get('empresa', \App\Http\Livewire\Empresas\Empresas::class);
-    Route::get('cotizacion/{cotizacion}/imprimir', \App\Http\Controllers\Admin\ImprimirCotizacionController::class)->name('cotizacion.imprimir');
 });
 
