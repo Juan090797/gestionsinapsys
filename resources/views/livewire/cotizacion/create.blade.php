@@ -136,7 +136,7 @@
                         <table class="table">
                             <tr>
                                 <th style="width:50%">Subtotal:</th>
-                                <td>S/.{{number_format($subTotal,2)}}</td>
+                                <td>S/ {{number_format($subTotal,2)}}</td>
                             </tr>
                             <tr>
                                 <th>
@@ -147,11 +147,11 @@
                                         @endforeach
                                     </select>
                                 </th>
-                                <td>S/.{{number_format($impuestoD,2)}}</td>
+                                <td>S/ {{number_format($impuestoD,2)}}</td>
                             </tr>
                             <tr>
                                 <th>Total:</th>
-                                <td>S/.{{number_format($total,2)}}</td>
+                                <td>S/ {{number_format($total,2)}}</td>
                             </tr>
                         </table>
                     </div>
@@ -174,9 +174,11 @@
         </section>
         </form>
     </div>
+    @push('js')
     <script>
         $('#sidebarCollapse').on('change', function() {
             $('body').toggleClass('sidebar-collapse');
         })
     </script>
+    @endpush
 </div>

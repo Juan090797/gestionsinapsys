@@ -52,11 +52,6 @@
             color: #817AE3;
         }
 
-        .header {
-            font-size: 20px;
-            color: rgba(0, 0, 0, 0.7);
-        }
-
         .content-wrapper {
             display: block;
             margin-top: 0px;
@@ -98,84 +93,11 @@
             word-wrap: break-word;
         }
 
-        .invoice-details-container {
-            float: right;
-            width: 30%;
-            padding: 10px 30px 0 0;
-        }
-
-        .attribute-label {
-            font-size: 12px;
-            line-height: 18px;
-            padding-right: 40px;
-            text-align: left;
-            color: #55547A;
-        }
-
-        .attribute-value {
-            font-size: 12px;
-            line-height: 18px;
-            text-align: right;
-        }
-
-        /* -- Shipping -- */
-
-        .shipping-address-container {
-            float: right;
-            padding-left: 40px;
-            width: 160px;
-        }
-        .shipping-address {
-            font-size: 12px;
-            line-height: 15px;
-            color: #595959;
-            padding: 45px 0px 0px 40px;
-            margin: 0px;
-            width: 160px;
-            word-wrap: break-word;
-        }
-
-        /* -- Billing -- */
-
-        .billing-address-container {
-            padding-top: 50px;
-            float: left;
-            padding-left: 30px;
-        }
-
-        .billing-address-label {
-            font-size: 12px;
-            line-height: 18px;
-            padding: 0px;
-            margin-top: 27px;
-            margin-bottom: 0px;
-        }
-
-        .billing-address-name {
-            max-width: 160px;
-            font-size: 15px;
-            line-height: 22px;
-            padding: 0px;
-            margin: 0px;
-        }
-
-        .billing-address {
-            font-size: 12px;
-            line-height: 15px;
-            color: #595959;
-            padding: 45px 0px 0px 30px;
-            margin: 0px;
-            width: 160px;
-            word-wrap: break-word;
-        }
-
         /* -- Items Table -- */
 
         .items-table {
             margin-top: 35px;
             padding: 0px 30px 10px 30px;
-            page-break-before: avoid;
-            page-break-after: auto;
         }
 
         .items-table hr {
@@ -286,10 +208,6 @@
 
         /* -- Helpers -- */
 
-        .text-primary {
-            color: #5851DB;
-        }
-
         .text-center {
             text-align: center
         }
@@ -322,18 +240,6 @@
 
         .pr-20 {
             padding-right: 20px;
-        }
-
-        .pr-10 {
-            padding-right: 10px;
-        }
-
-        .pl-20 {
-            padding-left: 20px;
-        }
-
-        .pl-10 {
-            padding-left: 10px;
         }
 
         .pl-0 {
@@ -387,42 +293,43 @@
         </div>
 
         <div style="position: relative; clear: both;">
-            <!-- table start -->
-            <table width="100%" class="items-table" cellspacing="0" border="0">
-              <tr class="item-table-heading-row">
-                  <th width="2%" class="pr-20 text-right item-table-heading">#</th>
-                  <th width="40%" class="pl-0 text-left item-table-heading">Producto</th>
-                  <th class="pr-20 text-center item-table-heading">Cantidad</th>
-                  <th class="pr-20 text-center item-table-heading">Precio</th>
-                  <th class="text-center item-table-heading">Total</th>
-              </tr>
-            @php
-                $index = 1
-            @endphp
-            @foreach ($cotizacion->CotizacionItem as $item)
-                <tr class="item-row">
-                    <td class="pr-20 text-right item-cell" style="vertical-align: top;">
-                        {{$index}}
-                    </td>
-                    <td class="pl-0 text-left item-cell" style="vertical-align: top;">
-                        <span class="item-description">{!! nl2br(htmlspecialchars($item->producto->descripcion)) !!}</span>
-                    </td>
-                    <td class="pr-20 text-center item-cell" style="vertical-align: top;">
-                        {{$item->cantidad}}
-                    </td>
-                    <td class="pr-20 text-center item-cell" style="vertical-align: top;">
-                        S/ {{number_format($item->precio,2)}}
-                    </td>
-
-                    <td class="text-center item-cell" style="vertical-align: top;">
-                        S/ {{number_format($item->monto,2)}}
-                    </td>
+        <!-- table start -->
+        <table width="100%" class="items-table" cellspacing="0" border="0">
+                <tr class="item-table-heading-row">
+                    <th width="2%" class="pr-20 text-right item-table-heading">#</th>
+                    <th width="40%" class="pl-0 text-left item-table-heading">Producto</th>
+                    <th class="pr-20 text-center item-table-heading">Cantidad</th>
+                    <th class="pr-20 text-center item-table-heading">Precio</th>
+                    <th class="text-center item-table-heading">Total</th>
                 </tr>
                 @php
-                    $index += 1
+                    $index = 1
                 @endphp
-            @endforeach
+                @foreach ($cotizacion->CotizacionItem as $item)
+                    <tr class="item-row">
+                        <td class="pr-20 text-right item-cell" style="vertical-align: top;">
+                            {{$index}}
+                        </td>
+                        <td class="pl-0 text-left item-cell" style="vertical-align: top;word-break: break-all;">
+                            <span class="item-description">{!! nl2br(htmlspecialchars($item->producto->descripcion)) !!}</span>
+                        </td>
+                        <td class="pr-20 text-center item-cell" style="vertical-align: top;">
+                            {{$item->cantidad}}
+                        </td>
+                        <td class="pr-20 text-center item-cell" style="vertical-align: top;">
+                            S/ {{number_format($item->precio,2)}}
+                        </td>
+
+                        <td class="text-center item-cell" style="vertical-align: top;">
+                            S/ {{number_format($item->monto,2)}}
+                        </td>
+                    </tr>
+                    @php
+                        $index += 1
+                    @endphp
+                @endforeach
             </table>
+
 
             <hr class="item-cell-table-hr">
 
@@ -464,13 +371,13 @@
                 <div class="notes-label">
                     Formas de Pago:
                 </div>
-                {!! $cotizacion->terminos !!}
+                {!! nl2br(htmlspecialchars($cotizacion->terminos)) !!}
         </div>
         <div class="notes">
             <div class="notes-label">
                 Condiciones Comerciales:
             </div>
-            {!! $cotizacion->condiciones !!}
+            c
         </div>
     </div>
     @if($cotizacion->foto)

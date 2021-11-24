@@ -110,7 +110,7 @@
                                 <ul class="list-unstyled">
                                     @forelse($cotizaciones as $cotizacion)
                                         <li>
-                                            <a href="{{ route('cotizacion.imprimir', $cotizacion) }}" class="btn-link text-secondary mr-2"><i class="far fa-fw fa-file-pdf"></i>Cotizacion_{{$cotizacion->id}}</a>
+                                            <a class="btn-link text-secondary mr-2"><i class="far fa-fw fa-file-pdf"></i>Cotizacion_{{$loop->iteration}}</a>
                                             <a href="{{ route('cotizacion.show',$cotizacion) }}" class="btn-link text-secondary"><i class="far fa-eye"></i></a>
                                             <a href="{{ route('cotizacion.edit', $cotizacion) }}" class="btn-link text-secondary"><i class="fas fa-pencil-alt"></i></a>
                                             <a href="javascript:void(0)" onclick="Confirmar('{{ $cotizacion->id }}')" class="btn-link text-secondary"><i class="far fa-trash-alt"></i></a>

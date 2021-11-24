@@ -2,21 +2,19 @@
 
 namespace App\Http\Livewire;
 
-use App\Imports\ProductosImport;
 use App\Models\Familia;
 use App\Models\Marca;
 use App\Models\Producto;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Livewire\Component;
 use Livewire\WithPagination;
-use Maatwebsite\Excel\Facades\Excel;
 
 class Productos extends Component
 {
     use WithPagination;
 
-    public $codigo, $modelo, $descripcion, $precio, $tipo, $marcaid,$familiaid,$search, $selected_id;
-
+    public $search, $selected_id;
+    public $state = [];
     protected $paginationTheme = 'bootstrap';
 
     Private $pagination = 10;
@@ -50,37 +48,27 @@ class Productos extends Component
 
     public function Store()
     {
-        $rules = [
+        $validated = Validator::make($this->state, [
             'codigo' => 'required|unique:productos',
             'modelo' => 'required',
             'descripcion' => 'required',
             'precio' => 'required',
             'tipo' => 'required',
-            'marcaid' => 'required',
-            'familiaid' => 'required',
-        ];
-        $messages =[
-            'codigo.required' => 'El Codigo del producto es requerido',
-            'codigo.unique' => 'Ya existe el codigo del producto',
-            'modelo.required' => 'La modelo es requerido',
-            'descripcion.required' => 'La modelo es requerido',
-            'precio.required' => 'EL precio es requerido',
-            'tipo.required' => 'La tipo es requerido',
-            'marcaid.required' => 'La marca es requerida',
-            'familiaid.required' => 'EL equipo es requerido',
-        ];
+            'marca_id' => 'required',
+            'familia_id' => 'required',
+        ],
+            [
+                'codigo.required' => 'El Codigo del producto es requerido',
+                'codigo.unique' => 'Ya existe el codigo del producto',
+                'modelo.required' => 'La modelo es requerido',
+                'descripcion.required' => 'La modelo es requerido',
+                'precio.required' => 'EL precio es requerido',
+                'tipo.required' => 'La tipo es requerido',
+                'marca_id.required' => 'La marca es requerida',
+                'familia_id.required' => 'EL equipo es requerido',
+            ])->validate();
 
-        $this->validate($rules, $messages);
-
-        $producto = Producto::create([
-            'codigo' => $this->codigo,
-            'modelo' => $this->modelo,
-            'descripcion' => $this->descripcion,
-            'precio' => $this->precio,
-            'tipo' => $this->tipo,
-            'marca_id' => $this->marcaid,
-            'familia_id' => $this->familiaid,
-        ]);
+        Producto::create($validated);
 
         $this->resetUI();
         $this->emit('producto-added', 'Producto Registrado');
@@ -88,65 +76,43 @@ class Productos extends Component
 
     public function resetUI()
     {
-        $this->codigo = '';
-        $this->modelo = '';
-        $this->descripcion = '';
-        $this->precio = '';
-        $this->tipo = '';
-        $this->marcaid = 'ELEGIR';
-        $this->familiaid = 'ELEGIR';
+        $this->state=[];
         $this->search = '';
         $this->selected_id = 0;
         $this->resetValidation();
     }
 
-    public function Edit($id)
+    public function Edit(Producto $producto)
     {
-        $record = Producto::find($id, ['id', 'codigo', 'modelo','descripcion', 'precio', 'tipo', 'marca_id','familia_id']);
-        $this->codigo = $record->codigo;
-        $this->modelo = $record->modelo;
-        $this->descripcion = $record->descripcion;
-        $this->precio = $record->precio;
-        $this->tipo = $record->tipo;
-        $this->marcaid = $record->marca_id;
-        $this->familiaid = $record->familia_id;
-        $this->selected_id = $record->id;
+        $this->selected_id = $producto->id;
+        $this->state = $producto->toArray();
         $this->emit('show-modal', 'show-modal!');
     }
 
     public function Update()
     {
-        $rules = [
+        $validated = Validator::make($this->state, [
             'codigo' => "required|unique:productos,codigo,{$this->selected_id}",
             'modelo' => 'required',
             'descripcion' => 'required',
             'precio' => 'required',
             'tipo' => 'required',
-            'marcaid' => 'required',
-            'familiaid' => 'required',
-        ];
-        $messages =[
-            'codigo.required' => 'El Codigo del producto es requerido',
-            'codigo.unique' => 'Ya existe el codigo del producto',
-            'modelo.required' => 'La modelo es requerido',
-            'descripcion.required' => 'La modelo es requerido',
-            'precio.required' => 'EL precio es requerido',
-            'tipo.required' => 'La tipo es requerido',
-            'marcaid.required' => 'La marca es requerida',
-            'familiaid.required' => 'EL equipo es requerido',
-        ];
+            'marca_id' => 'required',
+            'familia_id' => 'required',
+        ],
+            [
+                'codigo.required' => 'El Codigo del producto es requerido',
+                'codigo.unique' => 'Ya existe el codigo del producto',
+                'modelo.required' => 'La modelo es requerido',
+                'descripcion.required' => 'La modelo es requerido',
+                'precio.required' => 'EL precio es requerido',
+                'tipo.required' => 'La tipo es requerido',
+                'marca_id.required' => 'La marca es requerida',
+                'familia_id.required' => 'EL equipo es requerido',
+            ])->validate();
 
-        $this->validate($rules, $messages);
-        $producto = Producto::find($this->selected_id);
-        $producto->update([
-            'codigo' => $this->codigo,
-            'modelo' => $this->modelo,
-            'descripcion' => $this->descripcion,
-            'precio' => $this->precio,
-            'tipo' => $this->tipo,
-            'marca_id' => $this->marcaid,
-            'familia_id' => $this->familiaid,
-        ]);
+        $producto = Producto::findOrFail($this->state['id']);
+        $producto->update($validated);
 
         $this->resetUI();
         $this->emit('producto-updated', 'Producto Actualizado');

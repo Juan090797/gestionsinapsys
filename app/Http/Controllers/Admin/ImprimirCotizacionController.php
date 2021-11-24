@@ -15,9 +15,9 @@ class ImprimirCotizacionController extends Controller
     {
         $empresa = Empresa::all()->first();
         $number = $cotizacion->id;
-        $client = Cliente::findOrFail($cotizacion->cliente_id);
+        $cliente = Cliente::findOrFail($cotizacion->cliente_id);
         $pdf = App::make('dompdf.wrapper');
-        $pdf->loadView('livewire.cotizacion.print-invoice', compact('cotizacion', 'client', 'empresa'));
+        $pdf->loadView('livewire.cotizacion.vista', compact('cotizacion', 'cliente', 'empresa'));
 
         return $pdf->download('cotizacion_'. $number .'.pdf' );
     }

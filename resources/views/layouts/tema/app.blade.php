@@ -51,7 +51,7 @@
 </div>
 <!-- ./wrapper -->
 @include('layouts.tema.scripts')
-@livewireScripts
 @stack('js')
+@livewireScripts
 </body>
 </html>

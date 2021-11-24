@@ -90,7 +90,7 @@
                         <tr>
                             <th scope="row">{{$producto->codigo}}</th>
                             <td class="text-center">{{$producto->modelo}}</td>
-                            <td class="text-center">{{ Illuminate\Support\Str::limit($producto->descripcion, 100, $end='...') }}</td>
+                            <td>{{ Illuminate\Support\Str::limit($producto->descripcion, 100, $end='...') }}</td>
                             <td class="text-center">S/ {{$producto->precio}}</td>
                             <td class="text-center">{{$producto->tipo}}</td>
                             <td class="text-center">

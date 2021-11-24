@@ -18,7 +18,7 @@ Route::get('/', function () {
 });
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
-    Route::get('dashboard', \App\Http\Livewire\Dashboard::class);
+    Route::get('dashboard', \App\Http\Livewire\Dashboard::class)->name('dashboard');
     Route::get('categorias', \App\Http\Livewire\Categorias::class);
     Route::get('industrias', \App\Http\Livewire\Industrias::class);
     Route::get('clientes', \App\Http\Livewire\Clientes::class);

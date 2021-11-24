@@ -60,7 +60,6 @@ class EditCotizacion extends Component
                 'cotizacion_items'  => $this->rows,
             ]),
         );
-
         $this->emit('updated-cotizacion', 'Se actualizo la Cotizacion ');
     }
 

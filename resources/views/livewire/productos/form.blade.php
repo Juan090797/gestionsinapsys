@@ -8,60 +8,60 @@
                 <div class="row">
                     <div class="col-sm-12 col-md-3">
                         <div class="form-group">
-                            <label>Codigo*</label>
-                            <input type="text" wire:model.defer="codigo" class="form-control" placeholder="ej: 00000145">
+                            <label for="codigo">Codigo*</label>
+                            <input type="text" wire:model.defer="state.codigo" class="form-control" id="codigo" placeholder="ej: 00000145">
                         </div>
                         @error('codigo') <span class="text-danger er">{{ $message }}</span>@enderror
                     </div>
                     <div class="col-sm-12 col-md-3">
                         <div class="form-group">
-                            <label>Marca*</label>
-                            <select wire:model.defer="marcaid" class="form-control">
+                            <label for="marca_id">Marca*</label>
+                            <select wire:model.defer="state.marca_id" id="marca_id" class="form-control">
                                 <option value="ELEGIR" selected>Elegir</option>
                                 @foreach($marcas as $marca)
                                     <option value="{{$marca->id}}" >{{$marca->nombre}}</option>
                                 @endforeach
                             </select>
                         </div>
-                        @error('marcaid') <span class="text-danger er">{{ $message }}</span>@enderror
+                        @error('marca_id') <span class="text-danger er">{{ $message }}</span>@enderror
                     </div>
                     <div class="col-sm-12 col-md-3">
                         <div class="form-group">
-                            <label>Equipo*</label>
-                            <select wire:model.defer="familiaid" class="form-control">
+                            <label for="familia_id">Equipo*</label>
+                            <select wire:model.defer="state.familia_id" id="familia_id" class="form-control">
                                 <option value="ELEGIR" selected>Elegir</option>
                                 @foreach($familias as $familia)
                                     <option value="{{$familia->id}}" >{{$familia->nombre}}</option>
                                 @endforeach
                             </select>
                         </div>
-                        @error('familiaid') <span class="text-danger er">{{ $message }}</span>@enderror
+                        @error('familia_id') <span class="text-danger er">{{ $message }}</span>@enderror
                     </div>
                     <div class="col-sm-12 col-md-3">
                         <div class="form-group">
                             <label>Precio*</label>
-                            <input type="number" wire:model.defer="precio" class="form-control" placeholder="ej: Precio">
+                            <input type="number" wire:model.defer="state.precio" class="form-control" placeholder="ej: Precio">
                         </div>
                         @error('precio') <span class="text-danger er">{{ $message }}</span>@enderror
                     </div>
                     <div class="col-sm-12 col-md-6">
                         <div class="form-group">
-                            <label>Modelo*</label>
-                            <input type="text" wire:model.defer="modelo" class="form-control" placeholder="ej: Modelo">
+                            <label for="modelo">Modelo*</label>
+                            <input type="text" wire:model.defer="state.modelo" id="modelo" class="form-control" placeholder="ej: Modelo">
                         </div>
                         @error('modelo') <span class="text-danger er">{{ $message }}</span>@enderror
                     </div>
                     <div class="col-sm-12 col-md-6">
                         <div class="form-group">
-                            <label>Tipo*</label>
-                            <input type="text" wire:model.defer="tipo" class="form-control" placeholder="ej: Tipo">
+                            <label for="tipo">Tipo*</label>
+                            <input type="text" wire:model.defer="state.tipo" id="tipo" class="form-control" placeholder="ej: Tipo">
                         </div>
                         @error('tipo') <span class="text-danger er">{{ $message }}</span>@enderror
                     </div>
                     <div class="col-sm-12 col-md-12">
                         <div class="form-group">
-                            <label>Descripcion*</label>
-                            <textarea cols="40" rows="10" type="text" wire:model.defer="descripcion" class="form-control" placeholder="ej: Descripcion..."></textarea>
+                            <label for="descripcion">Descripcion*</label>
+                            <textarea wire:model.defer="state.descripcion" rows="10" id="descripcion" class="form-control"></textarea>
                         </div>
                         @error('descripcion') <span class="text-danger er">{{ $message }}</span>@enderror
                     </div>
