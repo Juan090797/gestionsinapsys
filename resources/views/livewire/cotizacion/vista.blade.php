@@ -88,8 +88,8 @@
                                 <td class="py-3"></td>
                             </tr>
                             <tr style="border: black 2px solid;">
-                                <td class="border-0"><b>Total</b></td>
-                                <td class="py-8 border-0" style="color: blue">S/ {{number_format($cotizacion->total,2)}}
+                                <td class="border-0" style="padding:8px !important;"><b>Total</b></td>
+                                <td class="py-8 border-0" style="color: blue;padding:8px !important;">S/ {{number_format($cotizacion->total,2)}}
                                 </td>
                             </tr>
                         </table>
@@ -126,7 +126,6 @@
             function printDiv(areaImprimir) {
                 var contenido = document.getElementById(areaImprimir).innerHTML;
                 var contenidoOriginal = document.body.innerHTML;
-
                 document.body.innerHTML = contenido;
                 window.print();
                 document.body.innerHTML = contenidoOriginal;
