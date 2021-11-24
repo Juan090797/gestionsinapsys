@@ -42,8 +42,8 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-12" style="overflow-x: hidden; overflow-y: auto; height: 14cm">
-                                <h4>Actividades Recientes</h4>
+                            <div class="col-12">
+                                <h4>Actividades Recientes({{$comentarios->count()}})</h4>
                                 <form wire:submit.prevent="createComentario">
                                     <div class="input-group mb-3">
                                         <input type="text" class="form-control" name="contenido" wire:model.defer="contenido" placeholder="Comentar">
@@ -53,6 +53,7 @@
                                     </div>
                                     @error('contenido') <span class="text-danger er">{{ $message }}</span>@enderror
                                 </form>
+                                <div  style="overflow-x: hidden; overflow-y: auto; height: 14cm">
                                 @forelse($comentarios as $comentario)
                                     <div class="post">
                                         <div class="user-block">
@@ -67,6 +68,7 @@
                                 @empty
                                     <p class="text-danger">0 comentarios</p>
                                 @endforelse
+                                </div>
                             </div>
 
                         </div>

@@ -1,14 +1,4 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    @include('layouts.tema.styles')
-</head>
-<body>
+<div>
     <section>
         <div class="card">
             <div class="card-header">
@@ -50,8 +40,8 @@
                     <div class="col-4">
                         <b>Cotizacion: #{{$cotizacion->codigo}}</b>
                         <p>
-                            <b>Fecha Cotizacion:</b> {{$cotizacion->fecha_inicio}}<br>
-                            <b>Fecha Caducidad:</b> {{$cotizacion->fecha_fin}}<br>
+                            <b>Fecha Cotizacion:</b> {{$cotizacion->formate_fechai}}<br>
+                            <b>Fecha Caducidad:</b> {{$cotizacion->formate_fechac}}<br>
                         </p>
                     </div>
                 </div>
@@ -131,18 +121,16 @@
             </div>
         </div>
     </section>
-@include('layouts.tema.scripts')
-@push('js')
-    <script>
-        function printDiv(areaImprimir) {
-            var contenido = document.getElementById(areaImprimir).innerHTML;
-            var contenidoOriginal = document.body.innerHTML;
+    @push('js')
+        <script>
+            function printDiv(areaImprimir) {
+                var contenido = document.getElementById(areaImprimir).innerHTML;
+                var contenidoOriginal = document.body.innerHTML;
 
-            document.body.innerHTML = contenido;
-            window.print();
-            document.body.innerHTML = contenidoOriginal;
-        }
-    </script>
-@endpush
-</body>
-</html>
+                document.body.innerHTML = contenido;
+                window.print();
+                document.body.innerHTML = contenidoOriginal;
+            }
+        </script>
+    @endpush
+</div>

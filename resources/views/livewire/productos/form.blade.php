@@ -40,7 +40,7 @@
                     <div class="col-sm-12 col-md-3">
                         <div class="form-group">
                             <label>Precio*</label>
-                            <input type="number" wire:model.defer="state.precio" class="form-control" placeholder="ej: Precio">
+                            <input type="money" wire:model.defer="state.precio" class="form-control" placeholder="ej: Precio">
                         </div>
                         @error('precio') <span class="text-danger er">{{ $message }}</span>@enderror
                     </div>
