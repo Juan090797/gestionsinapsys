@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\Familia;
+use Illuminate\Support\Facades\Validator;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -10,7 +11,8 @@ class Familias extends Component
 {
     use WithPagination;
 
-    public $nombre, $estado, $search, $selected_id;
+    public $search, $selected_id;
+    public $state =[];
     Private $pagination = 5;
     protected $paginationTheme = 'bootstrap';
 
@@ -33,35 +35,29 @@ class Familias extends Component
         }
         return view('livewire.familias.familias', ['familias' => $data])->extends('layouts.tema.app')->section('content');
     }
-    public function Edit($id)
+
+    public function Edit(Familia $familia)
     {
-        $record = Familia::find($id, ['id', 'nombre', 'estado']);
-        $this->nombre = $record->nombre;
-        $this->estado = $record->estado;
-        $this->selected_id = $record->id;
+        $this->selected_id = $familia->id;
+        $this->state = $familia->toArray();
 
         $this->emit('show-modal', 'show-modal!');
     }
 
     public function Store()
     {
-        $rules = [
+        $validated = Validator::make($this->state, [
             'nombre' => 'required|unique:familias|min:3',
             'estado' => 'required',
-        ];
-        $messages =[
+        ],[
             'nombre.required' => 'Nombre de la familia es requerido',
             'nombre.unique' => 'Ya existe el nombre de la familia',
             'nombre.min' => 'El nombre de la familia debe tener al menos 3 caracteres',
             'estado.required' => 'El estado es requerido',
-        ];
 
-        $this->validate($rules, $messages);
+        ])->validate();
 
-        $familia = Familia::create([
-            'nombre' => $this->nombre,
-            'estado' => $this->estado,
-        ]);
+        Familia::create($validated);
 
         $this->resetUI();
         $this->emit('familia-added', 'Familia Registrada');
@@ -69,23 +65,19 @@ class Familias extends Component
 
     public function Update()
     {
-        $rules = [
+        $validated = Validator::make($this->state, [
             'nombre' => "required||min:3|unique:familias,nombre,{$this->selected_id}",
-            'estado' => 'required|not_in:Elegir',
-        ];
-        $messages =[
+            'estado' => 'required',
+        ],[
             'nombre.required' => 'Nombre de la familia es requerido',
             'nombre.unique' => 'Ya existe el nombre de la familia',
             'nombre.min' => 'El nombre de la familia debe tener al menos 3 caracteres',
             'estado.required' => 'El estado es requerido',
-        ];
-        $this->validate($rules, $messages);
 
-        $familia = Familia::find($this->selected_id);
-        $familia->update([
-            'nombre' => $this->nombre,
-            'estado' => $this->estado,
-        ]);
+        ])->validate();
+
+        $familia = Familia::findOrFail($this->state['id']);
+        $familia->update($validated);
 
         $this->resetUI();
         $this->emit('familia-updated', 'Familia Actualizada');
@@ -94,8 +86,7 @@ class Familias extends Component
 
     public function resetUI()
     {
-        $this->nombre = '';
-        $this->estado = 'ELEGIR';
+        $this->state = [];
         $this->search = '';
         $this->selected_id = 0;
         $this->resetValidation();

@@ -53,7 +53,6 @@ class Impuestos extends Component
     public function Destroy(impuesto $impuesto)
     {
         $impuesto->delete();
-
         $this->resetUI();
         $this->emit('impuesto-deleted', 'Impuesto Eliminado');
     }
@@ -70,5 +69,6 @@ class Impuestos extends Component
     {
         $this->state =[];
         $this->selected_id = '';
+        $this->resetValidation();
     }
 }

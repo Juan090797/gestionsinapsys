@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\Clasificacion;
+use Illuminate\Support\Facades\Validator;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -10,7 +11,8 @@ class Clasificacions extends Component
 {
     use WithPagination;
 
-    public $nombre, $estado, $search, $selected_id;
+    public $search, $selected_id;
+    public $state = [];
     Private $pagination = 5;
     protected $paginationTheme = 'bootstrap';
 
@@ -33,35 +35,28 @@ class Clasificacions extends Component
         }
         return view('livewire.clasificacions.clasificacions', ['clasificacions' => $data])->extends('layouts.tema.app')->section('content');
     }
-    public function Edit($id)
+    public function Edit(Clasificacion $clasificacion)
     {
-        $record = Clasificacion::find($id, ['id', 'nombre', 'estado']);
-        $this->nombre = $record->nombre;
-        $this->estado = $record->estado;
-        $this->selected_id = $record->id;
+        $this->selected_id = $clasificacion->id;
+        $this->state = $clasificacion->toArray();
 
         $this->emit('show-modal', 'show-modal!');
     }
 
     public function Store()
     {
-        $rules = [
+        $validated = Validator::make($this->state, [
             'nombre' => 'required|unique:clasificacions|min:3',
             'estado' => 'required',
-        ];
-        $messages =[
+        ],[
             'nombre.required' => 'Nombre de la clasificacion es requerido',
             'nombre.unique' => 'Ya existe el nombre de la clasificacion',
             'nombre.min' => 'El nombre de la clasificacion debe tener al menos 3 caracteres',
             'estado.required' => 'El estado es requerido',
-        ];
 
-        $this->validate($rules, $messages);
+        ])->validate();
 
-        $clasificacion = Clasificacion::create([
-            'nombre' => $this->nombre,
-            'estado' => $this->estado,
-        ]);
+        Clasificacion::create($validated);
 
         $this->resetUI();
         $this->emit('clasificacion-added', 'Clasificacion Registrada');
@@ -69,23 +64,19 @@ class Clasificacions extends Component
 
     public function Update()
     {
-        $rules = [
+        $validated = Validator::make($this->state, [
             'nombre' => "required||min:3|unique:clasificacions,nombre,{$this->selected_id}",
-            'estado' => 'required|not_in:Elegir',
-        ];
-        $messages =[
+            'estado' => 'required',
+        ],[
             'nombre.required' => 'Nombre de la clasificacion es requerido',
             'nombre.unique' => 'Ya existe el nombre de la clasificacion',
             'nombre.min' => 'El nombre de la clasificacion debe tener al menos 3 caracteres',
             'estado.required' => 'El estado es requerido',
-        ];
-        $this->validate($rules, $messages);
 
-        $clasificacion = Clasificacion::find($this->selected_id);
-        $clasificacion->update([
-            'nombre' => $this->nombre,
-            'estado' => $this->estado,
-        ]);
+        ])->validate();
+
+        $clasificacion = Clasificacion::findOrFail($this->state['id']);
+        $clasificacion->update($validated);
 
         $this->resetUI();
         $this->emit('clasificacion-updated', 'Clasificacion Actualizada');
@@ -94,8 +85,7 @@ class Clasificacions extends Component
 
     public function resetUI()
     {
-        $this->nombre = '';
-        $this->estado = 'ELEGIR';
+        $this->state = [];
         $this->search = '';
         $this->selected_id = 0;
         $this->resetValidation();

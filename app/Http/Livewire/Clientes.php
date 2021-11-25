@@ -151,7 +151,6 @@ class Clientes extends Component
     public function Destroy(Cliente $cliente)
     {
         $cliente->delete();
-
         $this->resetUI();
         $this->emit('cliente-deleted', 'Cliente Eliminado');
     }

@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\Industria;
+use Illuminate\Support\Facades\Validator;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -10,7 +11,8 @@ class Industrias extends Component
 {
     use WithPagination;
 
-    public $nombre, $estado, $search, $selected_id;
+    public $search, $selected_id;
+    public $state=[];
     Private $pagination = 5;
     protected $paginationTheme = 'bootstrap';
 
@@ -32,35 +34,28 @@ class Industrias extends Component
         }
         return view('livewire.industrias.industrias', ['industrias' => $data])->extends('layouts.tema.app')->section('content');
     }
-    public function Edit($id)
-    {
-        $record = Industria::find($id, ['id', 'nombre', 'estado']);
-        $this->nombre = $record->nombre;
-        $this->estado = $record->estado;
-        $this->selected_id = $record->id;
 
+    public function Edit(Industria $industria)
+    {
+        $this->selected_id = $industria->id;
+        $this->state = $industria->toArray();
         $this->emit('show-modal', 'show-modal!');
     }
 
     public function Store()
     {
-        $rules = [
+        $validated = Validator::make($this->state, [
             'nombre' => 'required|unique:industrias|min:3',
             'estado' => 'required',
-        ];
-        $messages =[
+        ],[
             'nombre.required' => 'Nombre de la Industria es requerido',
             'nombre.unique' => 'Ya existe el nombre de la Industria',
             'nombre.min' => 'El nombre de la Industria debe tener al menos 3 caracteres',
             'estado.required' => 'El estado es requerido',
-        ];
 
-        $this->validate($rules, $messages);
+        ])->validate();
 
-        $industria = Industria::create([
-            'nombre' => $this->nombre,
-            'estado' => $this->estado,
-        ]);
+        Industria::create($validated);
 
         $this->resetUI();
         $this->emit('industria-added', 'Industria Registrada');
@@ -68,22 +63,19 @@ class Industrias extends Component
 
     public function Update()
     {
-        $rules = [
+        $validated = Validator::make($this->state, [
             'nombre' => "required||min:3|unique:industrias,nombre,{$this->selected_id}",
-            'estado' => 'required|not_in:Elegir',
-        ];
-        $messages =[
+            'estado' => 'required',
+        ],[
             'nombre.required' => 'Nombre de la Industria es requerido',
             'nombre.unique' => 'Ya existe el nombre de la Industria',
             'nombre.min' => 'El nombre de la Industria debe tener al menos 3 caracteres',
             'estado.required' => 'El estado es requerido',
-        ];
-        $this->validate($rules, $messages);
-        $industria = Industria::find($this->selected_id);
-        $industria->update([
-            'nombre' => $this->nombre,
-            'estado' => $this->estado,
-        ]);
+
+        ])->validate();
+
+        $industria = Industria::findOrFail($this->state['id']);
+        $industria->update($validated);
 
         $this->resetUI();
         $this->emit('industria-updated', 'Industria Actualizada');
@@ -92,8 +84,7 @@ class Industrias extends Component
 
     public function resetUI()
     {
-        $this->nombre = '';
-        $this->estado = 'ELEGIR';
+        $this->state=[];
         $this->search = '';
         $this->selected_id = 0;
         $this->resetValidation();
@@ -103,7 +94,6 @@ class Industrias extends Component
     public function Destroy(Industria $industria)
     {
         $industria->delete();
-
         $this->resetUI();
         $this->emit('industria-deleted', 'Industria Eliminada');
     }

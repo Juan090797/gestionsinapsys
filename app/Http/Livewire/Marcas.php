@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\Marca;
+use Illuminate\Support\Facades\Validator;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -10,7 +11,8 @@ class Marcas extends Component
 {
     use WithPagination;
 
-    public $nombre, $estado, $search, $selected_id;
+    public $search, $selected_id;
+    public $state = [];
     Private $pagination = 5;
     protected $paginationTheme = 'bootstrap';
 
@@ -33,59 +35,46 @@ class Marcas extends Component
         }
         return view('livewire.marcas.marcas', ['marcas' => $data])->extends('layouts.tema.app')->section('content');
     }
-    public function Edit($id)
+
+    public function Edit(Marca $marca)
     {
-        $record = Marca::find($id, ['id', 'nombre', 'estado']);
-        $this->nombre = $record->nombre;
-        $this->estado = $record->estado;
-        $this->selected_id = $record->id;
+        $this->selected_id = $marca->id;
+        $this->state = $marca->toArray();
 
         $this->emit('show-modal', 'show-modal!');
     }
 
     public function Store()
     {
-        $rules = [
+        $validated = Validator::make($this->state, [
             'nombre' => 'required|unique:marcas|min:3',
             'estado' => 'required',
-        ];
-        $messages =[
+        ],[
             'nombre.required' => 'Nombre de la marca es requerido',
             'nombre.unique' => 'Ya existe el nombre de la marca',
             'nombre.min' => 'El nombre de la marca debe tener al menos 3 caracteres',
             'estado.required' => 'El estado es requerido',
-        ];
+        ])->validate();
 
-        $this->validate($rules, $messages);
-
-        $marca = Marca::create([
-            'nombre' => $this->nombre,
-            'estado' => $this->estado,
-        ]);
-
+        Marca::create($validated);
         $this->resetUI();
         $this->emit('marca-added', 'Marca Registrada');
     }
 
     public function Update()
     {
-        $rules = [
+        $validated = Validator::make($this->state, [
             'nombre' => "required||min:3|unique:marcas,nombre,{$this->selected_id}",
-            'estado' => 'required|not_in:Elegir',
-        ];
-        $messages =[
+            'estado' => 'required',
+        ],[
             'nombre.required' => 'Nombre de la marca es requerido',
             'nombre.unique' => 'Ya existe el nombre de la marca',
             'nombre.min' => 'El nombre de la marca debe tener al menos 3 caracteres',
             'estado.required' => 'El estado es requerido',
-        ];
-        $this->validate($rules, $messages);
-        $marca = Marca::find($this->selected_id);
-        $marca->update([
-            'nombre' => $this->nombre,
-            'estado' => $this->estado,
-        ]);
+        ])->validate();
 
+        $marca = Marca::findOrFail($this->state['id']);
+        $marca->update($validated);
         $this->resetUI();
         $this->emit('marca-updated', 'Marca Actualizada');
 
@@ -93,8 +82,7 @@ class Marcas extends Component
 
     public function resetUI()
     {
-        $this->nombre = '';
-        $this->estado = 'ELEGIR';
+        $this->state=[];
         $this->search = '';
         $this->selected_id = 0;
         $this->resetValidation();
@@ -104,7 +92,6 @@ class Marcas extends Component
     public function Destroy(Marca $marca)
     {
         $marca->delete();
-
         $this->resetUI();
         $this->emit('marca-deleted', 'Marca Eliminada');
     }

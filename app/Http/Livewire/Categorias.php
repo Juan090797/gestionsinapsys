@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\Categoria;
+use Illuminate\Support\Facades\Validator;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -10,7 +11,8 @@ class Categorias extends Component
 {
     use WithPagination;
 
-    public $nombre, $estado, $search, $selected_id;
+    public $search, $selected_id;
+    public $state=[];
     Private $pagination = 5;
     protected $paginationTheme = 'bootstrap';
 
@@ -33,35 +35,28 @@ class Categorias extends Component
         }
         return view('livewire.categorias.categorias', ['categorias' => $data])->extends('layouts.tema.app')->section('content');
     }
-    public function Edit($id)
+    public function Edit(Categoria $categoria)
     {
-        $record = Categoria::find($id, ['id', 'nombre', 'estado']);
-        $this->nombre = $record->nombre;
-        $this->estado = $record->estado;
-        $this->selected_id = $record->id;
+        $this->selected_id = $categoria->id;
+        $this->state = $categoria->toArray();
 
         $this->emit('show-modal', 'show-modal!');
     }
 
     public function Store()
     {
-        $rules = [
+        $validated = Validator::make($this->state, [
             'nombre' => 'required|unique:categorias|min:3',
             'estado' => 'required',
-        ];
-        $messages =[
+        ],[
             'nombre.required' => 'Nombre de la categoria es requerido',
             'nombre.unique' => 'Ya existe el nombre de la categoria',
             'nombre.min' => 'El nombre de la categoria debe tener al menos 3 caracteres',
             'estado.required' => 'El estado es requerido',
-        ];
 
-        $this->validate($rules, $messages);
+        ])->validate();
 
-        $categoria = Categoria::create([
-            'nombre' => $this->nombre,
-            'estado' => $this->estado,
-        ]);
+        Categoria::create($validated);
 
         $this->resetUI();
         $this->emit('categoria-added', 'Categoria Registrada');
@@ -69,22 +64,19 @@ class Categorias extends Component
 
     public function Update()
     {
-        $rules = [
+        $validated = Validator::make($this->state, [
             'nombre' => "required||min:3|unique:categorias,nombre,{$this->selected_id}",
-            'estado' => 'required|not_in:Elegir',
-        ];
-        $messages =[
+            'estado' => 'required',
+        ],[
             'nombre.required' => 'Nombre de la categoria es requerido',
             'nombre.unique' => 'Ya existe el nombre de la categoria',
             'nombre.min' => 'El nombre de la categoria debe tener al menos 3 caracteres',
             'estado.required' => 'El estado es requerido',
-        ];
-        $this->validate($rules, $messages);
-        $categoria = Categoria::find($this->selected_id);
-        $categoria->update([
-            'nombre' => $this->nombre,
-            'estado' => $this->estado,
-        ]);
+
+        ])->validate();
+
+        $categoria = Categoria::findOrFail($this->state['id']);
+        $categoria->update($validated);
 
         $this->resetUI();
         $this->emit('categoria-updated', 'Categoria Actualizada');
@@ -93,8 +85,7 @@ class Categorias extends Component
 
     public function resetUI()
     {
-        $this->nombre = '';
-        $this->estado = 'ELEGIR';
+        $this->state=[];
         $this->search = '';
         $this->selected_id = 0;
         $this->resetValidation();
