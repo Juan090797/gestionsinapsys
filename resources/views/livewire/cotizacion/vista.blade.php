@@ -17,7 +17,7 @@
                         <h2 class="header-logo"><img style="width: 100%" src="{{ asset('/img/logo.png') }}" class="invoice-logo"></h2>
                     </div>
                 </div>
-                <hr>
+                <hr style="border: 0.620315px solid #E8E8E8;">
                 <div class="row">
                     <div class="col-4">
                         <b>{{$empresa->nombre}}</b>
@@ -47,23 +47,23 @@
                 </div>
                 <div class="row">
                     <table class="table">
-                        <thead class="thead-dark">
+                        <thead>
                         <tr>
-                            <th scope="col">#</th>
-                            <th scope="col" class="text-left">PRODUCTO</th>
-                            <th scope="col"class="text-center">CANTIDAD</th>
-                            <th scope="col" class="text-center">PRECIO</th>
-                            <th scope="col" class="text-center">TOTAL</th>
+                            <th scope="col" style="border-bottom: 1px solid #000000;border-top: 1px solid #000000;">#</th>
+                            <th scope="col" class="text-left" style="border-bottom: 1px solid #000000;border-top: 1px solid #000000;">PRODUCTO</th>
+                            <th scope="col"class="text-center" style="border-bottom: 1px solid #000000;border-top: 1px solid #000000;">CANTIDAD</th>
+                            <th scope="col" class="text-center" style="border-bottom: 1px solid #000000;border-top: 1px solid #000000;">PRECIO</th>
+                            <th scope="col" class="text-center" style="border-bottom: 1px solid #000000;border-top: 1px solid #000000;">TOTAL</th>
                         </tr>
                         </thead>
                         <tbody>
                         @foreach ($cotizacion->CotizacionItem as $item)
                             <tr>
-                                <th scope="row">{{$loop->iteration}}</th>
-                                <td style="width:55%" class="text-left">{!! nl2br(htmlspecialchars($item->producto->descripcion)) !!}</td>
-                                <td class="text-center">{{$item->cantidad}}</td>
-                                <td class="text-center">S/ {{number_format($item->precio,2)}}</td>
-                                <td class="text-center">S/ {{number_format($item->monto,2)}}</td>
+                                <th scope="row" style="border-top: 1px solid #000000;">{{$loop->iteration}}</th>
+                                <td style="width:55%;border-top: 1px solid #000000;" class="text-left">{!! nl2br(htmlspecialchars($item->producto->descripcion)) !!}</td>
+                                <td class="text-center" style="border-top: 1px solid #000000;">{{$item->cantidad}}</td>
+                                <td class="text-center" style="border-top: 1px solid #000000;">S/ {{number_format($item->precio,2)}}</td>
+                                <td class="text-center" style="border-top: 1px solid #000000;">S/ {{number_format($item->monto,2)}}</td>
                             </tr>
                         @endforeach
                         </tbody>
