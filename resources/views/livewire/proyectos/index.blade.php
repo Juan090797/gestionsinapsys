@@ -32,7 +32,7 @@
                     @foreach($proyectos as $index => $proyecto)
                         <tr>
                             <th scope="row">{{$proyectos->firstItem() + $index}}</th>
-                            <td><a href="#"><a href="{{ route('proyecto.show', $proyecto) }}">{{$proyecto->nombre}}</a></a></td>
+                            <td><a href="{{ route('proyecto.show', $proyecto) }}">{{$proyecto->nombre}}</a></td>
                             <td>{{ $proyecto->prioridad }}</td>
                             <td>{{ $proyecto->fecha_inicio }}</td>
                             <td>S/ {{ $proyecto->ingreso_estimado }}</td>
