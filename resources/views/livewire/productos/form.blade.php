@@ -60,6 +60,13 @@
                     </div>
                     <div class="col-sm-12 col-md-12">
                         <div class="form-group">
+                            <label for="nombre">Nombre*</label>
+                            <input type="text" wire:model.defer="state.nombre" id="nombre" class="form-control">
+                        </div>
+                        @error('nombre') <span class="text-danger er">{{ $message }}</span>@enderror
+                    </div>
+                    <div class="col-sm-12 col-md-12">
+                        <div class="form-group">
                             <label for="descripcion">Descripcion*</label>
                             <textarea wire:model.defer="state.descripcion" rows="10" id="descripcion" class="form-control"></textarea>
                         </div>

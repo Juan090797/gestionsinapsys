@@ -38,10 +38,11 @@
                         </p>
                     </div>
                     <div class="col-4">
-                        <b>Cotizacion: #{{$cotizacion->codigo}}</b>
                         <p>
-                            <b>Fecha Cotizacion:</b> {{$cotizacion->formate_fechai}}<br>
-                            <b>Fecha Caducidad:</b> {{$cotizacion->formate_fechac}}<br>
+                            <b>Cotizacion: #{{$cotizacion->codigo}}</b><br>
+                            <b>Fecha:</b> {{$cotizacion->formate_fechai}}<br>
+                            <b>Vencimiento:</b> {{$cotizacion->formate_fechac}}<br>
+                            <b>Atencion:</b> {{$cotizacion->atendido}}<br>
                         </p>
                     </div>
                 </div>
@@ -60,7 +61,10 @@
                         @foreach ($cotizacion->CotizacionItem as $item)
                             <tr>
                                 <th scope="row" style="border-top: 1px solid #000000;">{{$loop->iteration}}</th>
-                                <td style="width:55%;border-top: 1px solid #000000;" class="text-left">{!! nl2br(htmlspecialchars($item->producto->descripcion)) !!}</td>
+                                <td style="width:55%;border-top: 1px solid #000000;" class="text-left">
+                                    {{$item->producto->nombre}} <br>
+                                    {!! nl2br(htmlspecialchars($item->producto->descripcion)) !!}
+                                </td>
                                 <td class="text-center" style="border-top: 1px solid #000000;">{{$item->cantidad}}</td>
                                 <td class="text-center" style="border-top: 1px solid #000000;">S/ {{number_format($item->precio,2)}}</td>
                                 <td class="text-center" style="border-top: 1px solid #000000;">S/ {{number_format($item->monto,2)}}</td>
@@ -108,14 +112,10 @@
                     </div>
                 </div>
                 @if($cotizacion->foto)
-                    <div>
-                        <table width="100%">
-                            <tr>
-                                <td class="text-left">
-                                    <h2 class="header-logo"><img src="{{ asset('/storage/firmas/grupomarquina.png') }}" class="invoice-logo"> </h2>
-                                </td>
-                            </tr>
-                        </table>
+                    <div class="row">
+                        <div class="col-4">
+                            <img src="{{ asset('/storage/firmas/grupomarquina.png') }}" class="invoice-logo" style="width: 100%">
+                        </div>
                     </div>
                 @endif
             </div>

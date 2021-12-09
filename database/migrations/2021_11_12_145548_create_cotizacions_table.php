@@ -20,6 +20,7 @@ class CreateCotizacionsTable extends Migration
             $table->date('fecha_fin')->nullable();
             $table->longText('terminos')->nullable();
             $table->longText('condiciones')->nullable();
+            $table->string('atendido')->nullable();
             $table->boolean('foto')->nullable();
             $table->decimal('total',20,2)->default(0);
             $table->decimal('subtotal',20,2)->default(0);

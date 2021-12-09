@@ -66,13 +66,13 @@ class EditCotizacion extends Component
     public function render()
     {
         $empresa = Empresa::all()->first();
-        $clientes = Cliente::latest()->paginate();
+        $cliente = Cliente::where('id', $this->cotizacion->cliente_id)->get();
         $cotizacionNumber = Cotizacion::latest()->first()->id ?? 0 + 1;
         $productos = Producto::latest()->get();
         $impuestos = impuesto::latest()->get();
         return view('livewire.cotizacion.edit-cotizacion',
         [
-            'clientes'          => $clientes,
+            'cliente'          => $cliente,
             'cotizacionNumber'  => $cotizacionNumber,
             'productos'         => $productos,
             'impuestos'         => $impuestos,

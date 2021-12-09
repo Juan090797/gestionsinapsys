@@ -10,7 +10,7 @@
                 <div class="row">
                     <div class="col-12">
                         <h2 class="page-header">
-                            <i class="fas fa-globe"></i> {{$empresa->nombre}}
+                            <b>Cotizacion #{{$cotizacion->codigo}}</b>
                             <small class="float-right">Fecha: {{date("d-m-Y")}}</small>
                         </h2>
                     </div>
@@ -19,49 +19,35 @@
                 <!-- info row -->
                 <div class="row invoice-info">
                     <div class="col-sm-4 invoice-col">
-                        De
-                        <address>
-                            <strong>Ventas</strong><br>
-                            {{$empresa->direccion}}<br>
-                            Telefono: {{$empresa->telefono}}<br>
-                            Correo: {{$empresa->correo}}
-                        </address>
-                        <div class="custom-control custom-switch">
-                            <input wire:model.defer="state.foto" type="checkbox" class="custom-control-input" id="sidebarCollapse">
-                            <label class="custom-control-label" for="sidebarCollapse">Firma</label>
+                        <div class="form-group">
+                            <label for="">Cliente:</label>
+                            <input type="text" class="form-control" value="{{ $cliente[0]->razon_social ?? ''}}" disabled>
                         </div>
                     </div>
                     <!-- /.col -->
                     <div class="col-sm-4 invoice-col">
                         <div class="form-group">
-                            <label>Cotizado a:</label>
-                            <select wire:model.lazy="state.cliente_id" wire:change="getClientInfo(event.target.value)" class="form-control">
-                                <option value="ELEGIR" selected>Elegir</option>
-                                @foreach($clientes as $cliente)
-                                    <option value="{{$cliente->id}}" >{{$cliente->nombre}}</option>
-                                @endforeach
-                            </select>
-                            @error('productoid') <span class="text-danger er">{{ $message }}</span>@enderror
+                            <label for="">Atencion:</label>
+                            <input type="text" class="form-control" wire:model.defer="state.atendido">
                         </div>
-                        @if($billedTo)
-                            <address>
-                                {{ $billedTo['razon_social'] ?? '' }}<br>
-                                Celular: {{ $billedTo['telefono'] ?? '' }}<br>
-                                Correo: {{ $billedTo['correo'] ?? '' }}
-                            </address>
-                        @endif
                     </div>
                     <div class="col-sm-4 invoice-col">
-                        <b>Cotizacion# {{$cotizacion->codigo}}</b><br>
                         <div class="form-group">
                             <label for="date">Fecha *</label>
-                            <input class="form-control" type="date" aria-label="Use the arrow keys to pick a date" wire:model.lazy="state.fecha_inicio">
+                            <input class="form-control" type="date" aria-label="Use the arrow keys to pick a date" wire:model.defer="state.fecha_inicio">
                         </div>
+                    </div>
+                    <div class="col-sm-4 invoice-col">
                         <div class="form-group">
                             <label for="due_date">Fecha Fin *</label>
-                            <input class="form-control" type="date" aria-label="Use the arrow keys to pick a date" wire:model.lazy="state.fecha_fin">
+                            <input class="form-control" type="date" aria-label="Use the arrow keys to pick a date" wire:model.defer="state.fecha_fin">
                         </div>
-                        <br>
+                    </div>
+                    <div class="col-sm-4 mt-5">
+                        <div class="custom-control custom-switch">
+                            <input wire:model.defer="state.foto" type="checkbox" class="custom-control-input" id="sidebarCollapse1">
+                            <label class="custom-control-label" for="sidebarCollapse1">Firma</label>
+                        </div>
                     </div>
                 </div>
 
@@ -180,8 +166,12 @@
                 noty(msg)
             });
         });
-        $('#sidebarCollapse').on('change', function() {
-            $('body').toggleClass('sidebar-collapse');
-        })
     </script>
+        @push('js')
+            <script>
+                $('#sidebarCollapse1').on('change', function() {
+                    $('body').toggleClass('sidebar-collapse1');
+                })
+            </script>
+        @endpush
 </div>

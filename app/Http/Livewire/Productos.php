@@ -51,6 +51,7 @@ class Productos extends Component
         $validated = Validator::make($this->state, [
             'codigo' => 'required|unique:productos',
             'modelo' => 'required',
+            'nombre' => 'required',
             'descripcion' => 'required',
             'precio' => 'required',
             'tipo' => 'required',
@@ -61,7 +62,8 @@ class Productos extends Component
                 'codigo.required' => 'El Codigo del producto es requerido',
                 'codigo.unique' => 'Ya existe el codigo del producto',
                 'modelo.required' => 'La modelo es requerido',
-                'descripcion.required' => 'La modelo es requerido',
+                'nombre.required' => 'El nombre del producto es obligatorio',
+                'descripcion.required' => 'La descripcion es requerido',
                 'precio.required' => 'EL precio es requerido',
                 'tipo.required' => 'La tipo es requerido',
                 'marca_id.required' => 'La marca es requerida',
@@ -94,6 +96,7 @@ class Productos extends Component
         $validated = Validator::make($this->state, [
             'codigo' => "required|unique:productos,codigo,{$this->selected_id}",
             'modelo' => 'required',
+            'nombre' => 'required',
             'descripcion' => 'required',
             'precio' => 'required',
             'tipo' => 'required',
@@ -104,6 +107,7 @@ class Productos extends Component
                 'codigo.required' => 'El Codigo del producto es requerido',
                 'codigo.unique' => 'Ya existe el codigo del producto',
                 'modelo.required' => 'La modelo es requerido',
+                'nombre.required' => 'El nombre del producto es obligatorio',
                 'descripcion.required' => 'La modelo es requerido',
                 'precio.required' => 'EL precio es requerido',
                 'tipo.required' => 'La tipo es requerido',

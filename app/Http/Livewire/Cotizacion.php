@@ -57,7 +57,8 @@ Remitir al O/C al correo electronico: ventas@gruposinapsys.pe
 Numero de Cta. BBVA (CCI): 011-342-000100028409-39
 Numero de Cta. Detracciones (Bco. Nacion): 00-051-159853',
             'proyecto_id' => $this->proyecto->id,
-            'foto' => false
+            'foto' => false,
+            'cliente_id' => $this->proyecto->cliente_id,
         ];
 
     }
@@ -92,7 +93,7 @@ Numero de Cta. Detracciones (Bco. Nacion): 00-051-159853',
         $empresa = Empresa::all()->first();
         return view('livewire.cotizacion.create',
             [
-                'clientes'  => Cliente::all(),
+                'cliente'  => Cliente::where('id', $this->proyecto->cliente_id)->get(),
                 'productos' => Producto::all(),
                 'impuestos' => impuesto::all(),
                 'empresa'   => $empresa,

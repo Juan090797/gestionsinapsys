@@ -23,9 +23,9 @@
             <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
-                <a href="{{ route('logout') }}" class="dropdown-item" onclick="event.preventDefault(); this.closest('form').submit();">
-                    <i class="fas fa-sign-out-alt mr-2"></i> Salir
-                </a>
+                    <a href="{{ route('logout') }}" class="dropdown-item" onclick="event.preventDefault(); this.closest('form').submit();">
+                        <i class="fas fa-sign-out-alt mr-2"></i> Salir
+                    </a>
                 </form>
             </div>
         </li>

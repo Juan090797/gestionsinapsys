@@ -25,6 +25,7 @@ class CreateCotizacion implements CreatesCotizaciones
                 'impuesto'      => $input['impuesto'],
                 'subtotal'      => $input['subtotal'],
                 'codigo'        => $input['codigo'],
+                'atendido'      => $input['atendido'],
                 'foto'          => $input['foto'] ?? ''
             ]);
 
