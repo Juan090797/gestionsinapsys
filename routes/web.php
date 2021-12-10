@@ -38,5 +38,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::post('productos/imports/', [\App\Http\Controllers\ImportController::class, 'importProducto']);
     Route::get('impuestos', \App\Http\Livewire\Impuestos::class);
     Route::get('empresa', \App\Http\Livewire\Empresas\Empresas::class);
+    Route::get('pedidos', \App\Http\Livewire\Pedidos\Pedidos::class);
+    Route::get('pedidocreate', \App\Http\Livewire\Pedidos\PedidoCreate::class)->name('pedidocreate');
 });
 

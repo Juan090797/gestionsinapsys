@@ -14,9 +14,7 @@
                         <small class="float-right">Fecha: {{date("d-m-Y")}}</small>
                     </h2>
                 </div>
-                <!-- /.col -->
             </div>
-            <!-- info row -->
             <div class="row invoice-info">
                 <div class="col-sm-4 invoice-col">
                     <div class="form-group">
@@ -100,7 +98,6 @@
                 </div>
                 <!-- /.col -->
             </div>
-            <!-- /.row -->
 
             <div class="row">
                 <!-- accepted payments column -->

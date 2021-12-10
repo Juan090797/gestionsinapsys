@@ -7,9 +7,13 @@ use App\Models\Archivo;
 use App\Models\Cliente;
 use App\Models\Comentario;
 use App\Models\Cotizacion;
+use App\Models\Pedido;
+use App\Models\PedidoDetalle;
 use App\Models\Proyecto;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -20,7 +24,7 @@ class ShowProyecto extends Component
 
     public $state = [];
 
-    public $proyecto, $canti, $selected_id, $productoid,$total, $itemsQuantity, $contenido, $archivo;
+    public $proyecto, $canti, $selected_id, $productoid,$total, $itemsQuantity, $contenido, $archivo, $codigo;
 
     public function mount(Proyecto $proyecto)
     {
@@ -52,12 +56,62 @@ class ShowProyecto extends Component
         $this->emit('archivo-added', 'Archivo Registrado');
     }
 
-    protected $listeners = ['deleteRow' => 'Destroy', 'delete' => 'eliminarCotizacion'];
+    protected $listeners = ['deleteRow' => 'Destroy', 'delete' => 'eliminarCotizacion', 'create' => 'CrearPedido'];
 
     public function Destroy(Archivo $archivo)
     {
         $archivo->delete();
         $this->emit('archivo-deleted', 'Archivo Eliminado');
+    }
+
+    public function CrearPedido(Cotizacion $cotizacion)
+    {
+        if(Pedido::count() > 0){
+            $i = Pedido::latest()->first()->id +1;
+        }else{
+            $i = 1;
+        }
+        $date = Carbon::now();
+        $date = $date->Format('ym');
+        if($i <= 9){
+            $this->codigo = 'PE'. $date .'0000'. $i;
+        }elseif ($i <= 100){
+            $this->codigo = 'PE'. $date .'000'. $i;
+        }elseif ($i <= 1000){
+            $this->codigo = 'PE'. $date .'00'. $i;
+        }elseif ($i <= 10000){
+            $this->codigo = 'PE'. $date .'0'. $i;
+        }else{
+            $this->codigo = 'PE'. $date. $i;
+        }
+
+        $fecha = Carbon::now();
+        $fecha = $fecha->format('Y-m-d');
+        $pedido = Cotizacion::with('CotizacionItem')->find($cotizacion->id);
+
+        $pedido = Pedido::create([
+            'codigo'            => $this->codigo,
+            'documento'         => '',
+            'forma_pago'        => '',
+            'cotizacion_id'     => $pedido->id,
+            'fecha_vencimiento' => $fecha,
+            'cliente_id'        => $pedido->cliente_id,
+            'subtotal'          => $pedido->subtotal,
+            'total'             => $pedido->total,
+            'impuesto'             => $pedido->impuesto,
+            'user_id'           => Auth::user()->id,
+        ]);
+
+        foreach ($cotizacion->CotizacionItem as $item){
+            PedidoDetalle::create([
+                'pedido_id'     => $pedido->id,
+                'producto_id'   => $item['producto_id'],
+                'cantidad'      => $item['cantidad'],
+                'precio_u'      => $item['precio'],
+                'precio_t'      => $item['monto'],
+            ]);
+        }
+        $this->emit('pedido-creado', 'Pedido Creado');
     }
 
     public function eliminarCotizacion(DeletesCotizaciones $deleter, Cotizacion $cotizacion)
