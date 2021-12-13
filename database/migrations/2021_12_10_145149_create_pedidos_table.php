@@ -17,8 +17,8 @@ class CreatePedidosTable extends Migration
             $table->id();
             $table->string('estado')->default('En Proceso');
             $table->string('codigo')->nullable();
-            $table->string('documento')->nullable();
-            $table->string('forma_pago')->nullable();
+            $table->string('ordencompra')->nullable();
+            $table->string('guiaremision')->nullable();
             $table->decimal('total',20,2)->default(0);
             $table->decimal('subtotal',20,2)->default(0);
             $table->decimal('impuesto',20,2)->default(0);
