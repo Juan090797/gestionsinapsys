@@ -16,25 +16,26 @@
                         <div class="col-8">
                             <div class="card">
                                 <div class="card-body">
-                                    <h4>Actividades Recientes({{$comentarios->count()}})</h4>
-                                    <form wire:submit.prevent="createComentario">
-                                        <div class="input-group mb-3">
-                                            <input type="text" class="form-control" name="contenido" wire:model.defer="contenido" placeholder="Comentar">
-                                            <div class="input-group-append">
-                                                <button class="btn btn-outline-success float-righ" type="submit">Agregar</button>
-                                            </div>
+                                    <div class="row">
+                                        <div class="col-8">
+                                            <h4>Actividades Recientes({{$comentarios->count()}})</h4>
                                         </div>
-                                        @error('contenido') <span class="text-danger er">{{ $message }}</span>@enderror
-                                    </form>
-                                    <div  style="overflow-x: hidden; overflow-y: auto;">
+                                        <div class="col-4">
+                                            <a href="" class="btn btn-success float-right" data-toggle="modal" data-target="#theModalComentario">comentar</a>
+                                        </div>
+                                    </div>
+                                    <div style="overflow-x: hidden; overflow-y: auto;">
                                         @forelse($comentarios as $comentario)
                                             <div class="post">
                                                 <div class="user-block">
                                                     <img class="img-circle img-bordered-sm" src="{{ $comentario->user->profile_photo_url }}" alt="user image">
                                                     <span class="username">
-                                                            <a href="#" wire:model="{{$comentario->user->name}}">{{$comentario->user->name}}</a>
-                                                        </span>
+                                                        <a href="#" wire:model="{{$comentario->user->name}}">{{$comentario->user->name}}</a>
+                                                    </span>
                                                     <span class="description">{{$comentario->created_at->diffForHumans()}}</span>
+                                                    @if($comentario->archivo_c)
+                                                        <span class="float-left"><a href="javascript:void(0)" wire:click="descargaArchivoComentario({{ $comentario->id }})" class="btn-link text-primary">{{$comentario->archivo_c}}</a></span>
+                                                    @endif
                                                 </div>
                                                 <p>{{$comentario->contenido}}</p>
                                             </div>
@@ -70,7 +71,6 @@
                         </div>
                     </div>
                 </div>
-                <!-- /.tab-pane -->
                 <div class="tab-pane" id="timeline">
                     <div class="row">
                         <div class="col-12">
@@ -138,11 +138,8 @@
                         </div>
                     </div>
                 </div>
-                <!-- /.tab-pane -->
             </div>
-
         </div>
-
         <div class="modal fade" id="theModal" tabindex="-1" aria-labelledby="theModal" aria-hidden="true" wire:ignore.self>
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
@@ -165,6 +162,34 @@
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                         <button type="submit" class="btn btn-primary">Guardar</button>
                     </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="theModalComentario" tabindex="-1" aria-labelledby="theModalComentario" aria-hidden="true" wire:ignore.self>
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="theModal">Agregar comentario</h5>
+                    </div>
+                    <form wire:submit.prevent="createComentario">
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <textarea type="text" class="form-control" name="contenido" wire:model.defer="contenido" placeholder="Comentario"></textarea>
+                            </div>
+                            <div class="input-group">
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" wire:model="archivo_c">
+                                    <label class="custom-file-label">{{$archivo_c}}</label>
+                                </div>
+                            </div>
+                            @error('archivo_c') <span class="text-danger er">{{ $message }}</span>@enderror
+                            <div wire:loading wire:target="archivo_c">Cargando.....</div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                            <button type="submit" class="btn btn-primary">Guardar</button>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -193,6 +218,7 @@
                 noty(msg)
             });
             window.livewire.on('comentario-added', msg =>{
+                $('#theModalComentario').modal('hide');
                 noty(msg)
             });
             window.livewire.on('pedido-creado', msg =>{

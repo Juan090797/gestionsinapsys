@@ -16,6 +16,7 @@ class CreateComentariosTable extends Migration
         Schema::create('comentarios', function (Blueprint $table) {
             $table->id();
             $table->longText('contenido');
+            $table->string('archivo_c')->nullable();
             $table->foreignId('user_id')->constrained();
             $table->foreignId('proyecto_id')->constrained();
             $table->timestamps();

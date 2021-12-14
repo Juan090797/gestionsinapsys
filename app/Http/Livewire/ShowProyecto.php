@@ -24,7 +24,7 @@ class ShowProyecto extends Component
 
     public $state = [];
 
-    public $proyecto, $canti, $selected_id, $productoid,$total, $itemsQuantity, $contenido, $archivo, $codigo;
+    public $proyecto, $canti, $selected_id, $productoid,$total, $itemsQuantity, $contenido, $archivo, $codigo, $archivo_c;
 
     public function mount(Proyecto $proyecto)
     {
@@ -91,14 +91,12 @@ class ShowProyecto extends Component
 
         $pedido = Pedido::create([
             'codigo'            => $this->codigo,
-            'documento'         => '',
-            'forma_pago'        => '',
             'cotizacion_id'     => $pedido->id,
             'fecha_vencimiento' => $fecha,
             'cliente_id'        => $pedido->cliente_id,
             'subtotal'          => $pedido->subtotal,
             'total'             => $pedido->total,
-            'impuesto'             => $pedido->impuesto,
+            'impuesto'          => $pedido->impuesto,
             'user_id'           => Auth::user()->id,
         ]);
 
@@ -120,7 +118,6 @@ class ShowProyecto extends Component
         $this->emit('cotizacion-deleted', 'Cotizacion Eliminada');
     }
 
-
     public function descarga($id)
     {
         $ardesc = Archivo::where('id', $id)->pluck('archivo')->all();
@@ -138,13 +135,34 @@ class ShowProyecto extends Component
 
         $this->validate($rules, $messages);
 
-        $comentario = Comentario::create([
-            'contenido' => $this->contenido,
-            'proyecto_id' => $this->state['id'],
-            'user_id' => Auth::user()->id
-        ]);
+        if($this->archivo_c)
+        {
+            $name = $this->archivo_c->getClientOriginalName();
+            $this->archivo_c->storeAs('archivoscomentarios', $name);
+            $comentario = Comentario::create([
+                'contenido' => $this->contenido,
+                'archivo_c' => $name,
+                'proyecto_id' => $this->state['id'],
+                'user_id' => Auth::user()->id
+            ]);
+        }else{
+            $comentario = Comentario::create([
+                'contenido' => $this->contenido,
+                'archivo_c' => '',
+                'proyecto_id' => $this->state['id'],
+                'user_id' => Auth::user()->id
+            ]);
+        }
+
         $this->resetUI();
+        $this->archivo_c = '';
         $this->emit('comentario-added', 'Comentario Registrado');
+    }
+
+    public function descargaArchivoComentario(Comentario $comentario)
+    {
+        $ardescargacomentario = $comentario->archivo_c;
+        return Storage::disk('local')->download('archivoscomentarios/'.$ardescargacomentario);
     }
 
     public function resetUI()
