@@ -15,7 +15,7 @@ class ClasificacionSeeder extends Seeder
     public function run()
     {
         DB::table('clasificacions')->insert([
-            'nombre' => 'Activos Fijos',
+            'nombre' => 'Activos',
             'estado' => 'ACTIVO'
         ]);
         DB::table('clasificacions')->insert([
@@ -24,6 +24,10 @@ class ClasificacionSeeder extends Seeder
         ]);
         DB::table('clasificacions')->insert([
             'nombre' => 'Servicios',
+            'estado' => 'ACTIVO'
+        ]);
+        DB::table('clasificacions')->insert([
+            'nombre' => 'Insumos',
             'estado' => 'ACTIVO'
         ]);
         DB::table('clasificacions')->insert([

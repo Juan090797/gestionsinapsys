@@ -40,5 +40,6 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('empresa', \App\Http\Livewire\Empresas\Empresas::class);
     Route::get('pedidos', \App\Http\Livewire\Pedidos\Pedidos::class);
     Route::get('pedidocreate', \App\Http\Livewire\Pedidos\PedidoCreate::class)->name('pedidocreate');
+    Route::get('unidades', \App\Http\Livewire\UnidadesMedida::class);
 });
 

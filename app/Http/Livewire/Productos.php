@@ -5,6 +5,8 @@ namespace App\Http\Livewire;
 use App\Models\Familia;
 use App\Models\Marca;
 use App\Models\Producto;
+use App\Models\Clasificacion;
+use App\Models\UnidadMedida;
 use Illuminate\Support\Facades\Validator;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -43,31 +45,36 @@ class Productos extends Component
             'productos' => $data,
             'marcas' => Marca::all(),
             'familias' => Familia::all(),
+            'clasificaciones' => Clasificacion::all(),
+            'unidades' => UnidadMedida::all(),
         ])->extends('layouts.tema.app')->section('content');
     }
 
     public function Store()
     {
         $validated = Validator::make($this->state, [
-            'codigo' => 'required|unique:productos',
-            'modelo' => 'required',
-            'nombre' => 'required',
-            'descripcion' => 'required',
-            'precio' => 'required',
-            'tipo' => 'required',
-            'marca_id' => 'required',
-            'familia_id' => 'required',
+            'codigo'            => 'required|unique:productos',
+            'modelo'            => 'required',
+            'nombre'            => 'required',
+            'descripcion'       => 'required',
+            'precio_venta'      => 'required',
+            'tipo'              => 'required',
+            'marca_id'          => 'required',
+            'familia_id'        => 'required',
+            'clasificacions_id' => 'required',
+            'unidad_medidas_id' => '',
         ],
             [
-                'codigo.required' => 'El Codigo del producto es requerido',
-                'codigo.unique' => 'Ya existe el codigo del producto',
-                'modelo.required' => 'La modelo es requerido',
-                'nombre.required' => 'El nombre del producto es obligatorio',
-                'descripcion.required' => 'La descripcion es requerido',
-                'precio.required' => 'EL precio es requerido',
-                'tipo.required' => 'La tipo es requerido',
-                'marca_id.required' => 'La marca es requerida',
-                'familia_id.required' => 'EL equipo es requerido',
+                'codigo.required'               => 'El Codigo del producto es requerido',
+                'codigo.unique'                 => 'Ya existe el codigo del producto',
+                'modelo.required'               => 'La modelo es requerido',
+                'nombre.required'               => 'El nombre del producto es obligatorio',
+                'descripcion.required'          => 'La descripcion es requerido',
+                'precio_venta.required'         => 'EL precio de ventas es requerido',
+                'tipo.required'                 => 'La tipo es requerido',
+                'marca_id.required'             => 'La marca es requerida',
+                'familia_id.required'           => 'EL equipo es requerido',
+                'clasificacions_id.required'    => 'La clasificacion es requerida',
             ])->validate();
 
         Producto::create($validated);
@@ -98,7 +105,7 @@ class Productos extends Component
             'modelo' => 'required',
             'nombre' => 'required',
             'descripcion' => 'required',
-            'precio' => 'required',
+            'precio_venta' => 'required',
             'tipo' => 'required',
             'marca_id' => 'required',
             'familia_id' => 'required',
@@ -109,7 +116,7 @@ class Productos extends Component
                 'modelo.required' => 'La modelo es requerido',
                 'nombre.required' => 'El nombre del producto es obligatorio',
                 'descripcion.required' => 'La modelo es requerido',
-                'precio.required' => 'EL precio es requerido',
+                'precio_venta.required' => 'EL precio de venta es requerido',
                 'tipo.required' => 'La tipo es requerido',
                 'marca_id.required' => 'La marca es requerida',
                 'familia_id.required' => 'EL equipo es requerido',

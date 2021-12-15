@@ -18,11 +18,16 @@ class CreateProductosTable extends Migration
             $table->string('codigo')->unique();
             $table->longText('nombre')->nullable();
             $table->string('modelo')->nullable();
+            $table->integer('stock')->default(0);
+            $table->string('estado')->nullable();
             $table->longText('descripcion');
-            $table->decimal('precio',20,2)->default(0);
+            $table->decimal('precio_venta',20,2)->default(0.00);
+            $table->decimal('precio_compra',20,2)->default(0.00);
             $table->string('tipo')->nullable();
             $table->foreignId('marca_id')->constrained();
             $table->foreignId('familia_id')->constrained();
+            $table->foreignId('clasificacions_id')->constrained();
+            $table->foreignId('unidad_medidas_id')->constrained();
             $table->timestamps();
         });
     }

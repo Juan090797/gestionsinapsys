@@ -91,7 +91,7 @@
                             <th scope="row">{{$producto->codigo}}</th>
                             <td class="text-center">{{$producto->modelo}}</td>
                             <td>{{ Illuminate\Support\Str::limit($producto->descripcion, 100, $end='...') }}</td>
-                            <td class="text-center">S/ {{$producto->precio}}</td>
+                            <td class="text-center">S/ {{$producto->precio_venta}}</td>
                             <td class="text-center">{{$producto->tipo}}</td>
                             <td class="text-center">
                                 <a href="javascript:void(0)"  wire:click="Edit({{ $producto->id }})" class="btn btn-primary" title="Edit"><i class="fas fa-pencil-alt" aria-hidden="true"></i></a>

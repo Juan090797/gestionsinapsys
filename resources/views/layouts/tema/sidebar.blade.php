@@ -73,8 +73,8 @@
                         </li>
                     </ul>
                 </li>
-                <li class="nav-item {{ request()->is('productos') ? 'menu-open' : '' }} {{ request()->is('marcas') ? 'menu-open' : '' }} {{ request()->is('tipoequipos') ? 'menu-open' : '' }} {{ request()->is('clasificacions') ? 'menu-open' : '' }}">
-                    <a href="#" class="nav-link {{ request()->is('productos') ? 'active' : '' }} {{ request()->is('marcas') ? 'active' : '' }} {{ request()->is('tipoequipos') ? 'active' : '' }} {{ request()->is('clasificacions') ? 'active' : '' }}">
+                <li class="nav-item {{ request()->is('productos') ? 'menu-open' : '' }} {{ request()->is('marcas') ? 'menu-open' : '' }} {{ request()->is('tipoequipos') ? 'menu-open' : '' }} {{ request()->is('clasificacions') ? 'menu-open' : '' }} {{ request()->is('unidades') ? 'menu-open' : '' }}">
+                    <a href="#" class="nav-link {{ request()->is('productos') ? 'active' : '' }} {{ request()->is('marcas') ? 'active' : '' }} {{ request()->is('tipoequipos') ? 'active' : '' }} {{ request()->is('clasificacions') ? 'active' : '' }} {{ request()->is('unidades') ? 'active' : '' }}">
                         <i class="nav-icon fa fa-tag"></i>
                         <p>
                             Productos
@@ -104,6 +104,12 @@
                             <a href="{{ url('clasificacions') }}" class="nav-link {{ request()->is('clasificacions') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Clasificacion</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ url('unidades') }}" class="nav-link {{ request()->is('unidades') ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Unid. Medidas</p>
                             </a>
                         </li>
                     </ul>

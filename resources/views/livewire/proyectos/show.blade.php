@@ -85,6 +85,7 @@
                                             <tr>
                                                 <th scope="col">#</th>
                                                 <th class="text-center">Codigo</th>
+                                                <th class="text-center">Importe</th>
                                                 <th class="text-center">F.Creado</th>
                                                 <th class="text-center">F.Actualizado</th>
                                                 <th class="text-center">Acciones</th>
@@ -95,6 +96,7 @@
                                                 <tr>
                                                     <th scope="row">{{$loop->iteration}}</th>
                                                     <td class="text-center">{{$cotizacion->codigo}}</td>
+                                                    <td class="text-center">S/ {{$cotizacion->total}}</td>
                                                     <td class="text-center">{{$cotizacion->created_at}}</td>
                                                     <td class="text-center">{{$cotizacion->updated_at}}</td>
                                                     <td class="text-center">

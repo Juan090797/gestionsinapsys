@@ -13,7 +13,7 @@ class Marcas extends Component
 
     public $search, $selected_id;
     public $state = [];
-    Private $pagination = 5;
+    Private $pagination = 10;
     protected $paginationTheme = 'bootstrap';
 
     public function mount()
@@ -55,7 +55,6 @@ class Marcas extends Component
             'nombre.min' => 'El nombre de la marca debe tener al menos 3 caracteres',
             'estado.required' => 'El estado es requerido',
         ])->validate();
-
         Marca::create($validated);
         $this->resetUI();
         $this->emit('marca-added', 'Marca Registrada');
