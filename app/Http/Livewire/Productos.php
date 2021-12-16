@@ -54,6 +54,7 @@ class Productos extends Component
     {
         $validated = Validator::make($this->state, [
             'codigo'            => 'required|unique:productos',
+            'estado'            => 'required',
             'modelo'            => 'required',
             'nombre'            => 'required',
             'descripcion'       => 'required',
@@ -67,6 +68,7 @@ class Productos extends Component
             [
                 'codigo.required'               => 'El Codigo del producto es requerido',
                 'codigo.unique'                 => 'Ya existe el codigo del producto',
+                'estado.unique'                 => 'El estado es obligatorio',
                 'modelo.required'               => 'La modelo es requerido',
                 'nombre.required'               => 'El nombre del producto es obligatorio',
                 'descripcion.required'          => 'La descripcion es requerido',
@@ -102,24 +104,29 @@ class Productos extends Component
     {
         $validated = Validator::make($this->state, [
             'codigo' => "required|unique:productos,codigo,{$this->selected_id}",
-            'modelo' => 'required',
-            'nombre' => 'required',
-            'descripcion' => 'required',
-            'precio_venta' => 'required',
-            'tipo' => 'required',
-            'marca_id' => 'required',
-            'familia_id' => 'required',
+            'estado'            => 'required',
+            'modelo'            => 'required',
+            'nombre'            => 'required',
+            'descripcion'       => 'required',
+            'precio_venta'      => 'required',
+            'tipo'              => 'required',
+            'marca_id'          => 'required',
+            'familia_id'        => 'required',
+            'clasificacions_id' => 'required',
+            'unidad_medidas_id' => '',
         ],
             [
-                'codigo.required' => 'El Codigo del producto es requerido',
-                'codigo.unique' => 'Ya existe el codigo del producto',
-                'modelo.required' => 'La modelo es requerido',
-                'nombre.required' => 'El nombre del producto es obligatorio',
-                'descripcion.required' => 'La modelo es requerido',
-                'precio_venta.required' => 'EL precio de venta es requerido',
-                'tipo.required' => 'La tipo es requerido',
-                'marca_id.required' => 'La marca es requerida',
-                'familia_id.required' => 'EL equipo es requerido',
+                'codigo.required'               => 'El Codigo del producto es requerido',
+                'codigo.unique'                 => 'Ya existe el codigo del producto',
+                'estado.unique'                 => 'El estado es obligatorio',
+                'modelo.required'               => 'La modelo es requerido',
+                'nombre.required'               => 'El nombre del producto es obligatorio',
+                'descripcion.required'          => 'La descripcion es requerido',
+                'precio_venta.required'         => 'EL precio de ventas es requerido',
+                'tipo.required'                 => 'La tipo es requerido',
+                'marca_id.required'             => 'La marca es requerida',
+                'familia_id.required'           => 'EL equipo es requerido',
+                'clasificacions_id.required'    => 'La clasificacion es requerida',
             ])->validate();
 
         $producto = Producto::findOrFail($this->state['id']);

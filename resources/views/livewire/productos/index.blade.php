@@ -78,10 +78,14 @@
                     <thead class="thead-dark">
                     <tr>
                         <th scope="col">Codigo</th>
+                        <th class="text-center">Clasificacion</th>
+                        <th class="text-center">U.Medida</th>
+                        <th class="text-center">Marca</th>
                         <th class="text-center">Modelo</th>
                         <th class="text-center">Descripcion</th>
-                        <th class="text-center">Precio</th>
+                        <th class="text-center">Precio Venta</th>
                         <th class="text-center">Tipo</th>
+                        <th class="text-center">Stock</th>
                         <th class="text-center">Acciones</th>
                     </tr>
                     </thead>
@@ -89,10 +93,14 @@
                     @foreach($productos as $producto)
                         <tr>
                             <th scope="row">{{$producto->codigo}}</th>
+                            <td class="text-center">{{$producto->clasificacion->nombre}}</td>
+                            <td class="text-center">{{$producto->unidad->nombre}}</td>
+                            <td class="text-center">{{$producto->marca->nombre}}</td>
                             <td class="text-center">{{$producto->modelo}}</td>
                             <td>{{ Illuminate\Support\Str::limit($producto->descripcion, 100, $end='...') }}</td>
                             <td class="text-center">S/ {{$producto->precio_venta}}</td>
                             <td class="text-center">{{$producto->tipo}}</td>
+                            <td class="text-center">{{$producto->stock}}</td>
                             <td class="text-center">
                                 <a href="javascript:void(0)"  wire:click="Edit({{ $producto->id }})" class="btn btn-primary" title="Edit"><i class="fas fa-pencil-alt" aria-hidden="true"></i></a>
                                 <a href="javascript:void(0)" onclick="Confirm('{{ $producto->id }}')" class="btn btn-danger" title="Delet"><i class="fa fa-trash" aria-hidden="true"></i></a>

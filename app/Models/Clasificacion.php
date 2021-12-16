@@ -8,5 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Clasificacion extends Model
 {
     use HasFactory;
-    protected $fillable = ['nombre', 'estado'];
+    protected $guarded = ['id'];
+
 }
