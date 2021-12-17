@@ -116,7 +116,7 @@
                 </li>
                 <li class="nav-item {{ request()->is('impuestos') ? 'menu-open' : '' }} {{ request()->is('empresa') ? 'menu-open' : '' }}">
                     <a href="#" class="nav-link {{ request()->is('impuestos') ? 'active' : '' }} {{ request()->is('empresa') ? 'active' : '' }}">
-                        <i class="nav-icon fa fa-users"></i>
+                        <i class="nav-icon fas fa-cogs"></i>
                         <p>
                             Configuracion
                             <i class="fas fa-angle-left right"></i>
@@ -139,7 +139,7 @@
                 </li>
                 <li class="nav-item">
                     <a href="#" class="nav-link">
-                        <i class="nav-icon fa fa-users"></i>
+                        <i class="nav-icon fas fa-cash-register"></i>
                         <p>
                             Ventas
                             <i class="fas fa-angle-left right"></i>
@@ -150,6 +150,52 @@
                             <a href="{{ url('pedidos') }}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Pedidos</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon far fa-money-bill-alt"></i>
+                        <p>
+                            Compras
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ url('pedidos') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Ingresos</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ url('pedidos') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Salidas</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon far fas fa-dolly-flatbed"></i>
+                        <p>
+                            Proveedores
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ url('proveedores') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Proveedores</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ url('tipoproveedores') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Tipos Proveedores</p>
                             </a>
                         </li>
                     </ul>
