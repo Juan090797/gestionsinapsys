@@ -41,7 +41,12 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('pedidos', \App\Http\Livewire\Pedidos\Pedidos::class);
     Route::get('pedidocreate', \App\Http\Livewire\Pedidos\PedidoCreate::class)->name('pedidocreate');
     Route::get('unidades', \App\Http\Livewire\UnidadesMedida::class)->name('unidades');
-    Route::get('tipoproveedor', \App\Http\Livewire\TipoProveedor::class)->name('tipoproveedor');
+    Route::get('tipoproveedores', \App\Http\Livewire\TipoProveedores::class)->name('tipoproveedores');
     Route::get('proveedores', \App\Http\Livewire\Proveedores::class)->name('proveedores');
+    Route::get('centrocostos', \App\Http\Livewire\CentroCostos::class)->name('centrocostos');
+    Route::get('compras', \App\Http\Livewire\Compras\Compras::class)->name('compras');
+    Route::get('compracreate', \App\Http\Livewire\Compras\CreateCompra::class)->name('compracreate');
+    Route::get('ingresos', \App\Http\Livewire\Ingresos\Ingresos::class)->name('ingresos');
+    Route::get('ingresoscreate', \App\Http\Livewire\Ingresos\IngresosCreate::class)->name('ingresoscreate');
 });
 

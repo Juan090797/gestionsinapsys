@@ -8,18 +8,11 @@ use App\Models\Producto;
 use App\Models\Clasificacion;
 use App\Models\UnidadMedida;
 use Illuminate\Support\Facades\Validator;
-use Livewire\Component;
-use Livewire\WithPagination;
 
-class Productos extends Component
+class Productos extends ComponenteBase
 {
-    use WithPagination;
-
     public $search, $selected_id;
     public $state = [];
-    protected $paginationTheme = 'bootstrap';
-
-    Private $pagination = 10;
 
     public function  updatingSearch()
     {

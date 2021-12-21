@@ -4,17 +4,11 @@ namespace App\Http\Livewire;
 
 use App\Models\Marca;
 use Illuminate\Support\Facades\Validator;
-use Livewire\Component;
-use Livewire\WithPagination;
 
-class Marcas extends Component
+class Marcas extends ComponenteBase
 {
-    use WithPagination;
-
     public $search, $selected_id;
     public $state = [];
-    Private $pagination = 10;
-    protected $paginationTheme = 'bootstrap';
 
     public function mount()
     {

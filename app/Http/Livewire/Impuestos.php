@@ -6,7 +6,7 @@ use App\Models\impuesto;
 use Livewire\Component;
 use Illuminate\Support\Facades\Validator;
 
-class Impuestos extends Component
+class Impuestos extends ComponenteBase
 {
     public $selected_id;
     public $state= [];

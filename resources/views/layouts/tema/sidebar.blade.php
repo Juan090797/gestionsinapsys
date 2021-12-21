@@ -114,8 +114,8 @@
                         </li>
                     </ul>
                 </li>
-                <li class="nav-item {{ request()->is('impuestos') ? 'menu-open' : '' }} {{ request()->is('empresa') ? 'menu-open' : '' }}">
-                    <a href="#" class="nav-link {{ request()->is('impuestos') ? 'active' : '' }} {{ request()->is('empresa') ? 'active' : '' }}">
+                <li class="nav-item {{ request()->is('impuestos') ? 'menu-open' : '' }} {{ request()->is('empresa') ? 'menu-open' : '' }} {{ request()->is('centrocostos') ? 'menu-open' : '' }}">
+                    <a href="#" class="nav-link {{ request()->is('impuestos') ? 'active' : '' }} {{ request()->is('empresa') ? 'active' : '' }} {{ request()->is('centrocostos') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-cogs"></i>
                         <p>
                             Configuracion
@@ -133,6 +133,12 @@
                             <a href="{{ url('empresa') }}" class="nav-link {{ request()->is('empresa') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Info. Empresa</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ url('centrocostos') }}" class="nav-link {{ request()->is('centrocostos') ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Centro Costos</p>
                             </a>
                         </li>
                     </ul>
@@ -164,15 +170,15 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{ url('pedidos') }}" class="nav-link">
+                            <a href="{{ url('compras') }}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>Ingresos</p>
+                                <p>Registros Compras</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{ url('pedidos') }}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>Salidas</p>
+                                <p>Importaciones</p>
                             </a>
                         </li>
                     </ul>
@@ -196,6 +202,58 @@
                             <a href="{{ url('tipoproveedores') }}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Tipos Proveedores</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-box-open"></i>
+                        <p>
+                            Almacen
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ url('ingresos') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Ingresos</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ url('pedidos') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Salidas</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-key"></i>
+                        <p>
+                            Seguridad
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Usuarios</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Roles</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Permisos</p>
                             </a>
                         </li>
                     </ul>
