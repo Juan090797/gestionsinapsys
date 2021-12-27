@@ -17,7 +17,11 @@
                     <thead class="thead-dark">
                     <tr>
                         <th scope="col">#ID</th>
-                        <th class="text-center">NOMBRE</th>
+                        <th class="text-center">Tipo Doc.</th>
+                        <th class="text-center">N° Doc.</th>
+                        <th class="text-center">Fecha ingreso</th>
+                        <th class="text-center">Proveedor</th>
+                        <th class="text-center">Doc. Referencia</th>
                         <th class="text-center">ESTADO</th>
                         <th class="text-center">ACCIONES</th>
                     </tr>
@@ -26,7 +30,11 @@
                     @foreach($ingresos as $index => $ingreso)
                         <tr>
                             <th scope="row">{{$ingresos->firstItem() + $index}}</th>
-                            <td class="text-center">{{$ingreso->nombre}}</td>
+                            <td class="text-center">{{$ingreso->tipo_documento}}</td>
+                            <td class="text-center">{{$ingreso->numero_guia}}</td>
+                            <td class="text-center"></td>
+                            <td class="text-center">{{$ingreso->proveedormovi->razon_social}}</td>
+                            <td class="text-center"></td>
                             <td class="text-center"><span class="badge {{ $ingreso->estado == 'ACTIVO' ? 'badge-success' : 'badge-danger'}}">{{$ingreso->estado}}</span></td>
                             <td class="text-center">
                                 <a href="javascript:void(0)"  wire:click="Edit({{ $ingreso->id }})" class="btn btn-primary" title="Edit">

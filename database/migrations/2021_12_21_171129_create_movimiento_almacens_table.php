@@ -20,6 +20,7 @@ class CreateMovimientoAlmacensTable extends Migration
             $table->string('referencia')->nullable(); //numero de boleta o factura de la compra.
             $table->date('fecha_ingreso')->nullable(); //fecha que ingresa los productos a la empresa.
             $table->foreignId('proveedor_id')->constrained();
+            $table->string('estado')->nullable();
             $table->timestamps();
         });
     }

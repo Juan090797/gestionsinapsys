@@ -8,5 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class MovimientoAlmacen extends Model
 {
     use HasFactory;
+
     protected $guarded = ['id'];
+
+    public function proveedormovi()
+    {
+        return $this->belongsTo(Proveedor::class,'proveedor_id');
+    }
 }
