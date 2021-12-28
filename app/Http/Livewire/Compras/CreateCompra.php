@@ -68,44 +68,41 @@ class CreateCompra extends Component
         }
 
         //crea la guia de ingreso
-        if(MovimientoAlmacen::count() > 0){
-            $i = MovimientoAlmacen::latest()->first()->id +1;
-        }else{
-            $i = 1;
-        }
-        $date = Carbon::now();
-        $date = $date->Format('ym');
-        if($i <= 9){
-            $this->codigo = 'GI'. $date .'0000'. $i;
-        }elseif ($i <= 100){
-            $this->codigo = 'GI'. $date .'000'. $i;
-        }elseif ($i <= 1000){
-            $this->codigo = 'GI'. $date .'00'. $i;
-        }elseif ($i <= 10000){
-            $this->codigo = 'GI'. $date .'0'. $i;
-        }else{
-            $this->codigo = 'GI'. $date. $i;
-        }
+        if($compra){
+            if(MovimientoAlmacen::count() > 0){
+                $i = MovimientoAlmacen::latest()->first()->id +1;
+            }else{
+                $i = 1;
+            }
+            $date = Carbon::now();
+            $date = $date->Format('ym');
+            if($i <= 9){
+                $this->codigo = 'GI'. $date .'0000'. $i;
+            }elseif ($i <= 100){
+                $this->codigo = 'GI'. $date .'000'. $i;
+            }elseif ($i <= 1000){
+                $this->codigo = 'GI'. $date .'00'. $i;
+            }elseif ($i <= 10000){
+                $this->codigo = 'GI'. $date .'0'. $i;
+            }else{
+                $this->codigo = 'GI'. $date. $i;
+            }
 
-        $guia = MovimientoAlmacen::create([
-            'tipo_documento' => 'GI',
-            'numero_guia'    =>  $this->codigo,
-            'referencia'     => $compra->numero_documento,
-            'proveedor_id'   => $compra->proveedor_id,
-            'estado'         => 'Pendiente',
-        ]);
-
-        foreach ($this->rows as $item){
-            MovimientoAlmacenDetalle::create([
-                'movimiento_almacens_id'     => $guia->id,
-                'producto_id'   => $item['producto_id'],
-                'cantidad'      => $item['cantidad'],
+            $guia = MovimientoAlmacen::create([
+                'tipo_documento' => 'GI',
+                'numero_guia'    =>  $this->codigo,
+                'referencia'     => $compra->numero_documento,
+                'proveedor_id'   => $compra->proveedor_id,
+                'estado'         => 'Pendiente',
             ]);
 
-            $producto = Producto::find($item['producto_id']);
-            $producto->update([
-                'stock' => $item['cantidad'],
-            ]);
+            foreach ($this->rows as $item){
+                MovimientoAlmacenDetalle::create([
+                    'movimiento_almacens_id'     => $guia->id,
+                    'producto_id'   => $item['producto_id'],
+                    'cantidad'      => $item['cantidad'],
+                ]);
+            }
         }
 
         $this->emit('compra-registrada', 'Compra Registrado');

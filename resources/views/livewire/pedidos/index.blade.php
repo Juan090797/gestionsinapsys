@@ -16,7 +16,7 @@
                         <button class="btn btn-warning uppercase mr-1" type="button" wire:click="AbrirGuia()">
                             + GUIA
                         </button>
-                        <button class="btn btn-info uppercase mr-1" type="button" href="#">
+                        <button class="btn btn-info uppercase mr-1" type="button" wire:click="Despachar()">
                             DESPACHAR
                         </button>
                         <button class="btn btn-primary uppercase mr-1" type="button" wire:click="AbrirFactura()">
@@ -317,6 +317,9 @@
             });
             window.livewire.on('factura-added', msg =>{
                 $('#theModalFactura').modal('hide');
+                noty(msg)
+            });
+            window.livewire.on('despachar', msg =>{
                 noty(msg)
             });
         });

@@ -15,4 +15,10 @@ class MovimientoAlmacen extends Model
     {
         return $this->belongsTo(Proveedor::class,'proveedor_id');
     }
+
+    public function movimientoDetalles()
+    {
+        return $this->hasMany(MovimientoAlmacenDetalle::class, 'movimiento_almacens_id');
+    }
+
 }

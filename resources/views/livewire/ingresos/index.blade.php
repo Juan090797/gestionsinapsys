@@ -10,37 +10,48 @@
                     <div class="col-4">
                         <input wire:model="search" class="form-control" placeholder="Buscar por nombre">
                     </div>
+                    <div class="col-4">
+                        <a href="javascript:void(0)" class="btn btn-success" wire:click="AprobarMovimiento()">Aprobar</a>
+                    </div>
                 </div>
             </div>
             <div class="card-body">
                 <table class="table">
                     <thead class="thead-dark">
                     <tr>
-                        <th scope="col">#ID</th>
+                        <th scope="col"></th>
                         <th class="text-center">Tipo Doc.</th>
                         <th class="text-center">N° Doc.</th>
                         <th class="text-center">Fecha ingreso</th>
                         <th class="text-center">Proveedor</th>
+                        <th class="text-center">Tipo Doc. Refer.</th>
                         <th class="text-center">Doc. Referencia</th>
                         <th class="text-center">ESTADO</th>
                         <th class="text-center">ACCIONES</th>
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach($ingresos as $index => $ingreso)
+                    @foreach($ingresos as $ingreso)
                         <tr>
-                            <th scope="row">{{$ingresos->firstItem() + $index}}</th>
+                            <th>
+                                @if($ingreso->estado == 'Aprobado')
+                                    <input type="checkbox" wire:model="selectedProducts" value="{{ $ingreso->id }}" disabled>
+                                @else
+                                    <input type="checkbox" wire:model="selectedProducts" value="{{ $ingreso->id }}">
+                                @endif
+                            </th>
                             <td class="text-center">{{$ingreso->tipo_documento}}</td>
                             <td class="text-center">{{$ingreso->numero_guia}}</td>
                             <td class="text-center"></td>
                             <td class="text-center">{{$ingreso->proveedormovi->razon_social}}</td>
-                            <td class="text-center"></td>
-                            <td class="text-center"><span class="badge {{ $ingreso->estado == 'ACTIVO' ? 'badge-success' : 'badge-danger'}}">{{$ingreso->estado}}</span></td>
+                            <td class="text-center"><span class="badge badge-success">Factura</span></td>
+                            <td class="text-center">{{$ingreso->referencia}}</td>
+                            <td class="text-center"><span class="badge {{ $ingreso->estado == 'Aprobado' ? 'badge-success' : 'badge-danger'}}">{{$ingreso->estado}}</span></td>
                             <td class="text-center">
-                                <a href="javascript:void(0)"  wire:click="Edit({{ $ingreso->id }})" class="btn btn-primary" title="Edit">
+                                <a href="javascript:void(0)"  wire:click="Edit({{ $ingreso->id }})" class="btn btn-primary" title="Editar">
                                     <i class="fas fa-pencil-alt" aria-hidden="true"></i>
                                 </a>
-                                <a href="javascript:void(0)" onclick="Confirm('{{ $ingreso->id }}')" class="btn btn-danger" title="Delet">
+                                <a href="javascript:void(0)" onclick="Confirm('{{ $ingreso->id }}')" class="btn btn-danger" title="Eliminar">
                                     <i class="fa fa-trash" aria-hidden="true"></i>
                                 </a>
                             </td>
@@ -69,6 +80,12 @@
                 noty(msg)
             })
             window.livewire.on('marca-deleted', msg =>{
+                noty(msg)
+            })
+            window.livewire.on('error', msg =>{
+                noty(msg)
+            })
+            window.livewire.on('aprobado', msg =>{
                 noty(msg)
             })
         });

@@ -14,7 +14,7 @@ trait CalcularCotizacion
 
     public function getServicePrice($serviceId, $index)
     {
-        $this->rows[$index]['precio'] = Producto::findOrFail($serviceId)->precio;
+        $this->rows[$index]['precio'] = Producto::findOrFail($serviceId)->precio_venta;
         $this->rows[$index]['formate_precio'] = $this->rows[$index]['precio'];
         $this->rows[$index]['producto_id'] = $serviceId;
 

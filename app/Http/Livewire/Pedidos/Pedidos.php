@@ -2,7 +2,11 @@
 
 namespace App\Http\Livewire\Pedidos;
 
+use App\Models\MovimientoAlmacen;
+use App\Models\MovimientoAlmacenDetalle;
 use App\Models\Pedido;
+use App\Models\Producto;
+use Carbon\Carbon;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Storage;
@@ -181,7 +185,6 @@ class Pedidos extends Component
         $pedido->update([
             'estado' => 'Anulado',
         ]);
-
         $this->resetUI();
         $this->emit('pedido-anulado', 'Pedido Anulado');
     }
@@ -190,5 +193,69 @@ class Pedidos extends Component
     {
         $this->ped = Pedido::with('pedidoDetalle')->find($id);
         $this->emit('show-modal-pedido', 'Show modal');
+    }
+
+    public function Despachar()
+    {
+        if(count($this->selectedProducts))
+        {
+            $pedido = Pedido::with('pedidoDetalle')->find($this->selectedProducts[0]);
+            $proveedor = $pedido->cliente_id;
+            foreach ($pedido->pedidoDetalle as $item)
+            {
+                $pr = Producto::find($item['producto_id']);
+                if($pr->stock > 0 && $pr->stock > $item['cantidad'])
+                {
+                    if(MovimientoAlmacen::count() > 0){
+                        $i = MovimientoAlmacen::latest()->first()->id +1;
+                    }else{
+                        $i = 1;
+                    }
+                    $date = Carbon::now();
+                    $date = $date->Format('ym');
+                    if($i <= 9){
+                        $this->codigo = 'GS'. $date .'0000'. $i;
+                    }elseif ($i <= 100){
+                        $this->codigo = 'GS'. $date .'000'. $i;
+                    }elseif ($i <= 1000){
+                        $this->codigo = 'GS'. $date .'00'. $i;
+                    }elseif ($i <= 10000){
+                        $this->codigo = 'GS'. $date .'0'. $i;
+                    }else{
+                        $this->codigo = 'GS'. $date. $i;
+                    }
+
+                    $guia = MovimientoAlmacen::create([
+                        'tipo_documento' => 'GS',
+                        'numero_guia'    =>  $this->codigo,
+                        'referencia'     => $pedido->codigo,
+                        'proveedor_id'   => 1,
+                        'estado'         => 'Aprobado',
+                    ]);
+                    MovimientoAlmacenDetalle::create([
+                        'movimiento_almacens_id'     => $guia->id,
+                        'producto_id'   => $item['producto_id'],
+                        'cantidad'      => $item['cantidad'],
+                    ]);
+                    $producto = Producto::find($item['producto_id']);
+                    $producto->update([
+                        'stock' => $producto->stock - $item['cantidad'],
+                    ]);
+
+                    $pedido->update([
+                        'estado' => 'Despachado',
+                    ]);
+                    $this->emit('despachar', 'Se despacho el pedido y se ajusto el stock');
+
+                }elseif ($pr->stock < 0){
+                    $this->emit('despachar', 'Los productos no tienen stock');
+                }else
+                {
+                    $this->emit('despachar', 'Los productos no tienen el stock suficiente');
+                }
+            }
+        }else {
+            $this->emit('error', 'Selecciona un Movimiento');
+        }
     }
 }
