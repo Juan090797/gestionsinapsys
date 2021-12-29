@@ -12,6 +12,7 @@
         "laravel/jetstream": "^2.4",
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
+        "laraveldaily/laravel-charts": "^0.1.28",
         "livewire/livewire": "^2.5",
         "maatwebsite/excel": "^3.1"
     },

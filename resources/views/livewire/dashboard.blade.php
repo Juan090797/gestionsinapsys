@@ -1,9 +1,5 @@
 <div>
     @push('styles')
-        <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"></script>
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.js"></script>
-        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     @endpush
     @section('cabezera-contenido')
         <h1>Resumen</h1>
@@ -46,11 +42,37 @@
                     </div>
                 </div>
             </div>
-            <div class="col-8">
-                <canvas id="pie-chart"></canvas>
+            <div class="col-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h1>{{ $chart1->options['chart_title'] }}</h1>
+                        {!! $chart1->renderHtml() !!}
+                    </div>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h1>{{ $chart2->options['chart_title'] }}</h1>
+                        {!! $chart2->renderHtml() !!}
+                    </div>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h1>{{ $chart3->options['chart_title'] }}</h1>
+                        {!! $chart3->renderHtml() !!}
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-        <script>
-        </script>
+        @push('js')
+            {!! $chart1->renderChartJsLibrary() !!}
+            {!! $chart1->renderJs() !!}
+            {!! $chart2->renderJs() !!}
+            {!! $chart3->renderJs() !!}
+        @endpush
 </div>
+
