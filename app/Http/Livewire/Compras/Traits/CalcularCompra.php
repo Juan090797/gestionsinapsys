@@ -23,7 +23,6 @@ trait CalcularCompra
         $this->calculateTaxAmount();
         $this->calculateTotal();
         $this->calcularTotalItems();
-
     }
 
     public function calculateAmount($cantidad, $index)

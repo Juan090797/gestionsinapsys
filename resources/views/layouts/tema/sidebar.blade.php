@@ -222,7 +222,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ url('pedidos') }}" class="nav-link">
+                            <a href="{{ url('salidas') }}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Salidas</p>
                             </a>

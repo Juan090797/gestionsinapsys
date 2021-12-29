@@ -31,5 +31,6 @@ trait DataCompra
         $this->calculateSubTotal();
         $this->calculateTaxAmount($this->state['impuesto_id'] ?? null);
         $this->calculateTotal();
+        $this->calcularTotalItems();
     }
 }

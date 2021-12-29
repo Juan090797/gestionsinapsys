@@ -23,6 +23,7 @@ class CreatePedidosTable extends Migration
             $table->decimal('total',20,2)->default(0);
             $table->decimal('subtotal',20,2)->default(0);
             $table->decimal('impuesto',20,2)->default(0);
+            $table->string('total_items')->nullable();
             $table->string('cotizacion_id')->nullable();
             $table->date('fecha_vencimiento')->nullable();
             $table->foreignId('cliente_id')->constrained();

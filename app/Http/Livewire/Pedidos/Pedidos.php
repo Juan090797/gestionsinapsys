@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Pedidos;
 
+use App\Models\Cliente;
 use App\Models\MovimientoAlmacen;
 use App\Models\MovimientoAlmacenDetalle;
 use App\Models\Pedido;
@@ -200,10 +201,11 @@ class Pedidos extends Component
         if(count($this->selectedProducts))
         {
             $pedido = Pedido::with('pedidoDetalle')->find($this->selectedProducts[0]);
-            $proveedor = $pedido->cliente_id;
-            foreach ($pedido->pedidoDetalle as $item)
+
+            foreach ($pedido->pedidoDetalle as $index => $item)
             {
                 $pr = Producto::find($item['producto_id']);
+
                 if($pr->stock > 0 && $pr->stock > $item['cantidad'])
                 {
                     if(MovimientoAlmacen::count() > 0){
@@ -224,14 +226,20 @@ class Pedidos extends Component
                     }else{
                         $this->codigo = 'GS'. $date. $i;
                     }
+                    if ($index == 0)
+                    {
+                        $cli = Cliente::find($pedido->cliente_id);
+                        $guia = MovimientoAlmacen::create([
+                            'tipo_documento' => 'GS',
+                            'numero_guia'    => $this->codigo,
+                            'referencia'     => $pedido->codigo,
+                            'ruc_cliente'   => $cli->ruc,
+                            'nombre_cliente'    => $cli->razon_social,
+                            'total_items'   => $pedido->total_items,
+                            'estado'         => 'Aprobado',
+                        ]);
+                    }
 
-                    $guia = MovimientoAlmacen::create([
-                        'tipo_documento' => 'GS',
-                        'numero_guia'    =>  $this->codigo,
-                        'referencia'     => $pedido->codigo,
-                        'proveedor_id'   => 1,
-                        'estado'         => 'Aprobado',
-                    ]);
                     MovimientoAlmacenDetalle::create([
                         'movimiento_almacens_id'     => $guia->id,
                         'producto_id'   => $item['producto_id'],
@@ -245,6 +253,7 @@ class Pedidos extends Component
                     $pedido->update([
                         'estado' => 'Despachado',
                     ]);
+                    $this->resetUI();
                     $this->emit('despachar', 'Se despacho el pedido y se ajusto el stock');
 
                 }elseif ($pr->stock < 0){

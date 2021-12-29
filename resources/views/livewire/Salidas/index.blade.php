@@ -1,6 +1,6 @@
 <div>
     @section('cabezera-contenido')
-        <h1>Lista de Guias de Ingresos</h1>
+        <h1>Lista de Guias de Salidas</h1>
     @endsection
     <div class="content-fluid">
         <div class="card">
@@ -22,7 +22,7 @@
                         <th class="text-center">Tipo Doc.</th>
                         <th class="text-center">N° Doc.</th>
                         <th class="text-center">Fecha ingreso</th>
-                        <th class="text-center">Proveedor</th>
+                        <th class="text-center">Cliente</th>
                         <th class="text-center">Tipo Doc. Refer.</th>
                         <th class="text-center">Doc. Referencia</th>
                         <th class="text-center">ESTADO</th>
@@ -47,7 +47,7 @@
                             <td class="text-center">{{$ingreso->referencia}}</td>
                             <td class="text-center"><span class="badge {{ $ingreso->estado == 'Aprobado' ? 'badge-success' : 'badge-danger'}}">{{$ingreso->estado}}</span></td>
                             <td class="text-center">
-                                <a href="javascript:void(0)"  wire:click="verIngreso({{ $ingreso->id }})" class="btn btn-primary" title="Ver">
+                                <a href="javascript:void(0)"  wire:click="verSalida({{ $ingreso->id }})" class="btn btn-primary" title="Ver">
                                     <i class="far fa-eye" aria-hidden="true"></i>
                                 </a>
                                 <a href="javascript:void(0)" onclick="Confirm('{{ $ingreso->id }}')" class="btn btn-danger" title="Eliminar">
@@ -68,14 +68,14 @@
                 <div class="modal-dialog modal-xl">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="theModal">Guia de Ingreso #{{$ped->numero_guia}} </h5>
+                            <h5 class="modal-title" id="theModal">Guia de Salida #{{$ped->numero_guia}} </h5>
                         </div>
                         <div class="modal-body">
                             <div class="row">
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label for="cliente">Cliente</label>
-                                        <input type="text" class="form-control" id="cliente" value="{{$ingreso->nombre_cliente}}" disabled>
+                                        <input type="text" class="form-control" id="cliente" value="{{$ped->nombre_cliente}}" disabled>
                                     </div>
                                 </div>
                                 <div class="col-3">

@@ -25,6 +25,7 @@ class CreateCotizacionsTable extends Migration
             $table->decimal('total',20,2)->default(0);
             $table->decimal('subtotal',20,2)->default(0);
             $table->decimal('impuesto',20,2)->default(0);
+            $table->string('total_items')->nullable();
             $table->foreignId('cliente_id')->constrained();
             $table->foreignId('impuesto_id')->constrained();
             $table->foreignId('proyecto_id')->constrained();

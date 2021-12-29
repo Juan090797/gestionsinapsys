@@ -88,11 +88,14 @@ class CreateCompra extends Component
                 $this->codigo = 'GI'. $date. $i;
             }
 
+            $cli = Proveedor::find($this->state['proveedor_id']);
             $guia = MovimientoAlmacen::create([
                 'tipo_documento' => 'GI',
                 'numero_guia'    =>  $this->codigo,
                 'referencia'     => $compra->numero_documento,
-                'proveedor_id'   => $compra->proveedor_id,
+                'ruc_cliente'   => $cli->ruc,
+                'nombre_cliente'    => $cli->razon_social,
+                'total_items'   => $compra->total_items,
                 'estado'         => 'Pendiente',
             ]);
 

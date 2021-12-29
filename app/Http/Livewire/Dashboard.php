@@ -6,7 +6,10 @@ use App\Models\Cliente;
 use App\Models\Contacto;
 use App\Models\Producto;
 use App\Models\Proyecto;
+use App\Models\User;
+use Carbon\Carbon;
 use Livewire\Component;
+use DB;
 
 class Dashboard extends Component
 {
@@ -30,7 +33,7 @@ class Dashboard extends Component
             'contactos' => Contacto::all(),
             'clientes' => Cliente::all(),
             'productos' => Producto::all(),
-            'proyectos' => Proyecto::all()
+            'proyectos' => Proyecto::all(),
         ]
         )->extends('layouts.tema.app')->section('content');
     }

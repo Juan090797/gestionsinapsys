@@ -96,6 +96,7 @@ class ShowProyecto extends Component
             'cliente_id'        => $pedido->cliente_id,
             'subtotal'          => $pedido->subtotal,
             'total'             => $pedido->total,
+            'total_items'       => $pedido->total_items,
             'impuesto'          => $pedido->impuesto,
             'user_id'           => Auth::user()->id,
         ]);

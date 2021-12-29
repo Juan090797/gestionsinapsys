@@ -9,8 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class Cotizacion extends Model
 {
     use HasFactory;
-    protected $fillable = ['foto','codigo','fecha_inicio', 'atendido', 'fecha_fin', 'terminos', 'condiciones', 'total', 'subtotal', 'impuesto', 'cliente_id', 'impuesto_id', 'proyecto_id'];
-
+    protected $guarded = ['id'];
     protected $appends = [
         'formate_fechai',
         'formate_fechac'

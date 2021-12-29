@@ -11,14 +11,10 @@ class MovimientoAlmacen extends Model
 
     protected $guarded = ['id'];
 
-    public function proveedormovi()
-    {
-        return $this->belongsTo(Proveedor::class,'proveedor_id');
-    }
-
     public function movimientoDetalles()
     {
         return $this->hasMany(MovimientoAlmacenDetalle::class, 'movimiento_almacens_id');
     }
+
 
 }

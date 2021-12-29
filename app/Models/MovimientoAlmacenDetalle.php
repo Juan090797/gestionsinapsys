@@ -10,4 +10,9 @@ class MovimientoAlmacenDetalle extends Model
     use HasFactory;
 
     protected $guarded = ['id'];
+
+    public function producto()
+    {
+        return $this->belongsTo(Producto::class);
+    }
 }

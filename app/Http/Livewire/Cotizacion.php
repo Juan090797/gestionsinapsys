@@ -79,7 +79,8 @@ Numero de Cta. Detracciones (Bco. Nacion): 00-051-159853',
                 'total' => $this->total,
                 'impuesto' => $this->impuestoD,
                 'cotizacion_items' => $this->rows,
-                'codigo' => $this->code
+                'codigo' => $this->code,
+                'total_items' => $this->cantidadTotal,
             ]
         ));
 

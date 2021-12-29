@@ -114,7 +114,7 @@
                 </div>
                 <div class="col-4">
                     <p class="lead">Detalle</p>
-
+                    <p class="lead"><b>Total Items: {{$cantidadTotal}}</b> </p>
                     <div class="table-responsive">
                         <table class="table">
                             <tr>
@@ -164,4 +164,11 @@
         })
     </script>
     @endpush
+        <script>
+            document.addEventListener('DOMContentLoaded', function (){
+                window.livewire.on('cotizacion-ok', msg =>{
+                    noty(msg)
+                })
+            });
+        </script>
 </div>

@@ -11,6 +11,7 @@ trait CalcularCotizacion
     public $impuestoCalculo = 0;
     public $impuestoD = 0;
     public $total = 0;
+    public $cantidadTotal = 0;
 
     public function getServicePrice($serviceId, $index)
     {
@@ -22,7 +23,7 @@ trait CalcularCotizacion
         $this->calculateSubTotal();
         $this->calculateTaxAmount($this->state['impuesto_id'] ?? null);
         $this->calculateTotal();
-
+        $this->calcularTotalItems();
     }
 
     public function calculateAmount($cantidad, $index)
@@ -33,6 +34,7 @@ trait CalcularCotizacion
         $this->calculateSubTotal();
         $this->calculateTaxAmount($this->state['impuesto_id'] ?? null);
         $this->calculateTotal();
+        $this->calcularTotalItems();
     }
 
     public function calculatePrice($precio, $index)
@@ -43,6 +45,7 @@ trait CalcularCotizacion
         $this->calculateSubTotal();
         $this->calculateTaxAmount($this->state['impuesto_id'] ?? null);
         $this->calculateTotal();
+        $this->calcularTotalItems();
     }
 
     public function calculateSubTotal()
@@ -67,6 +70,13 @@ trait CalcularCotizacion
     public function calculateTotal()
     {
         $this->total = $this->subTotal+ $this->impuestoD;
+    }
+
+    public function calcularTotalItems()
+    {
+        $this->cantidadTotal = collect($this->rows)->filter(function ($row) {
+            return $row['producto_id'] !=='';
+        })->sum('cantidad');
     }
 
 }
