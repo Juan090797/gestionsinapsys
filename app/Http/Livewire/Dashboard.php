@@ -35,7 +35,7 @@ class Dashboard extends Component
             'model' => 'App\Models\Pedido',
             'group_by_field' => 'created_at',
             'group_by_period' => 'day',
-            'chart_type' => 'bar',
+            'chart_type' => 'line',
             'chart_color' => '158, 190, 187',
             'aggregate_function' => 'sum',
             'aggregate_field' => 'total',
