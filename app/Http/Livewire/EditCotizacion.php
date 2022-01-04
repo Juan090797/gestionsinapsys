@@ -27,21 +27,13 @@ class EditCotizacion extends Component
     public function mount(Cotizacion $cotizacion)
     {
         $this->cotizacion = $cotizacion;
-
         $this->CotizacionItem = $cotizacion->CotizacionItem;
-
         $this->impuesto = impuesto::find($cotizacion->impuesto_id);
-
         $this->state = $cotizacion->toArray();
-
         $this->rows = $cotizacion->CotizacionItem->toArray();
-
         $this->total = $cotizacion->total;
-
         $this->getClientInfo($this->cotizacion->cliente_id);
-
         $this->calculateSubTotal();
-
         $this->calculateTaxAmount($this->impuesto->id ?? null);
     }
 

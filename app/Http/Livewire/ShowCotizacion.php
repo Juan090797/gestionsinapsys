@@ -21,6 +21,6 @@ class ShowCotizacion extends Component
     public function render()
     {
         $empresa = Empresa::all()->first();
-        return view('livewire.cotizacion.vista', ['empresa' => $empresa])->extends('layouts.tema.app')->section('content');
+        return view('livewire.cotizacion.show', ['empresa' => $empresa])->extends('layouts.tema.app')->section('content');
     }
 }

@@ -49,5 +49,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('ingresos', \App\Http\Livewire\Ingresos\Ingresos::class)->name('ingresos');
     Route::get('ingresoscreate', \App\Http\Livewire\Ingresos\IngresosCreate::class)->name('ingresoscreate');
     Route::get('salidas', \App\Http\Livewire\Salidas\Salidas::class)->name('salidas');
+    Route::get('usuarios', \App\Http\Livewire\Usuarios\Usuarios::class)->name('usuarios');
+
 });
 

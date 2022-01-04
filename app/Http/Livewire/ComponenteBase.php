@@ -9,6 +9,6 @@ class ComponenteBase extends Component
 {
     use WithPagination;
 
-    protected $pagination = 5;
+    protected $pagination = 10;
     protected $paginationTheme = 'bootstrap';
 }
