@@ -17,18 +17,21 @@
                                 @endforeach
                             </select>
                         </div>
+                        @error('proveedor_id') <span class="text-danger er">{{ $message }}</span>@enderror
                     </div>
                     <div class="col-sm-3 invoice-col">
                         <div class="form-group">
                             <label for="tipo_documento">Documento</label>
                             <input id="tipo_documento" type="text" class="form-control" wire:model.defer="state.tipo_documento" placeholder="Ej: Factura">
                         </div>
+                        @error('tipo_documento') <span class="text-danger er">{{ $message }}</span>@enderror
                     </div>
                     <div class="col-sm-3 invoice-col">
                         <div class="form-group">
                             <label for="numero_documento">N° Documento</label>
                             <input id="numero_documento" type="text" class="form-control" wire:model.defer="state.numero_documento" placeholder="Ej: F001-123456789">
                         </div>
+                        @error('numero_documento') <span class="text-danger er">{{ $message }}</span>@enderror
                     </div>
                     <div class="col-sm-3 invoice-col">
                         <div class="form-group">
@@ -40,18 +43,21 @@
                                 @endforeach
                             </select>
                         </div>
+                        @error('centro_costo_id') <span class="text-danger er">{{ $message }}</span>@enderror
                     </div>
                     <div class="col-sm-3 invoice-col">
                         <div class="form-group">
                             <label for="fecha_documento">Fecha Documento</label>
                             <input id="fecha_documento" class="form-control" type="date" wire:model.defer="state.fecha_documento">
                         </div>
+                        @error('fecha_documento') <span class="text-danger er">{{ $message }}</span>@enderror
                     </div>
                     <div class="col-sm-3 invoice-col">
                         <div class="form-group">
                             <label for="fecha_pago">Fecha Pago</label>
                             <input id="fecha_pago" class="form-control" type="date" wire:model.defer="state.fecha_pago">
                         </div>
+                        @error('fecha_pago') <span class="text-danger er">{{ $message }}</span>@enderror
                     </div>
                 </div>
 

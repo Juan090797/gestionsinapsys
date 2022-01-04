@@ -24,7 +24,6 @@
                         <th scope="col">Jefe Proyecto</th>
                         <th scope="col">Cliente</th>
                         <th scope="col">EQUIPO</th>
-                        <th scope="col">Progreso</th>
                         <th scope="col">Acciones</th>
                     </tr>
                     </thead>
@@ -43,7 +42,7 @@
                                     @if($proyecto->team)
                                         @foreach($proyecto->team as $r)
                                             @if($proyecto->user->name = $r)
-                                                <div class="col-3 user-panel m-1 p-2 b-2 d-flex">
+                                                <div class="col-md-4 user-panel p-2 b-1">
                                                     <img src="{{ $proyecto->user->profile_photo_url }}" class="img-circle elevation-2" alt="User Image">
                                                 </div>
                                             @endif
@@ -54,17 +53,10 @@
                                 </div>
                             </td>
                             <td>
-                                <div class="mt-3">
-                                    <div class="progress">
-                                        <div class="progress-bar bg-success" role="progressbar" style="width: 59%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">59%</div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <a href="javascript:void(0)"  wire:click="Edit({{ $proyecto->id }})" class="btn btn-primary" title="Edit">
+                                <a href="javascript:void(0)"  wire:click="Edit({{ $proyecto->id }})" class="btn btn-primary" title="Editar">
                                     <i class="fas fa-pencil-alt" aria-hidden="true"></i>
                                 </a>
-                                <a href="javascript:void(0)" onclick="Confirm('{{ $proyecto->id }}')" class="btn btn-danger" title="Delet">
+                                <a href="javascript:void(0)" onclick="Confirm('{{ $proyecto->id }}')" class="btn btn-danger" title="Eliminar">
                                     <i class="fa fa-trash" aria-hidden="true"></i>
                                 </a>
                             </td>

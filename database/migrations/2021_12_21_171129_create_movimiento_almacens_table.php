@@ -23,6 +23,7 @@ class CreateMovimientoAlmacensTable extends Migration
             $table->string('ruc_cliente')->nullable(); //ruc del cliente
             $table->string('nombre_cliente')->nullable(); //razon social del cliente
             $table->string('estado')->nullable();
+            $table->foreignId('motivo_id')->constrained();
             $table->timestamps();
         });
     }

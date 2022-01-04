@@ -214,6 +214,7 @@ class Pedidos extends Component
                         $i = 1;
                     }
                     $date = Carbon::now();
+                    $date2 = $date->Format('d-m-Y');
                     $date = $date->Format('ym');
                     if($i <= 9){
                         $this->codigo = 'GS'. $date .'0000'. $i;
@@ -230,20 +231,22 @@ class Pedidos extends Component
                     {
                         $cli = Cliente::find($pedido->cliente_id);
                         $guia = MovimientoAlmacen::create([
-                            'tipo_documento' => 'GS',
-                            'numero_guia'    => $this->codigo,
-                            'referencia'     => $pedido->codigo,
-                            'ruc_cliente'   => $cli->ruc,
+                            'tipo_documento'    => 'GS',
+                            'numero_guia'       => $this->codigo,
+                            'referencia'        => $pedido->codigo,
+                            'ruc_cliente'       => $cli->ruc,
                             'nombre_cliente'    => $cli->razon_social,
-                            'total_items'   => $pedido->total_items,
-                            'estado'         => 'Aprobado',
+                            'total_items'       => $pedido->total_items,
+                            'estado'            => 'Aprobado',
+                            'motivo_id'         => 2,
+                            'fecha_ingreso'     => $date2,
                         ]);
                     }
 
                     MovimientoAlmacenDetalle::create([
-                        'movimiento_almacens_id'     => $guia->id,
-                        'producto_id'   => $item['producto_id'],
-                        'cantidad'      => $item['cantidad'],
+                        'movimiento_almacens_id'    => $guia->id,
+                        'producto_id'               => $item['producto_id'],
+                        'cantidad'                  => $item['cantidad'],
                     ]);
                     $producto = Producto::find($item['producto_id']);
                     $producto->update([

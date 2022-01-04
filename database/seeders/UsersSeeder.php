@@ -20,18 +20,48 @@ class UsersSeeder extends Seeder
             'password' => bcrypt('989688456')
         ]);
         DB::table('users')->insert([
-            'name' => 'Usuario 1',
-            'email' => 'sistemas1@gruposinapsys.pe',
+            'name' => 'Roberto Guzman',
+            'email' => 'r.guzman@gruposinapsys.pe',
             'password' => bcrypt('989688456')
         ]);
         DB::table('users')->insert([
-            'name' => 'Usuario 2',
-            'email' => 'sistemas2@gruposinapsys.pe',
+            'name' => 'Diana Guzman',
+            'email' => 'd.guzman@gruposinapsys.pe',
             'password' => bcrypt('989688456')
         ]);
         DB::table('users')->insert([
-            'name' => 'Usuario 3',
-            'email' => 'sistemas3@gruposinapsys.pe',
+            'name' => 'Marco Nolasco',
+            'email' => 'm.nolasco@gruposinapsys.pe',
+            'password' => bcrypt('989688456')
+        ]);
+        DB::table('users')->insert([
+            'name' => 'Elizabeth Puyen',
+            'email' => 'e.puyen@gruposinapsys.pe',
+            'password' => bcrypt('989688456')
+        ]);
+        DB::table('users')->insert([
+            'name' => 'Caroline Sanchez',
+            'email' => 'c.sanchez@gruposinapsys.pe',
+            'password' => bcrypt('989688456')
+        ]);
+        DB::table('users')->insert([
+            'name' => 'Evelyn Laura',
+            'email' => 'e.laura@gruposinapsys.pe',
+            'password' => bcrypt('989688456')
+        ]);
+        DB::table('users')->insert([
+            'name' => 'Grimaneza Castro',
+            'email' => 'g.castro@gruposinapsys.pe',
+            'password' => bcrypt('989688456')
+        ]);
+        DB::table('users')->insert([
+            'name' => 'Luis Samaniego',
+            'email' => 'l.samaniego@gruposinapsys.pe',
+            'password' => bcrypt('989688456')
+        ]);
+        DB::table('users')->insert([
+            'name' => 'Yorch Pajuelo',
+            'email' => 'y.pajuelo@gruposinapsys.pe',
             'password' => bcrypt('989688456')
         ]);
     }

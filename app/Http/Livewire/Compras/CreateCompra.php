@@ -12,6 +12,7 @@ use App\Models\MovimientoAlmacenDetalle;
 use App\Models\Producto;
 use App\Models\Proveedor;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Validator;
 use Livewire\Component;
 
 class CreateCompra extends Component
@@ -37,6 +38,23 @@ class CreateCompra extends Component
 
     public function createCompra()
     {
+        $validated = Validator::make($this->state, [
+            'tipo_documento' => 'required',
+            'numero_documento' => 'required',
+            'fecha_documento' => 'required',
+            'fecha_pago' => 'required',
+            'proveedor_id' => 'required',
+            'centro_costo_id' => 'required',
+        ],[
+            'tipo_documento.required' => 'El tipo de documento es requerido',
+            'numero_documento.required' => 'El numero de documento es requerido',
+            'fecha_documento.required' => 'La fecha de documento es requerido',
+            'fecha_pago.required' => 'La fecha de pago es requerido',
+            'proveedor_id.required' => 'El proveedor es requerido',
+            'centro_costo_id.required' => 'El centro de costo es requerido',
+
+        ])->validate();
+
         $compra = Compra::create([
             'tipo_documento'            => $this->state['tipo_documento'],
             'numero_documento'     => $this->state['numero_documento'],
@@ -50,7 +68,8 @@ class CreateCompra extends Component
             'centro_costo_id' => $this->state['centro_costo_id'],
         ]);
 
-        foreach ($this->rows as $item){
+        foreach ($this->rows as $item)
+        {
             CompraDetalle::create([
                 'compra_id'     => $compra->id,
                 'producto_id'   => $item['producto_id'],
@@ -58,52 +77,60 @@ class CreateCompra extends Component
                 'precio_u'      => $item['precio'],
                 'precio_t'      => $item['monto'],
             ]);
-        }
-
-        foreach ($this->rows as $item){
             $producto = Producto::find($item['producto_id']);
             $producto->update([
                 'precio_compra' => $item['monto'],
             ]);
         }
 
-        //crea la guia de ingreso
+        //crea la guia de ingreso .. movimiento almacen
         if($compra){
-            if(MovimientoAlmacen::count() > 0){
+            if(MovimientoAlmacen::count() > 0)
+            {
                 $i = MovimientoAlmacen::latest()->first()->id +1;
-            }else{
+            }else
+            {
                 $i = 1;
             }
             $date = Carbon::now();
+            $date2 = $date->Format('Y-m-d');
             $date = $date->Format('ym');
-            if($i <= 9){
+            if($i <= 9)
+            {
                 $this->codigo = 'GI'. $date .'0000'. $i;
-            }elseif ($i <= 100){
+            }elseif ($i <= 100)
+            {
                 $this->codigo = 'GI'. $date .'000'. $i;
-            }elseif ($i <= 1000){
+            }elseif ($i <= 1000)
+            {
                 $this->codigo = 'GI'. $date .'00'. $i;
-            }elseif ($i <= 10000){
+            }elseif ($i <= 10000)
+            {
                 $this->codigo = 'GI'. $date .'0'. $i;
-            }else{
+            }else
+            {
                 $this->codigo = 'GI'. $date. $i;
             }
 
             $cli = Proveedor::find($this->state['proveedor_id']);
             $guia = MovimientoAlmacen::create([
-                'tipo_documento' => 'GI',
-                'numero_guia'    =>  $this->codigo,
-                'referencia'     => $compra->numero_documento,
-                'ruc_cliente'   => $cli->ruc,
+                'tipo_documento'    => 'GI',
+                'numero_guia'       =>  $this->codigo,
+                'referencia'        => $compra->numero_documento,
+                'ruc_cliente'       => $cli->ruc,
                 'nombre_cliente'    => $cli->razon_social,
-                'total_items'   => $compra->total_items,
-                'estado'         => 'Pendiente',
+                'total_items'       => $compra->total_items,
+                'estado'            => 'Pendiente',
+                'motivo_id'         => 1,
+                'fecha_ingreso'     => $date2,
             ]);
 
-            foreach ($this->rows as $item){
+            foreach ($this->rows as $item)
+            {
                 MovimientoAlmacenDetalle::create([
-                    'movimiento_almacens_id'     => $guia->id,
-                    'producto_id'   => $item['producto_id'],
-                    'cantidad'      => $item['cantidad'],
+                    'movimiento_almacens_id'    => $guia->id,
+                    'producto_id'               => $item['producto_id'],
+                    'cantidad'                  => $item['cantidad'],
                 ]);
             }
         }

@@ -41,7 +41,7 @@
                             </th>
                             <td class="text-center">{{$ingreso->tipo_documento}}</td>
                             <td class="text-center">{{$ingreso->numero_guia}}</td>
-                            <td class="text-center"></td>
+                            <td class="text-center">{{$ingreso->created_at}}</td>
                             <td class="text-center">{{$ingreso->nombre_cliente}}</td>
                             <td class="text-center"><span class="badge badge-success">Factura</span></td>
                             <td class="text-center">{{$ingreso->referencia}}</td>
@@ -87,7 +87,7 @@
                                 <div class="col-3">
                                     <div class="form-group">
                                         <label for="cliente">Fecha Ingreso</label>
-                                        <input type="date" class="form-control" id="cliente"  disabled>
+                                        <input type="date" class="form-control" id="cliente" value="{{$ped->fecha_ingreso}}" disabled>
                                     </div>
                                 </div>
                             </div>
@@ -96,7 +96,7 @@
                                     <thead class="thead-dark">
                                     <tr>
                                         <th scope="col">#</th>
-                                        <th class="text-center">Producto</th>
+                                        <th lass="text-center">Producto</th>
                                         <th class="text-center">Codigo</th>
                                         <th class="text-center">Marca</th>
                                         <th class="text-center">Cantidad</th>
