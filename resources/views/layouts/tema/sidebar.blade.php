@@ -258,6 +258,12 @@
                         </li>
                     </ul>
                 </li>
+                <li class="nav-item">
+                    <a href="{{ url('mensajes') }}" class="nav-link {{ request()->is('mensajes') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-comments"></i>
+                        <p>Mensajes</p>
+                    </a>
+                </li>
             </ul>
         </nav>
         <!-- /.sidebar-menu -->

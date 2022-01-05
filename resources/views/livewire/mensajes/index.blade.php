@@ -1,0 +1,103 @@
+<div>
+    <div class="pt-2 row" wire:poll.visible>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Contactos</h3>
+                </div>
+                <div class="card-body">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="Buscar usuarios" wire:model="query">
+                        <div class="input-group-append">
+                            <span class="input-group-text"><i class="fas fa-search"></i></span>
+                        </div>
+                    </div>
+                    @if(!empty($usuarios))
+                        @foreach($usuarios as $user)
+                            <ul id="2" class="contacts-list">
+                                <li>
+                                    <a href="#" wire:click.prevent="nuevoMensaje( {{ $user->id }})">
+                                        <img class="contacts-list-img" src="{{ $user->profile_photo_url }}" alt="User Avatar">
+                                        <div class="contacts-list-info">
+                                            <span class="contacts-list-name text-dark">
+                                                {{ $user->name }}
+                                            </span>
+                                        </div>
+                                    </a>
+                                </li>
+                            </ul>
+                        @endforeach
+                    @endif
+                    <hr>
+                    <ul class="contacts-list">
+                    @foreach ($conversations as $conversation)
+                        <li class="{{ $conversation->id === $selectedConversation->id ? 'bg-warning' : '' }}">
+                            <a href="#" wire:click.prevent="viewMessage( {{ $conversation->id }})">
+                                <img class="contacts-list-img" src="{{ $conversation->receiver->profile_photo_url }}" alt="User Avatar">
+                                <div class="contacts-list-info">
+                                    <span class="contacts-list-name text-dark">
+                                        @if(Auth::user()->name == $conversation->receiver->name)
+                                            {{ $conversation->sender->name }}
+                                        @else
+                                            {{ $conversation->receiver->name }}
+                                        @endif
+                                        <small class="float-right contacts-list-date text-muted">{{ $conversation->mensajes->last()?->created_at->format('d/m/Y') }}</small>
+                                    </span>
+                                    <span class="contacts-list-msg text-secondary">{{ $conversation->mensajes->last()?->body }}</span>
+                                </div>
+                            </a>
+                        </li>
+                    @endforeach
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="card direct-chat direct-chat-primary">
+                <div class="card-header">
+                    <h3 class="card-title">Chat con
+                        <span>
+                            {{ $selectedConversation?->receiver->name }}
+                        </span>
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <div class="direct-chat-messages" id="conversation" style="height: 400px!important;">
+                        @if($selectedConversation)
+                            @if(count($selectedConversation->mensajes))
+                                @foreach($selectedConversation->mensajes as $message)
+                                    <div class="direct-chat-msg {{ $message->user_id === auth()->id() ? 'right' : '' }}">
+                                        <div class="clearfix direct-chat-infos">
+                                            <span class="float-left direct-chat-name">{{ $message->user->name }}</span>
+                                            <span class="float-right direct-chat-timestamp">{{ $message->created_at->format('d M h:i a') }}</span>
+                                        </div>
+                                        <img class="direct-chat-img" src="{{ $message->user->profile_photo_url }}" alt="message user image">
+                                        <div class="direct-chat-text">
+                                            {{ $message->body }}
+                                        </div>
+                                    </div>
+                                @endforeach
+                            @else
+                                <h2 class="text-center">Sin mensajes</h2>
+                            @endif
+                        @else
+                            <h2 class="text-center">0 chats</h2>
+                        @endif
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <form wire:submit.prevent="sendMessage" action="#">
+                        <div class="input-group">
+                            <input wire:model.defer="body" type="text" name="body" placeholder="Escribe un mensaje ..." class="form-control">
+                            <span class="input-group-append">
+                                <button type="submit" class="btn btn-primary">enviar</button>
+                            </span>
+                        </div>
+                        @error('body') <span class="text-danger er">{{ $message }}</span>@enderror
+                    </form>
+                </div>
+                <!-- /.card-footer-->
+            </div>
+        </div>
+    </div>
+</div>
