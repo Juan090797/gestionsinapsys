@@ -18,6 +18,7 @@ class CreateMensajesTable extends Migration
             $table->foreignId('conversacion_id')->constrained();
             $table->foreignId('user_id')->constrained();
             $table->longText('body');
+            $table->string('visto')->nullable();
             $table->timestamps();
         });
     }

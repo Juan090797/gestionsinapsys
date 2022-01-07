@@ -72,4 +72,11 @@ class User extends Authenticatable
         return $this->hasMany(Pedido::class);
     }
 
+    public  function scopeContacto($query , $valor)
+    {
+        if ($valor){
+            return $query->where('name', 'like', '%' . $valor . '%');
+        }
+    }
+
 }

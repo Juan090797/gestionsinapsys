@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Mensajes;
 
+use App\Events\MensajeEnviado;
 use App\Http\Livewire\ComponenteBase;
 use App\Models\Conversacion;
 use App\Models\Mensaje;
@@ -10,41 +11,86 @@ use Illuminate\Support\Facades\Validator;
 
 class ListaConversacion extends ComponenteBase
 {
-    public $selectedConversation, $body;
+    public $selectedConversation;
 
-    public $query, $usuarios;
+    public $body, $conversations;
+
+    public $contacto, $usuarios, $mensajesSinVer;
 
     protected $rules = [
-        'body' => 'required',
+        'body' => 'required|string',
     ];
 
     protected $messages = [
         'body.required' => 'El mensaje es obligatorio',
     ];
 
-    public function updatedQuery()
-    {
-        $this->usuarios = User::where('name', 'like', '%' . $this->query . '%')->get();
-    }
+    protected $listeners = ['conversacion_id'];
 
     public function mount()
     {
-        $this->query = '';
+        $this->indexPage();
+    }
+
+    public function render()
+    {
+        $this->update();
+        return view('livewire.mensajes.index')->extends('layouts.tema.app')->section('content');
+    }
+
+    public function update()
+    {
+        $this->contacto();
+        $this->conversaciones();
+    }
+
+    public function contacto()
+    {
+        if($this->contacto)
+        {
+            if(strlen($this->contacto) > 3)
+            {
+                $this->usuarios = User::contacto($this->contacto)->get();
+            }
+        }else
+        {
+            $this->usuarios = [];
+        }
+    }
+
+    public function conversaciones()
+    {
+        $this->conversations = Conversacion::with('mensajes')
+            ->orderBy('id', 'ASC')
+            ->where('sender_id', auth()->id())
+            ->orWhere('receiver_id', auth()->id())
+            ->get();
+    }
+
+    public function indexPage()
+    {
+        $this->contacto = '';
         $this->usuarios = [];
-        $this->selectedConversation = Conversacion::query()
-                                    ->where('sender_id', auth()->id())
-                                    ->orWhere('receiver_id', auth()->id())
-                                    ->first();
+        $this->selectedConversation = '';
+    }
+
+    public function viewMessage($conversationId)
+    {
+        $this->selectedConversation = Conversacion::find($conversationId);
+    }
+
+    public  function conversacion_id($conversacion_id)
+    {
+        //dd($conversacion_id);
     }
 
     public function nuevoMensaje(User $user)
     {
-
         $validar = Conversacion::where('receiver_id', $user->id)->get();
         if(count($validar))
         {
             $this->viewMessage($validar[0]->id);
-            $this->reset('query');
+            $this->reset('contacto');
             $this->reset('usuarios');
         }else
         {
@@ -53,7 +99,7 @@ class ListaConversacion extends ComponenteBase
                 'receiver_id' => $user->id,
             ]);
             $this->viewMessage($conversacion->id);
-            $this->reset('query');
+            $this->reset('contacto');
             $this->reset('usuarios');
         }
 
@@ -62,31 +108,26 @@ class ListaConversacion extends ComponenteBase
     public function sendMessage()
     {
         $this->validate();
+        $this->crearMensaje();
+    }
 
-        Mensaje::create([
+    public function crearMensaje()
+    {
+      $mensj=  Mensaje::create([
             'conversacion_id' => $this->selectedConversation->id,
             'user_id' => auth()->id(),
             'body' => $this->body,
+            'estado' => 0,
         ]);
-
-        $this->reset('body');
         $this->viewMessage($this->selectedConversation->id);
+        $this->reset('body');
+
+        if($mensj)
+        {
+            event(new MensajeEnviado($mensj->conversacion_id));
+        }
     }
 
-    public function viewMessage($conversationId)
-    {
-        $this->selectedConversation = Conversacion::findOrFail($conversationId);
-    }
 
-    public function render()
-    {
-        $conversations = Conversacion::query()
-                        ->where('sender_id', auth()->id())
-                        ->orWhere('receiver_id', auth()->id())
-                        ->get();
 
-        $users = User::where('id', '!=', auth()->id())->get();
-
-        return view('livewire.mensajes.index',['conversations' => $conversations, 'users' => $users])->extends('layouts.tema.app')->section('content');
-    }
 }

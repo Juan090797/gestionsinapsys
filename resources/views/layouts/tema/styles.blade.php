@@ -15,6 +15,7 @@
 <link href="{{ asset('plugins/notification/snackbar/snackbar.min.css') }}" rel="stylesheet" type="text/css" />
 <!-- select2 -->
 <link rel="stylesheet" href="{{ asset('plugins/select2/css/select2.min.css') }}">
+<script src="https://js.pusher.com/7.0/pusher.min.js"></script>
 
 <style>
     .select2-container--default .select2-selection--multiple .select2-selection__choice {
