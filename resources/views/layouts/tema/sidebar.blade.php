@@ -95,12 +95,6 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ url('tipoequipos') }}" class="nav-link {{ request()->is('tipoequipos') ? 'active' : '' }}">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Tipo Equipos</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
                             <a href="{{ url('clasificacions') }}" class="nav-link {{ request()->is('clasificacions') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Clasificacion</p>

@@ -24,7 +24,6 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('clientes', \App\Http\Livewire\Clientes::class);
     Route::resource('clients', \App\Http\Controllers\ClienteController::class)->only('show');
     Route::get('marcas', \App\Http\Livewire\Marcas::class);
-    Route::get('tipoequipos', \App\Http\Livewire\Familias::class);
     Route::get('productos', \App\Http\Livewire\Productos::class);
     Route::get('clasificacions', \App\Http\Livewire\Clasificacions::class);
     Route::get('proyectos', \App\Http\Livewire\Proyectos::class)->name('proyectos');

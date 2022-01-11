@@ -21,9 +21,8 @@ class ProductoSeeder extends Seeder
             'nombre'            => 'Nombre del producto 1',
             'descripcion'       => 'descripcion del producto 1',
             'precio_venta'      => '98000.00',
-            'tipo'              => 'Tipo 1',
+            'tipo'              => 'Baño Maria',
             'marca_id'          => 1,
-            'familia_id'        => 1,
             'clasificacions_id' => 1,
             'unidad_medidas_id' => 1,
         ]);
@@ -34,9 +33,8 @@ class ProductoSeeder extends Seeder
             'nombre'            => 'Nombre del producto 2',
             'descripcion'       => 'descripcion del producto 2',
             'precio_venta'      => '25000.00',
-            'tipo'              => 'Tipo 2',
+            'tipo'              => 'Microscopio',
             'marca_id'          => 1,
-            'familia_id'        => 1,
             'clasificacions_id' => 1,
             'unidad_medidas_id' => 1,
         ]);
@@ -47,9 +45,8 @@ class ProductoSeeder extends Seeder
             'nombre'            => 'Nombre del producto 3',
             'descripcion'       => 'descripcion del producto 3',
             'precio_venta'      => '55000.00',
-            'tipo'              => 'Tipo 3',
+            'tipo'              => 'Ventilador',
             'marca_id'          => 1,
-            'familia_id'        => 1,
             'clasificacions_id' => 1,
             'unidad_medidas_id' => 1,
         ]);

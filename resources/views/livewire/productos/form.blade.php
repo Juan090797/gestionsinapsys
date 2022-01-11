@@ -6,14 +6,14 @@
             </div>
             <div class="modal-body">
                 <div class="row">
-                    <div class="col-sm-12 col-md-2">
+                    <div class="col-sm-12 col-md-3">
                         <div class="form-group">
                             <label for="codigo">Codigo*</label>
                             <input type="text" wire:model.defer="state.codigo" class="form-control" id="codigo" placeholder="ej: 00000145">
                         </div>
                         @error('codigo') <span class="text-danger er">{{ $message }}</span>@enderror
                     </div>
-                    <div class="col-sm-12 col-md-2">
+                    <div class="col-sm-12 col-md-3">
                         <div class="form-group">
                             <label for="marca_id">Marca*</label>
                             <select wire:model.defer="state.marca_id" id="marca_id" class="form-control">
@@ -24,18 +24,6 @@
                             </select>
                         </div>
                         @error('marca_id') <span class="text-danger er">{{ $message }}</span>@enderror
-                    </div>
-                    <div class="col-sm-12 col-md-2">
-                        <div class="form-group">
-                            <label for="familia_id">Equipo*</label>
-                            <select wire:model.defer="state.familia_id" id="familia_id" class="form-control">
-                                <option value="ELEGIR" selected>Elegir</option>
-                                @foreach($familias as $familia)
-                                    <option value="{{$familia->id}}" >{{$familia->nombre}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        @error('familia_id') <span class="text-danger er">{{ $message }}</span>@enderror
                     </div>
                     <div class="col-sm-12 col-md-2">
                         <div class="form-group">
@@ -68,7 +56,7 @@
                     <div class="col-sm-12 col-md-3">
                         <div class="form-group">
                             <label for="tipo">Tipo*</label>
-                            <input type="text" wire:model.defer="state.tipo" id="tipo" class="form-control" placeholder="ej: Tipo">
+                            <input type="text" wire:model.defer="state.tipo" id="tipo" class="form-control" placeholder="ej: Tipo de equipo">
                         </div>
                         @error('tipo') <span class="text-danger er">{{ $message }}</span>@enderror
                     </div>

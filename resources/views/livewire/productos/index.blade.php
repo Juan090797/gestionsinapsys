@@ -84,7 +84,6 @@
                         <th class="text-center">Modelo</th>
                         <th class="text-center">Descripcion</th>
                         <th class="text-center">Precio Venta</th>
-                        <th class="text-center">Precio Compra</th>
                         <th class="text-center">Tipo</th>
                         <th class="text-center">Stock</th>
                         <th class="text-center">Acciones</th>
@@ -100,7 +99,6 @@
                             <td class="text-center">{{$producto->modelo}}</td>
                             <td>{{ Illuminate\Support\Str::limit($producto->descripcion, 100, $end='...') }}</td>
                             <td class="text-center">S/ {{$producto->precio_venta}}</td>
-                            <td class="text-center">S/ {{$producto->precio_compra}}</td>
                             <td class="text-center">{{$producto->tipo}}</td>
                             <td class="text-center"><span class="badge {{ $producto->stock > 0 ? 'badge-success' : 'badge-danger'}}">{{$producto->stock > 0 ? $producto->stock : 'sin stock' }}</span></td>
                             <td class="text-center">

@@ -2,7 +2,6 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\Familia;
 use App\Models\Marca;
 use App\Models\Producto;
 use App\Models\Clasificacion;
@@ -37,7 +36,6 @@ class Productos extends ComponenteBase
         return view('livewire.productos.index',[
             'productos' => $data,
             'marcas' => Marca::all(),
-            'familias' => Familia::all(),
             'clasificaciones' => Clasificacion::all(),
             'unidades' => UnidadMedida::all(),
         ])->extends('layouts.tema.app')->section('content');
@@ -54,7 +52,6 @@ class Productos extends ComponenteBase
             'precio_venta'      => 'required',
             'tipo'              => 'required',
             'marca_id'          => 'required',
-            'familia_id'        => 'required',
             'clasificacions_id' => 'required',
             'unidad_medidas_id' => '',
         ],
@@ -68,7 +65,6 @@ class Productos extends ComponenteBase
                 'precio_venta.required'         => 'EL precio de ventas es requerido',
                 'tipo.required'                 => 'La tipo es requerido',
                 'marca_id.required'             => 'La marca es requerida',
-                'familia_id.required'           => 'EL equipo es requerido',
                 'clasificacions_id.required'    => 'La clasificacion es requerida',
             ])->validate();
 
@@ -104,7 +100,6 @@ class Productos extends ComponenteBase
             'precio_venta'      => 'required',
             'tipo'              => 'required',
             'marca_id'          => 'required',
-            'familia_id'        => 'required',
             'clasificacions_id' => 'required',
             'unidad_medidas_id' => '',
         ],
@@ -118,7 +113,6 @@ class Productos extends ComponenteBase
                 'precio_venta.required'         => 'EL precio de ventas es requerido',
                 'tipo.required'                 => 'La tipo es requerido',
                 'marca_id.required'             => 'La marca es requerida',
-                'familia_id.required'           => 'EL equipo es requerido',
                 'clasificacions_id.required'    => 'La clasificacion es requerida',
             ])->validate();
 
