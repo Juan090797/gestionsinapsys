@@ -22,7 +22,11 @@
                     <div class="col-sm-3 invoice-col">
                         <div class="form-group">
                             <label for="tipo_documento">Documento</label>
-                            <input id="tipo_documento" type="text" class="form-control" wire:model.defer="state.tipo_documento" placeholder="Ej: Factura">
+                            <select id="tipo_documento" wire:model.defer="state.tipo_documento" class="form-control">
+                                <option value="0">Elegir</option>
+                                <option value="Factura">Factura</option>
+                                <option value="Boleta">Boleta</option>
+                            </select>
                         </div>
                         @error('tipo_documento') <span class="text-danger er">{{ $message }}</span>@enderror
                     </div>

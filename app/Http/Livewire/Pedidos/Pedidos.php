@@ -214,7 +214,7 @@ class Pedidos extends Component
                         $i = 1;
                     }
                     $date = Carbon::now();
-                    $date2 = $date->Format('d-m-Y');
+                    $date2 = $date->Format('Y-m-d');
                     $date = $date->Format('ym');
                     if($i <= 9){
                         $this->codigo = 'GS'. $date .'0000'. $i;

@@ -45,7 +45,6 @@
                                             <small class="float-right contacts-list-date text-muted">{{ $conversation->mensajes->last()?->created_at->diffForHumans() }}</small>
                                         </span>
                                         <span class="contacts-list-msg text-secondary">{{ $conversation->mensajes->last()?->body }}</span>
-                                        <span class="float-right badge badge-danger">{{$conversation->mensajes->count()}}</span>
                                     </div>
                                 </a>
                             </li>
@@ -54,16 +53,15 @@
                                     <a href="#" wire:click.prevent="viewMessage( {{ $conversation->id }})">
                                         <img class="contacts-list-img" src="{{ $conversation->receiver->profile_photo_url }}" alt="User Avatar">
                                         <div class="contacts-list-info">
-                                    <span class="contacts-list-name text-dark">
-                                        @if(Auth::user()->name == $conversation->receiver->name)
-                                            {{ $conversation->sender->name }}
-                                        @else
-                                            {{ $conversation->receiver->name }}
-                                        @endif
-                                        <small class="float-right contacts-list-date text-muted">{{ $conversation->mensajes->last()?->created_at->diffForHumans() }}</small>
-                                    </span>
+                                            <span class="contacts-list-name text-dark">
+                                                @if(Auth::user()->name == $conversation->receiver->name)
+                                                    {{ $conversation->sender->name }}
+                                                @else
+                                                    {{ $conversation->receiver->name }}
+                                                @endif
+                                                <small class="float-right contacts-list-date text-muted">{{ $conversation->mensajes->last()?->created_at->diffForHumans() }}</small>
+                                            </span>
                                             <span class="contacts-list-msg text-secondary">{{ $conversation->mensajes->last()?->body }}</span>
-                                            <span class="float-right badge badge-danger">{{$conversation->mensajes->count()}}</span>
                                         </div>
                                     </a>
                                 </li>

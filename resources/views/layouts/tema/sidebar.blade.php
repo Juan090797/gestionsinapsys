@@ -259,6 +259,23 @@
                     </ul>
                 </li>
                 <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon far fa-question-circle"></i>
+                        <p>
+                            Consultas
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ url('kardex-producto') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Kardex</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item">
                     <a href="{{ url('mensajes') }}" class="nav-link {{ request()->is('mensajes') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-comments"></i>
                         <p>Mensajes</p>

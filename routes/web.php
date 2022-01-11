@@ -51,6 +51,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('salidas', \App\Http\Livewire\Salidas\Salidas::class)->name('salidas');
     Route::get('usuarios', \App\Http\Livewire\Usuarios\Usuarios::class)->name('usuarios');
     Route::get('mensajes', \App\Http\Livewire\mensajes\ListaConversacion::class)->name('mensajes');
+    Route::get('kardex-producto', \App\Http\Livewire\Kardex\KardexProducto::class)->name('kardex-producto');
 
 });
 
