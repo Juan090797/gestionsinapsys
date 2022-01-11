@@ -1,4 +1,124 @@
 <div>
+    @push('styles')
+        <style>
+            @media (max-width: 767px) {
+                .btn-breadcrumb { margin-left: 10px; margin-right: 10px; width: calc(100% - 20px) !important; }
+            }
+
+            .btn-breadcrumb{
+                width: 100%;
+                background-color: #fff;
+                border-radius: 4px;
+                border: solid 1px #ccc;
+            }
+            .btn-breadcrumb .btn{
+                border-color: transparent; border: 0px solid transparent;
+                border-right: 1px solid transparent !important;
+                font-size: 11px;
+            }
+            .breadcrumb-default{ background-color: #fff; }
+            .btn-primary,.breadcrumb-primary{ background-color: #337ab7; }
+            .btn-primary:hover{background-color: #286090;}
+
+            .breadcrumb-success{ background-color: #5cb85c; }
+            .breadcrumb-info{ background-color: #5bc0de; }
+            .breadcrumb-warning{ background-color: #f0ad4e; }
+            .breadcrumb-danger{ background-color: #d9534f; }
+            .breadcrumb-negro{ background-color: #d4d4d4; }
+
+            .btn-breadcrumb .btn:last-child {font-weight: bold; text-decoration: underline;}
+            .btn-breadcrumb .btn:last-child:after{margin-left: -2px;}
+            .btn-breadcrumb .btn:last-child:before{margin-left: -1px;}
+
+            .btn-breadcrumb .btn-derecha{
+                float: right;
+                margin-right: 0px;
+                padding: 6px 10px 6px 10px !important;
+                margin-left: 0px !important;
+                border-radius: 0px !important;
+            }
+            .btn-breadcrumb .btn-derecha:first-child {
+                border-top-right-radius: 2px !important;
+                border-bottom-right-radius: 2px !important;
+            }
+
+            .btn-breadcrumb .btn-derecha:after, .btn-breadcrumb .btn-derecha:before{
+                content: none !important;
+            }
+
+            .btn-breadcrumb .btn:after {
+                content: " ";
+                display: block;
+                width: 0;
+                height: 0;
+                border-top: 13px solid transparent;
+                border-bottom: 14px solid transparent;
+                border-left: 10px solid white;
+                position: absolute;
+                top: 50%;
+                margin-top: -14px;
+                margin-left: 0px;
+                left: 100%;
+                z-index: 3;
+            }
+            .btn-breadcrumb .btn:before {
+                content: " ";
+                display: block;
+                width: 0;
+                height: 0;
+                border-top: 13px solid transparent;
+                border-bottom: 14px solid transparent;
+                border-left: 10px solid rgb(173, 173, 173);
+                position: absolute;
+                top: 50%;
+                margin-top: -14px;
+                margin-left: 1px;
+                left: 100%;
+                z-index: 3;
+            }
+
+            /** The Spacing **/
+            .btn-breadcrumb .btn {padding:6px 12px 6px 24px;}
+            .btn-breadcrumb .btn:first-child {padding:6px 6px 6px 10px;}
+            .btn-breadcrumb .btn:last-child {padding:6px 18px 6px 24px;}
+
+            /** Default button **/
+            .btn-breadcrumb .btn.btn-default:after { border-left: 10px solid #fff;}
+            .btn-breadcrumb .btn.btn-default:hover:after {border-left: 10px solid #e6e6e6;}
+            .btn-breadcrumb .btn.btn-default:hover:before, .btn-breadcrumb .btn.btn-default:before {border-left: 10px solid #adadad;}
+            .breadcrumb-default{ border: solid 1px #adadad; }
+
+            /** Primary button **/
+            .btn-breadcrumb .btn.btn-primary:after {border-left: 10px solid #337ab7;}
+            .btn-breadcrumb .btn.btn-primary:hover:after {border-left: 10px solid #286090;}
+            .btn-breadcrumb .btn.btn-primary:hover:before, .btn-breadcrumb .btn.btn-primary:before {border-left: 10px solid #204d74;}
+            .breadcrumb-primary{ border: solid 1px #204d74; }
+
+            /** Success button **/
+            .btn-breadcrumb .btn.btn-success:after {border-left: 10px solid #5cb85c;}
+            .btn-breadcrumb .btn.btn-success:hover:after {border-left: 10px solid #449d44;}
+            .btn-breadcrumb .btn.btn-success:hover:before, .btn-breadcrumb .btn.btn-success:before {border-left: 10px solid #398439;}
+            .breadcrumb-success{ border: solid 1px #398439; }
+
+            /** Danger button **/
+            .btn-breadcrumb .btn.btn-danger:after {border-left: 10px solid #d9534f;}
+            .btn-breadcrumb .btn.btn-danger:hover:after {border-left: 10px solid #c9302c;}
+            .btn-breadcrumb .btn.btn-danger:hover:before, .btn-breadcrumb .btn.btn-danger:before {border-left: 10px solid #ac2925;}
+            .breadcrumb-danger{ border: solid 1px #ac2925; }
+
+            /** Warning button **/
+            .btn-breadcrumb .btn.btn-warning:after {border-left: 10px solid #f0ad4e;}
+            .btn-breadcrumb .btn.btn-warning:hover:after {border-left: 10px solid #ec971f;}
+            .btn-breadcrumb .btn.btn-warning:hover:before, .btn-breadcrumb .btn.btn-warning:before {border-left: 10px solid #d58512;}
+            .breadcrumb-warning{ border: solid 1px #d58512; }
+
+            /** Info button **/
+            .btn-breadcrumb .btn.btn-info:after {border-left: 10px solid #5bc0de;}
+            .btn-breadcrumb .btn.btn-info:hover:after {border-left: 10px solid #31b0d5;}
+            .btn-breadcrumb .btn.btn-info:hover:before, .btn-breadcrumb .btn.btn-info:before {border-left: 10px solid #269abc;}
+            .breadcrumb-info{ border: solid 1px #269abc; }
+        </style>
+    @endpush
     @section('cabezera-contenido')
         <a href="{{url('proyectos')}}" class="btn btn-primary float-right">Atras</a>
         <h1>{{$proyecto->nombre }}</h1>
@@ -6,12 +126,62 @@
     <div class="content-fluid">
         <div>
             <ul class="nav nav-pills">
-                <li class="nav-item"><a class="nav-link active" href="#activity" data-toggle="tab">Actividades({{$comentarios->count()}})</a></li>
+                <li class="nav-item"><a class="nav-link active" href="#general" data-toggle="tab">Principal</a></li>
+                <li class="nav-item"><a class="nav-link" href="#activity" data-toggle="tab">Actividades({{$comentarios->count()}})</a></li>
                 <li class="nav-item"><a class="nav-link" href="#timeline" data-toggle="tab">Cotizaciones({{$cotizaciones->count()}})</a></li>
                 <li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">Archivos({{$archivos->count()}})</a></li>
             </ul>
             <div class="tab-content mt-3">
-                <div class="active tab-pane" id="activity">
+                <div class="active tab-pane" id="general">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-12 col-sm-4">
+                                            <div class="info-box bg-light">
+                                                <div class="info-box-content">
+                                                    <span class="info-box-text text-center text-muted">Presupuesto Estimado</span>
+                                                    <span class="info-box-number text-center text-muted mb-0">S/ {{$proyecto->ingreso_estimado}}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-sm-4">
+                                            <div class="info-box bg-light">
+                                                <div class="info-box-content">
+                                                    <span class="info-box-text text-center text-muted">Gasto Estimado</span>
+                                                    <span class="info-box-number text-center text-muted mb-0">S/ {{$proyecto->gasto_estimado}}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-sm-4">
+                                            <div class="info-box bg-light">
+                                                <div class="info-box-content">
+                                                    <span class="info-box-text text-center text-muted">Duracion Esimada</span>
+                                                    <span class="info-box-number text-center text-muted mb-0">{{$proyecto->fecha_dia}} días</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="btn-group btn-breadcrumb breadcrumb-default">
+                                        <a href="#" class="btn btn-default visible-lg-block visible-md-block">Inicio</a>
+                                        <a href="#" class="btn btn-default visible-lg-block visible-md-block">Planeamiento</a>
+                                        <a href="#" class="btn btn-default visible-lg-block visible-md-block">Ejecucion</a>
+                                        <a href="#" class="btn btn-default visible-lg-block visible-md-block">Monitoreo y Control</a>
+                                        <div class="btn btn-info"><b>Cierre</b></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="activity">
                     <div class="row">
                         <div class="col-8">
                             <div class="card">
