@@ -40,6 +40,11 @@ class Proyecto extends Model
         return $this->hasMany(Archivo::class);
     }
 
+    public function etapa()
+    {
+        return $this->belongsTo(Etapa::class);
+    }
+
     public function getFechaDiaAttribute()
     {
         $f1=Carbon::parse($this->fecha_inicio);

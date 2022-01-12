@@ -19,11 +19,17 @@ class Pedidos extends Component
     public $selectedProducts = [];
     public $state= [];
     public $selected_id, $ordencompra,$fechaplazo,$guia,$numeroPedido,$cliente,$total,$fechaemision,$numerofactura,$factura,$ped;
+    public $pedidos;
 
     public function render()
     {
-        $pedidos = Pedido::with('pedidoDetalle')->latest()->get();
-        return view('livewire.pedidos.index', ['pedidos' => $pedidos])->extends('layouts.tema.app')->section('content');
+        $this->update();
+        return view('livewire.pedidos.index')->extends('layouts.tema.app')->section('content');
+    }
+
+    public function update()
+    {
+        $this->pedidos = Pedido::with('pedidoDetalle')->latest()->get();
     }
 
     public function resetUI()
@@ -50,7 +56,12 @@ class Pedidos extends Component
             $pedido = Pedido::find($this->selectedProducts);
             $pedido = $pedido[0];
             $this->numeroPedido = $pedido->codigo;
-            $this->emit('show-modal-oc', 'show-modal!');
+            if(is_null($pedido->ordencompra))
+            {
+                $this->emit('show-modal-oc', 'show-modal!');
+            }else{
+                $this->emit('error', 'El pedido ya tiene OC');
+            }
         }else {
             $this->emit('error', 'Selecciona un pedido');
         }
@@ -94,7 +105,13 @@ class Pedidos extends Component
             $pedido = Pedido::find($this->selectedProducts);
             $pedido = $pedido[0];
             $this->numeroPedido = $pedido->codigo;
-            $this->emit('show-modal-guia', 'show-modal!');
+            if(is_null($pedido->guiaremision))
+            {
+                $this->emit('show-modal-guia', 'show-modal!');
+            }else{
+                $this->emit('error', 'El pedido ya tiene Guia');
+            }
+
         }else{
             $this->emit('error', 'Selecciona un pedido');
         }
@@ -131,7 +148,8 @@ class Pedidos extends Component
         if(count($this->selectedProducts))
         {
             $p= Pedido::find($this->selectedProducts);
-            if($p[0]->estado == 'En Proceso'){
+            if($p[0]->estado == 'Despachado')
+            {
                 $this->selected_id = 1;
                 $pedido= Pedido::find($this->selectedProducts);
                 $this->numeroPedido= $pedido[0]->codigo;
@@ -139,7 +157,7 @@ class Pedidos extends Component
                 $this->total= $pedido[0]->total;
                 $this->emit('show-modal-factura', 'show-modal!');
             }else{
-                $this->emit('error', 'Pedido Facturado');
+                $this->emit('error', 'El pedido tiene que despacharse primero');
             }
         }else{
             $this->emit('error', 'Selecciona un pedido');
@@ -153,9 +171,9 @@ class Pedidos extends Component
             'numerofactura' => 'required',
         ];
         $messages =[
-            'factura.required' => 'El archivo es requerida',
+            'factura.required'      => 'El archivo es requerida',
             'fechaemision.required' => 'La fecha de emision es requerida',
-            'numerofactura.required' => 'El numero de factura es requerida',
+            'numerofactura.required'=> 'El numero de factura es requerida',
         ];
         $this->validate($rules, $messages);
 
@@ -165,10 +183,10 @@ class Pedidos extends Component
         $name = $this->factura->getClientOriginalName();
         $this->factura->storeAs('facturas', $name);
         $pedido->update([
-            'factura_archivo'       => $name,
-            'fecha_emision' => $this->fechaemision,
-            'numero_factura' => $this->numerofactura,
-            'estado' => 'Facturado',
+            'factura_archivo'   => $name,
+            'fecha_emision'     => $this->fechaemision,
+            'numero_factura'    => $this->numerofactura,
+            'estado'            => 'Facturado',
         ]);
 
         $this->resetUI();
@@ -201,7 +219,6 @@ class Pedidos extends Component
         if(count($this->selectedProducts))
         {
             $pedido = Pedido::with('pedidoDetalle')->find($this->selectedProducts[0]);
-
             foreach ($pedido->pedidoDetalle as $index => $item)
             {
                 $pr = Producto::find($item['producto_id']);

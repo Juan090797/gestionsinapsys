@@ -72,7 +72,7 @@
                                         <select name="producto_id" wire:change="getServicePrice(event.target.value, {{$key}})" class="form-control">
                                             <option value="">Elegir</option>
                                             @foreach($productos as $producto)
-                                                <option {{ ($producto->id == $rows[$key]['producto_id']) ? 'selected' : '' }} value="{{ $producto->id }}">{{$producto->codigo}}</option>
+                                                <option {{ ($producto->id == $rows[$key]['producto_id']) ? 'selected' : '' }} value="{{ $producto->id }}">{{$producto->codigo .'-(' . $producto->stock . ')'}}</option>
                                             @endforeach
                                         </select>
                                     </td>

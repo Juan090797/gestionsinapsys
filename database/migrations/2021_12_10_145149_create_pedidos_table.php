@@ -20,6 +20,9 @@ class CreatePedidosTable extends Migration
             $table->string('ordencompra')->nullable();
             $table->date('fecha_entrega')->nullable();
             $table->string('guiaremision')->nullable();
+            $table->string('numero_factura')->nullable();
+            $table->string('fecha_emision')->nullable();
+            $table->string('factura_archivo')->nullable();
             $table->decimal('total',20,2)->default(0);
             $table->decimal('subtotal',20,2)->default(0);
             $table->decimal('impuesto',20,2)->default(0);

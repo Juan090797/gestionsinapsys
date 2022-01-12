@@ -27,19 +27,21 @@
                         <label for="">Atencion:</label>
                         <input type="text" class="form-control" wire:model.defer="state.atendido">
                     </div>
+                    @error('atendido') <span class="text-danger er">{{ $message }}</span>@enderror
                 </div>
-                <!-- /.col -->
                 <div class="col-sm-4 invoice-col">
                     <div class="form-group">
                         <label for="date">Fecha *</label>
                         <input class="form-control" type="date" aria-label="Use the arrow keys to pick a date" wire:model.defer="state.fecha_inicio">
                     </div>
+                    @error('fecha_inicio') <span class="text-danger er">{{ $message }}</span>@enderror
                 </div>
                 <div class="col-sm-4 invoice-col">
                     <div class="form-group">
                         <label for="due_date">Fecha Fin *</label>
                         <input class="form-control" type="date" aria-label="Use the arrow keys to pick a date" wire:model.defer="state.fecha_fin">
                     </div>
+                    @error('fecha_fin') <span class="text-danger er">{{ $message }}</span>@enderror
                 </div>
                 <div class="col-sm-4 mt-5">
                     <div class="custom-control custom-switch">
@@ -48,7 +50,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="row">
                 <div class="col-12 table-responsive">
                     <table class="table table-striped">
@@ -70,7 +71,7 @@
                                     <select name="producto_id" wire:change="getServicePrice(event.target.value, {{$key}})" class="form-control">
                                         <option value="">Elegir</option>
                                         @foreach($productos as $producto)
-                                            <option {{ ($producto->id == $rows[$key]['producto_id']) ? 'selected' : '' }} value="{{ $producto->id }}">{{$producto->codigo}}</option>
+                                            <option {{ ($producto->id == $rows[$key]['producto_id']) ? 'selected' : '' }} value="{{ $producto->id }}">{{$producto->codigo .'-(' . $producto->stock . ')'}}</option>
                                         @endforeach
                                     </select>
                                 </td>
@@ -96,18 +97,14 @@
                         </tbody>
                     </table>
                 </div>
-                <!-- /.col -->
             </div>
 
             <div class="row">
-                <!-- accepted payments column -->
                 <div class="col-4">
                     <p class="lead">Terminos:</p>
-
                     <textarea wire:model.defer="state.terminos" class="form-control" rows="5">
                     </textarea>
                 </div>
-                <!-- /.col -->
                 <div class="col-4">
                     <p class="lead">Condiciones:</p>
                     <textarea wire:model.defer="state.condiciones" class="form-control" rows="5"></textarea>

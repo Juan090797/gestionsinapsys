@@ -5,6 +5,9 @@
                 .btn-breadcrumb { margin-left: 10px; margin-right: 10px; width: calc(100% - 20px) !important; }
             }
 
+            #etapa{
+                text-decoration: none;
+            }
             .btn-breadcrumb{
                 width: 100%;
                 background-color: #fff;
@@ -26,7 +29,6 @@
             .breadcrumb-danger{ background-color: #d9534f; }
             .breadcrumb-negro{ background-color: #d4d4d4; }
 
-            .btn-breadcrumb .btn:last-child {font-weight: bold; text-decoration: underline;}
             .btn-breadcrumb .btn:last-child:after{margin-left: -2px;}
             .btn-breadcrumb .btn:last-child:before{margin-left: -1px;}
 
@@ -170,11 +172,9 @@
                             <div class="card">
                                 <div class="card-body">
                                     <div class="btn-group btn-breadcrumb breadcrumb-default">
-                                        <a href="#" class="btn btn-default visible-lg-block visible-md-block">Inicio</a>
-                                        <a href="#" class="btn btn-default visible-lg-block visible-md-block">Planeamiento</a>
-                                        <a href="#" class="btn btn-default visible-lg-block visible-md-block">Ejecucion</a>
-                                        <a href="#" class="btn btn-default visible-lg-block visible-md-block">Monitoreo y Control</a>
-                                        <div class="btn btn-info"><b>Cierre</b></div>
+                                        @foreach($etapas as $etapa)
+                                            <a href="javascript:void(0)" class="btn {{ $etapa->nombre == $proyecto->etapa->nombre ? 'btn-info' : 'btn-default'}}" wire:click="cambiarEtapa({{ $etapa->id }})">{{$etapa->nombre}}</a>
+                                        @endforeach
                                     </div>
                                 </div>
                             </div>
@@ -394,6 +394,9 @@
                 noty(msg)
             });
             window.livewire.on('pedido-creado', msg =>{
+                noty(msg)
+            });
+            window.livewire.on('update-etapa', msg =>{
                 noty(msg)
             });
         });

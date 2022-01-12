@@ -12,6 +12,17 @@ class CreateCotizacion implements CreatesCotizaciones
 {
     public function create(array $input)
     {
+        $validatedData = Validator::make($input, [
+            'atendido' => 'required',
+            'fecha_inicio' => 'required',
+            'fecha_fin' => 'required',
+        ],
+            [
+                'atendido.required' => 'La persona atendida es requerido',
+                'fecha_inicio.required' => 'El fecha de inicio es requerido',
+                'fecha_fin.required' => 'El fecha de fin es requerido',
+            ])->validate();
+
         DB::transaction(function() use ($input) {
             $cotizacion = Cotizacion::create([
                 'cliente_id'    => $input['cliente_id'],

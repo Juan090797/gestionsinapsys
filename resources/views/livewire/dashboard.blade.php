@@ -26,10 +26,10 @@
             </div>
             <div class="col-md-3 col-sm-6 col-12">
                 <div class="info-box">
-                    <span class="info-box-icon bg-info"><i class="fa fa-phone"></i></span>
+                    <span class="info-box-icon bg-info" wire:click="proveedor"><i class="fas fa-truck"></i></span>
                     <div class="info-box-content">
-                        <span class="info-box-text">Contactos</span>
-                        <span class="info-box-number">{{count($contactos)}}</span>
+                        <span class="info-box-text">Proveedores</span>
+                        <span class="info-box-number">{{count($proveedores)}}</span>
                     </div>
                 </div>
             </div>

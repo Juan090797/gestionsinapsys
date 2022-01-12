@@ -68,7 +68,6 @@ Numero de Cta. Detracciones (Bco. Nacion): 00-051-159853',
         $this->billedTo = Cliente::getBillingInfo($clientId)->toArray();
     }
 
-
     public function createInvoice(CreatesCotizaciones $creator)
     {
         $ide = $this->state['proyecto_id'];
@@ -85,7 +84,6 @@ Numero de Cta. Detracciones (Bco. Nacion): 00-051-159853',
         ));
 
         $this->emit('cotizacion-ok', 'Cotizacion creado con Exito');
-
         return redirect()->route('proyecto.show', $ide);
     }
 

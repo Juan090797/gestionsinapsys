@@ -7,6 +7,7 @@ use App\Models\Archivo;
 use App\Models\Cliente;
 use App\Models\Comentario;
 use App\Models\Cotizacion;
+use App\Models\Etapa;
 use App\Models\Pedido;
 use App\Models\PedidoDetalle;
 use App\Models\Proyecto;
@@ -23,19 +24,38 @@ class ShowProyecto extends Component
     use WithFileUploads;
 
     public $state = [];
-
     public $proyecto, $canti, $selected_id, $productoid,$total, $itemsQuantity, $contenido, $archivo, $codigo, $archivo_c;
+    public $archivos, $comentarios, $cotizaciones, $users, $clientes,$etapas;
+
+    protected $listeners = ['deleteRow' => 'Destroy', 'delete' => 'eliminarCotizacion', 'create' => 'CrearPedido'];
 
     public function mount(Proyecto $proyecto)
     {
         $this->state = $proyecto->toArray();
         $this->proyecto = $proyecto;
+    }
+    public function render()
+    {
+        $this->update();
+        $this->indexPage();
+        return view('livewire.proyectos.show')->extends('layouts.tema.app')->section('content');
+    }
+    public function indexPage()
+    {
         $this->total = 0;
         $this->itemsQuantity = 0;
         $this->selected_id = 0;
         $this->canti = 0;
     }
-
+    public function update()
+    {
+        $this->archivos();
+        $this->comentarios();
+        $this->cotizaciones();
+        $this->users();
+        $this->clientes();
+        $this->etapas();
+    }
     public function createArchivo()
     {
         $rules = [
@@ -55,15 +75,42 @@ class ShowProyecto extends Component
         $this->archivo = '';
         $this->emit('archivo-added', 'Archivo Registrado');
     }
-
-    protected $listeners = ['deleteRow' => 'Destroy', 'delete' => 'eliminarCotizacion', 'create' => 'CrearPedido'];
-
+    public function archivos()
+    {
+        $this->archivos = Archivo::where('proyecto_id', $this->proyecto->id)->get();
+    }
+    public function comentarios()
+    {
+        $this->comentarios = Comentario::where('proyecto_id', $this->proyecto->id )->latest()->get();
+    }
+    public function cotizaciones()
+    {
+        $this->cotizaciones = Cotizacion::where('proyecto_id', $this->proyecto->id)->get();
+    }
+    public function users()
+    {
+        $this->users = User::all();
+    }
+    public function clientes()
+    {
+        $this->clientes = Cliente::all();
+    }
+    public function etapas()
+    {
+        $this->etapas = Etapa::all();
+    }
+    public function cambiarEtapa(Etapa $etapa)
+    {
+        $this->proyecto->update([
+            'etapa_id' => $etapa->id,
+        ]);
+        $this->emit('update-etapa', 'Se actualizo la etapa');
+    }
     public function Destroy(Archivo $archivo)
     {
         $archivo->delete();
         $this->emit('archivo-deleted', 'Archivo Eliminado');
     }
-
     public function CrearPedido(Cotizacion $cotizacion)
     {
         if(Pedido::count() > 0){
@@ -112,19 +159,16 @@ class ShowProyecto extends Component
         }
         $this->emit('pedido-creado', 'Pedido Creado');
     }
-
     public function eliminarCotizacion(DeletesCotizaciones $deleter, Cotizacion $cotizacion)
     {
         $deleter->delete($cotizacion);
         $this->emit('cotizacion-deleted', 'Cotizacion Eliminada');
     }
-
     public function descarga($id)
     {
         $ardesc = Archivo::where('id', $id)->pluck('archivo')->all();
         return Storage::disk('local')->download('archivos/'.$ardesc[0]);
     }
-
     public function createComentario()
     {
         $rules = [
@@ -159,39 +203,14 @@ class ShowProyecto extends Component
         $this->archivo_c = '';
         $this->emit('comentario-added', 'Comentario Registrado');
     }
-
     public function descargaArchivoComentario(Comentario $comentario)
     {
         $ardescargacomentario = $comentario->archivo_c;
         return Storage::disk('local')->download('archivoscomentarios/'.$ardescargacomentario);
     }
-
     public function resetUI()
     {
         $this->contenido = '';
-    }
-
-    public function render()
-    {
-        $proyecto = $this->proyecto;
-        $cotizaciones = Cotizacion::where('proyecto_id', $proyecto->id)->get();
-        $archivos = Archivo::where('proyecto_id', $proyecto->id)->get();
-        $comentarios = Comentario::where('proyecto_id', $proyecto->id )->latest()->get();
-        $f1 = $proyecto->fecha_inicio;
-        $f2 = $proyecto->fecha_fin;
-        $diff = abs(strtotime($f2) - strtotime($f1));
-        $years = floor($diff / (365*60*60*24));
-        $months = floor(($diff - $years * 365*60*60*24) / (30*60*60*24));
-        $days = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24)/ (60*60*24));
-
-        return view('livewire.proyectos.show', [
-            'users' => User::all(),
-            'day' => $days,
-            'clientes' => Cliente::all(),
-            'cotizaciones' => $cotizaciones,
-            'comentarios' => $comentarios,
-            'archivos' => $archivos
-        ])->extends('layouts.tema.app')->section('content');
     }
 
 }

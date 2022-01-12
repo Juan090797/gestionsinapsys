@@ -50,7 +50,7 @@
                     @foreach($pedidos as $pedido)
                         <tr>
                             <th>
-                                @if($pedido->estado == 'Facturado' || $pedido->estado == 'Anulado')
+                                @if($pedido->estado == 'Facturado' || $pedido->estado == 'Anulado' || $pedido->estado == 'Facturado')
                                     <input type="checkbox" wire:model="selectedProducts" value="{{ $pedido->id }}" disabled>
                                 @else
                                     <input type="checkbox" wire:model="selectedProducts" value="{{ $pedido->id }}">
@@ -58,9 +58,11 @@
                             </th>
                             <th scope="row">
                                 @if($pedido->estado == 'Facturado')
-                                    <span class="badge badge-secondary">{{$pedido->estado}}</span>
+                                    <span class="badge badge-primary">{{$pedido->estado}}</span>
                                 @elseif($pedido->estado == 'Anulado')
                                     <span class="badge badge-danger">{{$pedido->estado}}</span>
+                                @elseif($pedido->estado == 'Despachado')
+                                    <span class="badge badge-info">{{$pedido->estado}}</span>
                                 @else
                                     <span class="badge badge-success">{{$pedido->estado}}</span>
                                 @endif
@@ -246,8 +248,8 @@
                                     @foreach($ped->pedidoDetalle as $p)
                                         <tr>
                                             <th scope="row">{{$loop->iteration}}</th>
-                                            <td class="text-center">{{$p->producto->nombre}}</td>
-                                            <th class="text-center">{{$p->producto->codigo}}</th>
+                                            <td class="text-left">{{$p->producto->nombre}}</td>
+                                            <th class="text-left">{{$p->producto->codigo}}</th>
                                             <td class="text-center">{{$p->cantidad}}</td>
                                             <td class="text-center">S/ {{$p->precio_u}}</td>
                                             <td class="text-center">S/ {{$p->precio_t}}</td>

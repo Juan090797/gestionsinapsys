@@ -3,18 +3,20 @@
 namespace App\Http\Livewire;
 
 use App\Models\Cliente;
-use App\Models\Contacto;
 use App\Models\Producto;
+use App\Models\Proveedor;
 use App\Models\Proyecto;
-use App\Models\User;
-use Carbon\Carbon;
 use Livewire\Component;
-use DB;
 use LaravelDaily\LaravelCharts\Classes\LaravelChart;
 
 class Dashboard extends Component
 {
+    public $clientes,$productos,$proveedores,$proyectos;
 
+    public function proveedor()
+    {
+        return redirect()->to('proveedores');
+    }
     public function cliente()
     {
         return redirect()->to('clientes');
@@ -29,6 +31,7 @@ class Dashboard extends Component
     }
     public function render()
     {
+        $this->update();
         $chart_options = [
             'chart_title' => 'Ingresos de ventas por dia',
             'report_type' => 'group_by_date',
@@ -71,14 +74,35 @@ class Dashboard extends Component
 
         return view('livewire.dashboard',
         [
-            'contactos' => Contacto::all(),
-            'clientes' => Cliente::all(),
-            'productos' => Producto::all(),
-            'proyectos' => Proyecto::all(),
             'chart1'   => $chart1,
             'chart2'   => $chart2,
             'chart3'   => $chart3,
         ]
         )->extends('layouts.tema.app')->section('content');
+    }
+
+    public function update()
+    {
+        $this->clientes();
+        $this->productos();
+        $this->proyectos();
+        $this->proveedores();
+    }
+
+    public function clientes()
+    {
+        $this->clientes = Cliente::all();
+    }
+    public function productos()
+    {
+        $this->productos = Producto::all();
+    }
+    public function proyectos()
+    {
+        $this->proyectos = Proyecto::all();
+    }
+    public function proveedores()
+    {
+        $this->proveedores = Proveedor::all();
     }
 }

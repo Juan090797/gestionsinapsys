@@ -24,11 +24,12 @@ class CreateProyectosTable extends Migration
             $table->date('fecha_fin')->nullable();
             $table->foreignId('cliente_id')->constrained();
             $table->foreignId('user_id')->constrained();
+            $table->foreignId('etapa_id')->constrained();
             $table->timestamps();
         });
     }
 
-    /**
+    /**.0
      * Reverse the migrations.
      *
      * @return void

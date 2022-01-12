@@ -19,15 +19,87 @@ class MarcasSeeder extends Seeder
             'estado' => 'ACTIVO'
         ]);
         DB::table('marcas')->insert([
-            'nombre' => 'Lmb',
+            'nombre' => 'Yamato',
             'estado' => 'ACTIVO'
         ]);
         DB::table('marcas')->insert([
-            'nombre' => 'Mpw',
+            'nombre' => 'Bell',
+            'estado' => 'ACTIVO'
+        ]);
+        DB::table('marcas')->insert([
+            'nombre' => 'MPW',
+            'estado' => 'ACTIVO'
+        ]);
+        DB::table('marcas')->insert([
+            'nombre' => 'LMB',
+            'estado' => 'ACTIVO'
+        ]);
+        DB::table('marcas')->insert([
+            'nombre' => 'Polyscience',
+            'estado' => 'ACTIVO'
+        ]);
+        DB::table('marcas')->insert([
+            'nombre' => 'Fiochetti',
+            'estado' => 'ACTIVO'
+        ]);
+        DB::table('marcas')->insert([
+            'nombre' => 'Pobel',
+            'estado' => 'ACTIVO'
+        ]);
+        DB::table('marcas')->insert([
+            'nombre' => 'Convergent',
+            'estado' => 'ACTIVO'
+        ]);
+        DB::table('marcas')->insert([
+            'nombre' => 'Astell',
+            'estado' => 'ACTIVO'
+        ]);
+        DB::table('marcas')->insert([
+            'nombre' => 'Giorgio Bormac',
+            'estado' => 'ACTIVO'
+        ]);
+        DB::table('marcas')->insert([
+            'nombre' => 'Heathrow',
+            'estado' => 'ACTIVO'
+        ]);
+        DB::table('marcas')->insert([
+            'nombre' => 'Mobercas',
+            'estado' => 'ACTIVO'
+        ]);
+        DB::table('marcas')->insert([
+            'nombre' => 'Biobase',
+            'estado' => 'ACTIVO'
+        ]);
+        DB::table('marcas')->insert([
+            'nombre' => 'Angelantoni',
+            'estado' => 'ACTIVO'
+        ]);
+        DB::table('marcas')->insert([
+            'nombre' => 'Shinva',
+            'estado' => 'ACTIVO'
+        ]);
+        DB::table('marcas')->insert([
+            'nombre' => 'Lifotronic',
+            'estado' => 'ACTIVO'
+        ]);
+        DB::table('marcas')->insert([
+            'nombre' => 'Argolab',
+            'estado' => 'ACTIVO'
+        ]);
+        DB::table('marcas')->insert([
+            'nombre' => 'Biosan',
+            'estado' => 'ACTIVO'
+        ]);
+        DB::table('marcas')->insert([
+            'nombre' => 'Dialab',
             'estado' => 'ACTIVO'
         ]);
         DB::table('marcas')->insert([
             'nombre' => 'Wasserlab',
+            'estado' => 'ACTIVO'
+        ]);
+        DB::table('marcas')->insert([
+            'nombre' => 'Xs instruments',
             'estado' => 'ACTIVO'
         ]);
     }

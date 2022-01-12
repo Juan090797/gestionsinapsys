@@ -4,17 +4,21 @@ namespace App\Http\Controllers;
 
 use App\Imports\ClienteImport;
 use App\Imports\ProductosImport;
+use App\Imports\ProveedorImport;
 use Illuminate\Http\Request;
-use Maatwebsite\Excel\Facades\Excel;
-
 
 class ImportController extends Controller
 {
-
     public function importCliente(Request $request)
     {
-        Excel::import(new ClienteImport(), $request->file);
-        return back()->withInput();
+        $import = new ClienteImport();
+        $import->import($request->file);
+
+        if ($import->failures()->isNotEmpty())
+        {
+            return back()->withFailures($import->failures());
+        }
+        return back()->with('message', "La importacion fue satisfactoria");
     }
 
     public function importProducto(Request $request)
@@ -26,8 +30,18 @@ class ImportController extends Controller
         {
             return back()->withFailures($import->failures());
         }
-
         return back()->with('message', "La importacion fue satisfactoria");
+    }
 
+    public function importProveedor(Request $request)
+    {
+        $import = new ProveedorImport();
+        $import->import($request->file);
+
+        if ($import->failures()->isNotEmpty())
+        {
+            return back()->withFailures($import->failures());
+        }
+        return back()->with('message', "La importacion fue satisfactoria");
     }
 }

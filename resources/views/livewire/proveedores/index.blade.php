@@ -10,6 +10,22 @@
                     <div class="col-4">
                         <input wire:model="search" class="form-control" placeholder="Buscar por ruc">
                     </div>
+                    <div class="col-4">
+                    </div>
+                    <div class="col-4">
+                        <form method="post" action="{{url('proveedors/imports/')}}" enctype="multipart/form-data">
+                            {{csrf_field()}}
+                            <div class="input-group">
+                                <div class="custom-file">
+                                    <input name="file" type="file" class="custom-file-input" required>
+                                    <label name="file" id="file" class="custom-file-label">Seleccionar archivo excel ....</label>
+                                </div>
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary" type="submit">Cargar</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
             <div class="card-body">
@@ -32,12 +48,12 @@
                         <tr>
                             <th scope="row">{{$proveedores->firstItem() + $index}}</th>
                             <td class="text-center">{{$proveedor->ruc}}</td>
-                            <td class="text-center">{{$proveedor->razon_social}}</td>
-                            <td class="text-center">{{$proveedor->telefono}}</td>
-                            <td class="text-center">{{$proveedor->correo}}</td>
-                            <td class="text-center">{{$proveedor->pagina_web}}</td>
+                            <td class="text-left">{{$proveedor->razon_social}}</td>
+                            <td class="text-left">{{$proveedor->telefono}}</td>
+                            <td class="text-left">{{$proveedor->correo}}</td>
+                            <td class="text-left">{{$proveedor->pagina_web}}</td>
                             <td class="text-center">{{$proveedor->tipo->nombre}}</td>
-                            <td class="text-center"><span class="badge {{ $proveedor->estado == 'Activo' ? 'badge-success' : 'badge-danger'}}">{{$proveedor->estado}}</span></td>
+                            <td class="text-center"><span class="badge {{ $proveedor->estado == 'ACTIVO' ? 'badge-success' : 'badge-danger'}}">{{$proveedor->estado}}</span></td>
                             <td class="text-center">
                                 <a href="javascript:void(0)"  wire:click="Edit({{ $proveedor->id }})" class="btn btn-primary" title="Edit">
                                     <i class="fas fa-pencil-alt" aria-hidden="true"></i>

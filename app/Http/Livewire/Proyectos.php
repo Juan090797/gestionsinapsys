@@ -53,7 +53,7 @@ class Proyectos extends Component
             'fecha_inicio' => 'required',
             'fecha_fin' => 'required',
             'cliente_id' => 'required',
-            'user_id' => 'required'
+            'user_id' => 'required',
         ],[
             'nombre.required' => 'Nombre del proyecto es requerido',
             'nombre.unique' => 'Ya existe el nombre del proyecto',
@@ -67,7 +67,7 @@ class Proyectos extends Component
             'cliente_id.required' => 'El cliente es requerido'
 
         ])->validate();
-
+        $validated['etapa_id'] = 1;
         Proyecto::create($validated);
 
         $this->resetUI();

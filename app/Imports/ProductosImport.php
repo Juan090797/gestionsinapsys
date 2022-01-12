@@ -21,12 +21,15 @@ class ProductosImport implements ToModel, SkipsEmptyRows, WithHeadingRow, WithVa
     {
         return new Producto([
             'codigo'            => $row['codigo'],
+            'nombre'            => $row['nombre'],
             'modelo'            => $row['modelo'],
+            'estado'            => $row['estado'],
             'descripcion'       => $row['descripcion'],
-            'precio'            => $row['precio'],
+            'precio_venta'      => $row['precio_venta'],
             'tipo'              => $row['tipo'],
             'marca_id'          => $row['marca'],
-            'familia_id'        => $row['equipo'],
+            'clasificacions_id' => $row['clasificacion'],
+            'unidad_medidas_id' => $row['unidad_medidas'],
         ]);
     }
 

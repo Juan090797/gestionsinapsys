@@ -96,10 +96,10 @@
                             <td class="text-center">{{$producto->clasificacion->nombre}}</td>
                             <td class="text-center">{{$producto->unidad->nombre}}</td>
                             <td class="text-center">{{$producto->marca->nombre}}</td>
-                            <td class="text-center">{{$producto->modelo}}</td>
+                            <td class="text-left">{{$producto->modelo}}</td>
                             <td>{{ Illuminate\Support\Str::limit($producto->descripcion, 100, $end='...') }}</td>
                             <td class="text-center">S/ {{$producto->precio_venta}}</td>
-                            <td class="text-center">{{$producto->tipo}}</td>
+                            <td class="text-left">{{$producto->tipo}}</td>
                             <td class="text-center"><span class="badge {{ $producto->stock > 0 ? 'badge-success' : 'badge-danger'}}">{{$producto->stock > 0 ? $producto->stock : 'sin stock' }}</span></td>
                             <td class="text-center">
                                 <a href="javascript:void(0)"  wire:click="Edit({{ $producto->id }})" class="btn btn-primary" title="Editar"><i class="fas fa-pencil-alt" aria-hidden="true"></i></a>
