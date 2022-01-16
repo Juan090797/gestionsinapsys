@@ -1,21 +1,22 @@
 <div>
     @section('cabezera-contenido')
-        <h1>Lista de Guias de Salidas</h1>
+        <h1>Lista de guias de salidas</h1>
     @endsection
     <div class="content-fluid">
         <div class="card">
             <div class="card-header">
                 <div class="row">
                     <div class="col-4">
-                        <input wire:model="search" class="form-control" placeholder="Buscar por nombre">
-                    </div>
-                    <div class="col-4">
                         <a href="javascript:void(0)" class="btn btn-success" wire:click="AprobarMovimiento()">Aprobar</a>
+                    </div>
+                    <div class="col-4"></div>
+                    <div class="col-4">
+                        <input wire:model="search" class="form-control" placeholder="Buscar por nombre">
                     </div>
                 </div>
             </div>
-            <div class="card-body">
-                <table class="table">
+            <div class="card-body table-responsive">
+                <table class="table table-sm table-hover">
                     <thead class="thead-dark">
                     <tr>
                         <th scope="col"></th>
@@ -25,8 +26,8 @@
                         <th class="text-center">Cliente</th>
                         <th class="text-center">Tipo Doc. Refer.</th>
                         <th class="text-center">Doc. Referencia</th>
-                        <th class="text-center">ESTADO</th>
-                        <th class="text-center">ACCIONES</th>
+                        <th class="text-center">Estado</th>
+                        <th class="text-center">Acciones</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -58,7 +59,7 @@
                     @endforeach
                     </tbody>
                 </table>
-                <div class="py-3">
+                <div class="py-3 float-right">
                     {{$ingresos->links()}}
                 </div>
             </div>
@@ -91,17 +92,17 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
-                                <table class="table">
+                            <div class="row table-responsive">
+                                <table class="table table-sm table-hover">
                                     <thead class="thead-dark">
-                                    <tr>
-                                        <th scope="col">#</th>
-                                        <th class="text-center">Producto</th>
-                                        <th class="text-center">Codigo</th>
-                                        <th class="text-center">Marca</th>
-                                        <th class="text-center">Cantidad</th>
-                                        <th class="text-center">UM</th>
-                                    </tr>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th class="text-center">Producto</th>
+                                            <th class="text-center">Codigo</th>
+                                            <th class="text-center">Marca</th>
+                                            <th class="text-center">UM</th>
+                                            <th class="text-center">Cantidad</th>
+                                        </tr>
                                     </thead>
                                     <tbody>
                                     @foreach($ped->movimientoDetalles as $p)
@@ -110,8 +111,8 @@
                                             <td class="text-center">{{$p->producto->nombre}}</td>
                                             <th class="text-center">{{$p->producto->codigo}}</th>
                                             <th class="text-center">{{$p->producto->marca->nombre}}</th>
-                                            <td class="text-center">{{$p->cantidad}}</td>
                                             <td class="text-center">{{$p->producto->unidad->nombre}}</td>
+                                            <td class="text-center">{{$p->cantidad}}</td>
                                         </tr>
                                     @endforeach
                                     </tbody>
@@ -120,7 +121,7 @@
                             <div class="row">
                                 <div class="col-6"></div>
                                 <div class="col-6">
-                                    <table class="table">
+                                    <table class="table table-sm">
                                         <tbody>
                                         <tr>
                                             <td class="text-right">Total items:</td>

@@ -6,20 +6,24 @@
     <div class="content-fluid">
         <div class="card">
             <div class="card-header">
-                <div class="row">
-                    <div class="col-4">
-                        <input wire:model="search" class="form-control" placeholder="Buscar por nombre">
+                <div class="row justify-content-end">
+                    <div class="col-3">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Buscar por nombre" wire:model="search">
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="card-body">
-                <table class="table">
+            <div class="card-body table-responsive">
+                <table class="table table-sm table-hover">
                     <thead class="thead-dark">
                     <tr>
                         <th scope="col">#ID</th>
-                        <th class="text-center">NOMBRE</th>
-                        <th class="text-center">ESTADO</th>
-                        <th class="text-center">ACCIONES</th>
+                        <th class="text-center">Nombre</th>
+                        <th class="text-center">Estado</th>
+                        <th class="text-center">Fecha Creado</th>
+                        <th class="text-center">Fecha Actualizacion</th>
+                        <th class="text-center">Acciones</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -28,6 +32,8 @@
                             <th scope="row">{{$industrias->firstItem() + $index}}</th>
                             <td class="text-center">{{$industria->nombre}}</td>
                             <td class="text-center"><span class="badge {{ $industria->estado == 'ACTIVO' ? 'badge-success' : 'badge-danger'}}">{{$industria->estado}}</span></td>
+                            <td class="text-center">{{$industria->created_at}}</td>
+                            <td class="text-center">{{$industria->updated_at}}</td>
                             <td class="text-center">
                                 <a href="javascript:void(0)"  wire:click="Edit({{ $industria->id }})" class="btn btn-primary" title="Edit">
                                     <i class="fas fa-pencil-alt" aria-hidden="true"></i>
@@ -40,7 +46,7 @@
                     @endforeach
                     </tbody>
                 </table>
-                <div class="py-3">
+                <div class="py-3 float-right">
                     {{$industrias->links()}}
                 </div>
             </div>

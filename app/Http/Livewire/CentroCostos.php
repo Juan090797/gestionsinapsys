@@ -9,21 +9,17 @@ class CentroCostos extends ComponenteBase
 {
     public $selected_id;
     public $state = [];
+    protected $listeners = ['deleteRow' => 'Destroy'];
 
-    public function mount()
-    {
-        $this->selected_id = 0;
-    }
     public function render()
     {
-        $costos = CentroCosto::orderBy('id', 'desc')->paginate($this->pagination);
-        return view('livewire.centrocostos.index', ['costos' => $costos])->extends('layouts.tema.app')->section('content');
+        $data = CentroCosto::orderBy('id', 'desc')->paginate($this->pagination);
+        return view('livewire.centrocostos.index', ['costos' => $data])->extends('layouts.tema.app')->section('content');
     }
     public function Edit(CentroCosto $centroCosto)
     {
         $this->selected_id = $centroCosto->id;
         $this->state = $centroCosto->toArray();
-
         $this->emit('show-modal', 'show-modal!');
     }
 
@@ -44,7 +40,7 @@ class CentroCostos extends ComponenteBase
         $this->emit('marca-added', 'Tipo de proveedor Registrado');
     }
 
-    public function Update()
+    public function actualizar()
     {
         $validated = Validator::make($this->state, [
             'nombre' => "required||min:3|unique:centro_costos,nombre,{$this->selected_id}",
@@ -60,7 +56,6 @@ class CentroCostos extends ComponenteBase
         $centroCosto->update($validated);
         $this->resetUI();
         $this->emit('marca-updated', 'Centro de costo actualizado');
-
     }
 
     public function resetUI()
@@ -69,7 +64,6 @@ class CentroCostos extends ComponenteBase
         $this->selected_id = 0;
         $this->resetValidation();
     }
-    protected $listeners = ['deleteRow' => 'Destroy'];
 
     public function Destroy(CentroCosto $centroCosto)
     {

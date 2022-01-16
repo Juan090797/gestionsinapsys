@@ -6,33 +6,39 @@
     <div class="content-fluid">
         <div class="card">
             <div class="card-header">
-                <div class="row">
-                    <div class="col-4">
-                        <input wire:model="search" class="form-control" placeholder="Buscar por nombre">
+                <div class="row justify-content-end">
+                    <div class="col-3">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Buscar por nombre" wire:model="search">
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="card-body">
-                <table class="table">
+            <div class="card-body table-responsive">
+                <table class="table table-sm table-hover">
                     <thead class="thead-dark">
                     <tr>
                         <th scope="col">#ID</th>
-                        <th class="text-center">NOMBRE</th>
-                        <th class="text-center">ESTADO</th>
-                        <th class="text-center">ACCIONES</th>
+                        <th class="text-center">Nombre</th>
+                        <th class="text-center">Estado</th>
+                        <th class="text-center">Fecha creado</th>
+                        <th class="text-center">Fecha actualizado</th>
+                        <th class="text-center">Acciones</th>
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach($clasificacions as $clasificacion)
+                    @foreach($clasificacions as $index => $clasificacion)
                         <tr>
-                            <th scope="row">{{$clasificacion->id}}</th>
+                            <th scope="row">{{$clasificacions->firstItem() + $index}}</th>
                             <td class="text-center">{{$clasificacion->nombre}}</td>
                             <td class="text-center"><span class="badge {{ $clasificacion->estado == 'ACTIVO' ? 'badge-success' : 'badge-danger'}}">{{$clasificacion->estado}}</span></td>
+                            <td class="text-center">{{$clasificacion->created_at}}</td>
+                            <td class="text-center">{{$clasificacion->updated_at}}</td>
                             <td class="text-center">
-                                <a href="javascript:void(0)"  wire:click="Edit({{ $clasificacion->id }})" class="btn btn-primary" title="Edit">
+                                <a href="javascript:void(0)"  wire:click="Edit({{ $clasificacion->id }})" class="btn btn-primary" title="Editar">
                                     <i class="fas fa-pencil-alt" aria-hidden="true"></i>
                                 </a>
-                                <a href="javascript:void(0)" onclick="Confirm('{{ $clasificacion->id }}')" class="btn btn-danger" title="Delet">
+                                <a href="javascript:void(0)" onclick="Confirm('{{ $clasificacion->id }}')" class="btn btn-danger" title="Eliminar">
                                     <i class="fa fa-trash" aria-hidden="true"></i>
                                 </a>
                             </td>
@@ -40,7 +46,7 @@
                     @endforeach
                     </tbody>
                 </table>
-                <div class="py-3">
+                <div class="py-3 float-right">
                 {{$clasificacions->links()}}
                 </div>
             </div>

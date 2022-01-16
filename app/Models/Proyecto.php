@@ -10,11 +10,9 @@ class Proyecto extends Model
 {
     use HasFactory;
 
-    protected  $casts = ['team' => 'array'];
+    protected $casts = ['team' => 'array'];
     protected $guarded = ['id'];
-    protected $appends = [
-        'fecha_dia',
-    ];
+    protected $appends = ['fecha_dia'];
 
     public function user()
     {

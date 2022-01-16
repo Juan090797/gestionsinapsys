@@ -10,11 +10,7 @@ class Usuarios extends ComponenteBase
 {
     public $selected_id;
     public $state = [];
-
-    public function mount()
-    {
-        $this->selected_id = 0;
-    }
+    protected $listeners = ['deleteRow' => 'Destroy'];
 
     public function render()
     {
@@ -26,7 +22,6 @@ class Usuarios extends ComponenteBase
     {
         $this->selected_id = $user->id;
         $this->state = $user->toArray();
-
         $this->emit('show-modal', 'show-modal!');
     }
 
@@ -46,13 +41,12 @@ class Usuarios extends ComponenteBase
         ])->validate();
 
         $validated['password'] = bcrypt('123456');
-
         User::create($validated);
         $this->resetUI();
         $this->emit('user-added', 'Usuario Registrado');
     }
 
-    public function Update()
+    public function actualizar()
     {
         $validated = Validator::make($this->state, [
             'name' => 'required|min:3',
@@ -80,7 +74,6 @@ class Usuarios extends ComponenteBase
         $this->selected_id = 0;
         $this->resetValidation();
     }
-    protected $listeners = ['deleteRow' => 'Destroy'];
 
     public function Destroy(User $user)
     {

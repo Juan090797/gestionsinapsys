@@ -4,23 +4,13 @@ namespace App\Http\Livewire;
 
 use App\Models\Proveedor;
 use Illuminate\Support\Facades\Validator;
-use Livewire\Component;
-use Livewire\WithPagination;
 use App\Models\TipoProveedor;
 
-class Proveedores extends Component
+class Proveedores extends ComponenteBase
 {
-    use WithPagination;
-
     public $search, $selected_id;
     public $state = [];
-    Private $pagination = 10;
-    protected $paginationTheme = 'bootstrap';
-
-    public function mount()
-    {
-        $this->selected_id = 0;
-    }
+    protected $listeners = ['deleteRow' => 'Destroy'];
 
     public function  updatingSearch()
     {
@@ -29,16 +19,23 @@ class Proveedores extends Component
 
     public function render()
     {
-        $tipos = TipoProveedor::all();
-
-        if(strlen($this->search) > 0) {
+        $this->update();
+        if(strlen($this->search) > 3) {
             $data = Proveedor::where('ruc', 'like', '%' . $this->search . '%')->paginate($this->pagination);
         }else {
             $data = Proveedor::orderBy('id', 'desc')->paginate($this->pagination);
         }
-        return view('livewire.proveedores.index', ['proveedores' => $data, 'tipos' => $tipos])->extends('layouts.tema.app')->section('content');
+        return view('livewire.proveedores.index', ['proveedores' => $data])->extends('layouts.tema.app')->section('content');
+    }
+    public function update()
+    {
+        $this->tipos();
     }
 
+    public function tipos()
+    {
+        $this->tipos = TipoProveedor::all();
+    }
     public function Edit(Proveedor $proveedor)
     {
         $this->selected_id = $proveedor->id;
@@ -77,7 +74,7 @@ class Proveedores extends Component
         $this->emit('proveedor-added', 'Proveedor Registrado');
     }
 
-    public function Update()
+    public function actualizar()
     {
         $validated = Validator::make($this->state, [
             'ruc'                   => "required||min:11|unique:proveedors,ruc,{$this->selected_id}",
@@ -117,7 +114,6 @@ class Proveedores extends Component
         $this->selected_id = 0;
         $this->resetValidation();
     }
-    protected $listeners = ['deleteRow' => 'Destroy'];
 
     public function Destroy(Proveedor $proveedor)
     {

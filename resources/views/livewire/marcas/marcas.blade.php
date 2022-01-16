@@ -6,21 +6,25 @@
     <div class="content-fluid">
         <div class="card">
             <div class="card-header">
-                <div class="row">
-                    <div class="col-4">
-                        <input wire:model="search" class="form-control" placeholder="Buscar por nombre">
+                <div class="row justify-content-end">
+                    <div class="col-3">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Buscar por nombre" wire:model="search">
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="card-body">
-                <table class="table">
+            <div class="card-body table-responsive">
+                <table class="table table-sm table-hover">
                     <thead class="thead-dark">
-                    <tr>
-                        <th scope="col">#ID</th>
-                        <th class="text-center">NOMBRE</th>
-                        <th class="text-center">ESTADO</th>
-                        <th class="text-center">ACCIONES</th>
-                    </tr>
+                        <tr>
+                            <th scope="col">#ID</th>
+                            <th class="text-center">Nombre</th>
+                            <th class="text-center">Estado</th>
+                            <th class="text-center">Fecha Creado</th>
+                            <th class="text-center">Fecha Actualizado</th>
+                            <th class="text-center">Acciones</th>
+                        </tr>
                     </thead>
                     <tbody>
                     @foreach($marcas as $index => $marca)
@@ -28,6 +32,8 @@
                             <th scope="row">{{$marcas->firstItem() + $index}}</th>
                             <td class="text-center">{{$marca->nombre}}</td>
                             <td class="text-center"><span class="badge {{ $marca->estado == 'ACTIVO' ? 'badge-success' : 'badge-danger'}}">{{$marca->estado}}</span></td>
+                            <td class="text-center">{{$marca->created_at}}</td>
+                            <td class="text-center">{{$marca->updated_at}}</td>
                             <td class="text-center">
                                 <a href="javascript:void(0)"  wire:click="Edit({{ $marca->id }})" class="btn btn-primary" title="Edit">
                                     <i class="fas fa-pencil-alt" aria-hidden="true"></i>
@@ -40,7 +46,7 @@
                     @endforeach
                     </tbody>
                 </table>
-                <div class="py-3">
+                <div class="py-3 float-right">
                     {{$marcas->links()}}
                 </div>
             </div>

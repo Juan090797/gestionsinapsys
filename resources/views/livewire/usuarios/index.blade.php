@@ -1,12 +1,12 @@
 <div>
     @section('cabezera-contenido')
         <a href="javascript:void(0)" class="btn btn-primary float-right" data-toggle="modal" data-target="#theModal">Agregar</a>
-        <h1>Lista de Usuarios</h1>
+        <h1>Lista de usuarios</h1>
     @endsection
     <div class="content-fluid">
         <div class="card">
-            <div class="card-body">
-                <table class="table">
+            <div class="card-body table-responsive">
+                <table class="table table-sm table-hover">
                     <thead class="thead-dark">
                     <tr>
                         <th scope="col">#ID</th>
@@ -37,7 +37,7 @@
                     @endforeach
                     </tbody>
                 </table>
-                <div class="py-3">
+                <div class="py-3 float-right">
                     {{$usuarios->links()}}
                 </div>
             </div>

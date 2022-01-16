@@ -52,12 +52,6 @@
             <div class="card-header">
                 <div class="row">
                     <div class="col-md-4 col-sm-12">
-                        <input wire:model="search" class="form-control" placeholder="Buscar por codigo, descripcion o  modelo del producto">
-                    </div>
-                    <div class="col-md-4 col-sm-12">
-                        <a class="btn btn-success" href="{{ url('productos/exports/') }}"><i class="fas fa-file-excel"></i> Excel</a>
-                    </div>
-                    <div class="col-md-4 col-sm-12">
                         <form method="post" action="{{url('productos/imports/')}}" enctype="multipart/form-data">
                             {{csrf_field()}}
                             <div class="input-group">
@@ -71,10 +65,16 @@
                             </div>
                         </form>
                     </div>
+                    <div class="col-md-4 col-sm-12">
+                        <a class="btn btn-success" href="{{ url('productos/exports/') }}"><i class="fas fa-file-excel"></i> Excel</a>
+                    </div>
+                    <div class="col-md-4 col-sm-12">
+                        <input class="form-control" placeholder="Buscar por codigo, descripcion o  modelo del producto" wire:model="search">
+                    </div>
                 </div>
             </div>
-            <div class="card-body">
-                <table class="table">
+            <div class="card-body table-responsive">
+                <table class="table table-sm table-hover">
                     <thead class="thead-dark">
                     <tr>
                         <th scope="col">Codigo</th>
@@ -97,7 +97,7 @@
                             <td class="text-center">{{$producto->unidad->nombre}}</td>
                             <td class="text-center">{{$producto->marca->nombre}}</td>
                             <td class="text-left">{{$producto->modelo}}</td>
-                            <td>{{ Illuminate\Support\Str::limit($producto->descripcion, 100, $end='...') }}</td>
+                            <td>{{ Illuminate\Support\Str::limit($producto->descripcion, 50, $end='...') }}</td>
                             <td class="text-center">S/ {{$producto->precio_venta}}</td>
                             <td class="text-left">{{$producto->tipo}}</td>
                             <td class="text-center"><span class="badge {{ $producto->stock > 0 ? 'badge-success' : 'badge-danger'}}">{{$producto->stock > 0 ? $producto->stock : 'sin stock' }}</span></td>
@@ -109,7 +109,7 @@
                     @endforeach
                     </tbody>
                 </table>
-                <div class="py-3">
+                <div class="py-3 float-right">
                     {{$productos->links()}}
                 </div>
             </div>

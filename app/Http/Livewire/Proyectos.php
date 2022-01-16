@@ -6,22 +6,14 @@ use App\Models\Cliente;
 use App\Models\Proyecto;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
-use Livewire\Component;
-use Livewire\WithPagination;
 
-class Proyectos extends Component
+class Proyectos extends ComponenteBase
 {
-    use WithPagination;
-
     public $selected_id, $search;
     public $state=[];
-    Private $pagination = 5;
-    protected $paginationTheme = 'bootstrap';
+    public $clientes,$users;
 
-    public function mount()
-    {
-        $this->selected_id = 0;
-    }
+    protected $listeners = ['deleteRow' => 'Destroy'];
 
     public function  updatingSearch()
     {
@@ -30,16 +22,28 @@ class Proyectos extends Component
 
     public function render()
     {
-        if(strlen($this->search) > 0) {
+        $this->update();
+        if(strlen($this->search) > 3) {
             $data = Proyecto::where('nombre', 'like', '%' . $this->search . '%')->paginate($this->pagination);
         }else {
             $data = Proyecto::orderBy('id', 'desc')->paginate($this->pagination);
         }
-        return view('livewire.proyectos.index', [
-            'proyectos' => $data,
-            'clientes'  => Cliente::all(),
-            'users'     => User::all()
-        ])->extends('layouts.tema.app')->section('content');
+        return view('livewire.proyectos.index',['proyectos' => $data])->extends('layouts.tema.app')->section('content');
+    }
+
+    public function update()
+    {
+        $this->clients();
+        $this->users();
+    }
+
+    public function clients()
+    {
+        $this->clientes = Cliente::all();
+    }
+    public function users()
+    {
+        $this->users = User::all();
     }
 
     public function Store()
@@ -76,25 +80,23 @@ class Proyectos extends Component
 
     public function Edit(Proyecto $proyecto)
     {
-        $this->selected_id = $proyecto->id;
-        $this->state = $proyecto->toArray();
-
+        $this->selected_id  = $proyecto->id;
+        $this->state        = $proyecto->toArray();
         $this->emit('show-modal', 'show-modal!');
     }
 
-
-    public function Update()
+    public function actualizar()
     {
         $validated = Validator::make($this->state, [
-            'nombre' => "required||min:3|unique:proyectos,nombre,{$this->selected_id}",
-            'prioridad' => 'required',
-            'team'  => '',
-            'ingreso_estimado' => '',
-            'gasto_estimado'   => '',
-            'fecha_inicio' => '',
-            'fecha_fin' => '',
-            'cliente_id' => '',
-            'user_id' => ''
+            'nombre'            => "required|min:3|unique:proyectos,nombre,{$this->selected_id}",
+            'prioridad'         => 'required',
+            'team'              => '',
+            'ingreso_estimado'  => 'required',
+            'gasto_estimado'    => 'required',
+            'fecha_inicio'      => 'required',
+            'fecha_fin'         => 'required',
+            'cliente_id'        => 'required',
+            'user_id'           => 'required'
         ],[
             'nombre.required' => 'Nombre del proyecto es requerido',
             'nombre.unique' => 'Ya existe el nombre del proyecto',
@@ -108,7 +110,6 @@ class Proyectos extends Component
 
         $this->resetUI();
         $this->emit('proyecto-updated', 'Proyecto Actualizado');
-
     }
 
     public function resetUI()
@@ -118,12 +119,10 @@ class Proyectos extends Component
         $this->selected_id = 0;
         $this->resetValidation();
     }
-    protected $listeners = ['deleteRow' => 'Destroy'];
 
     public function Destroy(Proyecto $proyecto)
     {
         $proyecto->delete();
-
         $this->resetUI();
         $this->emit('proyecto-deleted', 'Proyecto Eliminado');
     }

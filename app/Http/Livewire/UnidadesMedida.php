@@ -2,36 +2,27 @@
 
 namespace App\Http\Livewire;
 
-use Livewire\Component;
 use App\Models\UnidadMedida;
-use Livewire\WithPagination;
 use Illuminate\Support\Facades\Validator;
 
-class UnidadesMedida extends Component
+class UnidadesMedida extends ComponenteBase
 {
-    use WithPagination;
-
     public $search, $selected_id;
     public $state = [];
-    Private $pagination = 5;
-    protected $paginationTheme = 'bootstrap';
+    protected $listeners = ['deleteRow' => 'Destroy'];
 
     public function render()
     {
         $unidades = UnidadMedida::orderBy('id', 'desc')->paginate($this->pagination);
-        return view('livewire.unidades.index', ['unidades' => $unidades])->extends('layouts.tema.app')->section('content');
+        return view('livewire.unidades.index',['unidades' => $unidades])->extends('layouts.tema.app')->section('content');
     }
 
-    public function Edit($id)
+    public function Edit(UnidadMedida $unidadMedida)
     {
-        $unidad = UnidadMedida::find($id);
-        $this->selected_id = $unidad->id;
-        $this->state = $unidad->toArray();
-
+        $this->selected_id = $unidadMedida->id;
+        $this->state = $unidadMedida->toArray();
         $this->emit('show-modal', 'show-modal!');
     }
-
-
     public function Store()
     {
         $validated = Validator::make($this->state, [
@@ -43,12 +34,12 @@ class UnidadesMedida extends Component
             'nombre.min' => 'El nombre de la unidad debe tener al menos 3 caracteres',
             'estado.required' => 'El estado es requerido',
         ])->validate();
+
         UnidadMedida::create($validated);
         $this->resetUI();
         $this->emit('unidad-added', 'Unidad Registrada');
     }
-
-    public function Update()
+    public function actualizar()
     {
         $validated = Validator::make($this->state, [
             'nombre' => "required||min:3|unique:marcas,nombre,{$this->selected_id}",
@@ -65,7 +56,6 @@ class UnidadesMedida extends Component
         $this->resetUI();
         $this->emit('unidad-updated', 'Unidad Actualizada');
     }
-
     public function resetUI()
     {
         $this->state=[];
@@ -73,12 +63,9 @@ class UnidadesMedida extends Component
         $this->selected_id = 0;
         $this->resetValidation();
     }
-    protected $listeners = ['deleteRow' => 'Destroy'];
-
-    public function Destroy($id)
+    public function Destroy(UnidadMedida $unidadMedida)
     {
-        $unidad = UnidadMedida::find($id);
-        $unidad->delete();
+        $unidadMedida->delete();
         $this->resetUI();
         $this->emit('unidad-deleted', 'Unidad Eliminada');
     }

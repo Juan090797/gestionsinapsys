@@ -9,14 +9,14 @@
                     <div class="col-sm-12 col-md-6">
                         <div class="form-group">
                             <label for="nombre">Nombre</label>
-                            <input type="text" wire:model.defer="state.nombre" id="nombre" class="form-control" placeholder="ej: Categoria A">
+                            <input type="text" id="nombre" class="form-control" placeholder="ej: Categoria A" wire:model.defer="state.nombre">
                         </div>
                         @error('nombre') <span class="text-danger er">{{ $message }}</span>@enderror
                     </div>
                     <div class="col-sm-12 col-md-6">
                         <div class="form-group">
                             <label for="estado">Estado</label>
-                            <select wire:model.defer="state.estado" id="estado" class="form-control">
+                            <select id="estado" class="form-control" wire:model.defer="state.estado">
                                 <option value="ELEGIR" selected>Elegir</option>
                                 <option value="ACTIVO" >Activo</option>
                                 <option value="INACTIVO" >Bloqueado</option>

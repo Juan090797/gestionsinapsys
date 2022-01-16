@@ -8,11 +8,6 @@
             <div class="card-header">
                 <div class="row">
                     <div class="col-4">
-                        <input wire:model="search" class="form-control" placeholder="Buscar por ruc">
-                    </div>
-                    <div class="col-4">
-                    </div>
-                    <div class="col-4">
                         <form method="post" action="{{url('proveedors/imports/')}}" enctype="multipart/form-data">
                             {{csrf_field()}}
                             <div class="input-group">
@@ -26,10 +21,15 @@
                             </div>
                         </form>
                     </div>
+                    <div class="col-4">
+                    </div>
+                    <div class="col-4">
+                        <input wire:model="search" class="form-control" placeholder="Buscar por ruc">
+                    </div>
                 </div>
             </div>
-            <div class="card-body">
-                <table class="table">
+            <div class="card-body table-responsive">
+                <table class="table table-sm table-hover">
                     <thead class="thead-dark">
                     <tr>
                         <th scope="col">#ID</th>
@@ -55,10 +55,10 @@
                             <td class="text-center">{{$proveedor->tipo->nombre}}</td>
                             <td class="text-center"><span class="badge {{ $proveedor->estado == 'ACTIVO' ? 'badge-success' : 'badge-danger'}}">{{$proveedor->estado}}</span></td>
                             <td class="text-center">
-                                <a href="javascript:void(0)"  wire:click="Edit({{ $proveedor->id }})" class="btn btn-primary" title="Edit">
+                                <a href="javascript:void(0)"  wire:click="Edit({{ $proveedor->id }})" class="btn btn-primary" title="Editar">
                                     <i class="fas fa-pencil-alt" aria-hidden="true"></i>
                                 </a>
-                                <a href="javascript:void(0)" onclick="Confirm('{{ $proveedor->id }}')" class="btn btn-danger" title="Delet">
+                                <a href="javascript:void(0)" onclick="Confirm('{{ $proveedor->id }}')" class="btn btn-danger" title="Eliminar">
                                     <i class="fa fa-trash" aria-hidden="true"></i>
                                 </a>
                             </td>
@@ -66,7 +66,7 @@
                     @endforeach
                     </tbody>
                 </table>
-                <div class="py-3">
+                <div class="py-3 float-right">
                     {{$proveedores->links()}}
                 </div>
             </div>

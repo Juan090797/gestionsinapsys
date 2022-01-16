@@ -4,30 +4,22 @@ namespace App\Http\Livewire;
 
 use App\Models\Industria;
 use Illuminate\Support\Facades\Validator;
-use Livewire\Component;
-use Livewire\WithPagination;
 
-class Industrias extends Component
+class Industrias extends ComponenteBase
 {
-    use WithPagination;
-
     public $search, $selected_id;
     public $state=[];
-    Private $pagination = 5;
-    protected $paginationTheme = 'bootstrap';
-
-    public function mount()
-    {
-        $this->selected_id = 0;
-    }
+    protected $listeners = ['deleteRow' => 'Destroy'];
 
     public function  updatingSearch()
     {
         $this->resetPage();
     }
+
     public function render()
     {
-        if(strlen($this->search) > 0) {
+        if(strlen($this->search) > 3)
+        {
             $data = Industria::where('nombre', 'like', '%' . $this->search . '%')->paginate($this->pagination);
         }else {
             $data = Industria::orderBy('id', 'desc')->paginate($this->pagination);
@@ -56,15 +48,14 @@ class Industrias extends Component
         ])->validate();
 
         Industria::create($validated);
-
         $this->resetUI();
         $this->emit('industria-added', 'Industria Registrada');
     }
 
-    public function Update()
+    public function actualizar()
     {
         $validated = Validator::make($this->state, [
-            'nombre' => "required||min:3|unique:industrias,nombre,{$this->selected_id}",
+            'nombre' => "required|min:3|unique:industrias,nombre,{$this->selected_id}",
             'estado' => 'required',
         ],[
             'nombre.required' => 'Nombre de la Industria es requerido',
@@ -76,7 +67,6 @@ class Industrias extends Component
 
         $industria = Industria::findOrFail($this->state['id']);
         $industria->update($validated);
-
         $this->resetUI();
         $this->emit('industria-updated', 'Industria Actualizada');
 
@@ -89,7 +79,6 @@ class Industrias extends Component
         $this->selected_id = 0;
         $this->resetValidation();
     }
-    protected $listeners = ['deleteRow' => 'Destroy'];
 
     public function Destroy(Industria $industria)
     {

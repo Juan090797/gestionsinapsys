@@ -250,7 +250,7 @@
                                 </div>
                                 <div class="card-body">
                                     @if(count($cotizaciones))
-                                        <table class="table">
+                                        <table class="table table-sm">
                                             <thead>
                                             <tr>
                                                 <th scope="col">#</th>
@@ -329,11 +329,10 @@
                             @error('archivo') <span class="text-danger er">{{ $message }}</span>@enderror
                             <div wire:loading wire:target="archivo">Cargando.....</div>
                         </div>
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                        <button type="submit" class="btn btn-primary">Guardar</button>
-                    </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                            <button type="submit" class="btn btn-primary">Guardar</button>
+                        </div>
                     </form>
                 </div>
             </div>

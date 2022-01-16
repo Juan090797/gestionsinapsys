@@ -42,7 +42,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-4">
+            <div class="col-md-4 col-sm-12 col-12">
                 <div class="card">
                     <div class="card-body">
                         <h1>{{ $chart1->options['chart_title'] }}</h1>
@@ -50,7 +50,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-4">
+            <div class="col-md-4 col-sm-12 col-12">
                 <div class="card">
                     <div class="card-body">
                         <h1>{{ $chart2->options['chart_title'] }}</h1>
@@ -58,7 +58,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-4">
+            <div class="col-md-4 col-sm-12 col-12">
                 <div class="card">
                     <div class="card-body">
                         <h1>{{ $chart3->options['chart_title'] }}</h1>

@@ -12,20 +12,16 @@ class Productos extends ComponenteBase
 {
     public $search, $selected_id;
     public $state = [];
+    public $marcas,$clasificaciones,$unidades;
+    protected $listeners = ['deleteRow' => 'Destroy'];
 
     public function  updatingSearch()
     {
         $this->resetPage();
     }
-
-    public function mount()
-    {
-        $this->selected_id = 0;
-    }
-
     public function render()
     {
-        if(strlen($this->search) > 0) {
+        if(strlen($this->search) > 3) {
             $data = Producto::where('codigo', 'like', '%' . $this->search . '%')
                 ->orWhere('descripcion', 'like', '%' . $this->search . '%')
                 ->orWhere('modelo', 'like', '%' . $this->search . '%')
@@ -33,14 +29,28 @@ class Productos extends ComponenteBase
         }else {
             $data = Producto::orderBy('id', 'desc')->paginate($this->pagination);
         }
-        return view('livewire.productos.index',[
-            'productos' => $data,
-            'marcas' => Marca::all(),
-            'clasificaciones' => Clasificacion::all(),
-            'unidades' => UnidadMedida::all(),
-        ])->extends('layouts.tema.app')->section('content');
+        $this->update();
+        return view('livewire.productos.index',['productos' => $data,])->extends('layouts.tema.app')->section('content');
     }
 
+    public function update()
+    {
+        $this->marcas();
+        $this->clasificaciones();
+        $this->unidades();
+    }
+    public function marcas()
+    {
+        $this->marcas = Marca::all();
+    }
+    public function clasificaciones()
+    {
+        $this->clasificaciones = Clasificacion::all();
+    }
+    public function unidades()
+    {
+        $this->unidades = UnidadMedida::all();
+    }
     public function Store()
     {
         $validated = Validator::make($this->state, [
@@ -69,11 +79,9 @@ class Productos extends ComponenteBase
             ])->validate();
 
         Producto::create($validated);
-
         $this->resetUI();
         $this->emit('producto-added', 'Producto Registrado');
     }
-
     public function resetUI()
     {
         $this->state=[];
@@ -81,15 +89,13 @@ class Productos extends ComponenteBase
         $this->selected_id = 0;
         $this->resetValidation();
     }
-
     public function Edit(Producto $producto)
     {
         $this->selected_id = $producto->id;
         $this->state = $producto->toArray();
         $this->emit('show-modal', 'show-modal!');
     }
-
-    public function Update()
+    public function actualizar()
     {
         $validated = Validator::make($this->state, [
             'codigo' => "required|unique:productos,codigo,{$this->selected_id}",
@@ -122,13 +128,9 @@ class Productos extends ComponenteBase
         $this->resetUI();
         $this->emit('producto-updated', 'Producto Actualizado');
     }
-
-    protected $listeners = ['deleteRow' => 'Destroy'];
-
     public function Destroy(Producto $producto)
     {
         $producto->delete();
-
         $this->resetUI();
         $this->emit('producto-deleted', 'Producto Eliminado');
     }

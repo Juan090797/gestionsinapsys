@@ -3,17 +3,18 @@
 namespace App\Http\Livewire;
 
 use App\Models\impuesto;
-use Livewire\Component;
 use Illuminate\Support\Facades\Validator;
 
 class Impuestos extends ComponenteBase
 {
     public $selected_id;
     public $state= [];
+    protected $listeners = ['deleteRow' => 'Destroy'];
 
-    public function mount()
+    public function render()
     {
-        $this->selected_id = '';
+        $data = impuesto::paginate($this->pagination);
+        return view('livewire.impuestos.index', ['impuestos' => $data])->extends('layouts.tema.app')->section('content');
     }
 
     public function Store()
@@ -34,7 +35,7 @@ class Impuestos extends ComponenteBase
         $this->state = $impuesto->toArray();
         $this->emit('show-modal', 'show-modal!');
     }
-    public function Update()
+    public function actualizar()
     {
         $validated = Validator::make($this->state, [
             'nombre' => 'required',
@@ -43,26 +44,15 @@ class Impuestos extends ComponenteBase
         ])->validate();
 
         $tax = impuesto::findOrFail($this->state['id']);
-
         $tax->update($validated);
         $this->emit('impuesto-updated', 'Impuesto Registrado');
     }
-
-    protected $listeners = ['deleteRow' => 'Destroy'];
 
     public function Destroy(impuesto $impuesto)
     {
         $impuesto->delete();
         $this->resetUI();
         $this->emit('impuesto-deleted', 'Impuesto Eliminado');
-    }
-
-    public function render()
-    {
-        return view('livewire.impuestos.index',
-        [
-            'impuestos' => impuesto::paginate()
-        ])->extends('layouts.tema.app')->section('content');
     }
 
     public function resetUI()

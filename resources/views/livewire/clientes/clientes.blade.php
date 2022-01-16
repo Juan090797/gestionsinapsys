@@ -30,7 +30,7 @@
                 </div>
             </div>
             <div class="card-body">
-                <table class="table">
+                <table class="table table-sm">
                     <thead class="thead-dark">
                         <tr>
                             <th scope="col">Rz. Social</th>
@@ -61,7 +61,7 @@
                     @endforeach
                     </tbody>
                 </table>
-                <div class="py-3">
+                <div class="py-3 float-right">
                     {{$clientes->links()}}
                 </div>
             </div>

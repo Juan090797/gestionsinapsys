@@ -9,35 +9,27 @@ class Marcas extends ComponenteBase
 {
     public $search, $selected_id;
     public $state = [];
-
-    public function mount()
-    {
-        $this->selected_id = 0;
-    }
+    protected $listeners = ['deleteRow' => 'Destroy'];
 
     public function  updatingSearch()
     {
         $this->resetPage();
     }
-
     public function render()
     {
-        if(strlen($this->search) > 0) {
+        if(strlen($this->search) > 3) {
             $data = Marca::where('nombre', 'like', '%' . $this->search . '%')->paginate($this->pagination);
         }else {
             $data = Marca::orderBy('id', 'desc')->paginate($this->pagination);
         }
         return view('livewire.marcas.marcas', ['marcas' => $data])->extends('layouts.tema.app')->section('content');
     }
-
     public function Edit(Marca $marca)
     {
         $this->selected_id = $marca->id;
         $this->state = $marca->toArray();
-
         $this->emit('show-modal', 'show-modal!');
     }
-
     public function Store()
     {
         $validated = Validator::make($this->state, [
@@ -49,12 +41,12 @@ class Marcas extends ComponenteBase
             'nombre.min' => 'El nombre de la marca debe tener al menos 3 caracteres',
             'estado.required' => 'El estado es requerido',
         ])->validate();
+
         Marca::create($validated);
         $this->resetUI();
         $this->emit('marca-added', 'Marca Registrada');
     }
-
-    public function Update()
+    public function actualizar()
     {
         $validated = Validator::make($this->state, [
             'nombre' => "required||min:3|unique:marcas,nombre,{$this->selected_id}",
@@ -72,7 +64,6 @@ class Marcas extends ComponenteBase
         $this->emit('marca-updated', 'Marca Actualizada');
 
     }
-
     public function resetUI()
     {
         $this->state=[];
@@ -80,8 +71,6 @@ class Marcas extends ComponenteBase
         $this->selected_id = 0;
         $this->resetValidation();
     }
-    protected $listeners = ['deleteRow' => 'Destroy'];
-
     public function Destroy(Marca $marca)
     {
         $marca->delete();

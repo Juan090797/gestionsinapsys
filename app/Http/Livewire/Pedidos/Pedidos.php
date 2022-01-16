@@ -15,23 +15,21 @@ use Illuminate\Support\Facades\Storage;
 class Pedidos extends Component
 {
     use WithFileUploads;
-
     public $selectedProducts = [];
     public $state= [];
     public $selected_id, $ordencompra,$fechaplazo,$guia,$numeroPedido,$cliente,$total,$fechaemision,$numerofactura,$factura,$ped;
     public $pedidos;
+    protected $listeners = ['anular' => 'Anular'];
 
     public function render()
     {
         $this->update();
         return view('livewire.pedidos.index')->extends('layouts.tema.app')->section('content');
     }
-
     public function update()
     {
         $this->pedidos = Pedido::with('pedidoDetalle')->latest()->get();
     }
-
     public function resetUI()
     {
         $this->selectedProducts =[];
@@ -65,7 +63,6 @@ class Pedidos extends Component
         }else {
             $this->emit('error', 'Selecciona un pedido');
         }
-
     }
     public function AgregarOrdenCompra()
     {
@@ -128,7 +125,6 @@ class Pedidos extends Component
 
         $pedido = Pedido::find($this->selectedProducts);
         $pedido = $pedido[0];
-
         $name = $this->guia->getClientOriginalName();
         $this->guia->storeAs('guiasremision', $name);
         $pedido->update([
@@ -198,8 +194,6 @@ class Pedidos extends Component
         return Storage::disk('local')->download('facturas/'.$facturadesc);
     }
 
-    protected $listeners = ['anular' => 'Anular'];
-
     public function Anular(Pedido $pedido){
         $pedido->update([
             'estado' => 'Anulado',
@@ -207,13 +201,11 @@ class Pedidos extends Component
         $this->resetUI();
         $this->emit('pedido-anulado', 'Pedido Anulado');
     }
-
     public function verPedido($id)
     {
         $this->ped = Pedido::with('pedidoDetalle')->find($id);
         $this->emit('show-modal-pedido', 'Show modal');
     }
-
     public function Despachar()
     {
         if(count($this->selectedProducts))

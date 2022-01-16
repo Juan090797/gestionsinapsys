@@ -49,6 +49,7 @@ class ShowProyecto extends Component
     }
     public function update()
     {
+        $this->proyectoUpdate();
         $this->archivos();
         $this->comentarios();
         $this->cotizaciones();
@@ -56,24 +57,9 @@ class ShowProyecto extends Component
         $this->clientes();
         $this->etapas();
     }
-    public function createArchivo()
+    public function proyectoUpdate()
     {
-        $rules = [
-            'archivo' => 'required',
-        ];
-        $messages =[
-            'archivo.required' => 'El archivo es requerido',
-        ];
-        $this->validate($rules, $messages);
-        $name = $this->archivo->getClientOriginalName();
-        $archivo = Archivo::create([
-            'archivo' => $name,
-            'proyecto_id' => $this->state['id']
-        ]);
-
-        $this->archivo->storeAs('archivos', $name);
-        $this->archivo = '';
-        $this->emit('archivo-added', 'Archivo Registrado');
+        $this->proyecto = Proyecto::find($this->proyecto->id);
     }
     public function archivos()
     {
@@ -105,6 +91,25 @@ class ShowProyecto extends Component
             'etapa_id' => $etapa->id,
         ]);
         $this->emit('update-etapa', 'Se actualizo la etapa');
+    }
+    public function createArchivo()
+    {
+        $rules = [
+            'archivo' => 'required',
+        ];
+        $messages =[
+            'archivo.required' => 'El archivo es requerido',
+        ];
+        $this->validate($rules, $messages);
+        $name = $this->archivo->getClientOriginalName();
+        $archivo = Archivo::create([
+            'archivo' => $name,
+            'proyecto_id' => $this->state['id']
+        ]);
+
+        $this->archivo->storeAs('archivos', $name);
+        $this->archivo = '';
+        $this->emit('archivo-added', 'Archivo Registrado');
     }
     public function Destroy(Archivo $archivo)
     {

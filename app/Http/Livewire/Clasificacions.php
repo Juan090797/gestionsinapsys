@@ -4,31 +4,20 @@ namespace App\Http\Livewire;
 
 use App\Models\Clasificacion;
 use Illuminate\Support\Facades\Validator;
-use Livewire\Component;
-use Livewire\WithPagination;
 
-class Clasificacions extends Component
+class Clasificacions extends ComponenteBase
 {
-    use WithPagination;
-
     public $search, $selected_id;
     public $state = [];
-    Private $pagination = 5;
-    protected $paginationTheme = 'bootstrap';
-
-    public function mount()
-    {
-        $this->selected_id = 0;
-    }
+    protected $listeners = ['deleteRow' => 'Destroy'];
 
     public function  updatingSearch()
     {
         $this->resetPage();
     }
-
     public function render()
     {
-        if(strlen($this->search) > 0) {
+        if(strlen($this->search) > 3) {
             $data = Clasificacion::where('nombre', 'like', '%' . $this->search . '%')->paginate($this->pagination);
         }else {
             $data = Clasificacion::orderBy('id', 'desc')->paginate($this->pagination);
@@ -39,10 +28,8 @@ class Clasificacions extends Component
     {
         $this->selected_id = $clasificacion->id;
         $this->state = $clasificacion->toArray();
-
         $this->emit('show-modal', 'show-modal!');
     }
-
     public function Store()
     {
         $validated = Validator::make($this->state, [
@@ -57,12 +44,10 @@ class Clasificacions extends Component
         ])->validate();
 
         Clasificacion::create($validated);
-
         $this->resetUI();
         $this->emit('clasificacion-added', 'Clasificacion Registrada');
     }
-
-    public function Update()
+    public function actualizar()
     {
         $validated = Validator::make($this->state, [
             'nombre' => "required||min:3|unique:clasificacions,nombre,{$this->selected_id}",
@@ -77,12 +62,10 @@ class Clasificacions extends Component
 
         $clasificacion = Clasificacion::findOrFail($this->state['id']);
         $clasificacion->update($validated);
-
         $this->resetUI();
         $this->emit('clasificacion-updated', 'Clasificacion Actualizada');
 
     }
-
     public function resetUI()
     {
         $this->state = [];
@@ -90,12 +73,9 @@ class Clasificacions extends Component
         $this->selected_id = 0;
         $this->resetValidation();
     }
-    protected $listeners = ['deleteRow' => 'Destroy'];
-
     public function Destroy(Clasificacion $clasificacion)
     {
         $clasificacion->delete();
-
         $this->resetUI();
         $this->emit('clasificacion-deleted', 'Clasificacion Eliminada');
     }

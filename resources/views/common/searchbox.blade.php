@@ -6,7 +6,7 @@
                     Buscar
                 </span>
             </div>
-            <input type="text" wire:model= "search" placeholder="Buscar" class="form-control" autocomplete="off">
+            <input type="text" placeholder="Buscar" class="form-control" autocomplete="off" wire:model= "search">
         </div>
     </div>
 </div>

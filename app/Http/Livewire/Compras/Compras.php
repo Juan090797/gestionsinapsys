@@ -15,13 +15,9 @@ class Compras extends ComponenteBase
         $this->resetPage();
     }
 
-    public function mount()
-    {
-        $this->selected_id = 0;
-    }
     public function render()
     {
-        if(strlen($this->search) > 0) {
+        if(strlen($this->search) > 3) {
             $data = Compra::where('razon_social', 'like', '%' . $this->search . '%')
                 ->paginate($this->pagination);
         }else {

@@ -39,10 +39,10 @@
                     </div>
                 </form>
             </div>
-            <div class="card-body">
+            <div class="card-body table-responsive">
                 @if($data)
                     <h3 class="text-center">Del:{{$fecha_inicio}}  Saldo a la Fecha:{{$fecha_fin}}</h3>
-                    <table class="table">
+                    <table class="table table-sm table-hover">
                         <thead class="thead-dark">
                         <tr>
                             <th scope="col">Fecha</th>

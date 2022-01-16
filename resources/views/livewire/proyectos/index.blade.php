@@ -6,51 +6,51 @@
     <div class="content-fluid">
         <div class="card">
             <div class="card-header">
-                <div class="row">
-                    <div class="col-4">
-                        <input wire:model="search" class="form-control" placeholder="Buscar por nombre">
+                <div class="row justify-content-end">
+                    <div class="col-3">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Buscar por nombre" wire:model="search">
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="card-body">
-                <table class="table">
+            <div class="card-body table-responsive">
+                <table class="table table-sm table-hover">
                     <thead class="thead-dark">
                     <tr>
-                        <th scope="col">#ID</th>
-                        <th scope="col">NOMBRE</th>
-                        <th scope="col">Prioridad</th>
+                        <th scope="col">Proyecto</th>
+                        <th scope="col">Etapa</th>
                         <th scope="col">Fecha inicio</th>
                         <th scope="col">Ingreso Estimado</th>
                         <th scope="col">Jefe Proyecto</th>
                         <th scope="col">Cliente</th>
-                        <th scope="col">EQUIPO</th>
+                        <th scope="col">Equipo</th>
                         <th scope="col">Acciones</th>
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach($proyectos as $index => $proyecto)
+                    @foreach($proyectos as $proyecto)
                         <tr>
-                            <th scope="row">{{$proyectos->firstItem() + $index}}</th>
                             <td><a href="{{ route('proyecto.show', $proyecto) }}">{{$proyecto->nombre}}</a></td>
-                            <td>{{ $proyecto->prioridad }}</td>
+                            <td>{{ $proyecto->etapa->nombre }}</td>
                             <td>{{ $proyecto->fecha_inicio }}</td>
                             <td>S/ {{ $proyecto->ingreso_estimado }}</td>
                             <td>{{ $proyecto->user->name }}</td>
                             <td>{{ $proyecto->cliente->razon_social }}</td>
                             <td>
-                                <div class="row">
+                                <ul class="list-inline mb-0">
                                     @if($proyecto->team)
                                         @foreach($proyecto->team as $r)
                                             @if($proyecto->user->name = $r)
-                                                <div class="col-md-4 user-panel p-2 b-1">
-                                                    <img src="{{ $proyecto->user->profile_photo_url }}" class="img-circle elevation-2" alt="User Image">
-                                                </div>
+                                                <li class="list-inline-item user-panel">
+                                                    <img src="{{ $proyecto->user->profile_photo_url }}" class="img-circle">
+                                                </li>
                                             @endif
                                         @endforeach
                                     @else
                                         <p class="text-danger text-center">Sin Equipo</p>
                                     @endif
-                                </div>
+                                </ul>
                             </td>
                             <td>
                                 <a href="javascript:void(0)"  wire:click="Edit({{ $proyecto->id }})" class="btn btn-primary" title="Editar">

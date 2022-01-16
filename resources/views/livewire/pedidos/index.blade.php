@@ -7,9 +7,6 @@
             <div class="card-header">
                 <div class="row">
                     <div class="col-4">
-                        <input wire:model="search" class="form-control" placeholder="Buscar por cliente o N° Pedido">
-                    </div>
-                    <div class="col-4">
                         <button class="btn btn-secondary uppercase mr-1" type="button" wire:click="AbrirOrdenCompra()">
                             + OC
                         </button>
@@ -23,27 +20,31 @@
                             FACTURAR
                         </button>
                     </div>
+                    <div class="col-4">
+                    </div>
+                    <div class="col-4">
+                        <input wire:model="search" class="form-control" placeholder="Buscar por cliente o N° Pedido">
+                    </div>
                 </div>
             </div>
-            <div class="card-body">
-                <table class="table">
+            <div class="card-body table-responsive">
+                <table class="table table-sm table-hover">
                     <thead class="thead-dark">
                     <tr>
                         <th></th>
-                        <th scope="col">ESTADO</th>
-                        <th></th>
-                        <th class="text-center">FECHA</th>
-                        <th class="text-center">N°PEDIDO</th>
-                        <th class="text-center">CLIENTE</th>
-                        <th class="text-center">IMPORTE</th>
-                        <th class="text-center">TIPO</th>
-                        <th class="text-center">N°DOCUMENTO</th>
-                        <th class="text-center">F.EMISION</th>
-                        <th class="text-center">GUIA</th>
+                        <th scope="col">Estado</th>
+                        <th class="text-center">Fecha</th>
+                        <th class="text-center">N°Pedido</th>
+                        <th class="text-center">Cliente</th>
+                        <th class="text-center">Importe</th>
+                        <th class="text-center">Tipo</th>
+                        <th class="text-center">N°Documento</th>
+                        <th class="text-center">F.Emision</th>
+                        <th class="text-center">Guia</th>
                         <th class="text-center">Ord.Compr.</th>
-                        <th class="text-center">F.ENTREGA</th>
-                        <th class="text-center">VENDEDOR</th>
-                        <th class="text-center">ACCIONES</th>
+                        <th class="text-center">F.Entrega</th>
+                        <th class="text-center">Vendedor</th>
+                        <th class="text-center">Acciones</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -67,10 +68,9 @@
                                     <span class="badge badge-success">{{$pedido->estado}}</span>
                                 @endif
                             </th>
-                            <th><i class="fas fa-truck"></i><i class="fas fa-check-circle"></i><i class="fas fa-flag"></i></th>
                             <th class="text-center">{{$pedido->formate_fecha}}</th>
                             <td class="text-center">{{$pedido->codigo}}</td>
-                            <td class="text-center">{{$pedido->cliente->razon_social}}</td>
+                            <td class="text-left">{{$pedido->cliente->razon_social}}</td>
                             <td class="text-center">S/ {{$pedido->total}}</td>
                             <td class="text-center">
                                 @if($pedido->estado == 'Facturado' ||$pedido->estado == 'Anulado')
@@ -82,7 +82,7 @@
                             <td class="text-center">
                                 <a href="javascript:void(0)" wire:click="descargaGuia({{ $pedido->id }})">{{$pedido->guiaremision}}</a>
                             </td>
-                            <td class="text-center">
+                            <td class="text-left">
                                 <a href="javascript:void(0)" wire:click="descargaOc({{ $pedido->id }})">{{$pedido->ordencompra}}</a>
                             </td>
                             <td class="text-center">{{$pedido->fecha_entrega}}</td>
@@ -95,7 +95,7 @@
                     @endforeach
                     </tbody>
                 </table>
-                <div class="py-3">
+                <div class="py-3 float-right">
                 </div>
             </div>
         </div>

@@ -5,14 +5,16 @@
     @endsection
     <div class="content-fluid">
         <div class="card">
-            <div class="card-body">
-                <table class="table">
+            <div class="card-body table-responsive">
+                <table class="table table-sm table-hover">
                     <thead class="thead-dark">
                     <tr>
                         <th scope="col">#ID</th>
-                        <th class="text-center">NOMBRE</th>
-                        <th class="text-center">ESTADO</th>
-                        <th class="text-center">ACCIONES</th>
+                        <th class="text-center">Nombre</th>
+                        <th class="text-center">Estado</th>
+                        <th class="text-center">Fecha creado</th>
+                        <th class="text-center">Fecha actualizado</th>
+                        <th class="text-center">Acciones</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -21,6 +23,8 @@
                             <th scope="row">{{$unidades->firstItem() + $index}}</th>
                             <td class="text-center">{{$unidad->nombre}}</td>
                             <td class="text-center"><span class="badge {{ $unidad->estado == 'Activo' ? 'badge-success' : 'badge-danger'}}">{{$unidad->estado}}</span></td>
+                            <td class="text-center">{{$unidad->created_at}}</td>
+                            <td class="text-center">{{$unidad->updated_at}}</td>
                             <td class="text-center">
                                 <a href="javascript:void(0)"  wire:click="Edit({{ $unidad->id }})" class="btn btn-primary" title="Edit">
                                     <i class="fas fa-pencil-alt" aria-hidden="true"></i>

@@ -9,11 +9,7 @@ class TipoProveedores extends ComponenteBase
 {
     public $selected_id;
     public $state = [];
-
-    public function mount()
-    {
-        $this->selected_id = 0;
-    }
+    protected $listeners = ['deleteRow' => 'Destroy'];
 
     public function render()
     {
@@ -25,7 +21,6 @@ class TipoProveedores extends ComponenteBase
     {
         $this->selected_id = $tipoProveedor->id;
         $this->state = $tipoProveedor->toArray();
-
         $this->emit('show-modal', 'show-modal!');
     }
 
@@ -70,7 +65,6 @@ class TipoProveedores extends ComponenteBase
         $this->selected_id = 0;
         $this->resetValidation();
     }
-    protected $listeners = ['deleteRow' => 'Destroy'];
 
     public function Destroy(TipoProveedor $tipoProveedor)
     {

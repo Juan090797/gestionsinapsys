@@ -12,11 +12,6 @@ class Ingresos extends ComponenteBase
     public $search, $selected_id,$ped;
     public $state = [];
 
-    public function mount()
-    {
-        $this->selected_id = 0;
-    }
-
     public function  updatingSearch()
     {
         $this->resetPage();

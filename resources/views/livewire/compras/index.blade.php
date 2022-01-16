@@ -6,14 +6,16 @@
     <div class="content-fluid">
         <div class="card">
             <div class="card-header">
-                <div class="row">
-                    <div class="col-4">
-                        <input wire:model="search" class="form-control" placeholder="Buscar por nombre">
+                <div class="row justify-content-end">
+                    <div class="col-3">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Buscar por nombre del proveedor" wire:model="search">
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="card-body">
-                <table class="table">
+            <div class="card-body table-responsive">
+                <table class="table table-sm table-hover">
                     <thead class="thead-dark">
                     <tr>
                         <th scope="col">#ID</th>
@@ -23,7 +25,7 @@
                         <th class="text-center">N° Documento</th>
                         <th class="text-center">IGV</th>
                         <th class="text-center">Total</th>
-                        <th class="text-center">ACCIONES</th>
+                        <th class="text-center">Acciones</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -32,7 +34,7 @@
                             <th scope="row">{{$compras->firstItem() + $index}}</th>
                             <td class="text-center">{{$compra->proveedor->razon_social}}</td>
                             <td class="text-center">{{$compra->created_at}}</td>
-                            <td class="text-center"><span class="badge {{ $compra->tipo_documento == 'FACTURA' ? 'badge-success' : 'badge-danger'}}">{{$compra->tipo_documento}}</span></td>
+                            <td class="text-center"><span class="badge {{ $compra->tipo_documento == 'Factura' ? 'badge-success' : 'badge-danger'}}">{{$compra->tipo_documento}}</span></td>
                             <td class="text-center">{{$compra->numero_documento}}</td>
                             <td class="text-center">S/ {{$compra->impuesto}}</td>
                             <td class="text-center">S/ {{$compra->total}}</td>
@@ -48,7 +50,7 @@
                     @endforeach
                     </tbody>
                 </table>
-                <div class="py-3">
+                <div class="py-3 float-right">
                     {{$compras->links()}}
                 </div>
             </div>
