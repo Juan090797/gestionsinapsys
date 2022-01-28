@@ -50,15 +50,18 @@
             window.Livewire.on('show-modal', msg =>{
                 $('#theModal').modal('show')
             });
-            window.livewire.on('marca-added', msg =>{
+            window.livewire.on('proveedor-added', msg =>{
                 $('#theModal').modal('hide');
                 noty(msg)
             })
-            window.livewire.on('marca-updated', msg =>{
+            window.livewire.on('proveedor-updated', msg =>{
                 $('#theModal').modal('hide');
                 noty(msg)
             })
-            window.livewire.on('marca-deleted', msg =>{
+            window.livewire.on('proveedor-deleted', msg =>{
+                noty(msg)
+            })
+            window.livewire.on('error', msg =>{
                 noty(msg)
             })
         });

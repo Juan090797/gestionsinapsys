@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\Marca;
+use App\Models\Producto;
 use Illuminate\Support\Facades\Validator;
 
 class Marcas extends ComponenteBase
@@ -73,8 +74,15 @@ class Marcas extends ComponenteBase
     }
     public function Destroy(Marca $marca)
     {
-        $marca->delete();
-        $this->resetUI();
-        $this->emit('marca-deleted', 'Marca Eliminada');
+        $pro = Producto::where('marca_id', $marca->id)->count();
+        if ($pro == 0) {
+            $marca->delete();
+            $this->resetUI();
+            $this->emit('marca-deleted', 'Marca Eliminada');
+        }else {
+            $this->resetUI();
+            $this->emit('error', 'La marca esta relacionado con productos, no se puede eliminar');
+        }
     }
+
 }

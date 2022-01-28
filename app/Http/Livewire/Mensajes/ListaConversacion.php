@@ -7,6 +7,7 @@ use App\Http\Livewire\ComponenteBase;
 use App\Models\Conversacion;
 use App\Models\Mensaje;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Validator;
 
 class ListaConversacion extends ComponenteBase
@@ -76,6 +77,14 @@ class ListaConversacion extends ComponenteBase
 
     public function viewMessage($conversationId)
     {
+        $consulta = Mensaje::where('conversacion_id', $conversationId)->get();
+        foreach ($consulta as $c){
+            if($c->user_id != auth()->id()){
+                $c->update([
+                    'visto' => 1,
+                ]);
+            }
+        }
         $this->selectedConversation = Conversacion::find($conversationId);
     }
 

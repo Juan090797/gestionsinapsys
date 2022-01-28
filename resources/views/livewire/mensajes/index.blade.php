@@ -45,6 +45,11 @@
                                             <small class="float-right contacts-list-date text-muted">{{ $conversation->mensajes->last()?->created_at->diffForHumans() }}</small>
                                         </span>
                                         <span class="contacts-list-msg text-secondary">{{ $conversation->mensajes->last()?->body }}</span>
+                                        @if($conversation->mensajes_no->mensajes_count > 0)
+                                            @if($conversation->mensajes->last()?->user_id != Auth::user()->id)
+                                                <span class="float-right badge badge-danger">{{$conversation->mensajes_no->mensajes_count}}</span>
+                                            @endif
+                                        @endif
                                     </div>
                                 </a>
                             </li>
@@ -62,6 +67,11 @@
                                                 <small class="float-right contacts-list-date text-muted">{{ $conversation->mensajes->last()?->created_at->diffForHumans() }}</small>
                                             </span>
                                             <span class="contacts-list-msg text-secondary">{{ $conversation->mensajes->last()?->body }}</span>
+                                            @if($conversation->mensajes_no->mensajes_count > 0)
+                                                @if($conversation->mensajes->last()?->user_id !== Auth::user()->id)
+                                                    <span class="float-right badge badge-danger">{{$conversation->mensajes_no->mensajes_count}}</span>
+                                                @endif
+                                            @endif
                                         </div>
                                     </a>
                                 </li>
@@ -117,14 +127,12 @@
         </div>
     </div>
     <script>
-
         // Enable pusher logging - don't include this in production
         Pusher.logToConsole = true;
 
         var pusher = new Pusher('934510425d1de4fc4645', {
             cluster: 'us2'
         });
-
         var channel = pusher.subscribe('chat-chanel');
         channel.bind('chat-event', function(data) {
             window.livewire.emit('conversacion_id', data);

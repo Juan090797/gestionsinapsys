@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Cliente;
 use App\Models\Industria;
 use Illuminate\Support\Facades\Validator;
 
@@ -82,8 +83,16 @@ class Industrias extends ComponenteBase
 
     public function Destroy(Industria $industria)
     {
-        $industria->delete();
-        $this->resetUI();
-        $this->emit('industria-deleted', 'Industria Eliminada');
+        $clientes = Cliente::where('industria_id', $industria->id)->count();
+
+        if ($clientes == 0){
+            $industria->delete();
+            $this->resetUI();
+            $this->emit('industria-deleted', 'Industria Eliminada');
+        }else {
+            $this->resetUI();
+            $this->emit('error', 'La industria tiene clientes relacionados, no se puede eliminar');
+        }
+
     }
 }

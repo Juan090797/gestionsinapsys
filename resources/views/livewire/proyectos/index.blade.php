@@ -78,7 +78,6 @@
                 let data = $(this).val();
                 @this.set('state.team', $(this).val());
             });
-
             window.Livewire.on('show-modal', msg =>{
                 $('#theModal').modal('show')
             });
@@ -91,6 +90,9 @@
                 noty(msg)
             })
             window.livewire.on('proyecto-deleted', msg =>{
+                noty(msg)
+            })
+            window.livewire.on('error', msg =>{
                 noty(msg)
             })
         });

@@ -60,6 +60,9 @@
             window.livewire.on('unidad-deleted', msg =>{
                 noty(msg)
             })
+            window.livewire.on('error', msg =>{
+                noty(msg)
+            })
         });
         function Confirm(id)
         {

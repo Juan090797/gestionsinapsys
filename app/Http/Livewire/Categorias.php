@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\Categoria;
+use App\Models\Cliente;
 use Illuminate\Support\Facades\Validator;
 
 class Categorias extends ComponenteBase
@@ -79,8 +80,16 @@ class Categorias extends ComponenteBase
 
     public function Destroy(Categoria $categoria)
     {
-        $categoria->delete();
-        $this->resetUI();
-        $this->emit('categoria-deleted', 'Categoria Eliminada');
+        $clientes = Cliente::where('categoria_id', $categoria->id)->count();
+        if ($clientes == 0)
+        {
+            $categoria->delete();
+            $this->resetUI();
+            $this->emit('categoria-deleted', 'Categoria Eliminada');
+        }else{
+            $this->resetUI();
+            $this->emit('error', 'La categoria tiene clientes relacionados, no se puede eliminar');
+        }
+
     }
 }

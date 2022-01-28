@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Proveedor;
 use App\Models\TipoProveedor;
 use Illuminate\Support\Facades\Validator;
 
@@ -35,9 +36,10 @@ class TipoProveedores extends ComponenteBase
             'nombre.min' => 'El nombre del tipo de proveedor debe tener al menos 3 caracteres',
             'estado.required' => 'El estado es requerido',
         ])->validate();
+
         TipoProveedor::create($validated);
         $this->resetUI();
-        $this->emit('marca-added', 'Tipo de proveedor Registrado');
+        $this->emit('proveedor-added', 'Tipo de proveedor Registrado');
     }
 
     public function Update()
@@ -55,21 +57,25 @@ class TipoProveedores extends ComponenteBase
         $tipoProveedor = TipoProveedor::findOrFail($this->state['id']);
         $tipoProveedor->update($validated);
         $this->resetUI();
-        $this->emit('marca-updated', 'Tipo de proveedor Actualizado');
+        $this->emit('proveedor-updated', 'Tipo de proveedor Actualizado');
 
     }
-
     public function resetUI()
     {
         $this->state=[];
         $this->selected_id = 0;
         $this->resetValidation();
     }
-
     public function Destroy(TipoProveedor $tipoProveedor)
     {
-        $tipoProveedor->delete();
-        $this->resetUI();
-        $this->emit('marca-deleted', 'Tipo de proveedor eliminado');
+        $pro = Proveedor::where('tipo_proveedors_id', $tipoProveedor->id)->count();
+        if ($pro == 0) {
+            $tipoProveedor->delete();
+            $this->resetUI();
+            $this->emit('proveedor-deleted', 'Tipo de proveedor eliminado');
+        }else {
+            $this->resetUI();
+            $this->emit('error', 'El tipo esta relacionado con proveedor, no se puede eliminar');
+        }
     }
 }

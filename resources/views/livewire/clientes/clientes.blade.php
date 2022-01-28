@@ -30,7 +30,7 @@
                 </div>
             </div>
             <div class="card-body">
-                <table class="table table-sm">
+                <table class="table table-sm table-hover">
                     <thead class="thead-dark">
                         <tr>
                             <th scope="col">Rz. Social</th>

@@ -36,23 +36,33 @@
                     </div>
                     <div class="col-sm-3 invoice-col">
                         <div class="form-group">
-                            <label for="fecha_documento">Fecha Ingreso</label>
+                            <label for="fecha_documento">Fecha Documento</label>
                             <input id="fecha_documento" class="form-control" type="date" wire:model.defer="state.fecha_documento">
                         </div>
                     </div>
+                    <div class="col-sm-3 invoice-col">
+                        <div class="form-group">
+                            <label for="motivo_id">Motivo</label>
+                            <select id="motivo_id" wire:model.defer="state.motivo_id" class="form-control">
+                                <option value="0">Elegir</option>
+                                @foreach($motivos as $motivo)
+                                    <option value="{{$motivo->id}}">{{$motivo->nombre}}</option>
+                                @endforeach
+                            </select>
+                        </div>
                 </div>
-
+                </div>
                 <div class="row">
                     <div class="col-12 table-responsive">
                         <table class="table table-striped">
                             <thead>
-                            <tr>
-                                <th>#</th>
-                                <th class="text-center">Codigo</th>
-                                <th class="text-center">Stock Actual</th>
-                                <th class="text-center">Cantidad</th>
-                                <th class="text-center">Acciones</th>
-                            </tr>
+                                <tr>
+                                    <th>#</th>
+                                    <th class="text-center">Codigo</th>
+                                    <th class="text-center">Stock Actual</th>
+                                    <th class="text-center">Cantidad</th>
+                                    <th class="text-center">Acciones</th>
+                                </tr>
                             </thead>
                             <tbody>
                             @foreach($rows as $key => $row)
@@ -86,7 +96,6 @@
                         </table>
                     </div>
                 </div>
-
                 <div class="row">
                     <div class="col-4">
                     </div>

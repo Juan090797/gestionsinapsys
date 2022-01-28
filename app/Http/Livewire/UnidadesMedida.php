@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Producto;
 use App\Models\UnidadMedida;
 use Illuminate\Support\Facades\Validator;
 
@@ -65,8 +66,15 @@ class UnidadesMedida extends ComponenteBase
     }
     public function Destroy(UnidadMedida $unidadMedida)
     {
-        $unidadMedida->delete();
-        $this->resetUI();
-        $this->emit('unidad-deleted', 'Unidad Eliminada');
+        $pro = Producto::where('unidad_medidas_id', $unidadMedida->id)->count();
+        if ($pro == 0) {
+            $unidadMedida->delete();
+            $this->resetUI();
+            $this->emit('unidad-deleted', 'Unidad Eliminada');
+        }else {
+            $this->resetUI();
+            $this->emit('error', 'La unidad esta relacionado con productos, no se puede eliminar');
+        }
+
     }
 }

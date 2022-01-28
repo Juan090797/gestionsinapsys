@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\Clasificacion;
+use App\Models\Producto;
 use Illuminate\Support\Facades\Validator;
 
 class Clasificacions extends ComponenteBase
@@ -75,8 +76,14 @@ class Clasificacions extends ComponenteBase
     }
     public function Destroy(Clasificacion $clasificacion)
     {
-        $clasificacion->delete();
-        $this->resetUI();
-        $this->emit('clasificacion-deleted', 'Clasificacion Eliminada');
+        $pro = Producto::where('clasificacions_id', $clasificacion->id)->count();
+        if ($pro == 0) {
+            $clasificacion->delete();
+            $this->resetUI();
+            $this->emit('clasificacion-deleted', 'Clasificacion Eliminada');
+        }else {
+            $this->resetUI();
+            $this->emit('error', 'La clasificacion esta relacionado con productos, no se puede eliminar');
+        }
     }
 }

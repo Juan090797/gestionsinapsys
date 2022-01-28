@@ -70,6 +70,9 @@
             window.livewire.on('marca-deleted', msg =>{
                 noty(msg)
             })
+            window.livewire.on('error', msg =>{
+                noty(msg)
+            })
         });
 
         function Confirm(id)

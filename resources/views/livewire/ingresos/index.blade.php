@@ -1,5 +1,6 @@
 <div>
     @section('cabezera-contenido')
+        <a href="{{route('ingresoscreate')}}" class="btn btn-primary float-right">Agregar</a>
         <h1>Lista de guias de ingresos</h1>
     @endsection
     <div class="content-fluid">

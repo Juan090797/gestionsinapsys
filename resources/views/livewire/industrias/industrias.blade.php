@@ -67,8 +67,10 @@
                 $('#theModal').modal('hide');
                 noty(msg)
             })
-
             window.livewire.on('industria-deleted', msg =>{
+                noty(msg)
+            })
+            window.livewire.on('error', msg =>{
                 noty(msg)
             })
         });

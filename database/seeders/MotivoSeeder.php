@@ -20,5 +20,11 @@ class MotivoSeeder extends Seeder
         DB::table('motivos')->insert([
             'nombre' => 'Salidas por ventas',
         ]);
+        DB::table('motivos')->insert([
+            'nombre' => 'Ingresos por compras',
+        ]);
+        DB::table('motivos')->insert([
+            'nombre' => 'Salidas por ventas',
+        ]);
     }
 }

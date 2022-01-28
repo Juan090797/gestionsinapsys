@@ -27,9 +27,6 @@
                                 <a href="javascript:void(0)"  wire:click="Edit({{ $impuesto->id }})" class="btn btn-primary" title="Editar">
                                     <i class="fas fa-pencil-alt" aria-hidden="true"></i>
                                 </a>
-                                <a href="javascript:void(0)" onclick="Confirm('{{ $impuesto->id }}')" class="btn btn-danger" title="Eliminar">
-                                    <i class="fa fa-trash" aria-hidden="true"></i>
-                                </a>
                             </td>
                         </tr>
                     @endforeach

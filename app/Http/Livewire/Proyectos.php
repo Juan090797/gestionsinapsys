@@ -73,7 +73,6 @@ class Proyectos extends ComponenteBase
         ])->validate();
         $validated['etapa_id'] = 1;
         Proyecto::create($validated);
-
         $this->resetUI();
         $this->emit('proyecto-added', 'Proyecto Registrado');
     }
@@ -107,7 +106,6 @@ class Proyectos extends ComponenteBase
 
         $proyecto = Proyecto::findOrFail($this->state['id']);
         $proyecto->update($validated);
-
         $this->resetUI();
         $this->emit('proyecto-updated', 'Proyecto Actualizado');
     }
@@ -122,8 +120,16 @@ class Proyectos extends ComponenteBase
 
     public function Destroy(Proyecto $proyecto)
     {
-        $proyecto->delete();
-        $this->resetUI();
-        $this->emit('proyecto-deleted', 'Proyecto Eliminado');
+        $cotis = \App\Models\Cotizacion::where('proyecto_id', $proyecto->id)->count();
+        if($cotis == 0)
+        {
+            $proyecto->delete();
+            $this->resetUI();
+            $this->emit('proyecto-deleted', 'Proyecto Eliminado');
+        }else {
+            $this->resetUI();
+            $this->emit('error', "El proyecto cuenta con $cotis cotizaciones");
+        }
+
     }
 }
