@@ -15,16 +15,40 @@ class MotivoSeeder extends Seeder
     public function run()
     {
         DB::table('motivos')->insert([
-            'nombre' => 'Ingresos por compras',
+            'nombre' => 'Ingreso por compras',
+            'tipo'   => 'I'
         ]);
         DB::table('motivos')->insert([
-            'nombre' => 'Salidas por ventas',
+            'nombre' => 'Salida por ventas',
+            'tipo'   => 'S'
         ]);
         DB::table('motivos')->insert([
-            'nombre' => 'Ingresos por compras',
+            'nombre' => 'Salida por asignacion',
+            'tipo'   => 'S'
         ]);
         DB::table('motivos')->insert([
-            'nombre' => 'Salidas por ventas',
+            'nombre' => 'Salida por venta rapida',
+            'tipo'   => 'S'
+        ]);
+        DB::table('motivos')->insert([
+            'nombre' => 'Salida por consumo interno',
+            'tipo'   => 'S'
+        ]);
+        DB::table('motivos')->insert([
+            'nombre' => 'Ingreso por ajuste de inventario',
+            'tipo'   => 'I'
+        ]);
+        DB::table('motivos')->insert([
+            'nombre' => 'Ingreso por produccion',
+            'tipo'   => 'I'
+        ]);
+        DB::table('motivos')->insert([
+            'nombre' => 'Salida por vencimiento',
+            'tipo'   => 'S'
+        ]);
+        DB::table('motivos')->insert([
+            'nombre' => 'Salida por deterioro',
+            'tipo'   => 'S'
         ]);
     }
 }

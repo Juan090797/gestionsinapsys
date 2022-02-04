@@ -1,14 +1,13 @@
 <?php
 
-namespace App\Http\Livewire\Ingresos\Traits;
+namespace App\Http\Livewire\Salidas\Traits;
 
-trait DataIngreso
+trait DataSalida
 {
     public $compraData = [
         'producto_id' => '',
         'cantidad' => 1,
         'precio' => '',
-        'stock' => '0.00',
         'monto' => '',
     ];
 
@@ -17,7 +16,6 @@ trait DataIngreso
             'producto_id' => '',
             'cantidad' => 1,
             'precio' => '',
-            'stock' => '0.00',
             'monto' => '',
         ]
     ];
@@ -31,5 +29,6 @@ trait DataIngreso
     {
         unset($this->rows[$index]);
         $this->calculateTotal();
+        $this->calcularTotalItems();
     }
 }

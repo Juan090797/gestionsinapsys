@@ -24,7 +24,6 @@ class CreateComprasTable extends Migration
             $table->decimal('total',20,2)->default(0);
             $table->string('total_items')->nullable();
             $table->foreignId('proveedor_id')->constrained();
-            $table->foreignId('centro_costo_id')->constrained();
             $table->timestamps();
         });
     }

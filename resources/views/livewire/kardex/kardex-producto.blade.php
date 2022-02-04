@@ -17,7 +17,7 @@
                                     @endforeach
                                 </select>
                             </div>
-                            @error('producto') <span class="text-danger er">{{ $message }}</span>@enderror
+                            @error('producto_id') <span class="text-danger er">{{ $message }}</span>@enderror
                         </div>
                         <div class="col-3">
                             <div class="form-group">

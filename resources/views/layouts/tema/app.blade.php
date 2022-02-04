@@ -49,7 +49,7 @@
 </div>
 <!-- ./wrapper -->
 @include('layouts.tema.scripts')
-@stack('js')
 @livewireScripts
+@stack('js')
 </body>
 </html>

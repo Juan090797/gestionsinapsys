@@ -48,7 +48,10 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('compracreate', \App\Http\Livewire\Compras\CreateCompra::class)->name('compracreate');
     Route::get('ingresos', \App\Http\Livewire\Ingresos\Ingresos::class)->name('ingresos');
     Route::get('ingresoscreate', \App\Http\Livewire\Ingresos\IngresosCreate::class)->name('ingresoscreate');
+    Route::get('ingreso/{ingreso}/show', \App\Http\Livewire\Ingresos\IngresosShow::class)->name('ingreso.show');
     Route::get('salidas', \App\Http\Livewire\Salidas\Salidas::class)->name('salidas');
+    Route::get('salidascreate', \App\Http\Livewire\Salidas\SalidasCreate::class)->name('salidascreate');
+    Route::get('salida/{salida}/show', \App\Http\Livewire\Salidas\SalidasShow::class)->name('salida.show');
     Route::get('usuarios', \App\Http\Livewire\Usuarios\Usuarios::class)->name('usuarios');
     Route::get('mensajes', \App\Http\Livewire\mensajes\ListaConversacion::class)->name('mensajes');
     Route::get('kardex-producto', \App\Http\Livewire\Kardex\KardexProducto::class)->name('kardex-producto');

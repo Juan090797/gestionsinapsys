@@ -27,5 +27,9 @@ class MovimientoAlmacen extends Model
         return Carbon::parse($value)->format('d-m-Y');
     }
 
+    public function costos()
+    {
+        return $this->belongsTo(CentroCosto::class, 'centro_costo_id');
+    }
 
 }

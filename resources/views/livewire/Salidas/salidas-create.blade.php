@@ -1,10 +1,10 @@
 <div>
     @section('cabezera-contenido')
-        <a href="{{route('ingresos')}}" class="btn btn-primary float-right">Atras</a>
-        <h1>Registro de Guia de Ingreso</h1>
+        <a href="{{route('salidas')}}" class="btn btn-primary float-right">Atras</a>
+        <h1>Registro de Salida</h1>
     @endsection
     <div class="content-fluid">
-        <form wire:submit.prevent="createIngreso">
+        <form wire:submit.prevent="createSalida">
             <section class="invoice p-3 mb-3" wire:ignore.self>
                 <div class="row invoice-info">
                     <div class="col-sm-3 invoice-col">
@@ -35,15 +35,17 @@
                     </div>
                     <div class="col-sm-3 invoice-col">
                         <div class="form-group">
-                            <label for="numero_documento">Referencia</label>
-                            <input id="numero_documento" type="text" class="form-control" wire:model.defer="state.numero_documento" placeholder="Ej: F001-123456789">
+                            <label for="referencia">Referencia</label>
+                            <input id="referencia" type="text" class="form-control" wire:model.defer="state.referencia" placeholder="Ej: F001-123456789">
                         </div>
+                        @error('referencia') <span class="text-danger er">{{ $message }}</span>@enderror
                     </div>
                     <div class="col-sm-3 invoice-col">
                         <div class="form-group">
                             <label for="fecha_documento">Fecha Documento</label>
                             <input id="fecha_documento" class="form-control" type="date" wire:model.defer="state.fecha_documento">
                         </div>
+                        @error('fecha_documento') <span class="text-danger er">{{ $message }}</span>@enderror
                     </div>
                     <div class="col-sm-3 invoice-col">
                         <div class="form-group">
@@ -58,17 +60,19 @@
                         @error('centro_costo_id') <span class="text-danger er">{{ $message }}</span>@enderror
                     </div>
                 </div>
+
                 <div class="row">
                     <div class="col-12 table-responsive">
                         <table class="table table-striped">
                             <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th class="text-center">Codigo</th>
-                                    <th class="text-center">Stock Actual</th>
-                                    <th class="text-center">Cantidad</th>
-                                    <th class="text-center">Acciones</th>
-                                </tr>
+                            <tr>
+                                <th>#</th>
+                                <th class="text-center">Nombre-Codigo <span class="text-sm text-danger">(Solo productos con stock)</span></th>
+                                <th class="text-center">Cantidad</th>
+                                <th class="text-center">Precio</th>
+                                <th class="text-center">Total</th>
+                                <th class="text-center">Acciones</th>
+                            </tr>
                             </thead>
                             <tbody>
                             @foreach($rows as $key => $row)
@@ -83,10 +87,13 @@
                                         </select>
                                     </td>
                                     <td class="text-center">
-                                        <input type="text" class="form-control text-center" name="stock" size="5" value="{{ $rows[$key]['stock']}}"  disabled>
+                                        <input wire:change="calculateAmount($event.target.value, {{ $key }})" type="text" class="form-control text-center" name="cantidad" size="5" value="1">
                                     </td>
                                     <td class="text-center">
-                                        <input wire:change="cambioCantidad($event.target.value, {{ $key }})" type="text" class="form-control text-center" name="cantidad" value="1" size="5">
+                                        <input wire:change="calculatePrice($event.target.value, {{ $key }})" type="text" class="form-control text-center" name="precio" size="5" value="{{ $rows[$key]['formate_precio'] ?? 0 }}">
+                                    </td>
+                                    <td class="text-center">
+                                        <input type="text" class="form-control text-center" name="monto" value="{{ $rows[$key]['formate_monto'] ?? 0 }}" size="5" disabled>
                                     </td>
                                     <td class="text-center">
                                         <a href="javascript:void(0)" class="btn btn-danger" wire:click="deleteRow({{ $key }})"><i class="fa fa-trash" aria-hidden="true"></i></a>
@@ -102,6 +109,7 @@
                         </table>
                     </div>
                 </div>
+
                 <div class="row">
                     <div class="col-4">
                     </div>
@@ -110,6 +118,14 @@
                     <div class="col-4">
                         <p class="lead">Detalle</p>
                         <p class="lead"><b>Total Items: {{$cantidadTotal}}</b> </p>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <tr>
+                                    <th>Valorizado:</th>
+                                    <td>S/ {{number_format($total,2)}}</td>
+                                </tr>
+                            </table>
+                        </div>
                     </div>
                 </div>
                 <div class="row no-print">
@@ -122,9 +138,13 @@
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', function (){
-            window.livewire.on('compra-registrada', msg =>{
+            window.livewire.on('salida-registrada', msg =>{
+                noty(msg)
+            })
+            window.livewire.on('error', msg =>{
                 noty(msg)
             })
         });
     </script>
 </div>
+

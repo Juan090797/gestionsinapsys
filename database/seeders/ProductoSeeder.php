@@ -50,5 +50,44 @@ class ProductoSeeder extends Seeder
             'clasificacions_id' => 1,
             'unidad_medidas_id' => 1,
         ]);
+        DB::table('productos')->insert([
+            'codigo'            => '0000000004',
+            'modelo'            => 'Modelo 4',
+            'estado'            => 'Activo',
+            'nombre'            => 'Lapicero Negro',
+            'descripcion'       => 'lapicero',
+            'precio_venta'      => '0.00',
+            'precio_compra'      => '2.00',
+            'tipo'              => 'Ventilador',
+            'marca_id'          => 1,
+            'clasificacions_id' => 4,
+            'unidad_medidas_id' => 1,
+        ]);
+        DB::table('productos')->insert([
+            'codigo'            => '0000000005',
+            'modelo'            => 'Modelo 5',
+            'estado'            => 'Activo',
+            'nombre'            => 'Hojas Bond',
+            'descripcion'       => 'Resma x 500 unid.',
+            'precio_venta'      => '0.00',
+            'precio_compra'      => '35.00',
+            'tipo'              => 'Ventilador',
+            'marca_id'          => 1,
+            'clasificacions_id' => 4,
+            'unidad_medidas_id' => 1,
+        ]);
+        DB::table('productos')->insert([
+            'codigo'            => '0000000006',
+            'modelo'            => 'Modelo 6',
+            'estado'            => 'Activo',
+            'nombre'            => 'Martillo',
+            'descripcion'       => 'martillo generico con mango de madera',
+            'precio_venta'      => '0.00',
+            'precio_compra'      => '50.00',
+            'tipo'              => 'Ventilador',
+            'marca_id'          => 1,
+            'clasificacions_id' => 1,
+            'unidad_medidas_id' => 1,
+        ]);
     }
 }

@@ -46,7 +46,6 @@ class Cotizacion extends Component
         }else{
             $this->code = 'CT'. $date. $i;
         }
-
         $this->proyecto = $proyecto;
         $this->state = [
             'condiciones' => 'Plazo de entrega: 10 dias a partir de la recepcion de la O/C
@@ -60,7 +59,6 @@ Numero de Cta. Detracciones (Bco. Nacion): 00-051-159853',
             'foto' => false,
             'cliente_id' => $this->proyecto->cliente_id,
         ];
-
     }
 
     public function getClientInfo($clientId)
@@ -82,7 +80,6 @@ Numero de Cta. Detracciones (Bco. Nacion): 00-051-159853',
                 'total_items' => $this->cantidadTotal,
             ]
         ));
-
         $this->emit('cotizacion-ok', 'Cotizacion creado con Exito');
         return redirect()->route('proyecto.show', $ide);
     }

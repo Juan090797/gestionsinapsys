@@ -10,13 +10,9 @@ use Livewire\Component;
 class Salidas extends ComponenteBase
 {
     public $selectedProducts = [];
-    public $search, $selected_id,$ped;
+    public $search, $selected_id;
     public $state = [];
-
-    public function mount()
-    {
-        $this->selected_id = 0;
-    }
+    protected $listeners = ['deleteRow' => 'anular'];
 
     public function  updatingSearch()
     {
@@ -25,12 +21,12 @@ class Salidas extends ComponenteBase
 
     public function render()
     {
-        if(strlen($this->search) > 0) {
-            $data = MovimientoAlmacen::where('nombre', 'like', '%' . $this->search . '%')->paginate($this->pagination);
+        if(strlen($this->search) > 3) {
+            $data = MovimientoAlmacen::where('tipo_documento', 'GS')->where('nombre_cliente', 'like', '%' . $this->search . '%')->paginate($this->pagination);
         }else {
             $data = MovimientoAlmacen::where('tipo_documento', 'GS')->orderBy('id', 'desc')->paginate($this->pagination);
         }
-        return view('livewire.Salidas.index', ['ingresos' => $data])->extends('layouts.tema.app')->section('content');
+        return view('livewire.Salidas.index', ['salidas' => $data])->extends('layouts.tema.app')->section('content');
     }
 
     public function AprobarMovimiento()
@@ -54,16 +50,24 @@ class Salidas extends ComponenteBase
         }
     }
 
+    public function anular(MovimientoAlmacen $movimientoAlmacen)
+    {
+        $movimientoAlmacen->update([
+            'estado' => 'ANULADO'
+        ]);
+
+        foreach ($movimientoAlmacen->movimientoDetalles as $item) {
+            $p = Producto::find($item['producto_id']);
+            $p->update([
+                'stock' => $p->stock + $item['cantidad'],
+            ]);
+        }
+    }
+
     public function resetUI()
     {
         $this->selectedProducts =[];
         $this->selected_id = '';
         $this->resetValidation();
-    }
-
-    public function verSalida($id)
-    {
-        $this->ped = MovimientoAlmacen::with('movimientoDetalles')->find($id);
-        $this->emit('show-modal-ingreso', 'Show modal');
     }
 }

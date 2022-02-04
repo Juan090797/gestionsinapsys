@@ -30,4 +30,5 @@
         })
     })
 </script>
-
+<script src="{{ asset('vendor/livewire-alert/livewire-alert.js') }}"></script>
+<x-livewire-alert::flash />

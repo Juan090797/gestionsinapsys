@@ -19,11 +19,12 @@ class CreateMovimientoAlmacensTable extends Migration
             $table->string('numero_guia')->nullable(); // 001-0000000001.
             $table->string('referencia')->nullable(); //numero de boleta o factura de la compra.
             $table->string('total_items')->nullable(); //total de items del movimiento
-            $table->date('fecha_ingreso')->nullable(); //fecha que ingresa los productos a la empresa.
+            $table->date('fecha_documento')->nullable(); //fecha que ingresa los productos a la empresa.
             $table->string('ruc_cliente')->nullable(); //ruc del cliente
             $table->string('nombre_cliente')->nullable(); //razon social del cliente
             $table->string('estado')->nullable();
             $table->foreignId('motivo_id')->constrained();
+            $table->foreignId('centro_costo_id')->constrained();
             $table->timestamps();
         });
     }

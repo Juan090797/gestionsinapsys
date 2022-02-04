@@ -6,13 +6,14 @@ use App\Http\Livewire\ComponenteBase;
 use App\Models\MovimientoAlmacen;
 use App\Models\MovimientoAlmacenDetalle;
 use App\Models\Producto;
+use Illuminate\Support\Facades\Validator;
 
 class KardexProducto extends ComponenteBase
 {
     public $state = [];
     public $data = [];
     public $detalles = [];
-    public $productos, $resultado,$fecha_inicio, $fecha_fin, $pro,$sumEntradas,$sumSalidas;
+    public $productos, $resultado,$sumEntradas,$sumSalidas,$fecha_inicio, $fecha_fin, $pro;
 
     public function render()
     {
@@ -30,8 +31,29 @@ class KardexProducto extends ComponenteBase
         $this->productos = Producto::all();
     }
 
+    protected $rules = [
+        'pro' => 'required',
+        'fecha_inicio' => 'required',
+        'fecha_fin' => 'required',
+    ];
+
+    protected $messages = [
+        'pro.required' => 'El producto es obligatorio',
+        'fecha_inicio.required' => 'La fecha de inicio es obligatorio',
+        'fecha_fin.required' => 'La fecha de fin es obligatorio',
+    ];
+
     public function consultar()
     {
+        $validated = Validator::make($this->state, [
+            'producto_id' => 'required',
+            'fecha_inicio'  => 'required',
+            'fecha_fin' => 'required',
+        ],[
+            'producto_id.required' => 'El producto es requerido',
+            'fecha_inicio.required' => 'La fecha de inicio es requerido',
+            'fecha_fin.required' => 'La fecha de fin es requerido',
+        ])->validate();
         $a = 0;
         $suma1 = 0;
         $suma2 = 0;
@@ -39,6 +61,7 @@ class KardexProducto extends ComponenteBase
         $this->fecha_fin = $this->state['fecha_fin'];
         $this->pro= Producto::find($this->state['producto_id']);
         $this->data = MovimientoAlmacen::with('movimientoDetalles','motivos')
+            ->where('estado', 'APROBADO')
             ->whereHas('movimientoDetalles', function ($query) {
                 $query->where('producto_id',$this->state['producto_id'] );
             })
@@ -68,6 +91,8 @@ class KardexProducto extends ComponenteBase
         }
         $this->sumEntradas = $suma1;
         $this->sumSalidas  = $suma2;
+
+        $this->resetValidation();
 
     }
 
