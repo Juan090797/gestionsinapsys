@@ -23,7 +23,7 @@
                         <th scope="col"></th>
                         <th class="text-center">Tipo Doc.</th>
                         <th class="text-center">N° Doc.</th>
-                        <th class="text-center">Fecha ingreso</th>
+                        <th class="text-center">Fecha doc.</th>
                         <th class="text-center">Proveedor</th>
                         <th class="text-center">Doc. Referencia</th>
                         <th class="text-center">Estado</th>

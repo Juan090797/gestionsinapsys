@@ -39,7 +39,7 @@
                     </div>
                     <div class="col-sm-3 invoice-col">
                         <div class="form-group">
-                            <label for="">Centro de costo</label>
+                            <label for="centro_costo_id">Centro de costo</label>
                             <select wire:model.defer="state.centro_costo_id" class="form-control">
                                 <option value="0">Elegir</option>
                                 @foreach($costos as $costo)
@@ -86,7 +86,7 @@
                                         <select name="producto_id" wire:change="getServicePrice(event.target.value, {{$key}})" class="form-control">
                                             <option value="">Elegir</option>
                                             @foreach($productos as $producto)
-                                                <option {{ ($producto->id == $rows[$key]['producto_id']) ? 'selected' : '' }} value="{{ $producto->id }}">{{$producto->codigo}}</option>
+                                                <option {{ ($producto->id == $rows[$key]['producto_id']) ? 'selected' : '' }} value="{{ $producto->id }}">{{$producto->nombre.'-'.$producto->codigo}}</option>
                                             @endforeach
                                         </select>
                                     </td>

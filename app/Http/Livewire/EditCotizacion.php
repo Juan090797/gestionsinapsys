@@ -32,14 +32,8 @@ class EditCotizacion extends Component
         $this->state = $cotizacion->toArray();
         $this->rows = $cotizacion->CotizacionItem->toArray();
         $this->total = $cotizacion->total;
-        $this->getClientInfo($this->cotizacion->cliente_id);
         $this->calculateSubTotal();
         $this->calculateTaxAmount($this->impuesto->id ?? null);
-    }
-
-    public function getClientInfo($clientId)
-    {
-        $this->billedTo = Cliente::findOrFail($clientId)->toArray();
     }
 
     public function updateCoti(UpdatesCotizaciones $updater)

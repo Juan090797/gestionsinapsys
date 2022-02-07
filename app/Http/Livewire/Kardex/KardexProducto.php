@@ -54,7 +54,7 @@ class KardexProducto extends ComponenteBase
             'fecha_inicio.required' => 'La fecha de inicio es requerido',
             'fecha_fin.required' => 'La fecha de fin es requerido',
         ])->validate();
-        $a = 0;
+
         $suma1 = 0;
         $suma2 = 0;
         $this->fecha_inicio = $this->state['fecha_inicio'];
@@ -87,7 +87,6 @@ class KardexProducto extends ComponenteBase
                     }
                 }
             }
-
         }
         $this->sumEntradas = $suma1;
         $this->sumSalidas  = $suma2;

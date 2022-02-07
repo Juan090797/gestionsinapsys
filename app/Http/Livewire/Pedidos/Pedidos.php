@@ -8,12 +8,14 @@ use App\Models\MovimientoAlmacenDetalle;
 use App\Models\Pedido;
 use App\Models\Producto;
 use Carbon\Carbon;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Storage;
 
 class Pedidos extends Component
 {
+    use LivewireAlert;
     use WithFileUploads;
     public $selectedProducts = [];
     public $state= [];
@@ -172,17 +174,14 @@ class Pedidos extends Component
             'numerofactura.required'=> 'El numero de factura es requerida',
         ];
         $this->validate($rules, $messages);
-
-        $pedido = Pedido::find($this->selectedProducts);
-        $pedido = $pedido[0];
-
+        $pedido = Pedido::find($this->selectedProducts)->first();
         $name = $this->factura->getClientOriginalName();
         $this->factura->storeAs('facturas', $name);
         $pedido->update([
             'factura_archivo'   => $name,
             'fecha_emision'     => $this->fechaemision,
             'numero_factura'    => $this->numerofactura,
-            'estado'            => 'Facturado',
+            'estado'            => 'FACTURADO',
         ]);
 
         $this->resetUI();
@@ -208,75 +207,74 @@ class Pedidos extends Component
     }
     public function Despachar()
     {
-        if(count($this->selectedProducts))
-        {
+        if(count($this->selectedProducts)) {
             $pedido = Pedido::with('pedidoDetalle')->find($this->selectedProducts[0]);
-            foreach ($pedido->pedidoDetalle as $index => $item)
+            $id_movimiento =[];
+            foreach ($pedido->pedidoDetalle as $item)
             {
                 $pr = Producto::find($item['producto_id']);
-
-                if($pr->stock > 0 && $pr->stock > $item['cantidad'])
-                {
-                    if(MovimientoAlmacen::count() > 0){
-                        $i = MovimientoAlmacen::latest()->first()->id +1;
-                    }else{
-                        $i = 1;
-                    }
-                    $date = Carbon::now();
-                    $date2 = $date->Format('Y-m-d');
-                    $date = $date->Format('ym');
-                    if($i <= 9){
-                        $this->codigo = 'GS'. $date .'0000'. $i;
-                    }elseif ($i <= 100){
-                        $this->codigo = 'GS'. $date .'000'. $i;
-                    }elseif ($i <= 1000){
-                        $this->codigo = 'GS'. $date .'00'. $i;
-                    }elseif ($i <= 10000){
-                        $this->codigo = 'GS'. $date .'0'. $i;
-                    }else{
-                        $this->codigo = 'GS'. $date. $i;
-                    }
-                    if ($index == 0)
-                    {
-                        $cli = Cliente::find($pedido->cliente_id);
-                        $guia = MovimientoAlmacen::create([
-                            'tipo_documento'    => 'GS',
-                            'numero_guia'       => $this->codigo,
-                            'referencia'        => $pedido->codigo,
-                            'ruc_cliente'       => $cli->ruc,
-                            'nombre_cliente'    => $cli->razon_social,
-                            'total_items'       => $pedido->total_items,
-                            'estado'            => 'Aprobado',
-                            'motivo_id'         => 2,
-                            'fecha_ingreso'     => $date2,
-                        ]);
-                    }
-
-                    MovimientoAlmacenDetalle::create([
-                        'movimiento_almacens_id'    => $guia->id,
-                        'producto_id'               => $item['producto_id'],
-                        'cantidad'                  => $item['cantidad'],
-                    ]);
-                    $producto = Producto::find($item['producto_id']);
-                    $producto->update([
-                        'stock' => $producto->stock - $item['cantidad'],
-                    ]);
-
-                    $pedido->update([
-                        'estado' => 'Despachado',
-                    ]);
-                    $this->resetUI();
-                    $this->emit('despachar', 'Se despacho el pedido y se ajusto el stock');
-
-                }elseif ($pr->stock < 0){
-                    $this->emit('despachar', 'Los productos no tienen stock');
-                }else
-                {
-                    $this->emit('despachar', 'Los productos no tienen el stock suficiente');
+                if($pr->stock >= $item['cantidad']) {
+                    $id_movimiento[] = $this->add_cart_shop($item);
+                }else {
+                    $this->alert('error', 'Lo sentimos no tenemos  stock',['timerProgressBar' => true]);
                 }
             }
+            if( count($pedido->pedidoDetalle) == count($id_movimiento) )
+            {
+                $i = MovimientoAlmacen::count() > 0 ? MovimientoAlmacen::latest()->first()->id +1 : 1;
+                $date = Carbon::now();
+                $date = $date->Format('ym');
+                if($i <= 9){
+                    $this->codigo = 'GS'. $date .'0000'. $i;
+                }elseif ($i <= 100){
+                    $this->codigo = 'GS'. $date .'000'. $i;
+                }elseif ($i <= 1000){
+                    $this->codigo = 'GS'. $date .'00'. $i;
+                }elseif ($i <= 10000){
+                    $this->codigo = 'GS'. $date .'0'. $i;
+                }else{
+                    $this->codigo = 'GS'. $date. $i;
+                }
+
+                $cli = Cliente::find($pedido->cliente_id);
+                $guia = MovimientoAlmacen::create([
+                    'tipo_documento'    => 'GS',
+                    'numero_guia'       => $this->codigo,
+                    'fecha_documento'     => now(),
+                    'referencia'        => $pedido->codigo,
+                    'ruc_cliente'       => $cli->ruc,
+                    'nombre_cliente'    => $cli->razon_social,
+                    'total_items'       => $pedido->total_items,
+                    'estado'            => 'APROBADO',
+                    'motivo_id'         => 2,
+                    'centro_costo_id'   => 5,
+                ]);
+                foreach ($pedido->pedidoDetalle as $it)
+                {
+                    $producto = Producto::find($it['producto_id']);
+                    MovimientoAlmacenDetalle::create([
+                        'movimiento_almacens_id'    => $guia->id,
+                        'producto_id'               => $it['producto_id'],
+                        'stock_old'                 => $producto->stock,
+                        'cantidad'                  => $it['cantidad'],
+                    ]);
+                    $producto->update([
+                        'stock' => $producto->stock - $it['cantidad'],
+                    ]);
+                }
+                $pedido->update([
+                    'estado' => 'DESPACHADO',
+                ]);
+                $this->resetUI();
+                $this->alert('success', 'Se despacho el pedido y se ajusto el stock',['timerProgressBar' => true]);
+            }
         }else {
-            $this->emit('error', 'Selecciona un Movimiento');
+            $this->alert('error', 'Selecciona un registro',['timerProgressBar' => true]);
         }
+
+    }
+    public function add_cart_shop($item)
+    {
+        return $item;
     }
 }

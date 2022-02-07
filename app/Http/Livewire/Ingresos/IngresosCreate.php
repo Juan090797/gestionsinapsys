@@ -113,14 +113,15 @@ class IngresosCreate extends ComponenteBase
         ]);
 
         foreach ($this->rows as  $item) {
+            $producto = Producto::find($item['producto_id']);
             MovimientoAlmacenDetalle::create([
                 'movimiento_almacens_id'    => $guia->id,
                 'producto_id'               => $item['producto_id'],
                 'cantidad'                  => $item['cantidad'],
+                'stock_old' => $producto->stock,
             ]);
-            $producto = Producto::find($item['producto_id']);
             $producto->update([
-                'stock' => $producto->stock + $item['cantidad'],
+                'stock'     => $producto->stock + $item['cantidad'],
             ]);
         }
         $this->alert('success', 'Se creo el registro con exito',['timerProgressBar' => true]);

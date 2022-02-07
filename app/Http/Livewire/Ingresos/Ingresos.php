@@ -31,16 +31,21 @@ class Ingresos extends ComponenteBase
     {
         if(count($this->selectedProducts))
         {
-            $p = MovimientoAlmacen::with('movimientoDetalles')->find($this->selectedProducts);
-            foreach ($p[0]->movimientoDetalles as $item)
-            {
+            $p = MovimientoAlmacen::with('movimientoDetalles')->find($this->selectedProducts)->first();
+            foreach ($p->movimientoDetalles as $item) {
                 $prod = Producto::find($item->producto_id);
+                if($prod->stock > 0){
+                    $item->update([
+                        'stock_old' => $prod->stock,
+                    ]);
+                }
                 $prod->update([
                     'stock' => $prod->stock + $item->cantidad,
                 ]);
             }
-            $p[0]->update([
-                'estado' => 'Aprobado',
+            $p->update([
+                'fecha_documento' => now(),
+                'estado' => 'APROBADO',
             ]);
             $this->resetUI();
             $this->emit('aprobado', 'Se aprobo el movimiento y se ajusto el stock');
@@ -56,9 +61,4 @@ class Ingresos extends ComponenteBase
         $this->resetValidation();
     }
 
-    public function verIngreso($id)
-    {
-        $this->ped = MovimientoAlmacen::with('movimientoDetalles')->find($id);
-        $this->emit('show-modal-ingreso', 'Show modal');
-    }
 }

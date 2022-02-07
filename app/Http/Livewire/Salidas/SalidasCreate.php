@@ -78,7 +78,6 @@ class SalidasCreate extends ComponenteBase
         {
             $i = MovimientoAlmacen::count() > 0 ? MovimientoAlmacen::latest()->first()->id +1 : 1;
             $date = Carbon::now();
-            $date2 = $date->Format('Y-m-d');
             $date = $date->Format('ym');
             if($i <= 9) {
                 $this->codigo = 'GS'. $date .'0000'. $i;
@@ -103,7 +102,7 @@ class SalidasCreate extends ComponenteBase
             $guia = MovimientoAlmacen::create([
                 'tipo_documento'    => 'GS',
                 'numero_guia'       => $this->codigo,
-                'fecha_documento'   => $this->state['fecha_documento']?? $date2,
+                'fecha_documento'   => $this->state['fecha_documento']?? now(),
                 'referencia'        => $this->state['referencia']?? '',
                 'ruc_cliente'       => $use,
                 'nombre_cliente'    => $this->state['usuario_id'],
@@ -114,12 +113,13 @@ class SalidasCreate extends ComponenteBase
             ]);
 
             foreach ($this->rows as  $item) {
+                $producto = Producto::find($item['producto_id']);
                 MovimientoAlmacenDetalle::create([
                     'movimiento_almacens_id'    => $guia->id,
                     'producto_id'               => $item['producto_id'],
                     'cantidad'                  => $item['cantidad'],
+                    'stock_old' => $producto->stock,
                 ]);
-                $producto = Producto::find($item['producto_id']);
                 $producto->update([
                     'stock' => $producto->stock - $item['cantidad'],
                 ]);

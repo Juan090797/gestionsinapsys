@@ -24,4 +24,9 @@ class Compra extends Model
         return $this->belongsTo(Proveedor::class);
     }
 
+    public function costo()
+    {
+        return $this->belongsTo(CentroCosto::class);
+    }
+
 }

@@ -33,15 +33,21 @@ class Salidas extends ComponenteBase
     {
         if(count($this->selectedProducts))
         {
-            $p = MovimientoAlmacen::with('movimientoDetalles')->find($this->selectedProducts);
-            foreach ($p[0]->movimientoDetalles as $item)
+            $p = MovimientoAlmacen::with('movimientoDetalles')->find($this->selectedProducts)->first();
+            foreach ($p->movimientoDetalles as $item)
             {
                 $prod = Producto::find($item->producto_id);
                 $prod->update([
                     'stock' => $prod->stock + $item->cantidad,
                 ]);
+                if($item->stock_old > 0){
+                    $item->update([
+                        'stock_old' => $prod->stock,
+                    ]);
+                }
             }
-            $p[0]->update([
+            $p->update([
+                'fecha_documento' => now(),
                 'estado' => 'Aprobado',
             ]);
             $this->emit('aprobado', 'Se aprobo el movimiento y se ajusto el stock');
@@ -58,7 +64,7 @@ class Salidas extends ComponenteBase
 
         foreach ($movimientoAlmacen->movimientoDetalles as $item) {
             $p = Producto::find($item['producto_id']);
-            $p->update([
+            $item->update([
                 'stock' => $p->stock + $item['cantidad'],
             ]);
         }

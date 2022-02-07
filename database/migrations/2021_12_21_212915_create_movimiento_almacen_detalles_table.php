@@ -17,7 +17,8 @@ class CreateMovimientoAlmacenDetallesTable extends Migration
             $table->id();
             $table->foreignId('movimiento_almacens_id')->constrained();
             $table->foreignId('producto_id')->constrained();
-            $table->string('cantidad')->nullable();
+            $table->decimal('stock_old',20,2)->default(0.00);
+            $table->decimal('cantidad')->default(0.00);
             $table->timestamps();
         });
     }
