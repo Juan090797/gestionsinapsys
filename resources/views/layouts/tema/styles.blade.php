@@ -11,7 +11,6 @@
 <link rel="stylesheet" href="{{ asset('css/adminlte.min.css') }}">
 <!-- overlayScrollbars -->
 <link rel="stylesheet" href="{{ asset('plugins/overlayScrollbars/css/OverlayScrollbars.min.css') }}">
-<link rel="stylesheet" href="{{ asset('plugins/sweetalerts/sweetalert.css') }}"  type="text/css" />
 <link rel="stylesheet" href="{{ asset('plugins/notification/snackbar/snackbar.min.css') }}"  type="text/css" />
 <!-- select2 -->
 <link rel="stylesheet" href="{{ asset('plugins/select2/css/select2.min.css') }}">

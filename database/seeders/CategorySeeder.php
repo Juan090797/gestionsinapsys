@@ -15,39 +15,39 @@ class CategorySeeder extends Seeder
     public function run()
     {
         DB::table('categorias')->insert([
-            'nombre' => 'Cliente',
+            'nombre' => 'CLIENTE',
             'estado' => 'ACTIVO'
         ]);
         DB::table('categorias')->insert([
-            'nombre' => 'Competencia',
+            'nombre' => 'COMPETENCIA',
             'estado' => 'ACTIVO'
         ]);
         DB::table('categorias')->insert([
-            'nombre' => 'Analista',
+            'nombre' => 'ANALISTA',
             'estado' => 'ACTIVO'
         ]);
         DB::table('categorias')->insert([
-            'nombre' => 'Consultor',
+            'nombre' => 'CONSULTOR',
             'estado' => 'ACTIVO'
         ]);
         DB::table('categorias')->insert([
-            'nombre' => 'Inversionista',
+            'nombre' => 'INVERSIONISTA',
             'estado' => 'ACTIVO'
         ]);
         DB::table('categorias')->insert([
-            'nombre' => 'Socio',
+            'nombre' => 'SOCIO',
             'estado' => 'ACTIVO'
         ]);
         DB::table('categorias')->insert([
-            'nombre' => 'Logistico',
+            'nombre' => 'LOGISTICO',
             'estado' => 'ACTIVO'
         ]);
         DB::table('categorias')->insert([
-            'nombre' => 'Proyectista',
+            'nombre' => 'PROYECTISTA',
             'estado' => 'ACTIVO'
         ]);
         DB::table('categorias')->insert([
-            'nombre' => 'Otro',
+            'nombre' => 'OTRO',
             'estado' => 'ACTIVO'
         ]);
     }

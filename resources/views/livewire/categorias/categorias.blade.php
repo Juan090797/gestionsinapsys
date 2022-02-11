@@ -21,8 +21,6 @@
                         <th scope="col">#ID</th>
                         <th class="text-center">NOMBRE</th>
                         <th class="text-center">ESTADO</th>
-                        <th class="text-center">Fecha Creado</th>
-                        <th class="text-center">Fecha Actualizacion</th>
                         <th class="text-center">ACCIONES</th>
                     </tr>
                     </thead>
@@ -32,8 +30,6 @@
                         <th scope="row">{{$categorias->firstItem() + $index}}</th>
                         <td class="text-center">{{$categoria->nombre}}</td>
                         <td class="text-center"><span class="badge {{ $categoria->estado == 'ACTIVO' ? 'badge-success' : 'badge-danger'}}">{{$categoria->estado}}</span></td>
-                        <td class="text-center">{{$categoria->created_at}}</td>
-                        <td class="text-center">{{$categoria->updated_at}}</td>
                         <td class="text-center">
                             <a href="javascript:void(0)"  wire:click="Edit({{ $categoria->id }})" class="btn btn-primary" title="Edit">
                                 <i class="fas fa-pencil-alt" aria-hidden="true"></i>
@@ -67,29 +63,33 @@
                 $('#theModal').modal('hide');
                 noty(msg)
             })
-            window.livewire.on('categoria-deleted', msg =>{
-                noty(msg)
-            })
             window.livewire.on('error', msg =>{
                 noty(msg)
             })
         });
-
         function Confirm(id)
         {
-            swal({
+            Swal.fire({
                 title: 'CONFIRMAR',
-                text: '¿CONFIRMAS ELIMINAR EL REGISTRO?',
-                type: 'warning',
+                text: "¿CONFIRMAS ELIMINAR EL REGISTRO?",
+                icon: 'warning',
                 showCancelButton: true,
-                cancelButtonText: 'Cerrar',
-                cancelButtonColor: '#fff',
-                confirmButtonText: 'Aceptar',
-                getConfirmButtonColor: '#3B3F5C'
-            }).then(function (result){
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Aceptar'
+            }).then((result) => {
                 if(result.value){
                     window.livewire.emit('deleteRow', id)
-                    swal.close()
+                    Swal.fire(
+                        'Eliminado!',
+                        'El registro ha sido eliminado',
+                        'success'
+                    )
+                }else {
+                    Swal.fire({
+                        title: 'Operación Cancelada!',
+                        icon: 'success'
+                    });
                 }
             })
         }

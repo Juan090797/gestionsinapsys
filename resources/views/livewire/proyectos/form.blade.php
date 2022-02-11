@@ -55,7 +55,7 @@
                             <label>Equipo</label>
                             <select class="select2"  multiple="multiple" wire:model.defer="state.team" id="team" data-placeholder="Selecciona tu equipo" style="width: 100%;">
                                 @foreach($users as $user)
-                                        <option value="{{$user->name}}">{{$user->name}}</option>
+                                        <option value="{{$user->id}}">{{$user->name}}</option>
                                 @endforeach
                             </select>
                         </div>

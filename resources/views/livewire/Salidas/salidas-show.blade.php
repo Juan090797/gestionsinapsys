@@ -45,9 +45,9 @@
                         <tr>
                             <th scope="col" style="border-bottom: 1px solid #000000;border-top: 1px solid #000000;">#</th>
                             <th scope="col" class="text-left" style="border-bottom: 1px solid #000000;border-top: 1px solid #000000;">PRODUCTO</th>
+                            <th scope="col"class="text-center" style="border-bottom: 1px solid #000000;border-top: 1px solid #000000;">MARCA</th>
                             <th scope="col"class="text-center" style="border-bottom: 1px solid #000000;border-top: 1px solid #000000;">U.M.</th>
                             <th scope="col" class="text-center" style="border-bottom: 1px solid #000000;border-top: 1px solid #000000;">CANTIDAD</th>
-                            <th scope="col" class="text-center" style="border-bottom: 1px solid #000000;border-top: 1px solid #000000;">SERIE</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -56,11 +56,10 @@
                                 <th scope="row" style="border-top: 1px solid #000000;">{{$loop->iteration}}</th>
                                 <td style="width:55%;border-top: 1px solid #000000;" class="text-left">
                                     {{$item->producto->nombre}} <br>
-                                    {!! nl2br(htmlspecialchars($item->producto->descripcion)) !!}
                                 </td>
+                                <td class="text-center" style="border-top: 1px solid #000000;">{{$item->producto->marca->nombre}}</td>
                                 <td class="text-center" style="border-top: 1px solid #000000;">{{$item->producto->unidad->nombre}}</td>
                                 <td class="text-center" style="border-top: 1px solid #000000;">{{$item->cantidad}}</td>
-                                <td class="text-center" style="border-top: 1px solid #000000;"></td>
                             </tr>
                         @endforeach
                         </tbody>

@@ -20,7 +20,6 @@ class EditCotizacion extends Component
     public $cotizacion;
     public $CotizacionItem;
     public $impuesto;
-    public $billedTo = [];
     public $state = [];
     public $code;
 

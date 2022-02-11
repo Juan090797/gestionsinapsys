@@ -41,6 +41,7 @@ class Usuarios extends ComponenteBase
         ])->validate();
 
         $validated['password'] = bcrypt('123456');
+        $validated['dni'] = bcrypt('1234567');
         User::create($validated);
         $this->resetUI();
         $this->emit('user-added', 'Usuario Registrado');

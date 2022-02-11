@@ -60,10 +60,10 @@ class Pedidos extends Component
             {
                 $this->emit('show-modal-oc', 'show-modal!');
             }else{
-                $this->emit('error', 'El pedido ya tiene OC');
+                $this->alert('error', 'El pedido ya tiene OC',['timerProgressBar' => true]);
             }
         }else {
-            $this->emit('error', 'Selecciona un pedido');
+            $this->alert('error', 'Selecciona un registro',['timerProgressBar' => true]);
         }
     }
     public function AgregarOrdenCompra()
@@ -112,7 +112,7 @@ class Pedidos extends Component
             }
 
         }else{
-            $this->emit('error', 'Selecciona un pedido');
+            $this->alert('error', 'Selecciona un registro',['timerProgressBar' => true]);
         }
     }
     public function AgregarGuia()
@@ -133,7 +133,7 @@ class Pedidos extends Component
             'guiaremision' => $name,
         ]);
         $this->resetUI();
-        $this->emit('guia-added', 'Guia de remision agregada');
+        $this->emit('guia-added', 'Guia agregada');
     }
     public function descargaGuia(Pedido $pedido)
     {
@@ -155,10 +155,10 @@ class Pedidos extends Component
                 $this->total= $pedido[0]->total;
                 $this->emit('show-modal-factura', 'show-modal!');
             }else{
-                $this->emit('error', 'El pedido tiene que despacharse primero');
+                $this->alert('error', 'El pedido tiene que despacharse primero',['timerProgressBar' => true]);
             }
         }else{
-            $this->emit('error', 'Selecciona un pedido');
+            $this->alert('error', 'Selecciona un registro',['timerProgressBar' => true]);
         }
     }
     public function AgregarFactura()

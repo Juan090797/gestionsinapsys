@@ -102,7 +102,11 @@
                                     @if($d->tipo_documento == "GI")
                                         <td class="text-center text-primary">{{number_format($detalle->cantidad + $detalle->stock_old,2)}}</td>
                                     @else
-                                        <td class="text-center text-primary">{{number_format($detalle->stock_old - $detalle->cantidad,2)}}</td>
+                                        @if($detalle->stock_old > 0)
+                                            <td class="text-center text-primary">{{number_format($detalle->stock_old - $detalle->cantidad,2)}}</td>
+                                        @else
+                                            <td class="text-center text-primary">{{number_format($detalle->cantidad - $detalle->stock_old,2)}}</td>
+                                        @endif
                                     @endif
                                 @endif
                             @endforeach

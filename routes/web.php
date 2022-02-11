@@ -49,9 +49,11 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('ingresos', \App\Http\Livewire\Ingresos\Ingresos::class)->name('ingresos');
     Route::get('ingresoscreate', \App\Http\Livewire\Ingresos\IngresosCreate::class)->name('ingresoscreate');
     Route::get('ingreso/{ingreso}/show', \App\Http\Livewire\Ingresos\IngresosShow::class)->name('ingreso.show');
+    Route::get('ingreso/{ingreso}/edit', \App\Http\Livewire\Ingresos\IngresosEdit::class)->name('ingreso.edit');
     Route::get('salidas', \App\Http\Livewire\Salidas\Salidas::class)->name('salidas');
     Route::get('salidascreate', \App\Http\Livewire\Salidas\SalidasCreate::class)->name('salidascreate');
     Route::get('salida/{salida}/show', \App\Http\Livewire\Salidas\SalidasShow::class)->name('salida.show');
+    Route::get('salida/{salida}/edit', \App\Http\Livewire\Salidas\SalidasEdit::class)->name('salida.edit');
     Route::get('usuarios', \App\Http\Livewire\Usuarios\Usuarios::class)->name('usuarios');
     Route::get('mensajes', \App\Http\Livewire\mensajes\ListaConversacion::class)->name('mensajes');
     Route::get('kardex-producto', \App\Http\Livewire\Kardex\KardexProducto::class)->name('kardex-producto');

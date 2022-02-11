@@ -85,7 +85,6 @@ class Categorias extends ComponenteBase
         {
             $categoria->delete();
             $this->resetUI();
-            $this->emit('categoria-deleted', 'Categoria Eliminada');
         }else{
             $this->resetUI();
             $this->emit('error', 'La categoria tiene clientes relacionados, no se puede eliminar');

@@ -21,8 +21,6 @@
                         <th scope="col">#ID</th>
                         <th class="text-center">Nombre</th>
                         <th class="text-center">Estado</th>
-                        <th class="text-center">Fecha Creado</th>
-                        <th class="text-center">Fecha Actualizacion</th>
                         <th class="text-center">Acciones</th>
                     </tr>
                     </thead>
@@ -32,8 +30,6 @@
                             <th scope="row">{{$industrias->firstItem() + $index}}</th>
                             <td class="text-center">{{$industria->nombre}}</td>
                             <td class="text-center"><span class="badge {{ $industria->estado == 'ACTIVO' ? 'badge-success' : 'badge-danger'}}">{{$industria->estado}}</span></td>
-                            <td class="text-center">{{$industria->created_at}}</td>
-                            <td class="text-center">{{$industria->updated_at}}</td>
                             <td class="text-center">
                                 <a href="javascript:void(0)"  wire:click="Edit({{ $industria->id }})" class="btn btn-primary" title="Edit">
                                     <i class="fas fa-pencil-alt" aria-hidden="true"></i>
@@ -77,19 +73,25 @@
 
         function Confirm(id)
         {
-            swal({
+            Swal.fire({
                 title: 'CONFIRMAR',
-                text: '¿CONFIRMAS ELIMINAR EL REGISTRO?',
-                type: 'warning',
+                text: "¿CONFIRMAS ELIMINAR EL REGISTRO?",
+                icon: 'warning',
                 showCancelButton: true,
-                cancelButtonText: 'Cerrar',
-                cancelButtonColor: '#fff',
-                confirmButtonText: 'Aceptar',
-                getConfirmButtonColor: '#3B3F5C'
-            }).then(function (result){
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Aceptar'
+            }).then((result) => {
                 if(result.value){
                     window.livewire.emit('deleteRow', id)
                     swal.close()
+                }
+                if (result.isConfirmed) {
+                    Swal.fire(
+                        'Eliminado!',
+                        'El registro ha sido eliminado',
+                        'success'
+                    )
                 }
             })
         }

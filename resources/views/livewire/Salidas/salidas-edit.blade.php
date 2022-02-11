@@ -1,10 +1,10 @@
 <div>
     @section('cabezera-contenido')
-        <a href="{{route('ingresos')}}" class="btn btn-primary float-right">Atras</a>
-        <h1>Registro de Guia de Ingreso</h1>
+        <a href="{{route('salidas')}}" class="btn btn-primary float-right">Atras</a>
+        <h1>Registro de Guia de Salida</h1>
     @endsection
     <div class="content-fluid">
-        <form wire:submit.prevent="createIngreso">
+        <form wire:submit.prevent="actualizarSalida">
             <section class="invoice p-3 mb-3" wire:ignore.self>
                 <div class="row invoice-info">
                     <div class="col-sm-3 invoice-col">
@@ -62,13 +62,12 @@
                     <div class="col-12 table-responsive">
                         <table class="table table-striped">
                             <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th class="text-center">Codigo</th>
-                                    <th class="text-center">Stock Actual</th>
-                                    <th class="text-center">Cantidad</th>
-                                    <th class="text-center">Acciones</th>
-                                </tr>
+                            <tr>
+                                <th>#</th>
+                                <th class="text-center">Codigo</th>
+                                <th class="text-center">Cantidad</th>
+                                <th class="text-center">Acciones</th>
+                            </tr>
                             </thead>
                             <tbody>
                             @foreach($rows as $key => $row)
@@ -78,15 +77,12 @@
                                         <select name="producto_id" wire:change="getServicePrice(event.target.value, {{$key}})" class="form-control">
                                             <option value="">Elegir</option>
                                             @foreach($productos as $producto)
-                                                <option {{ ($producto->id == $rows[$key]['producto_id']) ? 'selected' : '' }} value="{{ $producto->id }}">{{$producto->nombre.'-'.$producto->marca->nombre.'-'.$producto->codigo}}</option>
+                                                <option {{ ($producto->id == $rows[$key]['producto_id']) ? 'selected' : '' }} value="{{ $producto->id }}">{{$producto->nombre .'-'.$producto->codigo.'('. $producto->stock.')'}}</option>
                                             @endforeach
                                         </select>
                                     </td>
                                     <td class="text-center">
-                                        <input type="text" class="form-control text-center" name="stock" size="5" value="{{ $rows[$key]['stock']}}"  disabled>
-                                    </td>
-                                    <td class="text-center">
-                                        <input wire:change="cambioCantidad($event.target.value, {{ $key }})" type="text" class="form-control text-center" name="cantidad" value="1" size="5">
+                                        <input wire:change="cambioCantidad($event.target.value, {{ $key }})" type="text" class="form-control text-center" name="cantidad" value="{{$rows[$key]['cantidad'] ?? 1}}" size="5">
                                     </td>
                                     <td class="text-center">
                                         <a href="javascript:void(0)" class="btn btn-danger" wire:click="deleteRow({{ $key }})"><i class="fa fa-trash" aria-hidden="true"></i></a>

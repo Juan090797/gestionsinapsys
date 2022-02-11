@@ -15,8 +15,8 @@ class ClienteSeeder extends Seeder
     public function run()
     {
         DB::table('clientes')->insert([
-            'nombre' => 'Apple',
-            'correo' => 'apple@apple.com',
+            'nombre' => 'APPLE',
+            'correo' => 'APPLE@APPLE.COM',
             'direccion' => 'Calle Belgica Mz. H Lt.8',
             'estado' => 'ACTIVO',
             'pagina_web' => 'www.google.com',
@@ -37,7 +37,7 @@ class ClienteSeeder extends Seeder
         ]);
 
         DB::table('clientes')->insert([
-            'nombre' => 'Sansung',
+            'nombre' => 'SANSUNG',
             'correo' => 'sansung@sansung.com',
             'direccion' => 'Calle Portugal Mz. H Lt.8',
             'estado' => 'ACTIVO',

@@ -15,20 +15,32 @@ class CentroCostoSeeder extends Seeder
     public function run()
     {
         DB::table('centro_costos')->insert([
-            'nombre' => 'Sistemas',
-            'estado' => 'Activo'
+            'nombre' => 'SISTEMAS',
+            'estado' => 'ACTIVO'
         ]);
         DB::table('centro_costos')->insert([
-            'nombre' => 'Ventas',
-            'estado' => 'Activo'
+            'nombre' => 'VENTAS',
+            'estado' => 'ACTIVO'
         ]);
         DB::table('centro_costos')->insert([
-            'nombre' => 'Administrativos',
-            'estado' => 'Activo'
+            'nombre' => 'ADMINISTRATIVOS',
+            'estado' => 'ACTIVO'
         ]);
         DB::table('centro_costos')->insert([
-            'nombre' => 'Soporte Tecnico',
-            'estado' => 'Activo'
+            'nombre' => 'SOPORTE TECNICO',
+            'estado' => 'ACTIVO'
+        ]);
+        DB::table('centro_costos')->insert([
+            'nombre' => 'GENERAL',
+            'estado' => 'ACTIVO'
+        ]);
+        DB::table('centro_costos')->insert([
+            'nombre' => 'POSTVENTA',
+            'estado' => 'ACTIVO'
+        ]);
+        DB::table('centro_costos')->insert([
+            'nombre' => 'SERVICIOS',
+            'estado' => 'ACTIVO'
         ]);
     }
 }

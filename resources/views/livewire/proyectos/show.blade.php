@@ -229,7 +229,7 @@
                                         <p class="text-sm">Equipo Proyecto
                                             @if($proyecto->team)
                                                 @foreach($proyecto->team as $t)
-                                                    <b class="d-block">{{$t}}</b>
+                                                    <b class="d-block">{{$proyecto->user->name}}</b>
                                                 @endforeach
                                             @else
                                                 <p class="text-danger">Sin equipo</p>

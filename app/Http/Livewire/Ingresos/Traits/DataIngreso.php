@@ -6,7 +6,7 @@ trait DataIngreso
 {
     public $compraData = [
         'producto_id' => '',
-        'cantidad' => 1,
+        'cantidad' => '1.00',
         'precio' => '',
         'stock' => '0.00',
         'monto' => '',
@@ -15,7 +15,7 @@ trait DataIngreso
     public $rows = [
         [
             'producto_id' => '',
-            'cantidad' => 1,
+            'cantidad' => '1.00',
             'precio' => '',
             'stock' => '0.00',
             'monto' => '',
@@ -30,6 +30,6 @@ trait DataIngreso
     public function deleteRow($index)
     {
         unset($this->rows[$index]);
-        $this->calculateTotal();
+        $this->calcularTotalItems();
     }
 }

@@ -24,13 +24,13 @@ class Productos extends ComponenteBase
         if(strlen($this->search) > 3) {
             $data = Producto::where('codigo', 'like', '%' . $this->search . '%')
                 ->orWhere('descripcion', 'like', '%' . $this->search . '%')
-                ->orWhere('modelo', 'like', '%' . $this->search . '%')
+                ->orWhere('nombre', 'like', '%' . $this->search . '%')
                 ->paginate($this->pagination);
         }else {
             $data = Producto::orderBy('id', 'desc')->paginate($this->pagination);
         }
         $this->update();
-        return view('livewire.productos.index',['productos' => $data,])->extends('layouts.tema.app')->section('content');
+        return view('livewire.productos.index',['productos' => $data])->extends('layouts.tema.app')->section('content');
     }
 
     public function update()
@@ -124,7 +124,6 @@ class Productos extends ComponenteBase
 
         $producto = Producto::findOrFail($this->state['id']);
         $producto->update($validated);
-
         $this->resetUI();
         $this->emit('producto-updated', 'Producto Actualizado');
     }
@@ -132,7 +131,6 @@ class Productos extends ComponenteBase
     {
         $producto->delete();
         $this->resetUI();
-        $this->emit('producto-deleted', 'Producto Eliminado');
     }
 
 }

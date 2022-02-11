@@ -2,7 +2,6 @@
 
 namespace App\Http\Livewire\Ingresos;
 
-use App\Http\Livewire\ComponenteBase;
 use App\Http\Livewire\Ingresos\Traits\CalcularIngreso;
 use App\Http\Livewire\Ingresos\Traits\DataIngreso;
 use App\Models\CentroCosto;
@@ -12,29 +11,32 @@ use App\Models\MovimientoAlmacen;
 use App\Models\MovimientoAlmacenDetalle;
 use App\Models\Producto;
 use App\Models\User;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
+use Livewire\Component;
 
-class IngresosCreate extends ComponenteBase
+class IngresosEdit extends Component
 {
     use LivewireAlert;
-    use DataIngreso;
     use CalcularIngreso;
-    public $state = [];
-    public $productos, $motivos, $lista, $costos;
+    use DataIngreso;
 
-    public function mount()
+    public $state = [];
+    public $movimiento, $lista;
+
+    public function mount($ingreso)
     {
+        $this->movimiento = MovimientoAlmacen::with('movimientoDetalles')->find($ingreso);
+        $this->state = $this->movimiento->toArray();
+        $this->rows = $this->movimiento->movimientoDetalles->toArray();
+        $this->cantidadTotal = $this->movimiento->total_items;
         $this->lista = collect();
     }
-
     public function render()
     {
         $this->update();
-        return view('livewire.ingresos.ingresos-create')->extends('layouts.tema.app')->section('content');
+        return view('livewire.ingresos.ingresos-edit')->extends('layouts.tema.app')->section('content');
     }
-
     public function update()
     {
         $this->productos();
@@ -64,7 +66,7 @@ class IngresosCreate extends ComponenteBase
         $this->costos = CentroCosto::all();
     }
 
-    public function createIngreso()
+    public function actualizarIngreso()
     {
         $validated = Validator::make($this->state, [
             'usuario_id' => 'required',
@@ -75,21 +77,6 @@ class IngresosCreate extends ComponenteBase
             'motivo_id.required' => 'El motivo es requerido',
             'centro_costo_id.required' => 'El centro de costo es requerido',
         ])->validate();
-
-        $i = MovimientoAlmacen::count() > 0 ? MovimientoAlmacen::latest()->first()->id +1 : 1;
-        $date = Carbon::now();
-        $date = $date->Format('ym');
-        if($i <= 9) {
-            $this->codigo = 'GI'. $date .'0000'. $i;
-        }elseif ($i <= 100) {
-            $this->codigo = 'GI'. $date .'000'. $i;
-        }elseif ($i <= 1000) {
-            $this->codigo = 'GI'. $date .'00'. $i;
-        }elseif ($i <= 10000) {
-            $this->codigo = 'GI'. $date .'0'. $i;
-        }else {
-            $this->codigo = 'GI'. $date. $i;
-        }
         //se busca el usuario o cliente
         $use = User::where('name', $this->state['usuario_id'])->get();
         $use = $use[0]->id;
@@ -97,12 +84,9 @@ class IngresosCreate extends ComponenteBase
             $use = Cliente::where('razon_social', $this->state['usuario_id'])->get();
             $use = $use[0]->ruc;
         }
-        ////crea el movimiento almacen
-        $guia = MovimientoAlmacen::create([
-            'tipo_documento'    => 'GI',
-            'numero_guia'       => $this->codigo,
-            'fecha_documento'   => $this->state['fecha_documento']?? now(),
-            'referencia'        => $this->state['referencia']?? '',
+        $nuevo =$this->movimiento;
+        $nuevo->update([
+            'fecha_documento'   => $this->state['fecha_documento'] ?? now(),
             'ruc_cliente'       => $use,
             'nombre_cliente'    => $this->state['usuario_id'],
             'total_items'       => $this->cantidadTotal,
@@ -110,18 +94,27 @@ class IngresosCreate extends ComponenteBase
             'motivo_id'         => $this->state['motivo_id'],
             'centro_costo_id'   => $this->state['centro_costo_id']
         ]);
+        $nuevo->movimientoDetalles->each(function($item) {
+            $item->delete();
+        });
 
-        foreach ($this->rows as  $item) {
-            $producto = Producto::find($item['producto_id']);
-            $detalle = MovimientoAlmacenDetalle::create([
-                'movimiento_almacens_id'    => $guia->id,
-                'producto_id'               => $item['producto_id'],
-                'cantidad'                  => $item['cantidad'],
-            ]);
-        }
-        $this->alert('success', 'Se creo el registro con exito',['timerProgressBar' => true]);
-        return redirect()->route('ingreso.show', $guia->id);
+        collect($this->rows)->filter(function ($item) {
+            return $item['producto_id'] !== '';
+        })->each(function($item) use($nuevo) {
+            MovimientoAlmacenDetalle::updateOrCreate(
+                [
+                    'id' => $item['id'] ?? MovimientoAlmacenDetalle::orderBy('id', 'desc')->first()->id + 1
+                ],
+                [
+                    'movimiento_almacens_id'=> $nuevo->id,
+                    'producto_id'           => $item['producto_id'],
+                    'cantidad'              => $item['cantidad'],
+                    'stock_old'             => $item['stock_old'] ?? 0,
+                ]
+            );
+        });
 
+        $this->alert('success', 'Se actualizo el registro con exito',['timerProgressBar' => true]);
+        return redirect()->route('ingreso.show', $this->movimiento->id);
     }
-
 }

@@ -15,24 +15,28 @@ class UnidadMedidaSeeder extends Seeder
     public function run()
     {
         DB::table('unidad_medidas')->insert([
-            'nombre' => 'Unidad',
-            'estado' => 'Activo'
+            'nombre' => 'UNIDAD',
+            'estado' => 'Activo',
         ]);
         DB::table('unidad_medidas')->insert([
-            'nombre' => 'Kilogramo',
-            'estado' => 'Activo'
+            'nombre' => 'KILOGRAMO',
+            'estado' => 'Activo',
        ]);
        DB::table('unidad_medidas')->insert([
-             'nombre' => 'Pieza',
-             'estado' => 'Activo'
+             'nombre' => 'PIEZA',
+             'estado' => 'Activo',
        ]);
        DB::table('unidad_medidas')->insert([
-            'nombre' => 'Millar',
-            'estado' => 'Activo'
+             'nombre' => 'LITROS',
+             'estado' => 'Activo',
        ]);
-       DB::table('unidad_medidas')->insert([
-             'nombre' => 'Docena',
-             'estado' => 'Activo'
-       ]);
+        DB::table('unidad_medidas')->insert([
+            'nombre' => 'RESMA',
+            'estado' => 'Activo',
+        ]);
+        DB::table('unidad_medidas')->insert([
+            'nombre' => 'CAJA',
+            'estado' => 'Activo',
+        ]);
     }
 }

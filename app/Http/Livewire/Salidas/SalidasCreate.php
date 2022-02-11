@@ -97,7 +97,6 @@ class SalidasCreate extends ComponenteBase
                 $use = Cliente::where('razon_social', $this->state['usuario_id'])->get();
                 $use = $use[0]->ruc;
             }
-
             ////crea el movimiento almacen
             $guia = MovimientoAlmacen::create([
                 'tipo_documento'    => 'GS',
@@ -107,21 +106,15 @@ class SalidasCreate extends ComponenteBase
                 'ruc_cliente'       => $use,
                 'nombre_cliente'    => $this->state['usuario_id'],
                 'total_items'       => $this->cantidadTotal,
-                'estado'            => 'APROBADO',
+                'estado'            => 'PENDIENTE',
                 'motivo_id'         => $this->state['motivo_id'],
                 'centro_costo_id'   => $this->state['centro_costo_id']
             ]);
-
             foreach ($this->rows as  $item) {
-                $producto = Producto::find($item['producto_id']);
                 MovimientoAlmacenDetalle::create([
                     'movimiento_almacens_id'    => $guia->id,
                     'producto_id'               => $item['producto_id'],
                     'cantidad'                  => $item['cantidad'],
-                    'stock_old' => $producto->stock,
-                ]);
-                $producto->update([
-                    'stock' => $producto->stock - $item['cantidad'],
                 ]);
             }
             $this->alert('success', 'Se creo el registro',['timerProgressBar' => true]);

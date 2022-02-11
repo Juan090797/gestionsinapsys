@@ -66,6 +66,7 @@ class KardexProducto extends ComponenteBase
                 $query->where('producto_id',$this->state['producto_id'] );
             })
             ->whereBetween('created_at', [$this->state['fecha_inicio'], $this->state['fecha_fin']])
+            ->orderBy('updated_at', 'asc')
             ->get();
         foreach ($this->data as $r)
         {

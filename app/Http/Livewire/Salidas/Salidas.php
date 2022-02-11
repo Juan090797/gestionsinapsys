@@ -5,10 +5,12 @@ namespace App\Http\Livewire\Salidas;
 use App\Http\Livewire\ComponenteBase;
 use App\Models\MovimientoAlmacen;
 use App\Models\Producto;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 
 class Salidas extends ComponenteBase
 {
+    use LivewireAlert;
     public $selectedProducts = [];
     public $search, $selected_id;
     public $state = [];
@@ -37,22 +39,22 @@ class Salidas extends ComponenteBase
             foreach ($p->movimientoDetalles as $item)
             {
                 $prod = Producto::find($item->producto_id);
-                $prod->update([
-                    'stock' => $prod->stock + $item->cantidad,
-                ]);
-                if($item->stock_old > 0){
+                if($prod->stock > 0){
                     $item->update([
                         'stock_old' => $prod->stock,
                     ]);
                 }
+                $prod->update([
+                    'stock' => $prod->stock - $item->cantidad,
+                ]);
             }
             $p->update([
                 'fecha_documento' => now(),
-                'estado' => 'Aprobado',
+                'estado' => 'APROBADO',
             ]);
-            $this->emit('aprobado', 'Se aprobo el movimiento y se ajusto el stock');
+            $this->alert('success', 'Se aprobo el movimiento y se ajusto el stock',['timerProgressBar' => true]);
         }else {
-            $this->emit('error', 'Selecciona un Movimiento');
+            $this->alert('error', 'Selecciona un registro',['timerProgressBar' => true]);
         }
     }
 

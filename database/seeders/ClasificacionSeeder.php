@@ -15,23 +15,23 @@ class ClasificacionSeeder extends Seeder
     public function run()
     {
         DB::table('clasificacions')->insert([
-            'nombre' => 'Activos',
+            'nombre' => 'ACTIVOS',
             'estado' => 'ACTIVO'
         ]);
         DB::table('clasificacions')->insert([
-            'nombre' => 'Mercaderias',
+            'nombre' => 'MERCADERIAS',
             'estado' => 'ACTIVO'
         ]);
         DB::table('clasificacions')->insert([
-            'nombre' => 'Servicios',
+            'nombre' => 'SERVICIOS',
             'estado' => 'ACTIVO'
         ]);
         DB::table('clasificacions')->insert([
-            'nombre' => 'Insumos',
+            'nombre' => 'INSUMOS',
             'estado' => 'ACTIVO'
         ]);
         DB::table('clasificacions')->insert([
-            'nombre' => 'Otros',
+            'nombre' => 'OTROS',
             'estado' => 'ACTIVO'
         ]);
     }

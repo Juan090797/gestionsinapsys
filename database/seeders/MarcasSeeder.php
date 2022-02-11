@@ -15,15 +15,15 @@ class MarcasSeeder extends Seeder
     public function run()
     {
         DB::table('marcas')->insert([
-            'nombre' => 'Euromex',
+            'nombre' => 'EUROMEX',
             'estado' => 'ACTIVO'
         ]);
         DB::table('marcas')->insert([
-            'nombre' => 'Yamato',
+            'nombre' => 'YAMATO',
             'estado' => 'ACTIVO'
         ]);
         DB::table('marcas')->insert([
-            'nombre' => 'Bell',
+            'nombre' => 'BELL',
             'estado' => 'ACTIVO'
         ]);
         DB::table('marcas')->insert([
@@ -43,7 +43,7 @@ class MarcasSeeder extends Seeder
             'estado' => 'ACTIVO'
         ]);
         DB::table('marcas')->insert([
-            'nombre' => 'Pobel',
+            'nombre' => 'POBEL',
             'estado' => 'ACTIVO'
         ]);
         DB::table('marcas')->insert([
@@ -51,7 +51,7 @@ class MarcasSeeder extends Seeder
             'estado' => 'ACTIVO'
         ]);
         DB::table('marcas')->insert([
-            'nombre' => 'Astell',
+            'nombre' => 'ASTELL',
             'estado' => 'ACTIVO'
         ]);
         DB::table('marcas')->insert([
@@ -63,11 +63,11 @@ class MarcasSeeder extends Seeder
             'estado' => 'ACTIVO'
         ]);
         DB::table('marcas')->insert([
-            'nombre' => 'Mobercas',
+            'nombre' => 'MOBERCAS',
             'estado' => 'ACTIVO'
         ]);
         DB::table('marcas')->insert([
-            'nombre' => 'Biobase',
+            'nombre' => 'BIOBASE',
             'estado' => 'ACTIVO'
         ]);
         DB::table('marcas')->insert([
@@ -75,7 +75,7 @@ class MarcasSeeder extends Seeder
             'estado' => 'ACTIVO'
         ]);
         DB::table('marcas')->insert([
-            'nombre' => 'Shinva',
+            'nombre' => 'SHINVA',
             'estado' => 'ACTIVO'
         ]);
         DB::table('marcas')->insert([
@@ -83,15 +83,15 @@ class MarcasSeeder extends Seeder
             'estado' => 'ACTIVO'
         ]);
         DB::table('marcas')->insert([
-            'nombre' => 'Argolab',
+            'nombre' => 'ARGOLAB',
             'estado' => 'ACTIVO'
         ]);
         DB::table('marcas')->insert([
-            'nombre' => 'Biosan',
+            'nombre' => 'BIOSAN',
             'estado' => 'ACTIVO'
         ]);
         DB::table('marcas')->insert([
-            'nombre' => 'Dialab',
+            'nombre' => 'DIALAB',
             'estado' => 'ACTIVO'
         ]);
         DB::table('marcas')->insert([
@@ -100,6 +100,179 @@ class MarcasSeeder extends Seeder
         ]);
         DB::table('marcas')->insert([
             'nombre' => 'Xs instruments',
+            'estado' => 'ACTIVO'
+        ]);
+        ///////////////////////
+        DB::table('marcas')->insert([
+            'nombre' => 'NOVE',
+            'estado' => 'ACTIVO'
+        ]);
+        DB::table('marcas')->insert([
+            'nombre' => 'ARTESCO',
+            'estado' => 'ACTIVO'
+        ]);
+        DB::table('marcas')->insert([
+            'nombre' => 'VINIFAN',
+            'estado' => 'ACTIVO'
+        ]);
+        DB::table('marcas')->insert([
+            'nombre' => 'CASIO',
+            'estado' => 'ACTIVO'
+        ]);
+        DB::table('marcas')->insert([
+            'nombre' => 'WINGO',
+            'estado' => 'ACTIVO'
+        ]);
+        DB::table('marcas')->insert([
+            'nombre' => 'PRINCO',
+            'estado' => 'ACTIVO'
+        ]);
+        DB::table('marcas')->insert([
+            'nombre' => 'GENERICO',
+            'estado' => 'ACTIVO'
+        ]);
+        DB::table('marcas')->insert([
+            'nombre' => 'FABER CASTELL',
+            'estado' => 'ACTIVO'
+        ]);
+        DB::table('marcas')->insert([
+            'nombre' => 'ENERGIZER',
+            'estado' => 'ACTIVO'
+        ]);
+        DB::table('marcas')->insert([
+            'nombre' => 'K & CO',
+            'estado' => 'ACTIVO'
+        ]);
+        DB::table('marcas')->insert([
+            'nombre' => 'MILENIUN',
+            'estado' => 'ACTIVO'
+        ]);
+        DB::table('marcas')->insert([
+            'nombre' => 'GALLO',
+            'estado' => 'ACTIVO'
+        ]);
+        DB::table('marcas')->insert([
+            'nombre' => 'BROTHER',
+            'estado' => 'ACTIVO'
+        ]);
+        DB::table('marcas')->insert([
+            'nombre' => 'INSTANT CLEAN',
+            'estado' => 'ACTIVO'
+        ]);
+        DB::table('marcas')->insert([
+            'nombre' => 'TOTTUS',
+            'estado' => 'ACTIVO'
+        ]);
+        DB::table('marcas')->insert([
+            'nombre' => 'SCOTH BRITTE',
+            'estado' => 'ACTIVO'
+        ]);
+        DB::table('marcas')->insert([
+            'nombre' => 'LIMPIA FACIL',
+            'estado' => 'ACTIVO'
+        ]);
+        DB::table('marcas')->insert([
+            'nombre' => 'SAPOLIO',
+            'estado' => 'ACTIVO'
+        ]);
+        DB::table('marcas')->insert([
+            'nombre' => 'ELITE',
+            'estado' => 'ACTIVO'
+        ]);
+        DB::table('marcas')->insert([
+            'nombre' => 'GLADE',
+            'estado' => 'ACTIVO'
+        ]);
+        DB::table('marcas')->insert([
+            'nombre' => 'KLEINE',
+            'estado' => 'ACTIVO'
+        ]);
+        DB::table('marcas')->insert([
+            'nombre' => 'CYGNUS',
+            'estado' => 'ACTIVO'
+        ]);
+        DB::table('marcas')->insert([
+            'nombre' => 'PAGODA',
+            'estado' => 'ACTIVO'
+        ]);
+        DB::table('marcas')->insert([
+            'nombre' => 'DRAGON',
+            'estado' => 'ACTIVO'
+        ]);
+        DB::table('marcas')->insert([
+            'nombre' => 'DURACELL',
+            'estado' => 'ACTIVO'
+        ]);
+        DB::table('marcas')->insert([
+            'nombre' => 'ENERGIZER',
+            'estado' => 'ACTIVO'
+        ]);
+        DB::table('marcas')->insert([
+            'nombre' => '12DIGITS',
+            'estado' => 'ACTIVO'
+        ]);
+        DB::table('marcas')->insert([
+            'nombre' => 'GUSTALINA',
+            'estado' => 'ACTIVO'
+        ]);
+        DB::table('marcas')->insert([
+            'nombre' => '3M',
+            'estado' => 'ACTIVO'
+        ]);
+        DB::table('marcas')->insert([
+            'nombre' => 'GRAPHOS',
+            'estado' => 'ACTIVO'
+        ]);
+        DB::table('marcas')->insert([
+            'nombre' => 'LAYCONSA',
+            'estado' => 'ACTIVO'
+        ]);
+        DB::table('marcas')->insert([
+            'nombre' => 'CHEMMER',
+            'estado' => 'ACTIVO'
+        ]);
+        DB::table('marcas')->insert([
+            'nombre' => 'POST IT',
+            'estado' => 'ACTIVO'
+        ]);
+        DB::table('marcas')->insert([
+            'nombre' => 'DURABLE',
+            'estado' => 'ACTIVO'
+        ]);
+        DB::table('marcas')->insert([
+            'nombre' => 'GRAFIT',
+            'estado' => 'ACTIVO'
+        ]);
+        DB::table('marcas')->insert([
+            'nombre' => 'YAMATO',
+            'estado' => 'ACTIVO'
+        ]);
+        DB::table('marcas')->insert([
+            'nombre' => 'PEGAFAN',
+            'estado' => 'ACTIVO'
+        ]);
+        DB::table('marcas')->insert([
+            'nombre' => 'GATTO',
+            'estado' => 'ACTIVO'
+        ]);
+        DB::table('marcas')->insert([
+            'nombre' => 'FARMACOTTON',
+            'estado' => 'ACTIVO'
+        ]);
+        DB::table('marcas')->insert([
+            'nombre' => 'CKF',
+            'estado' => 'ACTIVO'
+        ]);
+        DB::table('marcas')->insert([
+            'nombre' => 'SEGPRO',
+            'estado' => 'ACTIVO'
+        ]);
+        DB::table('marcas')->insert([
+            'nombre' => 'VIRUTEX',
+            'estado' => 'ACTIVO'
+        ]);
+        DB::table('marcas')->insert([
+            'nombre' => 'RDL',
             'estado' => 'ACTIVO'
         ]);
     }

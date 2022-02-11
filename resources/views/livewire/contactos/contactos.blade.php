@@ -63,19 +63,25 @@
 
         function Confirm(id)
         {
-            swal({
+            Swal.fire({
                 title: 'CONFIRMAR',
-                text: '¿CONFIRMAS ELIMINAR EL REGISTRO?',
-                type: 'warning',
+                text: "¿CONFIRMAS ELIMINAR EL REGISTRO?",
+                icon: 'warning',
                 showCancelButton: true,
-                cancelButtonText: 'Cerrar',
-                cancelButtonColor: '#fff',
-                confirmButtonText: 'Aceptar',
-                getConfirmButtonColor: '#3B3F5C'
-            }).then(function (result){
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Aceptar'
+            }).then((result) => {
                 if(result.value){
                     window.livewire.emit('deleteRow', id)
                     swal.close()
+                }
+                if (result.isConfirmed) {
+                    Swal.fire(
+                        'Eliminado!',
+                        'El registro ha sido eliminado',
+                        'success'
+                    )
                 }
             })
         }

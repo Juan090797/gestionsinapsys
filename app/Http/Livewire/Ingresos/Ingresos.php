@@ -5,9 +5,11 @@ namespace App\Http\Livewire\Ingresos;
 use App\Http\Livewire\ComponenteBase;
 use App\Models\MovimientoAlmacen;
 use App\Models\Producto;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class Ingresos extends ComponenteBase
 {
+    use LivewireAlert;
     public $selectedProducts = [];
     public $search, $selected_id,$ped;
     public $state = [];
@@ -48,9 +50,9 @@ class Ingresos extends ComponenteBase
                 'estado' => 'APROBADO',
             ]);
             $this->resetUI();
-            $this->emit('aprobado', 'Se aprobo el movimiento y se ajusto el stock');
+            $this->alert('success', 'Se aprobo el movimiento y se ajusto el stock',['timerProgressBar' => true]);
         }else {
-            $this->emit('error', 'Selecciona un Movimiento');
+            $this->alert('error', 'Selecciona un registro',['timerProgressBar' => true]);
         }
     }
 
