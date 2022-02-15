@@ -19,6 +19,7 @@ class CreateComprasTable extends Migration
             $table->string('numero_documento')->nullable();
             $table->date('fecha_documento')->nullable();
             $table->date('fecha_pago')->nullable();
+            $table->string('estado')->nullable();
             $table->decimal('subtotal',20,2)->default(0.00);
             $table->decimal('impuesto',20,2)->default(0.00);
             $table->decimal('total',20,2)->default(0.00);

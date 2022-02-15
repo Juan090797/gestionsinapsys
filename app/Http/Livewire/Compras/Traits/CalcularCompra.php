@@ -30,6 +30,7 @@ trait CalcularCompra
         $this->rows[$index]['cantidad'] = $cantidad;
         $this->rows[$index]['monto'] = (int) $cantidad * $this->rows[$index]['precio'] ?? 0;
         $this->rows[$index]['formate_monto'] = number_format($this->rows[$index]['monto'],2);
+
         $this->calculateSubTotal();
         $this->calculateTaxAmount();
         $this->calculateTotal();
@@ -41,6 +42,7 @@ trait CalcularCompra
         $this->rows[$index]['precio'] = $precio;
         $this->rows[$index]['monto'] = (int) $precio * $this->rows[$index]['cantidad'] ?? 0;
         $this->rows[$index]['formate_monto'] = number_format($this->rows[$index]['monto'],2);
+
         $this->calculateSubTotal();
         $this->calculateTaxAmount();
         $this->calculateTotal();

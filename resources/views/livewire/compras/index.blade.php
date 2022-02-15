@@ -6,8 +6,11 @@
     <div class="content-fluid">
         <div class="card">
             <div class="card-header">
-                <div class="row justify-content-end">
-                    <div class="col-3">
+                <div class="row justify-content-between">
+                    <div class="col-4">
+                        <a href="javascript:void(0)" class="btn btn-success" wire:click="AprobarMovimiento()">Aprobar</a>
+                    </div>
+                    <div class="col-4">
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder="Buscar por nombre del proveedor" wire:model="search">
                         </div>
@@ -18,26 +21,34 @@
                 <table class="table table-sm table-hover">
                     <thead class="thead-dark">
                     <tr>
-                        <th scope="col">#ID</th>
+                        <th scope="col"></th>
                         <th class="text-center">Proveedor</th>
                         <th class="text-center">Fecha</th>
                         <th class="text-center">Tipo Docum.</th>
                         <th class="text-center">N° Documento</th>
                         <th class="text-center">IGV</th>
                         <th class="text-center">Total</th>
+                        <th class="text-center">Estado</th>
                         <th class="text-center">Acciones</th>
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach($compras as $index => $compra)
+                    @foreach($compras as $compra)
                         <tr>
-                            <th scope="row">{{$compras->firstItem() + $index}}</th>
+                            <th>
+                                @if($compra->estado == 'APROBADO')
+                                    <input type="checkbox" wire:model="selectedProducts" value="{{ $compra->id }}" disabled>
+                                @else
+                                    <input type="checkbox" wire:model="selectedProducts" value="{{ $compra->id }}">
+                                @endif
+                            </th>
                             <td class="text-center">{{$compra->proveedor->razon_social}}</td>
                             <td class="text-center">{{$compra->created_at}}</td>
                             <td class="text-center"><span class="badge {{ $compra->tipo_documento == 'Factura' ? 'badge-success' : 'badge-danger'}}">{{$compra->tipo_documento}}</span></td>
                             <td class="text-center">{{$compra->numero_documento}}</td>
                             <td class="text-center">S/ {{$compra->impuesto}}</td>
                             <td class="text-center">S/ {{$compra->total}}</td>
+                            <td class="text-center"><span class="badge {{ $compra->estado == 'APROBADO' ? 'badge-success' : 'badge-danger'}}">{{$compra->estado}}</span></td>
                             <td class="text-center">
                                 <a href="javascript:void(0)"  wire:click="Edit({{ $compra->id }})" class="btn btn-primary" title="Editar">
                                     <i class="fas fa-pencil-alt" aria-hidden="true"></i>

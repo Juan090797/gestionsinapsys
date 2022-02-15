@@ -46,6 +46,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('centrocostos', \App\Http\Livewire\CentroCostos::class)->name('centrocostos');
     Route::get('compras', \App\Http\Livewire\Compras\Compras::class)->name('compras');
     Route::get('compracreate', \App\Http\Livewire\Compras\CreateCompra::class)->name('compracreate');
+    Route::get('compra/{compra}/edit', \App\Http\Livewire\Compras\ComprasEdit::class)->name('compra.edit');
     Route::get('ingresos', \App\Http\Livewire\Ingresos\Ingresos::class)->name('ingresos');
     Route::get('ingresoscreate', \App\Http\Livewire\Ingresos\IngresosCreate::class)->name('ingresoscreate');
     Route::get('ingreso/{ingreso}/show', \App\Http\Livewire\Ingresos\IngresosShow::class)->name('ingreso.show');

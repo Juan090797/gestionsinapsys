@@ -64,7 +64,6 @@
                         @error('fecha_pago') <span class="text-danger er">{{ $message }}</span>@enderror
                     </div>
                 </div>
-
                 <div class="row">
                     <div class="col-12 table-responsive">
                         <table class="table table-striped">
@@ -139,7 +138,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row no-print">
+                <div class="row">
                     <div class="col-12">
                         <button type="submit" class="btn btn-primary float-right"><i class="fa fa-save mr-1"></i> Guardar</button>
                     </div>
