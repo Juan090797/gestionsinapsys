@@ -36,6 +36,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('productos/exports/', [\App\Http\Controllers\ExportController::class, 'exportProducto']);
     Route::post('productos/imports/', [\App\Http\Controllers\ImportController::class, 'importProducto']);
     Route::post('proveedors/imports/', [\App\Http\Controllers\ImportController::class, 'importProveedor']);
+    Route::get('proveedors/exports/', [\App\Http\Livewire\Proveedores::class, 'exportProveedor'])->name('proveedor.export');
+    Route::get('compras/exports/', [\App\Http\Livewire\Compras\Compras::class, 'exportCompra'])->name('compra.export');
     Route::get('impuestos', \App\Http\Livewire\Impuestos::class);
     Route::get('empresa', \App\Http\Livewire\Empresas\Empresas::class);
     Route::get('pedidos', \App\Http\Livewire\Pedidos\Pedidos::class);
@@ -58,6 +60,9 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('usuarios', \App\Http\Livewire\Usuarios\Usuarios::class)->name('usuarios');
     Route::get('mensajes', \App\Http\Livewire\mensajes\ListaConversacion::class)->name('mensajes');
     Route::get('kardex-producto', \App\Http\Livewire\Kardex\KardexProducto::class)->name('kardex-producto');
-
+    Route::get('kardex-general', \App\Http\Livewire\Kardex\KardexGeneral::class)->name('kardex.general');
+    Route::get('ordenes', \App\Http\Livewire\Ordenes\ListaOrdenes::class)->name('ordenes');
+    Route::get('ordencreate', \App\Http\Livewire\Ordenes\CreateOrdenes::class)->name('orden.create');
+    Route::get('orden/{orden}/show', \App\Http\Livewire\Ordenes\ShowOrdenes::class)->name('orden.show');
 });
 

@@ -5,14 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Compra extends Model
+class OrdenCompra extends Model
 {
     use HasFactory;
-    protected $guarded =['id'];
+    protected $guarded = ['id'];
 
-    public function compraDetalles()
+    public function ordenDetalles()
     {
-        return $this->hasMany(CompraDetalle::class);
+        return $this->hasMany(OrdenCompraDetalle::class);
     }
 
     public function impuestoc()
@@ -24,9 +24,8 @@ class Compra extends Model
         return $this->belongsTo(Proveedor::class);
     }
 
-    public function costo()
+    public function user()
     {
-        return $this->belongsTo(CentroCosto::class, 'centro_costo_id');
+        return $this->belongsTo(User::class);
     }
-
 }

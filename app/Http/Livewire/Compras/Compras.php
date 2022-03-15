@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Compras;
 
+use App\Exports\ComprasExport;
 use App\Http\Livewire\ComponenteBase;
 use App\Models\Compra;
 use App\Models\MovimientoAlmacen;
@@ -10,6 +11,7 @@ use App\Models\Producto;
 use App\Models\Proveedor;
 use Carbon\Carbon;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
+use Maatwebsite\Excel\Facades\Excel;
 
 class Compras extends ComponenteBase
 {
@@ -114,5 +116,11 @@ class Compras extends ComponenteBase
         $this->selectedProducts =[];
         $this->selected_id = '';
         $this->resetValidation();
+    }
+
+    public function exportCompra()
+    {
+        $reportName = 'Compras_' . uniqid() . '.xlsx';
+        return Excel::download(new ComprasExport, $reportName);
     }
 }

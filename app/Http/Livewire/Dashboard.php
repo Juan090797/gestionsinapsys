@@ -32,51 +32,53 @@ class Dashboard extends Component
     public function render()
     {
         $this->update();
-        $chart_options = [
-            'chart_title' => 'Ingresos de ventas por dia',
+        $settings1 = [
+            'chart_title' => 'Ventas',
             'report_type' => 'group_by_date',
             'model' => 'App\Models\Pedido',
             'group_by_field' => 'created_at',
-            'group_by_period' => 'day',
-            'chart_type' => 'line',
-            'chart_color' => '158, 190, 187',
-            'aggregate_function' => 'sum',
-            'aggregate_field' => 'total',
-            'date_format' => 'd-m-Y',
-        ];
-        $chart1 = new LaravelChart($chart_options);
-
-        $chart_options = [
-            'chart_title' => 'Proyectos por mes',
-            'report_type' => 'group_by_date',
-            'model' => 'App\Models\Proyecto',
-            'group_by_field' => 'created_at',
             'group_by_period' => 'month',
             'chart_type' => 'bar',
-            'chart_color' => '255, 51, 0',
-            'date_format' => 'm-Y',
+            'aggregate_function' => 'sum',
+            'aggregate_field'  => 'total',
+            'continuous_time' => true,
+            'chart_color' => '204, 241, 237',
+            'date_format' =>'d-m-Y',
+
         ];
+        $settings2 = [
+            'chart_title'           => 'Compras',
+            'name'                  => 'Ventas y Compras',
+            'chart_type'            => 'bar',
+            'report_type'           => 'group_by_date',
+            'model'                 => 'App\Models\Compra',
+            'group_by_field'        => 'created_at',
+            'group_by_period'       => 'month',
+            'aggregate_function'    => 'sum',
+            'aggregate_field'       => 'total',
+            'chart_color'           => '255, 28, 86',
+        ];
+        $chart1 = new LaravelChart($settings1,$settings2);
+
+        $chart_options = [
+            'chart_title' => 'Gastos',
+            'chart_type' => 'pie',
+            'report_type' => 'group_by_relationship',
+            'model' => 'App\Models\MovimientoAlmacen',
+            'name' => 'Gastos '.now()->format('Y'),
+            'relationship_name' => 'costos', // represents function user() on Transaction model
+            'group_by_field' => 'nombre', // users.name
+
+            'aggregate_function' => 'sum',
+            'aggregate_field' => 'total',
+        ];
+
         $chart2 = new LaravelChart($chart_options);
-
-        $chart_options = [
-            'chart_title' => 'Compras por mes',
-            'report_type' => 'group_by_date',
-            'model' => 'App\Models\Compra',
-            'group_by_field' => 'created_at',
-            'group_by_period' => 'month',
-            'chart_type' => 'bar',
-            'chart_color' => '0, 126, 255',
-            'aggregate_function' => 'sum',
-            'aggregate_field' => 'total',
-            'date_format' => 'm-Y',
-        ];
-        $chart3 = new LaravelChart($chart_options);
 
         return view('livewire.dashboard',
         [
             'chart1'   => $chart1,
             'chart2'   => $chart2,
-            'chart3'   => $chart3,
         ]
         )->extends('layouts.tema.app')->section('content');
     }

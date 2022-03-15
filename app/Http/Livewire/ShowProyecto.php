@@ -16,11 +16,13 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
 class ShowProyecto extends Component
 {
+    use LivewireAlert;
     use WithFileUploads;
 
     public $state = [];
@@ -90,7 +92,7 @@ class ShowProyecto extends Component
         $this->proyecto->update([
             'etapa_id' => $etapa->id,
         ]);
-        $this->emit('update-etapa', 'Se actualizo la etapa');
+        $this->alert('success', 'Se actualizo la etapa',['timerProgressBar' => true]);
     }
     public function createArchivo()
     {

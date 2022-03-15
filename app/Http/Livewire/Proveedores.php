@@ -2,9 +2,11 @@
 
 namespace App\Http\Livewire;
 
+use App\Exports\ProveedorsExport;
 use App\Models\Proveedor;
 use Illuminate\Support\Facades\Validator;
 use App\Models\TipoProveedor;
+use Maatwebsite\Excel\Facades\Excel;
 
 class Proveedores extends ComponenteBase
 {
@@ -120,5 +122,11 @@ class Proveedores extends ComponenteBase
         $proveedor->delete();
         $this->resetUI();
         $this->emit('proveedor-deleted', 'Proveedor Eliminado');
+    }
+
+    public function exportProveedor()
+    {
+        $reportName = 'Proveedores_' . uniqid() . '.xlsx';
+        return Excel::download(new ProveedorsExport, $reportName);
     }
 }

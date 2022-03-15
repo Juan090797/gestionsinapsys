@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Livewire\Compras\Traits;
+namespace App\Http\Livewire\Ordenes\Traits;
 
 use App\Models\Producto;
 
-trait CalcularCompra
+trait CalcularOrden
 {
     public $subTotal = 0;
     public $impuestoCalculo = 0;

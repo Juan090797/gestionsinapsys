@@ -102,8 +102,7 @@
             <div class="row">
                 <div class="col-4">
                     <p class="lead">Terminos:</p>
-                    <textarea wire:model.defer="state.terminos" class="form-control" rows="5">
-                    </textarea>
+                    <textarea wire:model.defer="state.terminos" class="form-control" rows="5"></textarea>
                 </div>
                 <div class="col-4">
                     <p class="lead">Condiciones:</p>

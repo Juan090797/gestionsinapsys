@@ -438,19 +438,25 @@
         }
         function Confirmacion(id)
         {
-            swal({
+            Swal.fire({
                 title: 'CONFIRMAR',
-                text: '¿CONFIRMAS CREAR EL PEDIDO?',
-                type: 'warning',
+                text: "¿CONFIRMAS CREAR EL PEDIDO?",
+                icon: 'warning',
                 showCancelButton: true,
-                cancelButtonText: 'Cerrar',
-                cancelButtonColor: '#fff',
-                confirmButtonText: 'Aceptar',
-                getConfirmButtonColor: '#3B3F5C'
-            }).then(function (result){
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Aceptar'
+            }).then((result) => {
                 if(result.value){
                     window.livewire.emit('create', id)
                     swal.close()
+                }
+                if (result.isConfirmed) {
+                    Swal.fire(
+                        'Creado!',
+                        'El pedido ha sido creado',
+                        'success'
+                    )
                 }
             })
         }

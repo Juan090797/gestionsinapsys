@@ -1,15 +1,14 @@
 <div>
     @section('cabezera-contenido')
-        <a href="{{route('compracreate')}}" class="btn btn-primary float-right">Agregar</a>
-        <h1>Lista de Compras</h1>
+        <a href="{{route('orden.create')}}" class="btn btn-primary float-right">Agregar</a>
+        <h1>Lista de Ordenes Compras</h1>
     @endsection
     <div class="content-fluid">
         <div class="card">
             <div class="card-header">
                 <div class="row justify-content-between">
                     <div class="col-4">
-                        <a href="javascript:void(0)" class="btn btn-primary" wire:click="AprobarMovimiento()">Aprobar</a>
-                        <a class="btn btn-success" href="{{ route('compra.export') }}"><i class="fas fa-file-excel"></i> Excel</a>
+                        <a href="javascript:void(0)" class="btn btn-success" wire:click="AprobarMovimiento()">Aprobar</a>
                     </div>
                     <div class="col-4">
                         <div class="input-group">
@@ -23,10 +22,10 @@
                     <thead class="thead-dark">
                     <tr>
                         <th scope="col"></th>
+                        <th class="text-center">codigo</th>
                         <th class="text-center">Proveedor</th>
                         <th class="text-center">Fecha</th>
-                        <th class="text-center">Tipo Docum.</th>
-                        <th class="text-center">N° Documento</th>
+                        <th class="text-center">Referencia</th>
                         <th class="text-center">IGV</th>
                         <th class="text-center">Total</th>
                         <th class="text-center">Estado</th>
@@ -34,27 +33,30 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach($compras as $compra)
+                    @foreach($ordenes as $orden)
                         <tr>
                             <th>
-                                @if($compra->estado == 'APROBADO')
-                                    <input type="checkbox" wire:model="selectedProducts" value="{{ $compra->id }}" disabled>
+                                @if($orden->estado == 'APROBADO')
+                                    <input type="checkbox" wire:model="selectedProducts" value="{{ $orden->id }}" disabled>
                                 @else
-                                    <input type="checkbox" wire:model="selectedProducts" value="{{ $compra->id }}">
+                                    <input type="checkbox" wire:model="selectedProducts" value="{{ $orden->id }}">
                                 @endif
                             </th>
-                            <td class="text-center">{{$compra->proveedor->razon_social}}</td>
-                            <td class="text-center">{{$compra->created_at}}</td>
-                            <td class="text-center"><span class="badge {{ $compra->tipo_documento == 'Factura' ? 'badge-success' : 'badge-danger'}}">{{$compra->tipo_documento}}</span></td>
-                            <td class="text-center">{{$compra->numero_documento}}</td>
-                            <td class="text-center">S/ {{$compra->impuesto}}</td>
-                            <td class="text-center">S/ {{$compra->total}}</td>
-                            <td class="text-center"><span class="badge {{ $compra->estado == 'APROBADO' ? 'badge-success' : 'badge-danger'}}">{{$compra->estado}}</span></td>
+                            <td class="text-center">{{$orden->codigo}}</td>
+                            <td class="text-center">{{$orden->proveedor->razon_social}}</td>
+                            <td class="text-center">{{$orden->created_at}}</td>
+                            <td class="text-center">{{$orden->referencia}}</td>
+                            <td class="text-center">S/ {{$orden->impuesto}}</td>
+                            <td class="text-center">S/ {{$orden->total}}</td>
+                            <td class="text-center"><span class="badge {{ $orden->estado == 'APROBADO' ? 'badge-success' : 'badge-danger'}}">{{$orden->estado}}</span></td>
                             <td class="text-center">
-                                <a href="javascript:void(0)"  wire:click="Edit({{ $compra->id }})" class="btn btn-primary" title="Editar">
+                                <a href="{{route('orden.show', $orden)}}" class="btn btn-primary" title="Ver">
+                                    <i class="far fa-eye" aria-hidden="true"></i>
+                                </a>
+                                <a href="javascript:void(0)"  wire:click="Edit({{ $orden->id }})" class="btn btn-primary" title="Editar">
                                     <i class="fas fa-pencil-alt" aria-hidden="true"></i>
                                 </a>
-                                <a href="javascript:void(0)" onclick="Confirm('{{ $compra->id }}')" class="btn btn-danger" title="Eliminar">
+                                <a href="javascript:void(0)" onclick="Confirm('{{ $orden->id }}')" class="btn btn-danger" title="Eliminar">
                                     <i class="fa fa-trash" aria-hidden="true"></i>
                                 </a>
                             </td>
@@ -63,14 +65,13 @@
                     </tbody>
                 </table>
                 <div class="py-3 float-right">
-                    {{$compras->links()}}
+
                 </div>
             </div>
         </div>
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', function (){
-
             window.Livewire.on('show-modal', msg =>{
                 $('#theModal').modal('show')
             });

@@ -221,6 +221,18 @@
                                 <p>Salidas</p>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a href="{{ url('ordenes') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Ordenes Compras</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ url('salidas') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Requerimientos</p>
+                            </a>
+                        </li>
                     </ul>
                 </li>
                 <li class="nav-item">
@@ -264,7 +276,13 @@
                         <li class="nav-item">
                             <a href="{{ url('kardex-producto') }}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>Kardex</p>
+                                <p>Kardex(producto)</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ url('kardex-general') }}" class="nav-link {{ request()->is('kardex-general') ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Kardex(general)</p>
                             </a>
                         </li>
                     </ul>

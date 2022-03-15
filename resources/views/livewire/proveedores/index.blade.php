@@ -7,7 +7,7 @@
         <div class="card">
             <div class="card-header">
                 <div class="row">
-                    <div class="col-4">
+                    <div class="col-md-4 col-sm-12">
                         <form method="post" action="{{url('proveedors/imports/')}}" enctype="multipart/form-data">
                             {{csrf_field()}}
                             <div class="input-group">
@@ -21,9 +21,10 @@
                             </div>
                         </form>
                     </div>
-                    <div class="col-4">
+                    <div class="col-md-4 col-sm-12">
+                        <a class="btn btn-success" href="{{ route('proveedor.export') }}"><i class="fas fa-file-excel"></i> Excel</a>
                     </div>
-                    <div class="col-4">
+                    <div class="col-md-4 col-sm-12">
                         <input wire:model="search" class="form-control" placeholder="Buscar por ruc">
                     </div>
                 </div>

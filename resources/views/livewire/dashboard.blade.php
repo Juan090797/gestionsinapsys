@@ -42,27 +42,19 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-4 col-sm-12 col-12">
+            <div class="col-md-6 col-sm-12 col-12">
                 <div class="card">
                     <div class="card-body">
-                        <h1>{{ $chart1->options['chart_title'] }}</h1>
+                        <h1>{{ $chart1->options['name'] }}</h1>
                         {!! $chart1->renderHtml() !!}
                     </div>
                 </div>
             </div>
-            <div class="col-md-4 col-sm-12 col-12">
+            <div class="col-md-3 col-sm-12 col-12">
                 <div class="card">
                     <div class="card-body">
-                        <h1>{{ $chart2->options['chart_title'] }}</h1>
+                        <h1>{{ $chart2->options['name'] }}</h1>
                         {!! $chart2->renderHtml() !!}
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 col-sm-12 col-12">
-                <div class="card">
-                    <div class="card-body">
-                        <h1>{{ $chart3->options['chart_title'] }}</h1>
-                        {!! $chart3->renderHtml() !!}
                     </div>
                 </div>
             </div>
@@ -72,7 +64,6 @@
             {!! $chart1->renderChartJsLibrary() !!}
             {!! $chart1->renderJs() !!}
             {!! $chart2->renderJs() !!}
-            {!! $chart3->renderJs() !!}
         @endpush
 </div>
 
