@@ -1,7 +1,7 @@
 <div>
     @section('cabezera-contenido')
         <a href="javascript:void(0)" class="btn btn-primary float-right" data-toggle="modal" data-target="#theModal">Agregar</a>
-        <h1>Lista de usuarios</h1>
+        <h1>Lista de Roles</h1>
     @endsection
     <div class="content-fluid">
         <div class="card">
@@ -11,27 +11,19 @@
                     <tr>
                         <th scope="col">#ID</th>
                         <th class="text-center">Nombre</th>
-                        <th class="text-center">Correo</th>
-                        <th class="text-center">Area</th>
-                        <th class="text-center">Perfil</th>
-                        <th class="text-center">Estado</th>
                         <th class="text-center">ACCIONES</th>
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach($usuarios as $index => $usuario)
+                    @foreach($roles as $index => $role)
                         <tr>
-                            <th scope="row">{{$usuarios->firstItem() + $index}}</th>
-                            <td class="text-center">{{$usuario->name}}</td>
-                            <td class="text-center">{{$usuario->email}}</td>
-                            <td class="text-center">{{$usuario->area}}</td>
-                            <td class="text-center">{{$usuario->perfil}}</td>
-                            <td class="text-center"><span class="badge {{ $usuario->estado == 'Activo' ? 'badge-success' : 'badge-danger'}}">{{$usuario->estado}}</span></td>
+                            <th scope="row">{{$roles->firstItem() + $index}}</th>
+                            <td class="text-center">{{$role->name}}</td>
                             <td class="text-center">
-                                <a href="javascript:void(0)"  wire:click="Edit({{ $usuario->id }})" class="btn btn-primary" title="Editar">
+                                <a href="javascript:void(0)"  wire:click="Edit({{ $role->id }})" class="btn btn-primary" title="Editar">
                                     <i class="fas fa-pencil-alt" aria-hidden="true"></i>
                                 </a>
-                                <a href="javascript:void(0)" onclick="Confirm('{{ $usuario->id }}')" class="btn btn-danger" title="Eliminar">
+                                <a href="javascript:void(0)" onclick="Confirm('{{ $role->id }}')" class="btn btn-danger" title="Eliminar">
                                     <i class="fa fa-trash" aria-hidden="true"></i>
                                 </a>
                             </td>
@@ -40,26 +32,26 @@
                     </tbody>
                 </table>
                 <div class="py-3 float-right">
-                    {{$usuarios->links()}}
+                    {{$roles->links()}}
                 </div>
             </div>
         </div>
-        @include('livewire.usuarios.form')
+        @include('livewire.roles.form')
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', function (){
             window.Livewire.on('show-modal', msg =>{
                 $('#theModal').modal('show')
             });
-            window.livewire.on('user-added', msg =>{
+            window.livewire.on('rol-added', msg =>{
                 $('#theModal').modal('hide');
                 noty(msg)
             })
-            window.livewire.on('user-updated', msg =>{
+            window.livewire.on('rol-updated', msg =>{
                 $('#theModal').modal('hide');
                 noty(msg)
             })
-            window.livewire.on('user-deleted', msg =>{
+            window.livewire.on('rol-deleted', msg =>{
                 noty(msg)
             })
         });

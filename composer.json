@@ -16,7 +16,8 @@
         "laraveldaily/laravel-charts": "^0.1.28",
         "livewire/livewire": "^2.5",
         "maatwebsite/excel": "^3.1",
-        "pusher/pusher-php-server": "^7.0"
+        "pusher/pusher-php-server": "^7.0",
+        "spatie/laravel-permission": "^5.5"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

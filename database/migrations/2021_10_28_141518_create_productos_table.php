@@ -19,8 +19,8 @@ class CreateProductosTable extends Migration
             $table->longText('nombre')->nullable();
             $table->string('modelo')->nullable();
             $table->decimal('stock',20,2)->default(0.00);
-            $table->string('estado')->nullable();
-            $table->longText('descripcion');
+            $table->string('estado')->default('Activo');
+            $table->longText('descripcion')->nullable();
             $table->decimal('precio_venta',20,2)->default(0.00);
             $table->decimal('precio_compra',20,2)->default(0.00);
             $table->string('tipo')->nullable();

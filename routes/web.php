@@ -64,5 +64,6 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('ordenes', \App\Http\Livewire\Ordenes\ListaOrdenes::class)->name('ordenes');
     Route::get('ordencreate', \App\Http\Livewire\Ordenes\CreateOrdenes::class)->name('orden.create');
     Route::get('orden/{orden}/show', \App\Http\Livewire\Ordenes\ShowOrdenes::class)->name('orden.show');
+    Route::get('roles', \App\Http\Livewire\Roles\ListaRoles::class)->name('roles');
 });
 

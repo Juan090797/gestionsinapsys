@@ -11,6 +11,7 @@ trait CalcularCompra
     public $impuestoD = 0;
     public $total = 0;
     public $cantidadTotal = 0;
+    public $suma = 0;
 
     public function getServicePrice($productoId, $index)
     {
@@ -49,24 +50,27 @@ trait CalcularCompra
         $this->calcularTotalItems();
     }
 
-    public function calculateSubTotal()
+
+    public function calculateSubTotal($impuestoId = null)
     {
-        $this->subTotal = collect($this->rows)->filter(function ($row) {
+        $this->suma = collect($this->rows)->filter(function ($row) {
             return $row['producto_id'] !=='';
         })->sum('monto');
+        $this->impuestoCalculo = 1.18;
+        $this->subTotal = $this->suma / ($this->impuestoCalculo);
     }
 
-    public function calculateTaxAmount($impuestoId = null)
+    public function calculateTaxAmount()
     {
-        $this->impuestoCalculo = 18;
-        $this->impuestoD = $this->subTotal * ($this->impuestoCalculo/100);
+        $this->impuestoD = $this->suma - $this->subTotal;
         $this->calculateTotal();
     }
 
     public function calculateTotal()
     {
-        $this->total = $this->subTotal+ $this->impuestoD;
+        $this->total = $this->subTotal + $this->impuestoD;
     }
+
 
     public function calcularTotalItems()
     {

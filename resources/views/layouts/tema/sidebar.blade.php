@@ -38,6 +38,7 @@
                     </ul>
                 </li>
                 <li class="nav-header">Modulos</li>
+                @hasanyrole('Administrador|Ventas')
                 <li class="nav-item">
                     <a href="{{ url('proyectos') }}" class="nav-link {{ request()->is('proyectos') ? 'active' : '' }}">
                         <i class="nav-icon far fa-calendar-alt"></i>
@@ -73,6 +74,8 @@
                         </li>
                     </ul>
                 </li>
+                @endhasanyrole
+                @hasanyrole('Logistica|Administrador')
                 <li class="nav-item {{ request()->is('productos') ? 'menu-open' : '' }} {{ request()->is('marcas') ? 'menu-open' : '' }} {{ request()->is('tipoequipos') ? 'menu-open' : '' }} {{ request()->is('clasificacions') ? 'menu-open' : '' }} {{ request()->is('unidades') ? 'menu-open' : '' }}">
                     <a href="#" class="nav-link {{ request()->is('productos') ? 'active' : '' }} {{ request()->is('marcas') ? 'active' : '' }} {{ request()->is('tipoequipos') ? 'active' : '' }} {{ request()->is('clasificacions') ? 'active' : '' }} {{ request()->is('unidades') ? 'active' : '' }}">
                         <i class="nav-icon fa fa-tag"></i>
@@ -108,6 +111,8 @@
                         </li>
                     </ul>
                 </li>
+                @endhasanyrole
+                @role('Administrador')
                 <li class="nav-item {{ request()->is('impuestos') ? 'menu-open' : '' }} {{ request()->is('empresa') ? 'menu-open' : '' }} {{ request()->is('centrocostos') ? 'menu-open' : '' }}">
                     <a href="#" class="nav-link {{ request()->is('impuestos') ? 'active' : '' }} {{ request()->is('empresa') ? 'active' : '' }} {{ request()->is('centrocostos') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-cogs"></i>
@@ -137,6 +142,7 @@
                         </li>
                     </ul>
                 </li>
+                @endrole
                 <li class="nav-item">
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-cash-register"></i>
@@ -154,6 +160,7 @@
                         </li>
                     </ul>
                 </li>
+                @hasanyrole('Logistica|Administrador')
                 <li class="nav-item">
                     <a href="#" class="nav-link">
                         <i class="nav-icon far fa-money-bill-alt"></i>
@@ -177,6 +184,8 @@
                         </li>
                     </ul>
                 </li>
+                @endhasanyrole
+                @hasanyrole('Logistica|Administrador')
                 <li class="nav-item">
                     <a href="#" class="nav-link">
                         <i class="nav-icon far fas fa-dolly-flatbed"></i>
@@ -200,6 +209,8 @@
                         </li>
                     </ul>
                 </li>
+                @endhasanyrole
+                @role('Administrador')
                 <li class="nav-item">
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-box-open"></i>
@@ -235,6 +246,8 @@
                         </li>
                     </ul>
                 </li>
+                @endrole
+                @role('Administrador')
                 <li class="nav-item">
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-key"></i>
@@ -251,7 +264,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="{{ url('roles') }}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Roles</p>
                             </a>
@@ -264,6 +277,8 @@
                         </li>
                     </ul>
                 </li>
+                @endrole
+                @hasanyrole('Logistica|Administrador')
                 <li class="nav-item">
                     <a href="#" class="nav-link">
                         <i class="nav-icon far fa-question-circle"></i>
@@ -287,6 +302,7 @@
                         </li>
                     </ul>
                 </li>
+                @endhasanyrole
                 <li class="nav-item">
                     <a href="{{ url('mensajes') }}" class="nav-link {{ request()->is('mensajes') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-comments"></i>
