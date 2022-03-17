@@ -51,7 +51,7 @@
                             <td class="text-center">S/ {{$compra->total}}</td>
                             <td class="text-center"><span class="badge {{ $compra->estado == 'APROBADO' ? 'badge-success' : 'badge-danger'}}">{{$compra->estado}}</span></td>
                             <td class="text-center">
-                                <a href="javascript:void(0)"  wire:click="Edit({{ $compra->id }})" class="btn btn-primary" title="Editar">
+                                <a href="{{route('compra.edit', $compra)}}" class="btn btn-primary" title="Editar">
                                     <i class="fas fa-pencil-alt" aria-hidden="true"></i>
                                 </a>
                                 <a href="javascript:void(0)" onclick="Confirm('{{ $compra->id }}')" class="btn btn-danger" title="Eliminar">

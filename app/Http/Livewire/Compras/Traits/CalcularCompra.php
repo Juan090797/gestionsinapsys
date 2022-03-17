@@ -16,7 +16,7 @@ trait CalcularCompra
     public function getServicePrice($productoId, $index)
     {
         $this->rows[$index]['precio'] = Producto::findOrFail($productoId)->precio_compra;
-        $this->rows[$index]['formate_precio'] = $this->rows[$index]['precio'];
+        $this->rows[$index]['precio_u'] = $this->rows[$index]['precio'];
         $this->rows[$index]['producto_id'] = $productoId;
 
         $this->calculateAmount($this->rows[$index]['cantidad'], $index);
@@ -30,7 +30,7 @@ trait CalcularCompra
     {
         $this->rows[$index]['cantidad'] = $cantidad;
         $this->rows[$index]['monto'] = (int) $cantidad * $this->rows[$index]['precio'] ?? 0;
-        $this->rows[$index]['formate_monto'] = number_format($this->rows[$index]['monto'],2);
+        $this->rows[$index]['precio_t'] = number_format($this->rows[$index]['monto'],2);
 
         $this->calculateSubTotal();
         $this->calculateTaxAmount();
@@ -41,7 +41,7 @@ trait CalcularCompra
     public function calculatePrice($precio, $index)
     {
         $this->rows[$index]['precio'] = $precio;
-        $this->rows[$index]['monto'] = (int) $precio * $this->rows[$index]['cantidad'] ?? 0;
+        $this->rows[$index]['monto'] = $precio * $this->rows[$index]['cantidad'] ?? 0;
         $this->rows[$index]['formate_monto'] = number_format($this->rows[$index]['monto'],2);
 
         $this->calculateSubTotal();

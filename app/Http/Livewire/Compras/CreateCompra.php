@@ -18,6 +18,8 @@ class CreateCompra extends Component
     use DataCompra;
     public $state = [];
     public $productos,$proveedores,$costos;
+    public $nuevo;
+    public $lista = [];
 
     public function render()
     {
@@ -82,6 +84,17 @@ class CreateCompra extends Component
         }
         $this->emit('compra-registrada', 'Compra Registrada');
         return redirect()->route('compras');
+    }
+
+    public function updatedNuevo($value)
+    {
+        $pro = Producto::find($value);
+        $this->lista[] = $this->add_cart_shop($pro);
+    }
+
+    public function add_cart_shop($pro)
+    {
+       return $pro;
     }
 
 }
