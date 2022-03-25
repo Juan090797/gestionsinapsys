@@ -49,7 +49,6 @@ class CreateCompra extends Component
     public function createCompra()
     {
         $validated = Validator::make($this->state, [
-            'tipo_documento'    => 'required',
             'serie_documento'  => 'required',
             'numero_documento'  => 'required',
             'fecha_documento'   => 'required',
@@ -61,7 +60,6 @@ class CreateCompra extends Component
             'otros_gastos'      => '',
             'icbper'            => '',
         ],[
-            'tipo_documento.required'   => 'El tipo de documento es requerido',
             'serie_documento.required'  => 'La serie del documento es requerido',
             'numero_documento.required' => 'El numero del documento es requerido',
             'fecha_documento.required'  => 'La fecha del documento es requerido',
@@ -74,7 +72,7 @@ class CreateCompra extends Component
             'icbper.required'           => '',
         ])->validate();
 
-
+        $validated['tipo_documento'] = $this->tipo_documento;
         $validated['periodo'] =  Carbon::now()->format('Ym').''.'00';
         $validated['estado'] = 'PENDIENTE';
         $validated['otros_gastos'] = $this->otros_gastos;

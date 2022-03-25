@@ -12,9 +12,9 @@
         <th>N° Documento</th>
         <th>Razon Social</th>
         <th>Base imponible</th>
+        <th>Igv</th>
         <th>ICBPER</th>
         <th>Otros Gastos</th>
-        <th>Igv</th>
         <th>Total</th>
         <th>Moneda</th>
         <th>Tipo Cambio</th>
@@ -36,9 +36,9 @@
             <td>{{ $compra->proveedor->ruc }}</td>
             <td>{{ $compra->proveedor->razon_social }}</td>
             <td>S/ {{ $compra->subtotal}}</td>
+            <td>S/ {{ $compra->impuesto }}</td>
             <td>S/ {{ $compra->icbper}}</td>
             <td>S/ {{ $compra->otros_gatos}}</td>
-            <td>S/ {{ $compra->impuesto }}</td>
             <td>S/ {{ $compra->total }}</td>
             <td> {{ $compra->moneda }}</td>
             <td> {{ $compra->tipo_cambio }}</td>

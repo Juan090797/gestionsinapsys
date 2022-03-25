@@ -40,8 +40,9 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('compras/exports/', [\App\Http\Livewire\Compras\Compras::class, 'exportCompra'])->name('compra.export');
     Route::get('impuestos', \App\Http\Livewire\Impuestos::class);
     Route::get('empresa', \App\Http\Livewire\Empresas\Empresas::class);
-    Route::get('pedidos', \App\Http\Livewire\Pedidos\Pedidos::class);
+    Route::get('pedidos', \App\Http\Livewire\Pedidos\Pedidos::class)->name('pedidos');
     Route::get('pedidocreate', \App\Http\Livewire\Pedidos\PedidoCreate::class)->name('pedidocreate');
+    Route::get('pedido/{pedido}/show', \App\Http\Livewire\Pedidos\PedidoShow::class)->name('pedido.show');
     Route::get('unidades', \App\Http\Livewire\UnidadesMedida::class)->name('unidades');
     Route::get('tipoproveedores', \App\Http\Livewire\TipoProveedores::class)->name('tipoproveedores');
     Route::get('proveedores', \App\Http\Livewire\Proveedores::class)->name('proveedores');

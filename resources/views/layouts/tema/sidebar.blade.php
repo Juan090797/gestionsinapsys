@@ -225,12 +225,6 @@
                                 <p>Caja chica</p>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a href="{{ url('marcas') }}" class="nav-link {{ request()->is('marcas') ? 'active' : '' }}">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Marcas</p>
-                            </a>
-                        </li>
                     </ul>
                 </li>
                 @role('Administrador')

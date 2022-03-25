@@ -88,8 +88,9 @@
                             <td class="text-center">{{$pedido->fecha_entrega}}</td>
                             <td class="text-center">{{$pedido->user->name}}</td>
                             <td class="text-center">
-                                <a href="javascript:void(0)" wire:click="verPedido('{{ $pedido->id }}')" class="btn-link text-secondary"><i class="far fa-eye"></i></a>
-                                <a href="javascript:void(0)" onclick="Confirm('{{ $pedido->id }}')" class="btn-link text-secondary"><i class="far fa-trash-alt"></i></a>
+                                <a href="javascript:void(0)" wire:click="verPedido('{{ $pedido->id }}')" class="btn btn-success"><i class="fas fa-eye"></i></a>
+                                <a href="{{route('pedido.show', $pedido)}}" class="btn btn-primary"><i class="fas fa-eye"></i></a>
+                                <a href="javascript:void(0)" onclick="Confirm('{{ $pedido->id }}')" class="btn btn-danger"><i class="fas fa-trash"></i></a>
                             </td>
                         </tr>
                     @endforeach
