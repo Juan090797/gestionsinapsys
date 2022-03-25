@@ -91,14 +91,17 @@ class ListaCaja extends ComponenteBase
 
     public function Destroy(Caja $caja)
     {
-        $caja->delete();
-        $this->resetUI();
-        $this->alert('success', 'Caja eliminada',['timerProgressBar' => true]);
+        $contador = $caja->withCount('movimientos')->get();
+        if($contador->count() > 0)
+        {
+            $this->resetUI();
+            $this->alert('error', 'La caja cuenta con movimientos, no se puede eliminar',['timerProgressBar' => true]);
+        }else{
+            $caja->delete();
+            $this->resetUI();
+            $this->alert('success', 'Caja eliminada',['timerProgressBar' => true]);
+        }
+
     }
 
-    public function exportCaja()
-    {
-        $reportName = 'Cajas' . uniqid() . '.xlsx';
-        return Excel::download(new CajaChicaExporT, $reportName);
-    }
 }
