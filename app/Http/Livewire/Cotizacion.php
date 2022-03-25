@@ -82,10 +82,11 @@ Numero de Cta. Detracciones (Bco. Nacion): 00-051-159853',
     public function render()
     {
         $empresa = Empresa::all()->first();
+        $productos = Producto::where('clasificacions_id',2)->get();
         return view('livewire.cotizacion.create',
             [
                 'cliente'  => Cliente::where('id', $this->proyecto->cliente_id)->get(),
-                'productos' => Producto::all(),
+                'productos' => $productos,
                 'impuestos' => impuesto::all(),
                 'empresa'   => $empresa,
             ]

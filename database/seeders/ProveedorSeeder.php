@@ -15,16 +15,17 @@ class ProveedorSeeder extends Seeder
     public function run()
     {
         DB::table('proveedors')->insert([
-            'ruc' => '20122145785',
-            'razon_social' => 'Proveedor General SAC.',
-            'nombre_comercial' => 'Proveedor General',
-            'direccion' => 'Av. general 586',
-            'telefono' => '575-0387',
-            'celular' => '987456159',
-            'correo' => 'cliente@general.com',
-            'pagina_web' => 'www.clientegeneral.com',
-            'estado' => 'Activo',
-            'tipo_proveedors_id' => 1,
+            'tipo_documento'    => 'RUC',
+            'ruc'               => '20122145785',
+            'razon_social'      => 'Proveedor General SAC.',
+            'nombre_comercial'  => 'Proveedor General',
+            'direccion'         => 'Av. general 586',
+            'telefono'          => '575-0387',
+            'celular'           => '987456159',
+            'correo'            => 'cliente@general.com',
+            'pagina_web'        => 'www.clientegeneral.com',
+            'estado'            => 'ACTIVO',
+            'tipo_proveedors_id'=> 1,
         ]);
     }
 }

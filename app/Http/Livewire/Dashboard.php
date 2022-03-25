@@ -48,7 +48,7 @@ class Dashboard extends Component
         ];
         $settings2 = [
             'chart_title'           => 'Compras',
-            'name'                  => 'Ventas y Compras',
+            'name'                  => 'Ventas - Compras',
             'chart_type'            => 'bar',
             'report_type'           => 'group_by_date',
             'model'                 => 'App\Models\Compra',

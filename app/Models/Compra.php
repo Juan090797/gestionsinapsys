@@ -28,5 +28,4 @@ class Compra extends Model
     {
         return $this->belongsTo(CentroCosto::class, 'centro_costo_id');
     }
-
 }

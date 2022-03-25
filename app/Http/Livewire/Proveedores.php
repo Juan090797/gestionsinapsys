@@ -49,6 +49,7 @@ class Proveedores extends ComponenteBase
     public function Store()
     {
         $validated = Validator::make($this->state, [
+            'tipo_documento'        => 'required',
             'ruc'                   => 'required|unique:proveedors|min:11',
             'razon_social'          => 'required',
             'nombre_comercial'      => 'required',
@@ -60,6 +61,7 @@ class Proveedores extends ComponenteBase
             'estado'                => 'required',
             'tipo_proveedors_id'    => 'required',
         ],[
+            'tipo_documento'                => 'El tipo de documento es requerido',
             'ruc.required'                  => 'El ruc del proveedor es requerido',
             'ruc.unique'                    => 'Ya existe el ruc',
             'ruc.min'                       => 'El ruc debe tener al menos 11 numeros',
@@ -79,6 +81,7 @@ class Proveedores extends ComponenteBase
     public function actualizar()
     {
         $validated = Validator::make($this->state, [
+            'tipo_documento'        => 'required',
             'ruc'                   => "required||min:11|unique:proveedors,ruc,{$this->selected_id}",
             'razon_social'          => 'required',
             'nombre_comercial'      => 'required',
@@ -90,6 +93,7 @@ class Proveedores extends ComponenteBase
             'estado'                => 'required',
             'tipo_proveedors_id'    => 'required',
         ],[
+            'tipo_documento'                => 'El tipo de documento es requerido',
             'ruc.required'                  => 'El ruc del proveedor es requerido',
             'ruc.unique'                    => 'Ya existe el ruc',
             'ruc.min'                       => 'El ruc debe tener al menos 11 numeros',

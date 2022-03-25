@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Archivo extends Model
 {
     use HasFactory;
-    protected $fillable=['archivo', 'proyecto_id'];
+    protected $guarded = ['id'];
 
     public function proyecto()
     {

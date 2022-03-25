@@ -65,5 +65,9 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('ordencreate', \App\Http\Livewire\Ordenes\CreateOrdenes::class)->name('orden.create');
     Route::get('orden/{orden}/show', \App\Http\Livewire\Ordenes\ShowOrdenes::class)->name('orden.show');
     Route::get('roles', \App\Http\Livewire\Roles\ListaRoles::class)->name('roles');
+    Route::get('caja', \App\Http\Livewire\Caja\ListaCaja::class)->name('caja');
+    Route::get('caja/{caja}/movimientos', \App\Http\Livewire\Caja\ListaMovimientos::class)->name('caja-movimientos');
+    Route::get('movimiento/{movimiento}/show', \App\Http\Livewire\Caja\ShowMovimiento::class)->name('movimiento-show');
+    Route::get('cajachica/{caja}/exports/', [\App\Http\Livewire\Caja\ListaMovimientos::class, 'exportMovimiento'])->name('cajachica.export');
 });
 

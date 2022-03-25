@@ -17,6 +17,7 @@ class Clientes extends Component
     public $search, $selected_id;
     protected $paginationTheme = 'bootstrap';
     Private $pagination = 10;
+    protected $listeners = ['deleteRow' => 'Destroy'];
 
     public function  updatingSearch()
     {
@@ -43,6 +44,14 @@ class Clientes extends Component
             'industrias' => Industria::all(),
             'categorias' => Categoria::all(),
         ])->extends('layouts.tema.app')->section('content');
+    }
+
+    public function resetUI()
+    {
+        $this->state = [];
+        $this->search = '';
+        $this->selected_id = 0;
+        $this->resetValidation();
     }
 
     public function Store()
@@ -86,14 +95,6 @@ class Clientes extends Component
 
         $this->resetUI();
         $this->emit('cliente-added', 'Cliente Registrado');
-    }
-
-    public function resetUI()
-    {
-        $this->state = [];
-        $this->search = '';
-        $this->selected_id = 0;
-        $this->resetValidation();
     }
 
     public function Edit(Cliente $cliente)
@@ -145,8 +146,6 @@ class Clientes extends Component
         $this->resetUI();
         $this->emit('cliente-updated', 'Cliente Actualizado');
     }
-
-    protected $listeners = ['deleteRow' => 'Destroy'];
 
     public function Destroy(Cliente $cliente)
     {

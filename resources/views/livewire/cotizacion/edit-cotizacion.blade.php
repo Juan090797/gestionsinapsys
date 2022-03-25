@@ -6,7 +6,6 @@
     <div class="content-fluid">
         <form wire:submit.prevent="updateCoti">
             <section class="invoice p-3 mb-3">
-                <!-- title row -->
                 <div class="row">
                     <div class="col-12">
                         <h2 class="page-header">
@@ -14,9 +13,7 @@
                             <small class="float-right">Fecha: {{date("d-m-Y")}}</small>
                         </h2>
                     </div>
-                    <!-- /.col -->
                 </div>
-                <!-- info row -->
                 <div class="row invoice-info">
                     <div class="col-sm-4 invoice-col">
                         <div class="form-group">
@@ -24,7 +21,6 @@
                             <input type="text" class="form-control" value="{{ $cliente[0]->razon_social ?? ''}}" disabled>
                         </div>
                     </div>
-                    <!-- /.col -->
                     <div class="col-sm-4 invoice-col">
                         <div class="form-group">
                             <label for="">Atencion:</label>

@@ -17,9 +17,9 @@ class CreateCompraDetallesTable extends Migration
             $table->id();
             $table->foreignId('compra_id')->constrained();
             $table->foreignId('producto_id')->constrained();
-            $table->string('cantidad');
-            $table->decimal('precio_u',20,2)->default(0);
-            $table->decimal('precio_t',20,2)->default(0);
+            $table->float('cantidad',20,2)->default(0.00);
+            $table->float('precio_u',20,2)->default(0.00);
+            $table->float('precio_t',20,2)->default(0.00);
             $table->timestamps();
         });
     }

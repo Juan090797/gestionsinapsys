@@ -205,7 +205,6 @@ class ShowProyecto extends Component
                 'user_id' => Auth::user()->id
             ]);
         }
-
         $this->resetUI();
         $this->archivo_c = '';
         $this->emit('comentario-added', 'Comentario Registrado');

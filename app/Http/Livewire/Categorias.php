@@ -10,7 +10,6 @@ class Categorias extends ComponenteBase
 {
     public $search, $selected_id;
     public $state=[];
-
     protected $listeners = ['deleteRow' => 'Destroy'];
 
     public function  updatingSearch()

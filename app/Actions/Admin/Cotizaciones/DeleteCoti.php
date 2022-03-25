@@ -11,7 +11,6 @@ class DeleteCoti implements DeletesCotizaciones
     {
         DB::transaction(function() use($cotizacion) {
             $cotizacion->deleteItems();
-
             $cotizacion->delete();
         });
     }

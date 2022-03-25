@@ -20,13 +20,6 @@ class Usuarios extends ComponenteBase
         return view('livewire.usuarios.index', ['usuarios' => $usuarios, 'roles' => $roles])->extends('layouts.tema.app')->section('content');
     }
 
-    public function Edit(User $user)
-    {
-        $this->selected_id = $user->id;
-        $this->state = $user->toArray();
-        $this->emit('show-modal', 'show-modal!');
-    }
-
     public function Store()
     {
         $validated = Validator::make($this->state, [
@@ -49,7 +42,12 @@ class Usuarios extends ComponenteBase
         $this->resetUI();
         $this->emit('user-added', 'Usuario Registrado');
     }
-
+    public function Edit(User $user)
+    {
+        $this->selected_id = $user->id;
+        $this->state = $user->toArray();
+        $this->emit('show-modal', 'show-modal!');
+    }
     public function actualizar()
     {
         $validated = Validator::make($this->state, [

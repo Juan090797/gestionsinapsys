@@ -5,11 +5,13 @@ namespace App\Http\Livewire\Compras;
 use App\Exports\ComprasExport;
 use App\Http\Livewire\ComponenteBase;
 use App\Models\Compra;
+use App\Models\CompraDetalle;
 use App\Models\MovimientoAlmacen;
 use App\Models\MovimientoAlmacenDetalle;
 use App\Models\Producto;
 use App\Models\Proveedor;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -19,6 +21,8 @@ class Compras extends ComponenteBase
     public $selectedProducts = [];
     public $state= [];
     public $search, $selected_id;
+
+    protected $listeners = ['deleteRow' => 'delete'];
 
     public function  updatingSearch()
     {
@@ -122,5 +126,15 @@ class Compras extends ComponenteBase
     {
         $reportName = 'Compras_' . uniqid() . '.xlsx';
         return Excel::download(new ComprasExport, $reportName);
+    }
+
+    public function delete(Compra $compra)
+    {
+        DB::transaction(function() use($compra) {
+            CompraDetalle::where('compra_id', $compra->id)->delete();
+            $compra->delete();
+        });
+        $this->resetUI();
+        $this->alert('success', 'Se elimino la compra con exito',['timerProgressBar' => true]);
     }
 }

@@ -85,6 +85,21 @@
                         </div>
                         @error('tipo_proveedors_id') <span class="text-danger er">{{ $message }}</span>@enderror
                     </div>
+                    <div class="col-sm-12 col-md-3">
+                        <div class="form-group">
+                            <label for="tipo_documento">Tipo Documento</label>
+                            <select wire:model.defer="state.tipo_documento" id="tipo_documento" class="form-control">
+                                <option value="" selected>Elegir</option>
+                                <option value="RUC">RUC</option>
+                                <option value="DNI">DNI</option>
+                                <option value="CARNET EXTRANJERIA">CARNET EXTRANJERIA</option>
+                                <option value="PASAPORTE">PASAPORTE</option>
+                                <option value="CEDULA DIPLOMATICA">CEDULA DIPLOMATICA</option>
+                                <option value="OTROS">OTROS</option>
+                            </select>
+                        </div>
+                        @error('tipo_documento') <span class="text-danger er">{{ $message }}</span>@enderror
+                    </div>
                 </div>
             </div>
             @include('common.modalFooter')

@@ -6,36 +6,35 @@ use App\Models\Compra;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
+use Maatwebsite\Excel\Concerns\WithColumnFormatting;
+use PhpOffice\PhpSpreadsheet\Shared\Date;
+use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
+use Maatwebsite\Excel\Concerns\ShouldAutoSize;
+use Illuminate\Contracts\View\View;
+use Maatwebsite\Excel\Concerns\FromView;
 
-class ComprasExport implements FromCollection, WithHeadings,WithMapping
+class ComprasExport implements FromView
 {
     /**
     * @return \Illuminate\Support\Collection
     */
-    public function collection()
+    public $sumaigv,$sumabase, $sumatotal;
+    public function __construct()
     {
-        return Compra::with(['proveedor','costo'])->get();
-
+        $a = Compra::all();
+        $this->sumaigv = $a->sum('impuesto');
+        $this->sumabase = $a->sum('subtotal');
+        $this->sumatotal = $a->sum('total');
     }
 
-    public function map($compra): array
+    public function view(): View
     {
-        return [
-            $compra->proveedor->razon_social,
-            $compra->tipo_documento,
-            $compra->numero_documento,
-            $compra->fecha_documento,
-            $compra->fecha_pago,
-            $compra->total_items,
-            $compra->costo->nombre,
-            $compra->estado,
-            $compra->subtotal,
-            $compra->impuesto,
-            $compra->total,
-        ];
-    }
-    public function headings(): array
-    {
-        return ["proveedor","tipo_documento","numero_documento","fecha_documento","fecha_pago","total_items","centro_costo", "estado","subtotal","impuesto","total"];
+        return view('livewire.compras.excel-compras', [
+            'compras' => Compra::with('compraDetalles', 'costo', 'proveedor')->get(),
+            'sumabase' => $this->sumabase,
+            'sumaigv' => $this->sumaigv,
+            'sumatotal' => $this->sumatotal,
+        ]);
     }
 }
+

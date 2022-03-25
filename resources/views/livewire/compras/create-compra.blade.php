@@ -7,7 +7,7 @@
         <form wire:submit.prevent="createCompra">
             <section class="invoice p-3 mb-3" wire:ignore.self>
                 <div class="row invoice-info">
-                    <div class="col-sm-3 invoice-col">
+                    <div class="col-sm-4 invoice-col">
                         <div class="form-group">
                             <label for="">Proveedor</label>
                             <select wire:model.defer="state.proveedor_id" class="form-control">
@@ -19,7 +19,7 @@
                         </div>
                         @error('proveedor_id') <span class="text-danger er">{{ $message }}</span>@enderror
                     </div>
-                    <div class="col-sm-3 invoice-col">
+                    <div class="col-sm-2 invoice-col">
                         <div class="form-group">
                             <label for="tipo_documento">Documento</label>
                             <select id="tipo_documento" wire:model.defer="state.tipo_documento" class="form-control">
@@ -30,14 +30,21 @@
                         </div>
                         @error('tipo_documento') <span class="text-danger er">{{ $message }}</span>@enderror
                     </div>
-                    <div class="col-sm-3 invoice-col">
+                    <div class="col-sm-2 invoice-col">
+                        <div class="form-group">
+                            <label for="serie_documento">Serie° Documento</label>
+                            <input id="serie_documento" type="text" class="form-control" wire:model.defer="state.serie_documento" placeholder="Ej: F001">
+                        </div>
+                        @error('serie_documento') <span class="text-danger er">{{ $message }}</span>@enderror
+                    </div>
+                    <div class="col-sm-2 invoice-col">
                         <div class="form-group">
                             <label for="numero_documento">N° Documento</label>
-                            <input id="numero_documento" type="text" class="form-control" wire:model.defer="state.numero_documento" placeholder="Ej: F001-123456789">
+                            <input id="numero_documento" type="text" class="form-control" wire:model.defer="state.numero_documento" placeholder="Ej: 123456789">
                         </div>
                         @error('numero_documento') <span class="text-danger er">{{ $message }}</span>@enderror
                     </div>
-                    <div class="col-sm-3 invoice-col">
+                    <div class="col-sm-2 invoice-col">
                         <div class="form-group">
                             <label for="centro_costo_id">Centro de costo</label>
                             <select wire:model.defer="state.centro_costo_id" class="form-control">
@@ -63,6 +70,37 @@
                         </div>
                         @error('fecha_pago') <span class="text-danger er">{{ $message }}</span>@enderror
                     </div>
+                    <div class="col-sm-2 invoice-col">
+                        <div class="form-group">
+                            <label for="moneda">Moneda</label>
+                            <select id="moneda" wire:model.defer="state.moneda" class="form-control">
+                                <option value="0">Elegir</option>
+                                <option value="Soles" selected>Soles</option>
+                                <option value="Dolares">Dolares</option>
+                            </select>
+                        </div>
+                        @error('moneda') <span class="text-danger er">{{ $message }}</span>@enderror
+                    </div>
+                    <div class="col-sm-2 invoice-col">
+                        <div class="form-group">
+                            <label for="tipo_cambio">Tipo cambio</label>
+                            <input id="tipo_cambio" class="form-control" type="text" wire:model.defer="state.tipo_cambio" placeholder="Ej: 3.80">
+                        </div>
+                        @error('tipo_cambio') <span class="text-danger er">{{ $message }}</span>@enderror
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-5">
+                        <div class="form-group" wire:ignore>
+                            <label for="nuevo">Productos</label>
+                            <select class="sele form-control" wire:model="nuevo">
+                                <option value="">Seleccionar producto</option>
+                                @foreach($productos as $producto)
+                                    <option value="{{$producto->id}}">{{$producto->nombre}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col-12 table-responsive">
@@ -70,7 +108,7 @@
                             <thead>
                             <tr>
                                 <th>#</th>
-                                <th class="text-center">Codigo</th>
+                                <th class="text-center">Nombre</th>
                                 <th class="text-center">Cantidad</th>
                                 <th class="text-center">Precio</th>
                                 <th class="text-center">Total</th>
@@ -78,36 +116,26 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($rows as $key => $row)
+                            @foreach($lista as $key => $producto)
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
                                     <td>
-                                        <select name="producto_id" wire:change="getServicePrice(event.target.value, {{$key}})" class="form-control">
-                                            <option value="">Elegir</option>
-                                            @foreach($productos as $producto)
-                                                <option {{ ($producto->id == $rows[$key]['producto_id']) ? 'selected' : '' }} value="{{ $producto->id }}">{{$producto->nombre.'-'.$producto->codigo}}</option>
-                                            @endforeach
-                                        </select>
+                                        <input class="form-control text-center" type="text" value="{{$producto['nombre']}}" disabled>
                                     </td>
                                     <td class="text-center">
-                                        <input wire:change="calculateAmount($event.target.value, {{ $key }})" type="text" class="form-control text-center" name="cantidad" size="5" value="1">
+                                        <input wire:change="calcularCantidad($event.target.value, {{ $key }})" type="text" class="form-control text-center" name="cantidad" size="5" value="{{number_format($producto['cantidad'],2)}}">
                                     </td>
                                     <td class="text-center">
-                                        <input wire:change="calculatePrice($event.target.value, {{ $key }})" type="text" class="form-control text-center" name="precio" size="5" value="{{ $rows[$key]['formate_precio'] ?? 0 }}">
+                                        <input wire:change="calcularPrecio($event.target.value, {{ $key }})" type="text" class="form-control text-center" name="precio" size="5" value="{{ number_format($producto['precio_u'],2)}}">
                                     </td>
                                     <td class="text-center">
-                                        <input type="text" class="form-control text-center" name="monto" value="{{ $rows[$key]['formate_monto'] ?? 0 }}" size="5" disabled>
+                                        <input type="text" class="form-control text-center" name="monto" value="{{ number_format($lista[$key]['precio_t'],2) ?? 0 }}" size="5" disabled>
                                     </td>
                                     <td class="text-center">
                                         <a href="javascript:void(0)" class="btn btn-danger" wire:click="deleteRow({{ $key }})"><i class="fa fa-trash" aria-hidden="true"></i></a>
                                     </td>
                                 </tr>
                             @endforeach
-                            <tr>
-                                <td colspan="7">
-                                    <button wire:click.prevent="addNewRow()" class="btn btn-primary" type="button"><i class="fa fa-plus-circle mr-1"></i> Agregar</button>
-                                </td>
-                            </tr>
                             </tbody>
                         </table>
                     </div>
@@ -122,6 +150,14 @@
                         <p class="lead"><b>Total Items: {{$cantidadTotal}}</b> </p>
                         <div class="table-responsive">
                             <table class="table">
+                                <tr>
+                                    <th>Otros Gastos</th>
+                                    <td><input type="text" class="form-control" wire:model="otros_gastos"></td>
+                                </tr>
+                                <tr>
+                                    <th>ICBPER</th>
+                                    <td><input type="text" class="form-control" wire:model="icbper"></td>
+                                </tr>
                                 <tr>
                                     <th style="width:50%">Subtotal:</th>
                                     <td>S/ {{number_format($subTotal,2)}}</td>
@@ -146,11 +182,16 @@
             </section>
         </form>
     </div>
-        <script>
-            document.addEventListener('DOMContentLoaded', function (){
-                window.livewire.on('compra-registrada', msg =>{
-                    noty(msg)
-                })
+    <script>
+        document.addEventListener('DOMContentLoaded', function (){
+            $('.sele').select2();
+            $('.sele').on('change', function () {
+                let data = $(this).val();
+            @this.set('nuevo', $(this).val())
             });
-        </script>
+            window.livewire.on('compra-registrada', msg =>{
+                noty(msg)
+            })
+        });
+    </script>
 </div>

@@ -15,15 +15,21 @@ class CreateComprasTable extends Migration
     {
         Schema::create('compras', function (Blueprint $table) {
             $table->id();
+            $table->string('periodo')->nullable();
             $table->string('tipo_documento')->nullable();
+            $table->string('serie_documento')->nullable();
             $table->string('numero_documento')->nullable();
-            $table->date('fecha_documento')->nullable();
-            $table->date('fecha_pago')->nullable();
-            $table->string('estado')->nullable();
-            $table->decimal('subtotal',20,2)->default(0.00);
-            $table->decimal('impuesto',20,2)->default(0.00);
-            $table->decimal('total',20,2)->default(0.00);
-            $table->decimal('total_items',20,2)->default(0.00);
+            $table->date('fecha_documento');
+            $table->date('fecha_pago');
+            $table->string('moneda');
+            $table->float('tipo_cambio',20,4)->default(0.00);
+            $table->string('estado');
+            $table->float('otros_gastos',20,2)->default(0.00);
+            $table->float('icbper',20,2)->default(0.00);
+            $table->float('subtotal',20,2)->default(0.00);
+            $table->float('impuesto',20,2)->default(0.00);
+            $table->float('total',20,2)->default(0.00);
+            $table->float('total_items',20,2)->default(0.00);
             $table->foreignId('proveedor_id')->constrained();
             $table->foreignId('centro_costo_id')->constrained();
             $table->timestamps();

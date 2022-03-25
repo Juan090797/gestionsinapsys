@@ -24,8 +24,9 @@
                     <tr>
                         <th scope="col"></th>
                         <th class="text-center">Proveedor</th>
-                        <th class="text-center">Fecha</th>
-                        <th class="text-center">Tipo Docum.</th>
+                        <th class="text-center">Fecha Documento</th>
+                        <th class="text-center">Tipo Documento</th>
+                        <th class="text-center">Serie Documento</th>
                         <th class="text-center">N° Documento</th>
                         <th class="text-center">IGV</th>
                         <th class="text-center">Total</th>
@@ -43,12 +44,13 @@
                                     <input type="checkbox" wire:model="selectedProducts" value="{{ $compra->id }}">
                                 @endif
                             </th>
-                            <td class="text-center">{{$compra->proveedor->razon_social}}</td>
-                            <td class="text-center">{{$compra->created_at}}</td>
+                            <td class="text-center">{{ $compra->proveedor->razon_social }}</td>
+                            <td class="text-center">{{ date('d-m-Y', strtotime($compra->fecha_documento)) }}</td>
                             <td class="text-center"><span class="badge {{ $compra->tipo_documento == 'Factura' ? 'badge-success' : 'badge-danger'}}">{{$compra->tipo_documento}}</span></td>
-                            <td class="text-center">{{$compra->numero_documento}}</td>
-                            <td class="text-center">S/ {{$compra->impuesto}}</td>
-                            <td class="text-center">S/ {{$compra->total}}</td>
+                            <td class="text-center">{{ $compra->serie_documento }}</td>
+                            <td class="text-center">{{ $compra->numero_documento }}</td>
+                            <td class="text-center">S/ {{ number_format($compra->impuesto,2) }}</td>
+                            <td class="text-center">S/ {{ number_format($compra->total,2) }}</td>
                             <td class="text-center"><span class="badge {{ $compra->estado == 'APROBADO' ? 'badge-success' : 'badge-danger'}}">{{$compra->estado}}</span></td>
                             <td class="text-center">
                                 <a href="{{route('compra.edit', $compra)}}" class="btn btn-primary" title="Editar">
@@ -101,13 +103,6 @@
                 if(result.value){
                     window.livewire.emit('deleteRow', id)
                     swal.close()
-                }
-                if (result.isConfirmed) {
-                    Swal.fire(
-                        'Eliminado!',
-                        'El registro ha sido eliminado',
-                        'success'
-                    )
                 }
             })
         }
