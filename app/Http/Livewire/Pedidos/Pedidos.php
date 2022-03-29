@@ -21,6 +21,7 @@ class Pedidos extends Component
     public $state= [];
     public $selected_id, $ordencompra,$fechaplazo,$guia,$numeroPedido,$cliente,$total,$fechaemision,$numerofactura,$factura,$ped;
     public $pedidos;
+    public $clientes;
     protected $listeners = ['anular' => 'Anular'];
 
     public function render()

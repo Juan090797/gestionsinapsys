@@ -4,13 +4,14 @@ namespace App\Http\Livewire;
 
 use App\Exports\ProveedorsExport;
 use App\Models\Proveedor;
+use App\Models\TipoDocumento;
 use Illuminate\Support\Facades\Validator;
 use App\Models\TipoProveedor;
 use Maatwebsite\Excel\Facades\Excel;
 
 class Proveedores extends ComponenteBase
 {
-    public $search, $selected_id;
+    public $search, $selected_id,$documentos, $tipos;
     public $state = [];
     protected $listeners = ['deleteRow' => 'Destroy'];
 
@@ -32,11 +33,16 @@ class Proveedores extends ComponenteBase
     public function update()
     {
         $this->tipos();
+        $this->documentos();
     }
 
     public function tipos()
     {
         $this->tipos = TipoProveedor::all();
+    }
+    public function documentos()
+    {
+        $this->documentos = TipoDocumento::where('tipo','identidad')->get();
     }
     public function Edit(Proveedor $proveedor)
     {
@@ -49,7 +55,7 @@ class Proveedores extends ComponenteBase
     public function Store()
     {
         $validated = Validator::make($this->state, [
-            'tipo_documento'        => 'required',
+            'tipo_documento_id'     => 'required',
             'ruc'                   => 'required|unique:proveedors|min:11',
             'razon_social'          => 'required',
             'nombre_comercial'      => 'required',
@@ -61,7 +67,7 @@ class Proveedores extends ComponenteBase
             'estado'                => 'required',
             'tipo_proveedors_id'    => 'required',
         ],[
-            'tipo_documento'                => 'El tipo de documento es requerido',
+            'tipo_documento_id'             => 'El tipo de documento es requerido',
             'ruc.required'                  => 'El ruc del proveedor es requerido',
             'ruc.unique'                    => 'Ya existe el ruc',
             'ruc.min'                       => 'El ruc debe tener al menos 11 numeros',
@@ -81,7 +87,7 @@ class Proveedores extends ComponenteBase
     public function actualizar()
     {
         $validated = Validator::make($this->state, [
-            'tipo_documento'        => 'required',
+            'tipo_documento_id'     => 'required',
             'ruc'                   => "required||min:11|unique:proveedors,ruc,{$this->selected_id}",
             'razon_social'          => 'required',
             'nombre_comercial'      => 'required',
@@ -93,7 +99,7 @@ class Proveedores extends ComponenteBase
             'estado'                => 'required',
             'tipo_proveedors_id'    => 'required',
         ],[
-            'tipo_documento'                => 'El tipo de documento es requerido',
+            'tipo_documento_id'             => 'El tipo de documento es requerido',
             'ruc.required'                  => 'El ruc del proveedor es requerido',
             'ruc.unique'                    => 'Ya existe el ruc',
             'ruc.min'                       => 'El ruc debe tener al menos 11 numeros',

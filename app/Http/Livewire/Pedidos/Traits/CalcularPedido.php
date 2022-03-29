@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Livewire\Compras\Traits;
+namespace App\Http\Livewire\Pedidos\Traits;
 
-trait CalcularCompra
+trait CalcularPedido
 {
     public $subTotal = 0;
     public $impuestoCalculo = 0;

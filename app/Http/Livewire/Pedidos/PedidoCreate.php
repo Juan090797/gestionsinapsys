@@ -2,33 +2,47 @@
 
 namespace App\Http\Livewire\Pedidos;
 
-use App\Models\Cotizacion;
+use App\Http\Livewire\Pedidos\Traits\CalcularPedido;
+use App\Http\Livewire\Pedidos\Traits\DataPedido;
+use App\Models\CentroCosto;
+use App\Models\Cliente;
+use App\Models\Producto;
+use App\Models\TipoDocumento;
 use Livewire\Component;
 
 class PedidoCreate extends Component
 {
+    use CalcularPedido;
+    use DataPedido;
     public $state = [];
-    public $codigo, $cliente, $atendido, $terminos, $condiciones, $total, $subTotal,$impuestoD;
+    public $clientes,$documentos,$costos,$productos;
 
-    public function GetCotizacion($idcotizacion)
-    {
-        $cotizacion1 = Cotizacion::with('CotizacionItem')->find($idcotizacion);
-        $this->codigo= $cotizacion1->codigo;
-        $this->cliente = $cotizacion1->cliente->razon_social;
-        $this->atendido= $cotizacion1->atendido;
-        $this->terminos= $cotizacion1->terminos;
-        $this->condiciones= $cotizacion1->condiciones;
-        $this->total= $cotizacion1->total;
-        $this->subTotal= $cotizacion1->subtotal;
-        $this->impuestoD= $cotizacion1->impuesto;
-    }
     public function render()
     {
-        $cotizaciones = Cotizacion::all();
-        return view('livewire.pedidos.pedido-create',
-            [
-                'cotizaciones' => $cotizaciones
-            ]
-        )->extends('layouts.tema.app')->section('content');
+        $this->update();
+        return view('livewire.pedidos.pedido-create')->extends('layouts.tema.app')->section('content');
+    }
+    public function update()
+    {
+        $this->clientes();
+        $this->documentos();
+        $this->costos();
+        $this->productos();
+    }
+    public function clientes()
+    {
+        $this->clientes = Cliente::all();
+    }
+    public function documentos()
+    {
+        $this->documentos = TipoDocumento::where('tipo','pago')->get();
+    }
+    public function costos()
+    {
+        $this->costos = CentroCosto::all();
+    }
+    public function productos()
+    {
+        $this->productos = Producto::where('clasificacions_id','MERCADERIA')->get();
     }
 }

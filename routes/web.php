@@ -41,7 +41,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('impuestos', \App\Http\Livewire\Impuestos::class);
     Route::get('empresa', \App\Http\Livewire\Empresas\Empresas::class);
     Route::get('pedidos', \App\Http\Livewire\Pedidos\Pedidos::class)->name('pedidos');
-    Route::get('pedidocreate', \App\Http\Livewire\Pedidos\PedidoCreate::class)->name('pedidocreate');
+    Route::get('pedidocreate', \App\Http\Livewire\Pedidos\PedidoCreate::class)->name('pedido.create');
     Route::get('pedido/{pedido}/show', \App\Http\Livewire\Pedidos\PedidoShow::class)->name('pedido.show');
     Route::get('unidades', \App\Http\Livewire\UnidadesMedida::class)->name('unidades');
     Route::get('tipoproveedores', \App\Http\Livewire\TipoProveedores::class)->name('tipoproveedores');
@@ -70,5 +70,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('caja/{caja}/movimientos', \App\Http\Livewire\Caja\ListaMovimientos::class)->name('caja-movimientos');
     Route::get('movimiento/{movimiento}/show', \App\Http\Livewire\Caja\ShowMovimiento::class)->name('movimiento-show');
     Route::get('cajachica/{caja}/exports/', [\App\Http\Livewire\Caja\ListaMovimientos::class, 'exportMovimiento'])->name('cajachica.export');
+    Route::get('compras-administrativos', \App\Http\Livewire\Compras\GastosAdministrativos\ListaCompras::class)->name('compras.admin');
+    Route::get('tipo-documentos', \App\Http\Livewire\TipoDocumento\ListaTipos::class)->name('tipo.documentos');
+    Route::get('facturas', \App\Http\Livewire\Pedidos\Facturas\ListaFacturas::class)->name('facturas');
 });
 

@@ -22,14 +22,15 @@
                         </div>
                         <div class="col-sm-2 invoice-col">
                             <div class="form-group">
-                                <label for="tipo_documento">Documento</label>
-                                <select id="tipo_documento" wire:model="tipo_documento" class="form-control">
+                                <label for="tipo_documento_id">Tipo documento</label>
+                                <select id="tipo_documento_id" wire:model="tipo_documento_id" class="form-control">
                                     <option value="0">Elegir</option>
-                                    <option value="FACTURA" selected>Factura</option>
-                                    <option value="BOLETA">Boleta</option>
+                                    @foreach($documentos as $documento)
+                                        <option value="{{$documento->id}}">{{$documento->nombre}}</option>
+                                    @endforeach
                                 </select>
                             </div>
-                            @error('tipo_documento') <span class="text-danger er">{{ $message }}</span>@enderror
+                            @error('tipo_documento_id') <span class="text-danger er">{{ $message }}</span>@enderror
                         </div>
                         <div class="col-sm-2 invoice-col">
                             <div class="form-group">

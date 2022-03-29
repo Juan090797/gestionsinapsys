@@ -66,14 +66,14 @@
                         </div>
                         @error('correo') <span class="text-danger er">{{ $message }}</span>@enderror
                     </div>
-                    <div class="col-sm-12 col-md-4">
+                    <div class="col-sm-12 col-md-3">
                         <div class="form-group">
                             <label for="pagina_web">Pagina web</label>
                             <input type="text" wire:model.defer="state.pagina_web" id="pagina_web" class="form-control" placeholder="ej: www.paginaweb.com">
                         </div>
                         @error('pagina_web') <span class="text-danger er">{{ $message }}</span>@enderror
                     </div>
-                    <div class="col-sm-12 col-md-2">
+                    <div class="col-sm-12 col-md-3">
                         <div class="form-group">
                             <label for="tipo_proveedors_id">Tipo Proveedor</label>
                             <select wire:model.defer="state.tipo_proveedors_id" id="tipo_proveedors_id" class="form-control">
@@ -87,18 +87,15 @@
                     </div>
                     <div class="col-sm-12 col-md-3">
                         <div class="form-group">
-                            <label for="tipo_documento">Tipo Documento</label>
-                            <select wire:model.defer="state.tipo_documento" id="tipo_documento" class="form-control">
+                            <label for="tipo_documento_id">Tipo Documento</label>
+                            <select id="tipo_documento_id" class="form-control" wire:model.defer="state.tipo_documento_id">
                                 <option value="" selected>Elegir</option>
-                                <option value="RUC">RUC</option>
-                                <option value="DNI">DNI</option>
-                                <option value="CARNET EXTRANJERIA">CARNET EXTRANJERIA</option>
-                                <option value="PASAPORTE">PASAPORTE</option>
-                                <option value="CEDULA DIPLOMATICA">CEDULA DIPLOMATICA</option>
-                                <option value="OTROS">OTROS</option>
+                                @foreach($documentos as $documento)
+                                    <option value="{{ $documento->id }}">{{ $documento->nombre }}</option>
+                                @endforeach
                             </select>
                         </div>
-                        @error('tipo_documento') <span class="text-danger er">{{ $message }}</span>@enderror
+                        @error('tipo_documento_id') <span class="text-danger er">{{ $message }}</span>@enderror
                     </div>
                 </div>
             </div>

@@ -15,7 +15,6 @@ class ProveedorSeeder extends Seeder
     public function run()
     {
         DB::table('proveedors')->insert([
-            'tipo_documento'    => 'RUC',
             'ruc'               => '20122145785',
             'razon_social'      => 'Proveedor General SAC.',
             'nombre_comercial'  => 'Proveedor General',
@@ -26,6 +25,7 @@ class ProveedorSeeder extends Seeder
             'pagina_web'        => 'www.clientegeneral.com',
             'estado'            => 'ACTIVO',
             'tipo_proveedors_id'=> 1,
+            'tipo_documento_id' => 3
         ]);
     }
 }

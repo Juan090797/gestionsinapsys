@@ -146,7 +146,7 @@ class ShowProyecto extends Component
         $pedido = Pedido::create([
             'codigo'            => $this->codigo,
             'cotizacion_id'     => $pedido->id,
-            'fecha_vencimiento' => $fecha,
+            'fecha_pedido'      => $fecha,
             'cliente_id'        => $pedido->cliente_id,
             'subtotal'          => $pedido->subtotal,
             'total'             => $pedido->total,

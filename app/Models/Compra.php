@@ -28,4 +28,9 @@ class Compra extends Model
     {
         return $this->belongsTo(CentroCosto::class, 'centro_costo_id');
     }
+
+    public function documento()
+    {
+        return $this->belongsTo(TipoDocumento::class, 'tipo_documento_id');
+    }
 }

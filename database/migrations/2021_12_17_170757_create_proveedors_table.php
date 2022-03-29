@@ -15,7 +15,6 @@ class CreateProveedorsTable extends Migration
     {
         Schema::create('proveedors', function (Blueprint $table) {
             $table->id();
-            $table->string('tipo_documento');
             $table->string('ruc');
             $table->string('razon_social');
             $table->string('nombre_comercial');
@@ -26,6 +25,7 @@ class CreateProveedorsTable extends Migration
             $table->string('pagina_web')->nullable();
             $table->string('estado')->nullable();
             $table->foreignId('tipo_proveedors_id')->constrained();
+            $table->foreignId('tipo_documento_id')->constrained();
             $table->timestamps();
         });
     }

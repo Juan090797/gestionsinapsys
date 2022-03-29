@@ -28,8 +28,18 @@ class Pedido extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function comentarios()
+    {
+        return $this->hasMany(ComentarioPedido::class,'pedido_id');
+    }
+    public function archivos()
+    {
+        return $this->hasMany(ArchivoPedido::class,'pedido_id');
+    }
     public function getFormateFechaAttribute()
     {
         return Carbon::parse($this->created_at)->format('d-m-Y');
     }
+
 }

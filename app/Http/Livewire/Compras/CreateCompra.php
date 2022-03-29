@@ -9,6 +9,7 @@ use App\Models\Compra;
 use App\Models\CompraDetalle;
 use App\Models\Producto;
 use App\Models\Proveedor;
+use App\Models\TipoDocumento;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -19,7 +20,7 @@ class CreateCompra extends Component
     use CalcularCompra;
     use DataCompra;
     public $state = [];
-    public $productos,$proveedores,$costos;
+    public $productos,$proveedores,$costos,$documentos;
 
     public function render()
     {
@@ -31,6 +32,7 @@ class CreateCompra extends Component
         $this->products();
         $this->proveedors();
         $this->costs();
+        $this->documentos();
     }
 
     public function products()
@@ -44,6 +46,10 @@ class CreateCompra extends Component
     public function costs()
     {
         $this->costos = CentroCosto::all();
+    }
+    public function documentos()
+    {
+        $this->documentos = TipoDocumento::where('tipo','pago')->get();
     }
 
     public function createCompra()
@@ -72,7 +78,7 @@ class CreateCompra extends Component
             'icbper.required'           => '',
         ])->validate();
 
-        $validated['tipo_documento'] = $this->tipo_documento;
+        $validated['tipo_documento_id'] = $this->tipo_documento_id;
         $validated['periodo'] =  Carbon::now()->format('Ym').''.'00';
         $validated['estado'] = 'PENDIENTE';
         $validated['otros_gastos'] = $this->otros_gastos;

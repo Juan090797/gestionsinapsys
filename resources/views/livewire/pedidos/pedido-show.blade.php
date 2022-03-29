@@ -68,78 +68,23 @@
                                             </div>
                                         </div>
                                         <div style="overflow-x: hidden; overflow-y: auto;">
+                                            @foreach($comentarios as $comentario)
                                             <div class="post">
                                                 <div class="user-block">
-                                                    <img class="img-circle img-bordered-sm" src="../../dist/img/user1-128x128.jpg" alt="user image">
+                                                    <img class="img-circle img-bordered-sm" src="{{ $comentario->user->profile_photo_url }}">
                                                     <span class="username">
-                                                        <a href="#">Jonathan Burke Jr.</a>
+                                                        <a href="#">{{$comentario->user->name}}</a>
                                                     </span>
-                                                    <span class="description">Shared publicly - 7:45 PM today</span>
+                                                    <span class="description">{{ $comentario->created_at->diffForHumans() }}</span>
                                                 </div>
-
+                                                <p>{{ $comentario->contenido }}</p>
+                                                @if($comentario->archivo)
                                                 <p>
-                                                    Lorem ipsum represents a long-held tradition for designers,
-                                                    typographers and the like. Some people hate it and argue for
-                                                    its demise, but others ignore.
+                                                    <a href="javascript:void(0)" wire:click="descargaArchivoComentario({{ $comentario->id }})" class="link-black text-sm"><i class="fas fa-link mr-1"></i> {{ $comentario->archivo }}</a>
                                                 </p>
-                                                <p>
-                                                    <a href="#" class="link-black text-sm"><i class="fas fa-link mr-1"></i> Demo File 1 v2</a>
-                                                </p>
+                                                @endif
                                             </div>
-                                            <div class="post">
-                                                <div class="user-block">
-                                                    <img class="img-circle img-bordered-sm" src="../../dist/img/user1-128x128.jpg" alt="user image">
-                                                    <span class="username">
-                                                        <a href="#">Jonathan Burke Jr.</a>
-                                                    </span>
-                                                    <span class="description">Shared publicly - 7:45 PM today</span>
-                                                </div>
-
-                                                <p>
-                                                    Lorem ipsum represents a long-held tradition for designers,
-                                                    typographers and the like. Some people hate it and argue for
-                                                    its demise, but others ignore.
-                                                </p>
-                                                <p>
-                                                    <a href="#" class="link-black text-sm"><i class="fas fa-link mr-1"></i> Demo File 1 v2</a>
-                                                </p>
-                                            </div>
-                                            <div class="post">
-                                                <div class="user-block">
-                                                    <img class="img-circle img-bordered-sm" src="../../dist/img/user1-128x128.jpg" alt="user image">
-                                                    <span class="username">
-                                                        <a href="#">Jonathan Burke Jr.</a>
-                                                    </span>
-                                                    <span class="description">Shared publicly - 7:45 PM today</span>
-                                                </div>
-
-                                                <p>
-                                                    Lorem ipsum represents a long-held tradition for designers,
-                                                    typographers and the like. Some people hate it and argue for
-                                                    its demise, but others ignore.
-                                                </p>
-                                                <p>
-                                                    <a href="#" class="link-black text-sm"><i class="fas fa-link mr-1"></i> Demo File 1 v2</a>
-                                                </p>
-                                            </div>
-                                            <div class="post">
-                                                <div class="user-block">
-                                                    <img class="img-circle img-bordered-sm" src="../../dist/img/user1-128x128.jpg" alt="user image">
-                                                    <span class="username">
-                                                        <a href="#">Jonathan Burke Jr.</a>
-                                                    </span>
-                                                    <span class="description">Shared publicly - 7:45 PM today</span>
-                                                </div>
-
-                                                <p>
-                                                    Lorem ipsum represents a long-held tradition for designers,
-                                                    typographers and the like. Some people hate it and argue for
-                                                    its demise, but others ignore.
-                                                </p>
-                                                <p>
-                                                    <a href="#" class="link-black text-sm"><i class="fas fa-link mr-1"></i> Demo File 1 v2</a>
-                                                </p>
-                                            </div>
+                                            @endforeach
                                         </div>
                                     </div>
                                 </div>
@@ -157,39 +102,33 @@
                     <div class="card-body">
                         <h5 class="text-bold">Orden compra:</h5>
                         <ul class="list-unstyled">
-                            <li>
-                                <a href="" class="btn-link text-secondary"><i class="far fa-fw fa-file-word"></i> Functional-requirements.docx</a>
-                            </li>
-                            <li>
-                                <a href="" class="btn-link text-secondary"><i class="far fa-fw fa-file-pdf"></i> UAT.pdf</a>
-                            </li>
+                            @foreach($files as $file)
+                                @if($file->tipo_documento == 'ORDEN COMPRA')
+                                    <li>
+                                        <a href="" class="btn-link text-secondary"><i class="fa fa-file-text-o" aria-hidden="true"></i> {{ $file->archivo_p }}</a>
+                                    </li>
+                                @endif
+                            @endforeach
                         </ul>
                         <h5 class="text-bold">Guia remision:</h5>
                         <ul class="list-unstyled">
-                            <li>
-                                <a href="" class="btn-link text-secondary"><i class="far fa-fw fa-file-word"></i> Functional-requirements.docx</a>
-                            </li>
-                            <li>
-                                <a href="" class="btn-link text-secondary"><i class="far fa-fw fa-file-pdf"></i> UAT.pdf</a>
-                            </li>
+                            @foreach($files as $file)
+                                @if($file->tipo_documento == 'GUIA REMISION')
+                                    <li>
+                                        <a href="" class="btn-link text-secondary"><i class="fa fa-file-text-o" aria-hidden="true"></i> {{ $file->archivo_p }}</a>
+                                    </li>
+                                @endif
+                            @endforeach
                         </ul>
                         <h5 class="text-bold">Facturas:</h5>
                         <ul class="list-unstyled">
-                            <li>
-                                <a href="" class="btn-link text-secondary"><i class="far fa-fw fa-file-word"></i> Functional-requirements.docx</a>
-                            </li>
-                            <li>
-                                <a href="" class="btn-link text-secondary"><i class="far fa-fw fa-file-pdf"></i> UAT.pdf</a>
-                            </li>
-                            <li>
-                                <a href="" class="btn-link text-secondary"><i class="far fa-fw fa-envelope"></i> Email-from-flatbal.mln</a>
-                            </li>
-                            <li>
-                                <a href="" class="btn-link text-secondary"><i class="far fa-fw fa-image "></i> Logo.png</a>
-                            </li>
-                            <li>
-                                <a href="" class="btn-link text-secondary"><i class="far fa-fw fa-file-word"></i> Contract-10_12_2014.docx</a>
-                            </li>
+                            @foreach($files as $file)
+                                @if($file->tipo_documento == 'FACTURA')
+                                    <li>
+                                        <a href="" class="btn-link text-secondary"><i class="fa fa-file-text-o" aria-hidden="true"></i> {{ $file->archivo_p }}</a>
+                                    </li>
+                                @endif
+                            @endforeach
                         </ul>
                     </div>
                 </div>
@@ -201,34 +140,34 @@
                     <div class="modal-header">
                         <h5 class="modal-title" id="theModal">Agregar archivo</h5>
                     </div>
-                    <form wire:submit.prevent="createArchivo">
+                    <form wire:submit.prevent="agregarArchivo">
                         <div class="modal-body">
                             <div class="row">
                                 <div class="col-4">
                                     <div class="form-group">
-                                        <select wire:model.defer="state.prioridad" class="form-control">
+                                        <select class="form-control" wire:model.defer="tipo">
                                             <option value="" selected>Tipo documento</option>
-                                            <option value="ALTA">Orden compra</option>
-                                            <option value="MEDIA">Guia remision</option>
-                                            <option value="BAJA">Factura</option>
+                                            <option value="ORDEN COMPRA">Orden compra</option>
+                                            <option value="GUIA REMISION">Guia remision</option>
+                                            <option value="FACTURA">Factura</option>
                                         </select>
                                     </div>
-                                    @error('archivo') <span class="text-danger er">{{ $message }}</span>@enderror
+                                    @error('tipo') <span class="text-danger er">{{ $message }}</span>@enderror
                                 </div>
                                 <div class="col-8">
                                     <div class="input-group">
                                         <div class="custom-file">
-                                            <input type="file" class="custom-file-input" wire:model="archivo">
-                                            <label class="custom-file-label"></label>
+                                            <input type="file" class="custom-file-input" wire:model="archivo_p">
+                                            <label class="custom-file-label">{{ $archivo_p }}</label>
                                         </div>
                                     </div>
-                                    @error('archivo') <span class="text-danger er">{{ $message }}</span>@enderror
-                                    <div wire:loading wire:target="archivo">Cargando.....</div>
+                                    @error('archivo_p') <span class="text-danger er">{{ $message }}</span>@enderror
+                                    <div wire:loading wire:target="archivo_p">Cargando.....</div>
                                 </div>
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal" wire:click="resetUI()">Cerrar</button>
                             <button type="submit" class="btn btn-primary">Guardar</button>
                         </div>
                     </form>
@@ -248,12 +187,12 @@
                             </div>
                             <div class="input-group">
                                 <div class="custom-file">
-                                    <input type="file" class="custom-file-input" wire:model="archivo_c">
-                                    <label class="custom-file-label"></label>
+                                    <input type="file" class="custom-file-input" wire:model="archivo">
+                                    <label class="custom-file-label">{{$archivo}}</label>
                                 </div>
                             </div>
-                            @error('archivo_c') <span class="text-danger er">{{ $message }}</span>@enderror
-                            <div wire:loading wire:target="archivo_c">Cargando.....</div>
+                            @error('archivo') <span class="text-danger er">{{ $message }}</span>@enderror
+                            <div wire:loading wire:target="archivo">Cargando.....</div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
@@ -266,13 +205,14 @@
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', function (){
-
             window.Livewire.on('show-modal', msg =>{
                 $('#theModal').modal('show')
             });
-            window.livewire.on('movimiento-added', msg =>{
+            window.livewire.on('comentario-added', msg =>{
+                $('#theModalComentario').modal('hide');
+            })
+            window.livewire.on('archivo-added', msg =>{
                 $('#theModal').modal('hide');
-                noty(msg)
             })
             window.livewire.on('movimiento-updated', msg =>{
                 $('#theModal').modal('hide');

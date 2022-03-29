@@ -1,5 +1,6 @@
 <div>
     @section('cabezera-contenido')
+        <a href="{{route('pedido.create')}}" class="btn btn-primary float-right">Agregar</a>
         <h1>Lista de Pedidos</h1>
     @endsection
     <div class="content-fluid">
@@ -7,23 +8,11 @@
             <div class="card-header">
                 <div class="row">
                     <div class="col-4">
-                        <button class="btn btn-secondary uppercase mr-1" type="button" wire:click="AbrirOrdenCompra()">
-                            + OC
-                        </button>
-                        <button class="btn btn-warning uppercase mr-1" type="button" wire:click="AbrirGuia()">
-                            + GUIA
-                        </button>
-                        <button class="btn btn-info uppercase mr-1" type="button" wire:click="Despachar()">
-                            DESPACHAR
-                        </button>
-                        <button class="btn btn-primary uppercase mr-1" type="button" wire:click="AbrirFactura()">
-                            FACTURAR
-                        </button>
                     </div>
                     <div class="col-4">
                     </div>
                     <div class="col-4">
-                        <input wire:model="search" class="form-control" placeholder="Buscar por cliente o N° Pedido">
+
                     </div>
                 </div>
             </div>
@@ -31,18 +20,11 @@
                 <table class="table table-sm table-hover">
                     <thead class="thead-dark">
                     <tr>
-                        <th></th>
                         <th scope="col">Estado</th>
                         <th class="text-center">Fecha</th>
                         <th class="text-center">N°Pedido</th>
                         <th class="text-center">Cliente</th>
                         <th class="text-center">Importe</th>
-                        <th class="text-center">Tipo</th>
-                        <th class="text-center">N°Documento</th>
-                        <th class="text-center">F.Emision</th>
-                        <th class="text-center">Guia</th>
-                        <th class="text-center">Ord.Compr.</th>
-                        <th class="text-center">F.Entrega</th>
                         <th class="text-center">Vendedor</th>
                         <th class="text-center">Acciones</th>
                     </tr>
@@ -50,13 +32,6 @@
                     <tbody>
                     @foreach($pedidos as $pedido)
                         <tr>
-                            <th>
-                                @if($pedido->estado == 'Facturado' || $pedido->estado == 'Anulado' || $pedido->estado == 'Facturado')
-                                    <input type="checkbox" wire:model="selectedProducts" value="{{ $pedido->id }}" disabled>
-                                @else
-                                    <input type="checkbox" wire:model="selectedProducts" value="{{ $pedido->id }}">
-                                @endif
-                            </th>
                             <th scope="row">
                                 @if($pedido->estado == 'Facturado')
                                     <span class="badge badge-primary">{{$pedido->estado}}</span>
@@ -70,22 +45,8 @@
                             </th>
                             <th class="text-center">{{$pedido->formate_fecha}}</th>
                             <td class="text-center">{{$pedido->codigo}}</td>
-                            <td class="text-left">{{$pedido->cliente->razon_social}}</td>
-                            <td class="text-center">S/ {{$pedido->total}}</td>
-                            <td class="text-center">
-                                @if($pedido->estado == 'Facturado' ||$pedido->estado == 'Anulado')
-                                    <span class="badge badge-success">FAC</span>
-                                @endif
-                            </td>
-                            <td class="text-center"><a href="javascript:void(0)" wire:click="descargaFactura({{ $pedido->id }})">{{$pedido->numero_factura}}</a></td>
-                            <td class="text-center">{{$pedido->fecha_emision}}</td>
-                            <td class="text-center">
-                                <a href="javascript:void(0)" wire:click="descargaGuia({{ $pedido->id }})">{{$pedido->guiaremision}}</a>
-                            </td>
-                            <td class="text-left">
-                                <a href="javascript:void(0)" wire:click="descargaOc({{ $pedido->id }})">{{$pedido->ordencompra}}</a>
-                            </td>
-                            <td class="text-center">{{$pedido->fecha_entrega}}</td>
+                            <td class="text-center">{{$pedido->cliente->razon_social}}</td>
+                            <td class="text-center">{{$pedido->total}}</td>
                             <td class="text-center">{{$pedido->user->name}}</td>
                             <td class="text-center">
                                 <a href="javascript:void(0)" wire:click="verPedido('{{ $pedido->id }}')" class="btn btn-success"><i class="fas fa-eye"></i></a>

@@ -140,6 +140,12 @@
                                 <p>Centro Costos</p>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a href="{{ url('tipo-documentos') }}" class="nav-link {{ request()->is('tipo-documentos') ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Tipo documentos</p>
+                            </a>
+                        </li>
                     </ul>
                 </li>
                 @endrole
@@ -223,6 +229,31 @@
                             <a href="{{ url('caja') }}" class="nav-link {{ request()->is('caja') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Caja chica</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item {{ request()->is('compras-administrativos') ? 'menu-open' : '' }}">
+                    <a href="#" class="nav-link {{ request()->is('compras-administrativos') ? 'active' : '' }}">
+                        <i class="nav-icon fa fa-tag"></i>
+                        <p>
+                            Contabilidad
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ url('compras-administrativos') }}" class="nav-link {{ request()->is('compras-administrativos') ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Egresos</p>
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ url('facturas') }}" class="nav-link {{ request()->is('facturas') ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Ingresos</p>
                             </a>
                         </li>
                     </ul>

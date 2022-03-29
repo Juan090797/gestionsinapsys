@@ -49,10 +49,10 @@
                         <tr>
                             <th scope="row">{{$proveedores->firstItem() + $index}}</th>
                             <td class="text-center">{{$proveedor->ruc}}</td>
-                            <td class="text-left">{{$proveedor->razon_social}}</td>
-                            <td class="text-left">{{$proveedor->telefono}}</td>
-                            <td class="text-left">{{$proveedor->correo}}</td>
-                            <td class="text-left">{{$proveedor->pagina_web}}</td>
+                            <td class="text-center">{{$proveedor->razon_social}}</td>
+                            <td class="text-center">{{$proveedor->telefono}}</td>
+                            <td class="text-center">{{$proveedor->correo}}</td>
+                            <td class="text-center">{{$proveedor->pagina_web}}</td>
                             <td class="text-center">{{$proveedor->tipo->nombre}}</td>
                             <td class="text-center"><span class="badge {{ $proveedor->estado == 'ACTIVO' ? 'badge-success' : 'badge-danger'}}">{{$proveedor->estado}}</span></td>
                             <td class="text-center">

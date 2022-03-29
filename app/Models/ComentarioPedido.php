@@ -5,14 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Comentario extends Model
+class ComentarioPedido extends Model
 {
     use HasFactory;
     protected $guarded = ['id'];
 
-    public function proyecto()
+    public function pedido()
     {
-        return $this->belongsTo(Proyecto::class);
+        return $this->belongsTo(Pedido::class);
     }
 
     public function user()
