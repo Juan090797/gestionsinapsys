@@ -78,11 +78,9 @@
             });
             window.livewire.on('proyecto-added', msg =>{
                 $('#theModal').modal('hide');
-                noty(msg)
             })
             window.livewire.on('proyecto-updated', msg =>{
                 $('#theModal').modal('hide');
-                noty(msg)
             })
             window.livewire.on('proyecto-deleted', msg =>{
                 noty(msg)

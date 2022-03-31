@@ -6,7 +6,6 @@
     <div class="content-fluid">
         <form wire:submit.prevent="createInvoice">
         <section class="invoice p-3 mb-3" wire:ignore.self>
-            <!-- title row -->
             <div class="row">
                 <div class="col-12">
                     <h2 class="page-header">
@@ -19,7 +18,7 @@
                 <div class="col-sm-4 invoice-col">
                     <div class="form-group">
                         <label for="">Cliente:</label>
-                        <input type="text" class="form-control" value="{{ $cliente[0]->razon_social ?? ''}}" disabled>
+                        <input type="text" class="form-control" value="{{ $proyecto->cliente->razon_social }}" disabled>
                     </div>
                 </div>
                 <div class="col-sm-4 invoice-col">
@@ -52,7 +51,7 @@
             </div>
             <div class="row">
                 <div class="col-12 table-responsive">
-                    <table class="table table-striped">
+                    <table class="table table-striped table-sm">
                         <thead>
                         <tr>
                             <th>#</th>
@@ -112,7 +111,7 @@
                     <p class="lead">Detalle</p>
                     <p class="lead"><b>Total Items: {{$cantidadTotal}}</b> </p>
                     <div class="table-responsive">
-                        <table class="table">
+                        <table class="table table-sm">
                             <tr>
                                 <th style="width:50%">Subtotal:</th>
                                 <td>S/ {{number_format($subTotal,2)}}</td>
@@ -120,7 +119,7 @@
                             <tr>
                                 <th>
                                     <select wire:model.defer="state.impuesto_id" class="form-control" wire:change="calculateTaxAmount(event.target.value)">
-                                        <option value="0">Impuestos</option>
+                                        <option value="0">Seleccionar impuesto</option>
                                         @foreach($impuestos as $impuesto)
                                             <option value="{{ $impuesto->id }}">{{ $impuesto->nombre }}</option>
                                         @endforeach
@@ -135,7 +134,6 @@
                         </table>
                     </div>
                 </div>
-                <!-- /.col -->
             </div>
             <div class="row no-print">
                 <div class="col-12">
@@ -149,7 +147,6 @@
                     </a>
                 </div>
             </div>
-            <!-- /.row -->
         </section>
         </form>
     </div>

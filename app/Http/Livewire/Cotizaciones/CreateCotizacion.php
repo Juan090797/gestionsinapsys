@@ -1,21 +1,21 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Cotizaciones;
 
 use App\Contracts\Admin\Cotizaciones\CreatesCotizaciones;
 use App\Http\Livewire\Cotizaciones\Traits\CalcularCotizacion;
 use App\Http\Livewire\Cotizaciones\Traits\DataCotizacion;
-use App\Models\Cliente;
-use App\Models\Empresa;
 use App\Models\impuesto;
 use App\Models\Producto;
 use App\Models\Proyecto;
 use Carbon\Carbon;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
-class Cotizacion extends Component
+class CreateCotizacion extends Component
 {
+    use LivewireAlert;
     use DataCotizacion;
     use CalcularCotizacion;
     use WithFileUploads;
@@ -24,7 +24,8 @@ class Cotizacion extends Component
     public $state = [];
     public $billedTo = [];
     public $impuesto = null;
-    public $code, $ct ;
+    public $code, $ct;
+    public $productos, $impuestos;
 
     public function mount(Proyecto $proyecto)
     {
@@ -75,23 +76,27 @@ Numero de Cta. Detracciones (Bco. Nacion): 00-051-159853',
                 'total_items' => $this->cantidadTotal,
             ]
         ));
-        $this->emit('cotizacion-ok', 'Cotizacion creado con Exito');
+        $this->alert('success', 'Cotizacion creada!!',['timerProgressBar' => true]);
         return redirect()->route('proyecto.show', $ide);
     }
 
     public function render()
     {
-        $empresa = Empresa::all()->first();
-        $productos = Producto::where('clasificacions_id',2)->get();
-        return view('livewire.cotizacion.create',
-            [
-                'cliente'  => Cliente::where('id', $this->proyecto->cliente_id)->get(),
-                'productos' => $productos,
-                'impuestos' => impuesto::all(),
-                'empresa'   => $empresa,
-            ]
-            )->extends('layouts.tema.app')->section('content');
+        $this->update();
+        return view('livewire.cotizacion.create')->extends('layouts.tema.app')->section('content');
     }
 
-
+    public function update()
+    {
+        $this->productos();
+        $this->impuestos();
+    }
+    public function productos()
+    {
+        $this->productos = Producto::where('clasificacions_id',2)->get();
+    }
+    public function impuestos()
+    {
+        $this->impuestos = impuesto::all();
+    }
 }

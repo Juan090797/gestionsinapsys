@@ -31,18 +31,18 @@
                     <div class="col-4">
                         <b>{{$cliente->razon_social}}</b>
                         <p>
-                            <b>Ruc:</b> {{$cliente->ruc}}<br>
-                            <b>Direccion:</b> {{$cliente->direccion}}<br>
-                            <b>Telefono:</b> {{$cliente->telefono}}<br>
-                            <b>Correo:</b> {{$cliente->correo}}
+                            <b>Ruc:</b> {{ $cliente->ruc }}<br>
+                            <b>Direccion:</b> {{ $cliente->direccion }}<br>
+                            <b>Telefono:</b> {{ $cliente->telefono }}<br>
+                            <b>Correo:</b> {{ $cliente->correo }}
                         </p>
                     </div>
                     <div class="col-4">
                         <p>
-                            <b>Cotizacion: #{{$cotizacion->codigo}}</b><br>
-                            <b>Fecha:</b> {{$cotizacion->formate_fechai}}<br>
-                            <b>Vencimiento:</b> {{$cotizacion->formate_fechac}}<br>
-                            <b>Atencion:</b> {{$cotizacion->atendido}}<br>
+                            <b>Cotizacion: #{{ $cotizacion->codigo }}</b><br>
+                            <b>Fecha:</b> {{ $cotizacion->fecha_inicio}}<br>
+                            <b>Vencimiento:</b> {{ $cotizacion->fecha_fin }}<br>
+                            <b>Atencion:</b> {{ $cotizacion->atendido }}<br>
                         </p>
                     </div>
                 </div>

@@ -44,4 +44,12 @@ class Cotizacion extends Model
     {
         return Carbon::parse($this->fecha_fin)->format('d-m-Y');
     }
+    public function getFechaInicioAttribute($value)
+    {
+        return Carbon::parse($value)->format('d-m-Y');
+    }
+    public function getFechaFinAttribute($value)
+    {
+        return Carbon::parse($value)->format('d-m-Y');
+    }
 }

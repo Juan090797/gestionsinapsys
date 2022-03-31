@@ -5,7 +5,7 @@
             <a class="btn btn-primary btn-sm float-right" data-toggle="modal" data-target="#theModal">Agregar Contacto</a>
         </div>
         <div class="card-body">
-            <table class="table">
+            <table class="table table-sm">
                 <thead>
                 <tr>
                     <th scope="col">Nombre</th>

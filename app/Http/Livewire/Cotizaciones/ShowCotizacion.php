@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Cotizaciones;
 
 use App\Models\Cliente;
 use App\Models\Cotizacion;

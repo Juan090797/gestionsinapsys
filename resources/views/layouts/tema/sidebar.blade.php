@@ -1,29 +1,25 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
-    <!-- Brand Logo -->
-    <a href="index3.html" class="brand-link">
-        <span class="brand-text font-weight-light">Grupo Sinapsys</span>
+    <a href="#" class="brand-link">
+        <img src="{{asset('img/coorporacion.ico')}}" class="brand-image img-circle elevation-3" style="opacity: .8">
+        <span class="brand-text" style="color:white">GRUPO SINAPSYS</span>
     </a>
-    <!-- Sidebar -->
     <div class="sidebar">
-        <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
                 <img src="{{ Auth::user()->profile_photo_url }}" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
-                <a href="#" class="d-block">{{ Auth::user()->name}}</a>
+                <a href="#" class="d-block" style="color:white">{{ Auth::user()->name}}</a>
             </div>
         </div>
 
         <!-- Sidebar Menu -->
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                <!-- Add icons to the links using the .nav-icon class
-                     with font-awesome or any other icon font library -->
                 <li class="nav-item {{ request()->is('dashboard') ? 'menu-open' : '' }}">
                     <a href="#" class="nav-link {{ request()->is('dashboard') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-tachometer-alt"></i>
-                        <p>
+                        <i class="nav-icon fas fa-tachometer-alt" style="color:white"></i>
+                        <p style="color:white">
                             Dashboard
                             <i class="right fas fa-angle-left"></i>
                         </p>
@@ -41,14 +37,14 @@
                 @hasanyrole('Administrador|Ventas')
                 <li class="nav-item">
                     <a href="{{ url('proyectos') }}" class="nav-link {{ request()->is('proyectos') ? 'active' : '' }}">
-                        <i class="nav-icon far fa-calendar-alt"></i>
-                        <p>Proyectos</p>
+                        <i class="nav-icon far fa-calendar-alt" style="color:white"></i>
+                        <p style="color:white">Proyectos</p>
                     </a>
                 </li>
                 <li class="nav-item {{ request()->is('clientes') ? 'menu-open' : '' }} {{ request()->is('categorias') ? 'menu-open' : '' }} {{ request()->is('industrias') ? 'menu-open' : '' }}">
                     <a href="#" class="nav-link {{ request()->is('clientes') ? 'active' : '' }} {{ request()->is('categorias') ? 'active' : '' }} {{ request()->is('industrias') ? 'active' : '' }}">
-                        <i class="nav-icon fa fa-users"></i>
-                        <p>
+                        <i class="nav-icon fa fa-users" style="color:white"></i>
+                        <p style="color:white">
                             Clientes
                             <i class="fas fa-angle-left right"></i>
                         </p>
@@ -78,8 +74,8 @@
                 @hasanyrole('Logistica|Administrador')
                 <li class="nav-item {{ request()->is('productos') ? 'menu-open' : '' }} {{ request()->is('marcas') ? 'menu-open' : '' }} {{ request()->is('tipoequipos') ? 'menu-open' : '' }} {{ request()->is('clasificacions') ? 'menu-open' : '' }} {{ request()->is('unidades') ? 'menu-open' : '' }}">
                     <a href="#" class="nav-link {{ request()->is('productos') ? 'active' : '' }} {{ request()->is('marcas') ? 'active' : '' }} {{ request()->is('tipoequipos') ? 'active' : '' }} {{ request()->is('clasificacions') ? 'active' : '' }} {{ request()->is('unidades') ? 'active' : '' }}">
-                        <i class="nav-icon fa fa-tag"></i>
-                        <p>
+                        <i class="nav-icon fa fa-tag" style="color: white"></i>
+                        <p style="color: white">
                             Productos
                             <i class="fas fa-angle-left right"></i>
                         </p>
@@ -115,8 +111,8 @@
                 @role('Administrador')
                 <li class="nav-item {{ request()->is('impuestos') ? 'menu-open' : '' }} {{ request()->is('empresa') ? 'menu-open' : '' }} {{ request()->is('centrocostos') ? 'menu-open' : '' }}">
                     <a href="#" class="nav-link {{ request()->is('impuestos') ? 'active' : '' }} {{ request()->is('empresa') ? 'active' : '' }} {{ request()->is('centrocostos') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-cogs"></i>
-                        <p>
+                        <i class="nav-icon fas fa-cogs" style="color: white"></i>
+                        <p style="color: white">
                             Configuracion
                             <i class="fas fa-angle-left right"></i>
                         </p>
@@ -151,8 +147,8 @@
                 @endrole
                 <li class="nav-item">
                     <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-cash-register"></i>
-                        <p>
+                        <i class="nav-icon fas fa-cash-register" style="color:white"></i>
+                        <p style="color:white">
                             Ventas
                             <i class="fas fa-angle-left right"></i>
                         </p>
@@ -169,8 +165,8 @@
                 @hasanyrole('Logistica|Administrador')
                 <li class="nav-item">
                     <a href="#" class="nav-link">
-                        <i class="nav-icon far fa-money-bill-alt"></i>
-                        <p>
+                        <i class="nav-icon far fa-money-bill-alt" style="color: white"></i>
+                        <p style="color: white">
                             Compras
                             <i class="fas fa-angle-left right"></i>
                         </p>
@@ -200,8 +196,8 @@
                 @hasanyrole('Logistica|Administrador')
                 <li class="nav-item">
                     <a href="#" class="nav-link">
-                        <i class="nav-icon far fas fa-dolly-flatbed"></i>
-                        <p>
+                        <i class="nav-icon far fas fa-dolly-flatbed" style="color:white"></i>
+                        <p style="color:white">
                             Proveedores
                             <i class="fas fa-angle-left right"></i>
                         </p>
@@ -224,8 +220,8 @@
                 @endhasanyrole
                 <li class="nav-item {{ request()->is('caja') ? 'menu-open' : '' }} {{ request()->is('unidades') ? 'menu-open' : '' }}">
                     <a href="#" class="nav-link {{ request()->is('caja') ? 'active' : '' }}">
-                        <i class="nav-icon fa fa-tag"></i>
-                        <p>
+                        <i class="nav-icon fa fa-tag" style="color: white"></i>
+                        <p style="color: white">
                             Tesoreria
                             <i class="fas fa-angle-left right"></i>
                         </p>
@@ -241,8 +237,8 @@
                 </li>
                 <li class="nav-item {{ request()->is('compras-administrativos') ? 'menu-open' : '' }}">
                     <a href="#" class="nav-link {{ request()->is('compras-administrativos') ? 'active' : '' }}">
-                        <i class="nav-icon fa fa-tag"></i>
-                        <p>
+                        <i class="nav-icon fa fa-tag" style="color:white"></i>
+                        <p style="color:white">
                             Contabilidad
                             <i class="fas fa-angle-left right"></i>
                         </p>
@@ -259,8 +255,8 @@
                 @role('Administrador')
                 <li class="nav-item">
                     <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-box-open"></i>
-                        <p>
+                        <i class="nav-icon fas fa-box-open" style="color: white"></i>
+                        <p style="color: white">
                             Almacen
                             <i class="fas fa-angle-left right"></i>
                         </p>
@@ -290,8 +286,8 @@
                 @role('Administrador')
                 <li class="nav-item">
                     <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-key"></i>
-                        <p>
+                        <i class="nav-icon fas fa-key" style="color: white"></i>
+                        <p style="color: white">
                             Seguridad
                             <i class="fas fa-angle-left right"></i>
                         </p>
@@ -321,8 +317,8 @@
                 @hasanyrole('Logistica|Administrador')
                 <li class="nav-item">
                     <a href="#" class="nav-link">
-                        <i class="nav-icon far fa-question-circle"></i>
-                        <p>
+                        <i class="nav-icon far fa-question-circle" style="color: #00a87d"></i>
+                        <p style="color: #00a87d">
                             Consultas
                             <i class="fas fa-angle-left right"></i>
                         </p>
@@ -345,8 +341,8 @@
                 @endhasanyrole
                 <li class="nav-item">
                     <a href="{{ url('mensajes') }}" class="nav-link {{ request()->is('mensajes') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-comments"></i>
-                        <p>Mensajes</p>
+                        <i class="nav-icon fas fa-comments" style="color: yellow"></i>
+                        <p style="color: yellow">Mensajes</p>
                     </a>
                 </li>
             </ul>

@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use App\Models\Categoria;
 use App\Models\Cliente;
 use App\Models\Industria;
+use App\Models\TipoDocumento;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Livewire\Component;
@@ -14,7 +15,7 @@ class Clientes extends Component
 {
     use WithPagination;
     public $state= [];
-    public $search, $selected_id;
+    public $search, $selected_id,$documentos;
     protected $paginationTheme = 'bootstrap';
     Private $pagination = 10;
     protected $listeners = ['deleteRow' => 'Destroy'];
@@ -39,11 +40,21 @@ class Clientes extends Component
         }else {
             $data = Cliente::orderBy('id', 'desc')->paginate($this->pagination);
         }
+        $this->update();
         return view('livewire.clientes.clientes',[
             'clientes' => $data,
             'industrias' => Industria::all(),
             'categorias' => Categoria::all(),
         ])->extends('layouts.tema.app')->section('content');
+    }
+
+    public function update()
+    {
+        $this->documentos();
+    }
+    public function documentos()
+    {
+        $this->documentos = TipoDocumento::where('tipo', 'identidad')->get();
     }
 
     public function resetUI()
@@ -104,7 +115,7 @@ class Clientes extends Component
         $this->emit('show-modal', 'show-modal!');
     }
 
-    public function Update()
+    public function actualizar()
     {
         $validated = Validator::make($this->state, [
             'nombre' => "required|min:3|unique:clientes,nombre,{$this->selected_id}",

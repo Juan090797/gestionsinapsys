@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Cotizaciones;
 
 use App\Contracts\Admin\Cotizaciones\UpdatesCotizaciones;
 use App\Http\Livewire\Cotizaciones\Traits\CalcularCotizacion;

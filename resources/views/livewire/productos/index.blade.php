@@ -94,8 +94,8 @@
                             <td class="text-left">{{$producto->tipo}}</td>
                             <td class="text-center"><span class="badge {{ $producto->stock > 0 ? 'badge-success' : 'badge-danger'}}">{{$producto->stock > 0 ? $producto->stock : 'sin stock' }}</span></td>
                             <td class="text-center">
-                                <a href="javascript:void(0)" wire:click="Edit({{ $producto->id }})" class="btn btn-primary" title="Editar"><i class="fas fa-pencil-alt" aria-hidden="true"></i></a>
-                                <a href="javascript:void(0)" onclick="Confirm('{{ $producto->id }}')" class="btn btn-danger" title="Eliminar"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                <a href="javascript:void(0)" wire:click="Edit({{ $producto->id }})" class="btn btn-primary btn-sm" title="Editar"><i class="fas fa-pencil-alt" aria-hidden="true"></i></a>
+                                <a href="javascript:void(0)" onclick="Confirm('{{ $producto->id }}')" class="btn btn-danger btn-sm" title="Eliminar"><i class="fa fa-trash" aria-hidden="true"></i></a>
                             </td>
                         </tr>
                     @endforeach
@@ -115,11 +115,9 @@
             });
             window.livewire.on('producto-added', msg =>{
                 $('#theModal').modal('hide');
-                noty(msg)
             })
             window.livewire.on('producto-updated', msg =>{
                 $('#theModal').modal('hide');
-                noty(msg)
             })
             window.livewire.on('error', msg =>{
                 noty(msg)
@@ -139,13 +137,6 @@
                 if(result.value){
                     window.livewire.emit('deleteRow', id)
                     swal.close()
-                }
-                if (result.isConfirmed) {
-                    Swal.fire(
-                        'Eliminado!',
-                        'El registro ha sido eliminado',
-                        'success'
-                    )
                 }
             })
         }

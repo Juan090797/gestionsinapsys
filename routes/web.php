@@ -28,9 +28,9 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('clasificacions', \App\Http\Livewire\Clasificacions::class);
     Route::get('proyectos', \App\Http\Livewire\Proyectos::class)->name('proyectos');
     Route::get('proyectos/{proyecto}', \App\Http\Livewire\ShowProyecto::class)->name('proyecto.show');
-    Route::get('cotizacion/{proyecto}', \App\Http\Livewire\Cotizacion::class)->name('cotizacion');
-    Route::get('cotizacion/{cotizacion}/show', \App\Http\Livewire\ShowCotizacion::class)->name('cotizacion.show');
-    Route::get('cotizacion/{cotizacion}/edit', \App\Http\Livewire\EditCotizacion::class)->name('cotizacion.edit');
+    Route::get('cotizacion/{proyecto}', \App\Http\Livewire\Cotizaciones\CreateCotizacion::class)->name('cotizacion.create');
+    Route::get('cotizacion/{cotizacion}/show', \App\Http\Livewire\Cotizaciones\ShowCotizacion::class)->name('cotizacion.show');
+    Route::get('cotizacion/{cotizacion}/edit', \App\Http\Livewire\Cotizaciones\EditCotizacion::class)->name('cotizacion.edit');
     Route::get('clientes/exports/', [\App\Http\Controllers\ExportController::class, 'exportCliente']);
     Route::post('clientes/imports/', [\App\Http\Controllers\ImportController::class, 'importCliente']);
     Route::get('productos/exports/', [\App\Http\Controllers\ExportController::class, 'exportProducto']);

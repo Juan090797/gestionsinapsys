@@ -1,5 +1,5 @@
 <div  id="theModal" wire:ignore.self class="modal fade"  tabindex="-1">
-    <div class="modal-dialog modal-xl">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header bg-dark">
                 @include('common.modalHead')
@@ -16,8 +16,8 @@
                     </div>     <!--nombre -->
                     <div class="col-sm-12 col-md-3">
                         <div class="form-group">
-                            <label>Industria*</label>
-                            <select wire:model.defer="state.industria_id" class="form-control">
+                            <label for="industria_id">Industria*</label>
+                            <select id="industria_id" class="form-control" wire:model.defer="state.industria_id">
                                 <option value="ELEGIR" selected>Elegir</option>
                                 @foreach($industrias as $industria)
                                     <option value="{{$industria->id}}" >{{$industria->nombre}}</option>
@@ -29,7 +29,7 @@
                     <div class="col-sm-12 col-md-3">
                         <div class="form-group">
                             <label>Categoria*</label>
-                            <select wire:model.defer="state.categoria_id" class="form-control">
+                            <select class="form-control" wire:model.defer="state.categoria_id">
                                 <option value="ELEGIR" selected>Elegir</option>
                                 @foreach($categorias as $categoria)
                                     <option value="{{$categoria->id}}" >{{$categoria->nombre}}</option>
@@ -37,18 +37,18 @@
                             </select>
                         </div>
                         @error('categoria_id') <span class="text-danger er">{{ $message }}</span>@enderror
-                    </div>    <!--categoria_id-->
+                    </div>
                     <div class="col-sm-12 col-md-6">
                         <div class="form-group">
                             <label>Correo*</label>
-                            <input type="email" wire:model.defer="state.correo" class="form-control" placeholder="ej: correo@correo.com">
+                            <input type="email" class="form-control" placeholder="ej: correo@correo.com" wire:model.defer="state.correo">
                         </div>
                         @error('correo') <span class="text-danger er">{{ $message }}</span>@enderror
-                    </div>    <!--correo-->
+                    </div>
                     <div class="col-sm-12 col-md-3">
                         <div class="form-group">
                             <label>Telefono*</label>
-                            <input type="text" wire:model.defer="state.telefono" class="form-control" placeholder="ej: 5750399">
+                            <input type="text" class="form-control" placeholder="ej: 5750399" wire:model.defer="state.telefono">
                         </div>
                         @error('telefono') <span class="text-danger er">{{ $message }}</span>@enderror
                     </div>    <!--telefono-->
@@ -63,20 +63,32 @@
                         </div>
                         @error('estado') <span class="text-danger er">{{ $message }}</span>@enderror
                     </div>    <!--estado-->
-                    <div class="col-sm-12 col-md-6">
+                    <div class="col-sm-12 col-md-4">
                         <div class="form-group">
                             <label>Pagina Web</label>
                             <input type="text" wire:model.defer="state.pagina_web" class="form-control" placeholder="ej: www.paginaweb.com">
                         </div>
                         @error('pagina_web') <span class="text-danger er">{{ $message }}</span>@enderror
                     </div>    <!--pagina_web-->
-                    <div class="col-sm-12 col-md-6">
+                    <div class="col-sm-12 col-md-5">
                         <div class="form-group">
                             <label>Direccion*</label>
                             <input type="text" wire:model.defer="state.direccion" class="form-control" placeholder="ej: Av.direccion 111">
                         </div>
                         @error('direccion') <span class="text-danger er">{{ $message }}</span>@enderror
-                    </div>    <!--direccion-->
+                    </div>
+                    <div class="col-sm-12 col-md-3">
+                        <div class="form-group">
+                            <label>Tipo Documento*</label>
+                            <select class="form-control" wire:model.defer="state.tipo_documento_id">
+                                <option value="ELEGIR" selected>Elegir</option>
+                                @foreach($documentos as $documento)
+                                    <option value="{{ $documento->id }}" >{{ $documento->nombre }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        @error('tipo_documento_id') <span class="text-danger er">{{ $message }}</span>@enderror
+                    </div>
                     <div class="col-sm-12 col-md-12">
                         <div class="form-group">
                             <label>Descripcion</label>
@@ -177,14 +189,7 @@
                     </div>
                 </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" wire:click.prevent="resetUI()" class="btn btn-dark close-btn text-info" data-dismiss="modal">CERRAR</button>
-                @if($selected_id < 1)
-                    <button type="submit" wire:click.prevent="Store()" class="btn btn-dark close-modal">GUARDAR</button>
-                @else
-                    <button type="submit" wire:click.prevent="Update()" class="btn btn-dark close-modal">ACTUALIZAR</button>
-                @endif
-            </div>
+            @include('common.modalFooter')
             </form>
         </div>
     </div>

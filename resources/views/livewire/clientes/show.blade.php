@@ -9,14 +9,14 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <p>Nombre del cliente: {{$cliente->nombre}}</p>
-                        <p>Razon social: {{$cliente->razon_social}}</p>
-                        <p>Ruc:  {{$cliente->ruc}}</p>
-                        <p>Estado: {{$cliente->estado}}</p>
-                        <p>Correo: {{$cliente->correo}}</p>
-                        <p>Pagina Web: {{$cliente->pagina_web}}</p>
-                        <p>Descripcion: {{$cliente->descripcion}}</p>
-                        <p>Detalles Bancarios: {{$cliente->detalle_banco}}</p>
+                        <p><b>Nombre del cliente:</b> {{$cliente->nombre}}</p>
+                        <p><b>Razon social:</b> {{$cliente->razon_social}}</p>
+                        <p><b>Ruc:</b>  {{$cliente->ruc}}</p>
+                        <p><b>Estado:</b> {{$cliente->estado}}</p>
+                        <p><b>Correo:</b> {{$cliente->correo}}</p>
+                        <p><b>Pagina Web:</b> {{$cliente->pagina_web}}</p>
+                        <p><b>Descripcion:</b> {{$cliente->descripcion}}</p>
+                        <p><b>Detalles Bancarios:</b> {{$cliente->detalle_banco}}</p>
                     </div>
                 </div>
             </div>

@@ -7,9 +7,11 @@ use App\Models\Producto;
 use App\Models\Clasificacion;
 use App\Models\UnidadMedida;
 use Illuminate\Support\Facades\Validator;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class Productos extends ComponenteBase
 {
+    use LivewireAlert;
     public $search, $selected_id;
     public $state = [];
     public $marcas,$clasificaciones,$unidades;
@@ -80,7 +82,8 @@ class Productos extends ComponenteBase
 
         Producto::create($validated);
         $this->resetUI();
-        $this->emit('producto-added', 'Producto Registrado');
+        $this->emit('producto-added');
+        $this->alert('success', 'Producto creado!!',['timerProgressBar' => true]);
     }
     public function resetUI()
     {
@@ -125,11 +128,13 @@ class Productos extends ComponenteBase
         $producto = Producto::findOrFail($this->state['id']);
         $producto->update($validated);
         $this->resetUI();
-        $this->emit('producto-updated', 'Producto Actualizado');
+        $this->emit('producto-updated');
+        $this->alert('success', 'Producto actualizado!!',['timerProgressBar' => true]);
     }
     public function Destroy(Producto $producto)
     {
         $producto->delete();
+        $this->alert('success', 'Producto eliminado!!',['timerProgressBar' => true]);
         $this->resetUI();
     }
 

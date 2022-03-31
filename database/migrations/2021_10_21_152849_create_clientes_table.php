@@ -15,10 +15,10 @@ class CreateClientesTable extends Migration
     {
         Schema::create('clientes', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre');                   //nombre comercial
+            $table->string('nombre');
             $table->string('correo')->nullable();
             $table->string('direccion')->nullable();
-            $table->string('estado');                   // activo o inactivo
+            $table->string('estado');
             $table->string('pagina_web')->nullable();
             $table->string('telefono')->nullable();
             $table->longText('descripcion')->nullable();
@@ -35,7 +35,7 @@ class CreateClientesTable extends Migration
 
             $table->foreignId('industria_id')->constrained();
             $table->foreignId('categoria_id')->constrained();
-
+            $table->foreignId('tipo_documento_id')->constrained();
             $table->timestamps();
         });
     }

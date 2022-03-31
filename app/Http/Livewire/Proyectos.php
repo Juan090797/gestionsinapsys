@@ -7,9 +7,11 @@ use App\Models\Proyecto;
 use App\Models\ProyectoUser;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class Proyectos extends ComponenteBase
 {
+    use LivewireAlert;
     public $selected_id, $search;
     public $state=[];
     public $clientes,$users;
@@ -75,7 +77,8 @@ class Proyectos extends ComponenteBase
         $validated['etapa_id'] = 1;
         $proyecto = Proyecto::create($validated);
         $this->resetUI();
-        $this->emit('proyecto-added', 'Proyecto Registrado');
+        $this->emit('proyecto-added');
+        $this->alert('success', 'Proyecto creado!!',['timerProgressBar' => true]);
     }
 
     public function Edit(Proyecto $proyecto)
@@ -108,7 +111,8 @@ class Proyectos extends ComponenteBase
         $proyecto = Proyecto::findOrFail($this->state['id']);
         $proyecto->update($validated);
         $this->resetUI();
-        $this->emit('proyecto-updated', 'Proyecto Actualizado');
+        $this->emit('proyecto-updated');
+        $this->alert('success', 'Proyecto actualizado!!',['timerProgressBar' => true]);
     }
 
     public function resetUI()

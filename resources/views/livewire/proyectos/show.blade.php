@@ -226,7 +226,7 @@
                                         <p class="text-sm">Lider Proyecto
                                             <b class="d-block">{{$proyecto->user->name}}</b>
                                         </p>
-                                        <p class="text-sm">Equipo Proyecto <a href="javascript:void(0)" data-toggle="modal" data-target="#theModalEquipo"><i class="fa fa-plus" aria-hidden="true"></i></a>
+                                        <p class="text-sm">Equipo Proyecto <a href="javascript:void(0)" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#theModalEquipo"><i class="fa fa-plus" aria-hidden="true"></i></a>
                                             @if($proyecto->colaboradores)
                                                 @foreach($proyecto->colaboradores as $t)
                                                     <b class="d-block">{{$t->usuario->name}} <a href="javascript:void(0)" wire:click="borrarColaborador({{$t}})"><i class="far fa-trash-alt"></i></a></b>
@@ -246,42 +246,44 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <a href="{{route('cotizacion',$proyecto)}}" class="btn btn-sm btn-success">Agregar Cotizacion</a>
+                                    <a href="{{route('cotizacion.create',$proyecto)}}" class="btn btn-sm btn-success">Agregar Cotizacion</a>
                                 </div>
                                 <div class="card-body">
-                                    @if(count($cotizaciones))
-                                        <table class="table table-sm">
-                                            <thead>
+                                    <table class="table table-sm">
+                                        <thead>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th class="text-center">Codigo</th>
+                                            <th class="text-center">Cliente</th>
+                                            <th class="text-center">Fecha Inicio</th>
+                                            <th class="text-center">Fecha Fin</th>
+                                            <th class="text-center">Importe</th>
+                                            <th class="text-center">Fecha Actualizado</th>
+                                            <th class="text-center">Acciones</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        @forelse($cotizaciones as $cotizacion)
                                             <tr>
-                                                <th scope="col">#</th>
-                                                <th class="text-center">Codigo</th>
-                                                <th class="text-center">Importe</th>
-                                                <th class="text-center">F.Creado</th>
-                                                <th class="text-center">F.Actualizado</th>
-                                                <th class="text-center">Acciones</th>
+                                                <th scope="row">{{$loop->iteration}}</th>
+                                                <td class="text-center">{{$cotizacion->codigo}}</td>
+                                                <td class="text-center"> {{$cotizacion->cliente->razon_social}}</td>
+                                                <td class="text-center"> {{$cotizacion->fecha_inicio}}</td>
+                                                <td class="text-center"> {{$cotizacion->fecha_fin}}</td>
+                                                <td class="text-center">S/ {{ $cotizacion->total }}</td>
+                                                <td class="text-center">{{$cotizacion->updated_at->diffForHumans()}}</td>
+                                                <td class="text-center">
+                                                    <a href="{{ route('cotizacion.show',$cotizacion) }}" class="btn btn-success btn-sm"><i class="far fa-eye"></i></a>
+                                                    <a href="{{ route('cotizacion.edit', $cotizacion) }}" class="btn btn-primary btn-sm"><i class="fas fa-pencil-alt"></i></a>
+                                                    <a href="javascript:void(0)" onclick="Confirmar('{{ $cotizacion->id }}')" class="btn btn-danger btn-sm"><i class="far fa-trash-alt"></i></a>
+                                                    <a href="javascript:void(0)" onclick="Confirmacion('{{ $cotizacion->id }}')" class="btn btn-info btn-sm"><i class="fas fa-clipboard-check"></i></a>
+                                                </td>
                                             </tr>
-                                            </thead>
-                                            <tbody>
-                                            @foreach($cotizaciones as $cotizacion)
-                                                <tr>
-                                                    <th scope="row">{{$loop->iteration}}</th>
-                                                    <td class="text-center">{{$cotizacion->codigo}}</td>
-                                                    <td class="text-center">S/ {{$cotizacion->total}}</td>
-                                                    <td class="text-center">{{$cotizacion->created_at}}</td>
-                                                    <td class="text-center">{{$cotizacion->updated_at}}</td>
-                                                    <td class="text-center">
-                                                        <a href="{{ route('cotizacion.show',$cotizacion) }}" class="btn-link text-secondary"><i class="far fa-eye"></i></a>
-                                                        <a href="{{ route('cotizacion.edit', $cotizacion) }}" class="btn-link text-secondary"><i class="fas fa-pencil-alt"></i></a>
-                                                        <a href="javascript:void(0)" onclick="Confirmar('{{ $cotizacion->id }}')" class="btn-link text-secondary"><i class="far fa-trash-alt"></i></a>
-                                                        <a href="javascript:void(0)" onclick="Confirmacion('{{ $cotizacion->id }}')" class="btn-link text-secondary"><i class="fas fa-clipboard-check"></i></a>
-                                                    </td>
-                                                </tr>
-                                            @endforeach
-                                            </tbody>
-                                        </table>
-                                    @else
-                                        <p class="text-danger">0 Cotizaciones</p>
-                                    @endif
+                                        @empty
+                                            <p class="text-danger">0 Cotizaciones</p>
+                                        @endforelse
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
