@@ -13,10 +13,12 @@ use App\Models\TipoDocumento;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 
 class CreateCompra extends Component
 {
+    use LivewireAlert;
     use CalcularCompra;
     use DataCompra;
     public $state = [];
@@ -34,7 +36,6 @@ class CreateCompra extends Component
         $this->costs();
         $this->documentos();
     }
-
     public function products()
     {
         $this->productos = Producto::all();
@@ -51,11 +52,11 @@ class CreateCompra extends Component
     {
         $this->documentos = TipoDocumento::where('tipo','pago')->get();
     }
-
     public function createCompra()
     {
         $validated = Validator::make($this->state, [
-            'serie_documento'  => 'required',
+            'tipo_documento_id' => 'required',
+            'serie_documento'   => 'required',
             'numero_documento'  => 'required',
             'fecha_documento'   => 'required',
             'fecha_pago'        => 'required',
@@ -63,9 +64,15 @@ class CreateCompra extends Component
             'centro_costo_id'   => 'required',
             'moneda'            => 'required',
             'tipo_cambio'       => '',
-            'otros_gastos'      => '',
+            'detalle'           => '',
+            'subtotal'          => '',
+            'impuesto'          => '',
+            'no_gravadas'       => '',
             'icbper'            => '',
+            'otros_gastos'      => '',
+            'total'             => 'required',
         ],[
+            'tipo_documento_id.required'=> 'El tipo de documento es requerido',
             'serie_documento.required'  => 'La serie del documento es requerido',
             'numero_documento.required' => 'El numero del documento es requerido',
             'fecha_documento.required'  => 'La fecha del documento es requerido',
@@ -73,19 +80,11 @@ class CreateCompra extends Component
             'proveedor_id.required'     => 'El proveedor es requerido',
             'centro_costo_id.required'  => 'El centro de costo es requerido',
             'moneda.required'           => 'La moneda es requerida',
-            'tipo_cambio.required'      => '',
-            'otros_gastos.required'     => '',
-            'icbper.required'           => '',
+            'total.required'            => 'El total es requerido',
         ])->validate();
 
-        $validated['tipo_documento_id'] = $this->tipo_documento_id;
         $validated['periodo'] =  Carbon::now()->format('Ym').''.'00';
         $validated['estado'] = 'PENDIENTE';
-        $validated['otros_gastos'] = $this->otros_gastos;
-        $validated['icbper'] = $this->icbper;
-        $validated['subtotal'] = $this->subTotal;
-        $validated['impuesto'] = $this->impuestoD;
-        $validated['total'] = $this->total;
         $validated['total_items'] = $this->cantidadTotal;
         $input = $this->lista;
 
@@ -103,10 +102,8 @@ class CreateCompra extends Component
                     ]);
                 });
         });
-        $this->emit('compra-registrada', 'Compra Registrada');
+        $this->alert('success', 'Compra Registrada',['timerProgressBar' => true]);
         return redirect()->route('compras');
+
     }
-
-
-
 }

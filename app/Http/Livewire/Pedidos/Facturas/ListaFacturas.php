@@ -2,12 +2,15 @@
 
 namespace App\Http\Livewire\Pedidos\Facturas;
 
+use App\Exports\ComprasExport;
+use App\Exports\FacturaVentaExport;
 use App\Models\FacturaVenta;
 use App\Models\Pedido;
 use App\Models\TipoDocumento;
 use Illuminate\Support\Facades\Validator;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ListaFacturas extends Component
 {
@@ -126,5 +129,10 @@ class ListaFacturas extends Component
         $facturaVenta->delete();
         $this->resetUI();
         $this->alert('success', 'Se elimino la factura con exito',['timerProgressBar' => true]);
+    }
+    public function exportFactura()
+    {
+        $reportName = 'Facturas_' . uniqid() . '.xlsx';
+        return Excel::download(new FacturaVentaExport, $reportName);
     }
 }

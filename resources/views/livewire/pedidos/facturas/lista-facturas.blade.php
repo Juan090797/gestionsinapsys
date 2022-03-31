@@ -5,6 +5,11 @@
     @endsection
     <div class="content-fluid">
         <div class="card">
+            <div class="card-header">
+                <div class="col-4">
+                    <a class="btn btn-success" href="{{ route('factura.export') }}"><i class="fas fa-file-excel"></i> Excel</a>
+                </div>
+            </div>
             <div class="card-body table-responsive">
                 <table class="table table-sm table-hover">
                     <thead class="thead-dark">

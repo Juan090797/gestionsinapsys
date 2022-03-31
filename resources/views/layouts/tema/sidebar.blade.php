@@ -188,6 +188,12 @@
                                 <p>Importaciones</p>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a href="{{ url('ordenes') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Ordenes Compras</p>
+                            </a>
+                        </li>
                     </ul>
                 </li>
                 @endhasanyrole
@@ -243,17 +249,9 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{ url('compras-administrativos') }}" class="nav-link {{ request()->is('compras-administrativos') ? 'active' : '' }}">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Egresos</p>
-                            </a>
-                        </li>
-                    </ul>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
                             <a href="{{ url('facturas') }}" class="nav-link {{ request()->is('facturas') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>Ingresos</p>
+                                <p>Reg. Fac. Ventas</p>
                             </a>
                         </li>
                     </ul>
@@ -278,12 +276,6 @@
                             <a href="{{ url('salidas') }}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Salidas</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ url('ordenes') }}" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Ordenes Compras</p>
                             </a>
                         </li>
                         <li class="nav-item">

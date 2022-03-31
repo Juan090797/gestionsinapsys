@@ -70,8 +70,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('caja/{caja}/movimientos', \App\Http\Livewire\Caja\ListaMovimientos::class)->name('caja-movimientos');
     Route::get('movimiento/{movimiento}/show', \App\Http\Livewire\Caja\ShowMovimiento::class)->name('movimiento-show');
     Route::get('cajachica/{caja}/exports/', [\App\Http\Livewire\Caja\ListaMovimientos::class, 'exportMovimiento'])->name('cajachica.export');
-    Route::get('compras-administrativos', \App\Http\Livewire\Compras\GastosAdministrativos\ListaCompras::class)->name('compras.admin');
     Route::get('tipo-documentos', \App\Http\Livewire\TipoDocumento\ListaTipos::class)->name('tipo.documentos');
     Route::get('facturas', \App\Http\Livewire\Pedidos\Facturas\ListaFacturas::class)->name('facturas');
+    Route::get('facturas/exports/', [\App\Http\Livewire\Pedidos\Facturas\ListaFacturas::class, 'exportFactura'])->name('factura.export');
 });
 

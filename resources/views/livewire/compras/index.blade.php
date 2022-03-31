@@ -23,14 +23,14 @@
                     <thead class="thead-dark">
                     <tr>
                         <th scope="col"></th>
+                        <th class="text-center">Estado</th>
                         <th class="text-center">Proveedor</th>
-                        <th class="text-center">Fecha Documento</th>
+                        <th class="text-center">Fecha Emision</th>
+                        <th class="text-center">Fecha Pago</th>
                         <th class="text-center">Tipo Documento</th>
                         <th class="text-center">Serie Documento</th>
                         <th class="text-center">N° Documento</th>
-                        <th class="text-center">IGV</th>
                         <th class="text-center">Total</th>
-                        <th class="text-center">Estado</th>
                         <th class="text-center">Acciones</th>
                     </tr>
                     </thead>
@@ -44,21 +44,17 @@
                                     <input type="checkbox" wire:model="selectedProducts" value="{{ $compra->id }}">
                                 @endif
                             </th>
+                            <td class="text-center"><span class="badge {{ $compra->estado == 'APROBADO' ? 'badge-success' : 'badge-danger'}}">{{$compra->estado}}</span></td>
                             <td class="text-center">{{ $compra->proveedor->razon_social }}</td>
                             <td class="text-center">{{ date('d-m-Y', strtotime($compra->fecha_documento)) }}</td>
-                            <td class="text-center"><span class="badge {{ $compra->tipo_documento == 'Factura' ? 'badge-success' : 'badge-danger'}}">{{$compra->tipo_documento}}</span></td>
+                            <td class="text-center">{{ date('d-m-Y', strtotime($compra->fecha_pago)) }}</td>
+                            <td class="text-center"><span class="badge {{ $compra->documento->nombre == 'FACTURA' ? 'badge-success' : 'badge-danger'}}">{{$compra->documento->nombre}}</span></td>
                             <td class="text-center">{{ $compra->serie_documento }}</td>
                             <td class="text-center">{{ $compra->numero_documento }}</td>
-                            <td class="text-center">S/ {{ number_format($compra->impuesto,2) }}</td>
                             <td class="text-center">S/ {{ number_format($compra->total,2) }}</td>
-                            <td class="text-center"><span class="badge {{ $compra->estado == 'APROBADO' ? 'badge-success' : 'badge-danger'}}">{{$compra->estado}}</span></td>
                             <td class="text-center">
-                                <a href="{{route('compra.edit', $compra)}}" class="btn btn-primary" title="Editar">
-                                    <i class="fas fa-pencil-alt" aria-hidden="true"></i>
-                                </a>
-                                <a href="javascript:void(0)" onclick="Confirm('{{ $compra->id }}')" class="btn btn-danger" title="Eliminar">
-                                    <i class="fa fa-trash" aria-hidden="true"></i>
-                                </a>
+                                <a href="{{route('compra.edit', $compra)}}" class="btn btn-primary" title="Editar"><i class="fas fa-pencil-alt" aria-hidden="true"></i></a>
+                                <a href="javascript:void(0)" onclick="Confirm('{{ $compra->id }}')" class="btn btn-danger" title="Eliminar"><i class="fa fa-trash" aria-hidden="true"></i></a>
                             </td>
                         </tr>
                     @endforeach
@@ -72,7 +68,6 @@
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', function (){
-
             window.Livewire.on('show-modal', msg =>{
                 $('#theModal').modal('show')
             });
@@ -88,7 +83,6 @@
                 noty(msg)
             })
         });
-
         function Confirm(id)
         {
             Swal.fire({

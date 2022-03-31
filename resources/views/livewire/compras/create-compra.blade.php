@@ -7,11 +7,11 @@
         <form wire:submit.prevent="createCompra">
             <div class="card" wire:ignore.self>
                 <div class="card-body">
-                    <div class="row invoice-info">
-                        <div class="col-sm-4 invoice-col">
+                    <div class="row">
+                        <div class="col-sm-4">
                             <div class="form-group">
-                                <label for="">Proveedor</label>
-                                <select wire:model.defer="state.proveedor_id" class="form-control">
+                                <label for="proveedor_id">Proveedor</label>
+                                <select id="proveedor_id" class="form-control" wire:model.defer="state.proveedor_id">
                                     <option value="0">Elegir</option>
                                     @foreach($proveedores as $proveedor)
                                         <option value="{{$proveedor->id}}">{{$proveedor->razon_social}}</option>
@@ -20,10 +20,10 @@
                             </div>
                             @error('proveedor_id') <span class="text-danger er">{{ $message }}</span>@enderror
                         </div>
-                        <div class="col-sm-2 invoice-col">
+                        <div class="col-sm-2">
                             <div class="form-group">
                                 <label for="tipo_documento_id">Tipo documento</label>
-                                <select id="tipo_documento_id" wire:model="tipo_documento_id" class="form-control">
+                                <select id="tipo_documento_id" class="form-control" wire:model.defer="state.tipo_documento_id">
                                     <option value="0">Elegir</option>
                                     @foreach($documentos as $documento)
                                         <option value="{{$documento->id}}">{{$documento->nombre}}</option>
@@ -32,24 +32,24 @@
                             </div>
                             @error('tipo_documento_id') <span class="text-danger er">{{ $message }}</span>@enderror
                         </div>
-                        <div class="col-sm-2 invoice-col">
+                        <div class="col-sm-2">
                             <div class="form-group">
                                 <label for="serie_documento">Serie° Documento</label>
                                 <input id="serie_documento" type="text" class="form-control" wire:model.defer="state.serie_documento" placeholder="Ej: F001">
                             </div>
                             @error('serie_documento') <span class="text-danger er">{{ $message }}</span>@enderror
                         </div>
-                        <div class="col-sm-2 invoice-col">
+                        <div class="col-sm-2">
                             <div class="form-group">
                                 <label for="numero_documento">N° Documento</label>
                                 <input id="numero_documento" type="text" class="form-control" wire:model.defer="state.numero_documento" placeholder="Ej: 123456789">
                             </div>
                             @error('numero_documento') <span class="text-danger er">{{ $message }}</span>@enderror
                         </div>
-                        <div class="col-sm-2 invoice-col">
+                        <div class="col-sm-2">
                             <div class="form-group">
                                 <label for="centro_costo_id">Centro de costo</label>
-                                <select wire:model.defer="state.centro_costo_id" class="form-control">
+                                <select id="centro_costo_id" class="form-control" wire:model.defer="state.centro_costo_id">
                                     <option value="0">Elegir</option>
                                     @foreach($costos as $costo)
                                         <option value="{{$costo->id}}">{{$costo->nombre}}</option>
@@ -58,21 +58,21 @@
                             </div>
                             @error('centro_costo_id') <span class="text-danger er">{{ $message }}</span>@enderror
                         </div>
-                        <div class="col-sm-3 invoice-col">
+                        <div class="col-sm-3">
                             <div class="form-group">
-                                <label for="fecha_documento">Fecha Documento</label>
+                                <label for="fecha_documento">Fecha Emision</label>
                                 <input id="fecha_documento" class="form-control" type="date" wire:model.defer="state.fecha_documento">
                             </div>
                             @error('fecha_documento') <span class="text-danger er">{{ $message }}</span>@enderror
                         </div>
-                        <div class="col-sm-3 invoice-col">
+                        <div class="col-sm-3">
                             <div class="form-group">
                                 <label for="fecha_pago">Fecha Pago</label>
                                 <input id="fecha_pago" class="form-control" type="date" wire:model.defer="state.fecha_pago">
                             </div>
                             @error('fecha_pago') <span class="text-danger er">{{ $message }}</span>@enderror
                         </div>
-                        <div class="col-sm-2 invoice-col">
+                        <div class="col-sm-2">
                             <div class="form-group">
                                 <label for="moneda">Moneda</label>
                                 <select id="moneda" wire:model.defer="state.moneda" class="form-control">
@@ -83,7 +83,7 @@
                             </div>
                             @error('moneda') <span class="text-danger er">{{ $message }}</span>@enderror
                         </div>
-                        <div class="col-sm-2 invoice-col">
+                        <div class="col-sm-2">
                             <div class="form-group">
                                 <label for="tipo_cambio">Tipo cambio</label>
                                 <input id="tipo_cambio" class="form-control" type="text" wire:model.defer="state.tipo_cambio" placeholder="Ej: 3.80">
@@ -92,10 +92,19 @@
                         </div>
                     </div>
                     <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="detalle">Detalle</label>
+                                <textarea id="detalle" rows="3" class="form-control" wire:model.defer="state.detalle"></textarea>
+                            </div>
+                            @error('detalle') <span class="text-danger er">{{ $message }}</span>@enderror
+                        </div>
+                    </div>
+                    <div class="row">
                         <div class="col-5">
                             <div class="form-group" wire:ignore>
                                 <label for="nuevo">Productos</label>
-                                <select class="sele form-control" wire:model="nuevo">
+                                <select id="nuevo" class="sele form-control" wire:model="nuevo">
                                     <option value="">Seleccionar producto</option>
                                     @foreach($productos as $producto)
                                         <option value="{{$producto->id}}">{{$producto->nombre}}</option>
@@ -106,7 +115,7 @@
                     </div>
                     <div class="row">
                         <div class="col-12 table-responsive">
-                            <table class="table table-striped">
+                            <table class="table table-striped table-sm">
                                 <thead>
                                 <tr>
                                     <th>#</th>
@@ -143,32 +152,39 @@
                         </div>
                     </div>
                     <div class="row">
+                        <div class="col-5"></div>
                         <div class="col-4"></div>
-                        <div class="col-4"></div>
-                        <div class="col-4">
+                        <div class="col-3">
                             <p class="lead">Detalle</p>
                             <p class="lead"><b>Total Items: {{$cantidadTotal}}</b> </p>
                             <div class="table-responsive">
-                                <table class="table">
+                                <table class="table table-sm">
                                     <tr>
-                                        <th>Otros Gastos</th>
-                                        <td><input type="text" class="form-control" wire:model="otros_gastos"></td>
+                                        <th>No agravadas:</th>
+                                        <td><input type="text" class="form-control" wire:model.defer="state.no_gravadas"></td>
                                     </tr>
                                     <tr>
-                                        <th>ICBPER</th>
-                                        <td><input type="text" class="form-control" wire:model="icbper"></td>
+                                        <th>Otros Gastos:</th>
+                                        <td><input type="text" class="form-control" wire:model.defer="state.otros_gastos"></td>
                                     </tr>
                                     <tr>
-                                        <th style="width:50%">Subtotal:</th>
-                                        <td>S/ {{number_format($subTotal,2)}}</td>
+                                        <th>ICBPER:</th>
+                                        <td><input type="text" class="form-control" wire:model.defer="state.icbper"></td>
                                     </tr>
                                     <tr>
-                                        <th>Impuesto(18%)</th>
-                                        <td>S/ {{number_format($impuestoD,2)}}</td>
+                                        <th>Subtotal:</th>
+                                        <td><input type="text" class="form-control" wire:model.defer="state.subtotal"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Impuesto(18%):</th>
+                                        <td><input type="text" class="form-control" wire:model.defer="state.impuesto"></td>
                                     </tr>
                                     <tr>
                                         <th>Total:</th>
-                                        <td>S/ {{number_format($total,2)}}</td>
+                                        <td>
+                                            <input type="text" class="form-control" wire:model.defer="state.total">
+                                            @error('total') <span class="text-danger er">{{ $message }}</span>@enderror
+                                        </td>
                                     </tr>
                                 </table>
                             </div>
@@ -185,14 +201,13 @@
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', function (){
-            $('.sele').select2();
+            $('.sele').select2({
+                theme: "classic",
+            });
             $('.sele').on('change', function () {
                 let data = $(this).val();
-            @this.set('nuevo', $(this).val())
+                @this.set('nuevo', $(this).val())
             });
-            window.livewire.on('compra-registrada', msg =>{
-                noty(msg)
-            })
         });
     </script>
 </div>

@@ -42,6 +42,10 @@ class Proyecto extends Model
     {
         return $this->belongsTo(Etapa::class);
     }
+    public function colaboradores()
+    {
+        return $this->hasMany(ProyectoUser::class,'proyecto_id');
+    }
 
     public function getFechaDiaAttribute()
     {

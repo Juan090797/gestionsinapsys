@@ -10,7 +10,7 @@
                     <div class="row invoice-info">
                         <div class="col-sm-4 invoice-col">
                             <div class="form-group">
-                                <label for="">Proveedor</label>
+                                <label for="">Cliente</label>
                                 <select wire:model.defer="state.proveedor_id" class="form-control">
                                     <option value="0">Elegir</option>
                                     @foreach($clientes as $cliente)
@@ -45,18 +45,6 @@
                                 <input id="numero_documento" type="text" class="form-control" wire:model.defer="state.numero_documento" placeholder="Ej: 123456789">
                             </div>
                             @error('numero_documento') <span class="text-danger er">{{ $message }}</span>@enderror
-                        </div>
-                        <div class="col-sm-2 invoice-col">
-                            <div class="form-group">
-                                <label for="centro_costo_id">Centro de costo</label>
-                                <select wire:model.defer="state.centro_costo_id" class="form-control">
-                                    <option value="0">Elegir</option>
-                                    @foreach($costos as $costo)
-                                        <option value="{{$costo->id}}">{{$costo->nombre}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            @error('centro_costo_id') <span class="text-danger er">{{ $message }}</span>@enderror
                         </div>
                         <div class="col-sm-3 invoice-col">
                             <div class="form-group">
@@ -106,7 +94,7 @@
                     </div>
                     <div class="row">
                         <div class="col-12 table-responsive">
-                            <table class="table table-striped">
+                            <table class="table table-striped table-sm">
                                 <thead>
                                 <tr>
                                     <th>#</th>
@@ -149,15 +137,7 @@
                             <p class="lead">Detalle</p>
                             <p class="lead"><b>Total Items: {{$cantidadTotal}}</b> </p>
                             <div class="table-responsive">
-                                <table class="table">
-                                    <tr>
-                                        <th>Otros Gastos</th>
-                                        <td><input type="text" class="form-control" wire:model="otros_gastos"></td>
-                                    </tr>
-                                    <tr>
-                                        <th>ICBPER</th>
-                                        <td><input type="text" class="form-control" wire:model="icbper"></td>
-                                    </tr>
+                                <table class="table table-sm">
                                     <tr>
                                         <th style="width:50%">Subtotal:</th>
                                         <td>S/ {{number_format($subTotal,2)}}</td>
@@ -185,14 +165,13 @@
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', function (){
-            $('.sele').select2();
+            $('.sele').select2({
+                theme: "classic",
+            });
             $('.sele').on('change', function () {
                 let data = $(this).val();
-            @this.set('nuevo', $(this).val())
+                @this.set('nuevo', $(this).val());
             });
-            window.livewire.on('compra-registrada', msg =>{
-                noty(msg)
-            })
         });
     </script>
 </div>

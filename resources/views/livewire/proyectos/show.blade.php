@@ -127,13 +127,13 @@
     @endsection
     <div class="content-fluid">
         <div>
-            <ul class="nav nav-pills">
+            <ul class="nav nav-pills" wire:ignore.self>
                 <li class="nav-item"><a class="nav-link active" href="#general" data-toggle="tab">Principal</a></li>
                 <li class="nav-item"><a class="nav-link" href="#activity" data-toggle="tab">Actividades({{$comentarios->count()}})</a></li>
                 <li class="nav-item"><a class="nav-link" href="#timeline" data-toggle="tab">Cotizaciones({{$cotizaciones->count()}})</a></li>
                 <li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">Archivos({{$archivos->count()}})</a></li>
             </ul>
-            <div class="tab-content mt-3">
+            <div class="tab-content mt-3" wire:ignore.self>
                 <div class="active tab-pane" id="general">
                     <div class="row">
                         <div class="col-12">
@@ -226,10 +226,10 @@
                                         <p class="text-sm">Lider Proyecto
                                             <b class="d-block">{{$proyecto->user->name}}</b>
                                         </p>
-                                        <p class="text-sm">Equipo Proyecto
-                                            @if($proyecto->team)
-                                                @foreach($proyecto->team as $t)
-                                                    <b class="d-block">{{$proyecto->user->name}}</b>
+                                        <p class="text-sm">Equipo Proyecto <a href="javascript:void(0)" data-toggle="modal" data-target="#theModalEquipo"><i class="fa fa-plus" aria-hidden="true"></i></a>
+                                            @if($proyecto->colaboradores)
+                                                @foreach($proyecto->colaboradores as $t)
+                                                    <b class="d-block">{{$t->usuario->name}} <a href="javascript:void(0)" wire:click="borrarColaborador({{$t}})"><i class="far fa-trash-alt"></i></a></b>
                                                 @endforeach
                                             @else
                                                 <p class="text-danger">Sin equipo</p>
@@ -365,6 +365,34 @@
                 </div>
             </div>
         </div>
+        <div class="modal fade" id="theModalEquipo" tabindex="-1" aria-labelledby="theModalEquipo" aria-hidden="true" wire:ignore.self>
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="theModal">Agregar colaborador</h5>
+                    </div>
+                    <form wire:submit.prevent="createEquipo">
+                        <div class="modal-body">
+                            <div class="col-sm-12 col-md-12">
+                                <div wire:ignore class="form-group">
+                                    <label>Equipo</label>
+                                    <select wire:model.defer="team" data-placeholder="Selecciona tu equipo" class="form-control">
+                                        @foreach($users as $user)
+                                            <option value="{{$user->id}}">{{$user->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            @error('team') <span class="text-danger er">{{ $message }}</span>@enderror
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                            <button type="submit" class="btn btn-primary">Guardar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', function (){
@@ -378,6 +406,9 @@
             window.livewire.on('proyecto-updated', msg =>{
                 $('#theModal').modal('hide');
                 noty(msg)
+            });
+            window.livewire.on('cerrar-modal', msg =>{
+                $('#theModalEquipo').modal('hide');
             });
             window.livewire.on('archivo-deleted', msg =>{
                 noty(msg)

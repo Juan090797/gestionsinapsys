@@ -19,46 +19,46 @@
                     <thead class="thead-dark">
                     <tr>
                         <th scope="col">Proyecto</th>
-                        <th scope="col">Etapa</th>
-                        <th scope="col">Fecha inicio</th>
-                        <th scope="col">Ingreso Estimado</th>
-                        <th scope="col">Jefe Proyecto</th>
-                        <th scope="col">Cliente</th>
-                        <th scope="col">Equipo</th>
-                        <th scope="col">Acciones</th>
+                        <th class="text-center">Etapa</th>
+                        <th class="text-center">Fecha inicio</th>
+                        <th class="text-center">Fecha fin</th>
+                        <th class="text-center">Ingreso Estimado</th>
+                        <th class="text-center">Jefe Proyecto</th>
+                        <th class="text-center">Cliente</th>
+                        <th class="text-center">Equipo</th>
+                        <th class="text-center">Acciones</th>
                     </tr>
                     </thead>
                     <tbody>
                     @foreach($proyectos as $proyecto)
                         <tr>
                             <td><a href="{{ route('proyecto.show', $proyecto) }}">{{$proyecto->nombre}}</a></td>
-                            <td>{{ $proyecto->etapa->nombre }}</td>
-                            <td>{{ $proyecto->fecha_inicio }}</td>
-                            <td>S/ {{ $proyecto->ingreso_estimado }}</td>
-                            <td>{{ $proyecto->user->name }}</td>
-                            <td>{{ $proyecto->cliente->razon_social }}</td>
-                            <td>
+                            <td class="text-center">{{ $proyecto->etapa->nombre }}</td>
+                            <td class="text-center">{{ $proyecto->fecha_inicio }}</td>
+                            <td class="text-center">{{ $proyecto->fecha_fin}}</td>
+                            <td class="text-center">S/ {{ $proyecto->ingreso_estimado }}</td>
+                            <td class="text-center">
                                 <ul class="list-inline mb-0">
-                                    @if($proyecto->team)
-                                        @foreach($proyecto->team as $r)
-                                            @if($proyecto->user->id == $r)
-                                                <li class="list-inline-item user-panel">
-                                                    <img src="{{ $proyecto->user->profile_photo_url }}" class="img-circle">
-                                                </li>
-                                            @endif
+                                    <li class="list-inline-item user-panel"><img src="{{ $proyecto->user->profile_photo_url }}" class="img-circle"></li>
+                                </ul>
+                            </td>
+                            <td class="text-center">{{ $proyecto->cliente->razon_social }}</td>
+                            <td class="text-center">
+                                <ul class="list-inline mb-0">
+                                    @if($proyecto->colaboradores)
+                                        @foreach($proyecto->colaboradores as $r)
+                                            <li class="list-inline-item user-panel">
+                                                <img src="{{ $r->usuario->profile_photo_url }}" class="img-circle" alt="{{ $r->usuario->name }}">
+                                            </li>
                                         @endforeach
                                     @else
                                         <p class="text-danger text-center">Sin Equipo</p>
                                     @endif
                                 </ul>
                             </td>
-                            <td>
-                                <a href="javascript:void(0)"  wire:click="Edit({{ $proyecto->id }})" class="btn btn-primary" title="Editar">
-                                    <i class="fas fa-pencil-alt" aria-hidden="true"></i>
-                                </a>
-                                <a href="javascript:void(0)" onclick="Confirm('{{ $proyecto->id }}')" class="btn btn-danger" title="Eliminar">
-                                    <i class="fa fa-trash" aria-hidden="true"></i>
-                                </a>
+                            <td class="text-center">
+                                <a href="javascript:void(0)"  wire:click="Edit({{ $proyecto->id }})" class="btn btn-primary" title="Editar"><i class="fas fa-pencil-alt" aria-hidden="true"></i></a>
+                                <a href="javascript:void(0)" onclick="Confirm('{{ $proyecto->id }}')" class="btn btn-danger" title="Eliminar"><i class="fa fa-trash" aria-hidden="true"></i></a>
                             </td>
                         </tr>
                     @endforeach
@@ -73,11 +73,6 @@
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', function (){
-            $('.select2').select2();
-            $('.select2').on('change', function () {
-                let data = $(this).val();
-                @this.set('state.team', $(this).val());
-            });
             window.Livewire.on('show-modal', msg =>{
                 $('#theModal').modal('show')
             });

@@ -28,9 +28,6 @@ trait DataCompra
     public function deleteRow($index)
     {
         unset($this->lista[$index]);
-        $this->calculateSubTotal();
-        $this->calculateTaxAmount($this->state['impuesto_id'] ?? null);
-        $this->calculateTotal();
         $this->calcularTotalItems();
     }
 }

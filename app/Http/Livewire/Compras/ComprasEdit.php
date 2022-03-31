@@ -9,6 +9,7 @@ use App\Models\Compra;
 use App\Models\CompraDetalle;
 use App\Models\Producto;
 use App\Models\Proveedor;
+use App\Models\TipoDocumento;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
@@ -21,7 +22,7 @@ class ComprasEdit extends Component
     use LivewireAlert;
 
     public $state = [];
-    public $movimiento, $old;
+    public $movimiento,$old, $proveedores,$costos,$productos;
 
     public function mount(Compra $compra)
     {
@@ -29,27 +30,44 @@ class ComprasEdit extends Component
         $this->state = $compra->toArray();
         $this->lista = $compra->compraDetalles->toArray();
         $this->cantidadTotal = $compra->total_items;
-        $this->otros_gastos = $compra->otros_gastos;
-        $this->icbper = $compra->icbper;
-        $this->subTotal = $compra->subtotal;
-        $this->impuestoD = $compra->impuesto;
-        $this->total = $compra->total;
     }
     public function render()
     {
-        $proveedores = Proveedor::all();
-        $costos = CentroCosto::all();
-        $productos = Producto::all();
-        return view('livewire.compras.compras-edit',
-            ['proveedores'=> $proveedores, 'costos' => $costos, 'productos' => $productos])
-            ->extends('layouts.tema.app')->section('content');
+        $this->update();
+        return view('livewire.compras.compras-edit')->extends('layouts.tema.app')->section('content');
+    }
+
+    public function update()
+    {
+        $this->proveedores();
+        $this->costos();
+        $this->productos();
+        $this->documentos();
+    }
+
+    public function proveedores()
+    {
+        $this->proveedores = Proveedor::all();
+    }
+
+    public function costos()
+    {
+        $this->costos = CentroCosto::all();
+    }
+    public function productos()
+    {
+        $this->productos = Producto::all();
+    }
+    public function documentos()
+    {
+        $this->documentos = TipoDocumento::where('tipo', 'pago')->get();
     }
 
     public function actualizarCompra()
     {
         $validated = Validator::make($this->state, [
-            'tipo_documento'    => 'required',
-            'serie_documento'  => 'required',
+            'tipo_documento_id' => 'required',
+            'serie_documento'   => 'required',
             'numero_documento'  => 'required',
             'fecha_documento'   => 'required',
             'fecha_pago'        => 'required',
@@ -57,10 +75,15 @@ class ComprasEdit extends Component
             'centro_costo_id'   => 'required',
             'moneda'            => 'required',
             'tipo_cambio'       => '',
-            'otros_gastos'      => '',
+            'detalle'           => '',
+            'subtotal'          => '',
+            'impuesto'          => '',
+            'no_gravadas'       => '',
             'icbper'            => '',
+            'otros_gastos'      => '',
+            'total'             => 'required',
         ],[
-            'tipo_documento.required'   => 'El tipo de documento es requerido',
+            'tipo_documento_id.required'=> 'El tipo de documento es requerido',
             'serie_documento.required'  => 'La serie del documento es requerido',
             'numero_documento.required' => 'El numero del documento es requerido',
             'fecha_documento.required'  => 'La fecha del documento es requerido',
@@ -68,19 +91,11 @@ class ComprasEdit extends Component
             'proveedor_id.required'     => 'El proveedor es requerido',
             'centro_costo_id.required'  => 'El centro de costo es requerido',
             'moneda.required'           => 'La moneda es requerida',
-            'tipo_cambio.required'      => '',
-            'otros_gastos.required'     => '',
-            'icbper.required'           => '',
+            'total.required'            => 'El total es requerido',
         ])->validate();
 
         $validated['estado'] = 'PENDIENTE';
-        $validated['otros_gastos'] = $this->otros_gastos;
-        $validated['icbper'] = $this->icbper;
-        $validated['subtotal'] = $this->subTotal;
-        $validated['impuesto'] = $this->impuestoD;
-        $validated['total'] = $this->total;
         $validated['total_items'] = $this->cantidadTotal;
-
         $old = $this->old;
         $input = $this->lista;
 

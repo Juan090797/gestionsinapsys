@@ -26,7 +26,6 @@ class PedidoCreate extends Component
     {
         $this->clientes();
         $this->documentos();
-        $this->costos();
         $this->productos();
     }
     public function clientes()
@@ -36,10 +35,6 @@ class PedidoCreate extends Component
     public function documentos()
     {
         $this->documentos = TipoDocumento::where('tipo','pago')->get();
-    }
-    public function costos()
-    {
-        $this->costos = CentroCosto::all();
     }
     public function productos()
     {

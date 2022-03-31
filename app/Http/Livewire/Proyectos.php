@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Models\Cliente;
 use App\Models\Proyecto;
+use App\Models\ProyectoUser;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 
@@ -49,30 +50,30 @@ class Proyectos extends ComponenteBase
     public function Store()
     {
         $validated = Validator::make($this->state, [
-            'nombre' => 'required|unique:proyectos|min:3',
-            'prioridad' => 'required',
-            'team'  => '',
-            'ingreso_estimado' => 'required',
-            'gasto_estimado'   => 'required',
-            'fecha_inicio' => 'required',
-            'fecha_fin' => 'required',
-            'cliente_id' => 'required',
-            'user_id' => 'required',
+            'nombre'            => 'required|unique:proyectos|min:3',
+            'prioridad'         => 'required',
+            'team'              => '',
+            'ingreso_estimado'  => 'required',
+            'gasto_estimado'    => 'required',
+            'fecha_inicio'      => 'required',
+            'fecha_fin'         => 'required',
+            'cliente_id'        => 'required',
+            'user_id'           => 'required',
         ],[
-            'nombre.required' => 'Nombre del proyecto es requerido',
-            'nombre.unique' => 'Ya existe el nombre del proyecto',
-            'nombre.min' => 'El nombre del proyecto debe tener al menos 3 caracteres',
-            'prioridad.required' => 'La prioridad es requerida',
-            'user_id.riquered' => 'El lider es requerido',
+            'nombre.required'           => 'Nombre del proyecto es requerido',
+            'nombre.unique'             => 'Ya existe el nombre del proyecto',
+            'nombre.min'                => 'El nombre del proyecto debe tener al menos 3 caracteres',
+            'prioridad.required'        => 'La prioridad es requerida',
+            'user_id.riquered'          => 'El lider es requerido',
             'ingreso_estimado.required' => 'El ingreso estimado es requerido',
-            'gasto_estimado.required' => 'El gasto estimado es requerido',
-            'fecha_inicio.required' => 'La fecha de inicio es requerida',
-            'fecha_fin.required' => 'La fecha de fin es requerida',
-            'cliente_id.required' => 'El cliente es requerido'
+            'gasto_estimado.required'   => 'El gasto estimado es requerido',
+            'fecha_inicio.required'     => 'La fecha de inicio es requerida',
+            'fecha_fin.required'        => 'La fecha de fin es requerida',
+            'cliente_id.required'       => 'El cliente es requerido'
 
         ])->validate();
         $validated['etapa_id'] = 1;
-        Proyecto::create($validated);
+        $proyecto = Proyecto::create($validated);
         $this->resetUI();
         $this->emit('proyecto-added', 'Proyecto Registrado');
     }
@@ -97,10 +98,10 @@ class Proyectos extends ComponenteBase
             'cliente_id'        => 'required',
             'user_id'           => 'required'
         ],[
-            'nombre.required' => 'Nombre del proyecto es requerido',
-            'nombre.unique' => 'Ya existe el nombre del proyecto',
-            'nombre.min' => 'El nombre del proyecto debe tener al menos 3 caracteres',
-            'prioridad.required' => 'La prioridad es requerida',
+            'nombre.required'       => 'Nombre del proyecto es requerido',
+            'nombre.unique'         => 'Ya existe el nombre del proyecto',
+            'nombre.min'            => 'El nombre del proyecto debe tener al menos 3 caracteres',
+            'prioridad.required'    => 'La prioridad es requerida',
 
         ])->validate();
 

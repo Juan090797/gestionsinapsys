@@ -11,6 +11,7 @@ use App\Models\Etapa;
 use App\Models\Pedido;
 use App\Models\PedidoDetalle;
 use App\Models\Proyecto;
+use App\Models\ProyectoUser;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -26,6 +27,7 @@ class ShowProyecto extends Component
     use WithFileUploads;
 
     public $state = [];
+    public $team;
     public $proyecto, $canti, $selected_id, $productoid,$total, $itemsQuantity, $contenido, $archivo, $codigo, $archivo_c;
     public $archivos, $comentarios, $cotizaciones, $users, $clientes,$etapas;
 
@@ -218,5 +220,20 @@ class ShowProyecto extends Component
     {
         $this->contenido = '';
     }
-
+    public function borrarColaborador(ProyectoUser $proyectoUser)
+    {
+        $proyectoUser->delete();
+        $this->alert('success', 'Se elimino el colaborador con exito',['timerProgressBar' => true]);
+    }
+    public function createEquipo()
+    {
+        if($this->team){
+            $this->proyecto->colaboradores()->create(['user_id' => $this->team]);
+            $this->emit('cerrar-modal', 'Comentario Registrado');
+            $this->alert('success', 'Se agrego el colaborador con exito',['timerProgressBar' => true]);
+        }else{
+            $this->emit('cerrar-modal', 'Comentario Registrado');
+            $this->alert('error', 'No se selecciono colaborador',['timerProgressBar' => true]);
+        }
+    }
 }
