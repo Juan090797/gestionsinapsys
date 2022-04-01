@@ -14,9 +14,9 @@ class Proyecto extends Model
     protected $guarded = ['id'];
     protected $appends = ['fecha_dia'];
 
-    public function user()
+    public function lider()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class,'user_id');
     }
 
     public function cliente()

@@ -44,18 +44,15 @@
                     <tbody>
                     @foreach($clientes as $cliente)
                         <tr>
-                            <th scope="row"><a href="{{ route('clients.show', $cliente->id) }}">{{$cliente->razon_social}}</a></th>
+                            <th scope="row">{{ $cliente->razon_social }}</th>
                             <td class="text-center">{{$cliente->ruc}}</td>
                             <td class="text-center">{{$cliente->correo}}</td>
                             <td class="text-center">{{$cliente->telefono}}</td>
                             <td class="text-center"><span class="badge {{ $cliente->estado == 'ACTIVO' ? 'badge-success' : 'badge-danger'}}">{{$cliente->estado}}</span></td>
                             <td class="text-center">
-                                <a href="javascript:void(0)"  wire:click="Edit({{ $cliente->id }})" class="btn btn-primary" title="Edit">
-                                    <i class="fas fa-pencil-alt" aria-hidden="true"></i>
-                                </a>
-                                <a href="javascript:void(0)" onclick="Confirm('{{ $cliente->id }}')" class="btn btn-danger" title="Delet">
-                                    <i class="fa fa-trash" aria-hidden="true"></i>
-                                </a>
+                                <a href="javascript:void(0)"  wire:click="Edit({{ $cliente->id }})" class="btn btn-primary btn-sm" title="Edit"><i class="fas fa-pencil-alt" aria-hidden="true"></i></a>
+                                <a href="{{ route('clients.show', $cliente) }}" class="btn btn-success btn-sm"><i class="far fa-eye"></i></a>
+                                <a href="javascript:void(0)" onclick="Confirm('{{ $cliente->id }}')" class="btn btn-danger btn-sm" title="Eliminar"><i class="fa fa-trash" aria-hidden="true"></i></a>
                             </td>
                         </tr>
                     @endforeach

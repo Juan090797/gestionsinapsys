@@ -19,6 +19,7 @@
                     <thead class="thead-dark">
                     <tr>
                         <th scope="col">Proyecto</th>
+                        <th class="text-center">Prioridad</th>
                         <th class="text-center">Etapa</th>
                         <th class="text-center">Fecha inicio</th>
                         <th class="text-center">Fecha fin</th>
@@ -32,14 +33,15 @@
                     <tbody>
                     @foreach($proyectos as $proyecto)
                         <tr>
-                            <td><a href="{{ route('proyecto.show', $proyecto) }}">{{$proyecto->nombre}}</a></td>
+                            <td scope="col">{{ $proyecto->nombre }}</td>
+                            <td class="text-center"><span class="badge {{ $proyecto->prioridad == 'ALTA' ? 'badge-danger' : 'badge-primary'}}">{{ $proyecto->prioridad }}</span></td>
                             <td class="text-center">{{ $proyecto->etapa->nombre }}</td>
                             <td class="text-center">{{ $proyecto->fecha_inicio }}</td>
                             <td class="text-center">{{ $proyecto->fecha_fin}}</td>
                             <td class="text-center">S/ {{ $proyecto->ingreso_estimado }}</td>
                             <td class="text-center">
                                 <ul class="list-inline mb-0">
-                                    <li class="list-inline-item user-panel"><img src="{{ $proyecto->user->profile_photo_url }}" class="img-circle"></li>
+                                    <li class="list-inline-item user-panel"><img src="{{ $proyecto->lider->profile_photo_url }}" class="img-circle" title="{{ $proyecto->lider->name }}"></li>
                                 </ul>
                             </td>
                             <td class="text-center">{{ $proyecto->cliente->razon_social }}</td>
@@ -48,7 +50,7 @@
                                     @if($proyecto->colaboradores)
                                         @foreach($proyecto->colaboradores as $r)
                                             <li class="list-inline-item user-panel">
-                                                <img src="{{ $r->usuario->profile_photo_url }}" class="img-circle" alt="{{ $r->usuario->name }}">
+                                                <img src="{{ $r->usuario->profile_photo_url }}" class="img-circle" alt="{{ $r->usuario->name }}" title="{{ $r->usuario->name }}">
                                             </li>
                                         @endforeach
                                     @else
@@ -57,8 +59,9 @@
                                 </ul>
                             </td>
                             <td class="text-center">
-                                <a href="javascript:void(0)"  wire:click="Edit({{ $proyecto->id }})" class="btn btn-primary" title="Editar"><i class="fas fa-pencil-alt" aria-hidden="true"></i></a>
-                                <a href="javascript:void(0)" onclick="Confirm('{{ $proyecto->id }}')" class="btn btn-danger" title="Eliminar"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                <a href="javascript:void(0)"  wire:click="Edit({{ $proyecto->id }})" class="btn btn-primary btn-sm" title="Editar"><i class="fas fa-pencil-alt" aria-hidden="true"></i></a>
+                                <a href="{{ route('proyecto.show', $proyecto) }}" class="btn btn-success btn-sm" title="Ver"><i class="far fa-eye"></i></a>
+                                <a href="javascript:void(0)" onclick="Confirm('{{ $proyecto->id }}')" class="btn btn-danger btn-sm" title="Eliminar"><i class="fa fa-trash" aria-hidden="true"></i></a>
                             </td>
                         </tr>
                     @endforeach
