@@ -17,9 +17,10 @@ class CreateCotizacionItemsTable extends Migration
             $table->id();
             $table->foreignId('cotizacion_id')->constrained();
             $table->foreignId('producto_id')->constrained();
+            $table->longText('descripcion');
             $table->string('cantidad');
-            $table->decimal('precio',20,2)->default(0.00);
-            $table->decimal('monto',20,2)->default(0.00);
+            $table->float('precio_u',20,2)->default(0.00);
+            $table->float('precio_t',20,2)->default(0.00);
             $table->timestamps();
         });
     }

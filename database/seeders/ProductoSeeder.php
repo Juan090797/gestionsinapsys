@@ -23,7 +23,7 @@ class ProductoSeeder extends Seeder
             'precio_venta'      => '98000.00',
             'tipo'              => 'Baño Maria',
             'marca_id'          => 1,
-            'clasificacions_id' => 1,
+            'clasificacions_id' => 2,
             'unidad_medidas_id' => 1,
         ]);
         DB::table('productos')->insert([
@@ -35,7 +35,7 @@ class ProductoSeeder extends Seeder
             'precio_venta'      => '25000.00',
             'tipo'              => 'Microscopio',
             'marca_id'          => 1,
-            'clasificacions_id' => 1,
+            'clasificacions_id' => 2,
             'unidad_medidas_id' => 1,
         ]);
         DB::table('productos')->insert([
@@ -47,7 +47,7 @@ class ProductoSeeder extends Seeder
             'precio_venta'      => '55000.00',
             'tipo'              => 'Ventilador',
             'marca_id'          => 1,
-            'clasificacions_id' => 1,
+            'clasificacions_id' => 2,
             'unidad_medidas_id' => 1,
         ]);
         DB::table('productos')->insert([

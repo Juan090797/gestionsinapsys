@@ -9,9 +9,7 @@ class CompraDetalle extends Model
 {
     use HasFactory;
     protected $guarded =['id'];
-    protected $appends = [
-        'nombre',
-    ];
+    protected $appends = ['nombre'];
 
     public function producto()
     {

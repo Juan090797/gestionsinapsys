@@ -12,7 +12,7 @@ class Proyecto extends Model
 
     protected $casts = ['team' => 'array'];
     protected $guarded = ['id'];
-    protected $appends = ['fecha_dia'];
+    protected $appends = ['fecha_dia','inicio','fin','restante'];
 
     public function lider()
     {
@@ -51,6 +51,29 @@ class Proyecto extends Model
     {
         $f1=Carbon::parse($this->fecha_inicio);
         $f2=Carbon::parse($this->fecha_fin);
-        return $f1->diffInDays($f2);
+        return $f1->diffInDays($f2,false);
+    }
+    public function getRestanteAttribute()
+    {
+        $f1=Carbon::now();
+        $f2=Carbon::parse($this->fecha_fin);
+        return $f1->diffInDays($f2,false);
+    }
+    public function getInicioAttribute()
+    {
+        return Carbon::parse($this->fecha_inicio)->format('d-m-Y');
+    }
+    public function getFinAttribute()
+    {
+        return Carbon::parse($this->fecha_fin)->format('d-m-Y');
+    }
+    public function getPrioridadBadgeAttribute()
+    {
+        $badges= [
+            'ALTA'  => 'badge-danger',
+            'MEDIA' => 'badge-warning',
+            'BAJA'  => 'badge-primary',
+        ];
+        return $badges[$this->prioridad];
     }
 }

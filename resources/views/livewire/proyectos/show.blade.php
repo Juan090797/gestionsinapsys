@@ -135,7 +135,7 @@
             </ul>
             <div class="tab-content mt-3" wire:ignore.self>
                 <div class="active tab-pane" id="general">
-                    <div class="row">
+                    <div class="row"    >
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-body">
@@ -159,7 +159,7 @@
                                         <div class="col-12 col-sm-4">
                                             <div class="info-box bg-light">
                                                 <div class="info-box-content">
-                                                    <span class="info-box-text text-center text-muted">Duracion Esimada</span>
+                                                    <span class="info-box-text text-center text-muted">Duracion Estimada</span>
                                                     <span class="info-box-number text-center text-muted mb-0">{{$proyecto->fecha_dia}} días</span>
                                                 </div>
                                             </div>
@@ -224,7 +224,7 @@
                                             <b class="d-block">{{$proyecto->cliente->razon_social}}</b>
                                         </p>
                                         <p class="text-sm">Lider Proyecto
-                                            <b class="d-block">{{$proyecto->user->name}}</b>
+                                            <b class="d-block">{{$proyecto->lider->name}}</b>
                                         </p>
                                         <p class="text-sm">Equipo Proyecto <a href="javascript:void(0)" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#theModalEquipo"><i class="fa fa-plus" aria-hidden="true"></i></a>
                                             @if($proyecto->colaboradores)
@@ -246,7 +246,7 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <a href="{{route('cotizacion.create',$proyecto)}}" class="btn btn-sm btn-success">Agregar Cotizacion</a>
+                                    <a href="{{route('cotizacion.create',$proyecto)}}" class="btn btn-sm btn-success float-right">Agregar Cotizacion</a>
                                 </div>
                                 <div class="card-body">
                                     <table class="table table-sm">
@@ -280,7 +280,7 @@
                                                 </td>
                                             </tr>
                                         @empty
-                                            <p class="text-danger">0 Cotizaciones</p>
+                                            <tr><p class="text-danger">0 Cotizaciones</p></tr>
                                         @endforelse
                                         </tbody>
                                     </table>
@@ -425,9 +425,6 @@
                 $('#theModalComentario').modal('hide');
                 noty(msg)
             });
-            window.livewire.on('pedido-creado', msg =>{
-                noty(msg)
-            });
             window.livewire.on('update-etapa', msg =>{
                 noty(msg)
             });
@@ -435,16 +432,15 @@
 
         function Confirm(id)
         {
-            swal({
+            Swal.fire({
                 title: 'CONFIRMAR',
-                text: '¿CONFIRMAS ELIMINAR EL REGISTRO?',
-                type: 'warning',
+                text: "¿CONFIRMAS ELIMINAR EL REGISTRO?",
+                icon: 'warning',
                 showCancelButton: true,
-                cancelButtonText: 'Cerrar',
-                cancelButtonColor: '#fff',
-                confirmButtonText: 'Aceptar',
-                getConfirmButtonColor: '#3B3F5C'
-            }).then(function (result){
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Aceptar'
+            }).then((result) => {
                 if(result.value){
                     window.livewire.emit('deleteRow', id)
                     swal.close()
@@ -453,16 +449,15 @@
         }
         function Confirmar(id)
         {
-            swal({
+            Swal.fire({
                 title: 'CONFIRMAR',
-                text: '¿CONFIRMAS ELIMINAR EL REGISTRO?',
-                type: 'warning',
+                text: "¿CONFIRMAS ELIMINAR EL REGISTRO?",
+                icon: 'warning',
                 showCancelButton: true,
-                cancelButtonText: 'Cerrar',
-                cancelButtonColor: '#fff',
-                confirmButtonText: 'Aceptar',
-                getConfirmButtonColor: '#3B3F5C'
-            }).then(function (result){
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Aceptar'
+            }).then((result) => {
                 if(result.value){
                     window.livewire.emit('delete', id)
                     swal.close()
@@ -483,13 +478,6 @@
                 if(result.value){
                     window.livewire.emit('create', id)
                     swal.close()
-                }
-                if (result.isConfirmed) {
-                    Swal.fire(
-                        'Creado!',
-                        'El pedido ha sido creado',
-                        'success'
-                    )
                 }
             })
         }

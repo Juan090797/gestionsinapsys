@@ -17,6 +17,9 @@ class CreatePedidosTable extends Migration
             $table->id();
             $table->string('estado')->default('En Proceso');
             $table->string('codigo')->nullable();
+            $table->string('plazo_entrega')->nullable();
+            $table->string('garantia')->nullable();
+            $table->string('direccion_entrega')->nullable();
             $table->decimal('total',20,2)->default(0);
             $table->decimal('subtotal',20,2)->default(0);
             $table->decimal('impuesto',20,2)->default(0);

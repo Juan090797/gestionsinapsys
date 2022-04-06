@@ -27,6 +27,7 @@
                         <th class="text-center">Jefe Proyecto</th>
                         <th class="text-center">Cliente</th>
                         <th class="text-center">Equipo</th>
+                        <th class="text-center">Dias restantes</th>
                         <th class="text-center">Acciones</th>
                     </tr>
                     </thead>
@@ -34,10 +35,10 @@
                     @foreach($proyectos as $proyecto)
                         <tr>
                             <td scope="col">{{ $proyecto->nombre }}</td>
-                            <td class="text-center"><span class="badge {{ $proyecto->prioridad == 'ALTA' ? 'badge-danger' : 'badge-primary'}}">{{ $proyecto->prioridad }}</span></td>
+                            <td class="text-center"><span class="badge {{ $proyecto->prioridad_badge }}">{{ $proyecto->prioridad }}</span></td>
                             <td class="text-center">{{ $proyecto->etapa->nombre }}</td>
-                            <td class="text-center">{{ $proyecto->fecha_inicio }}</td>
-                            <td class="text-center">{{ $proyecto->fecha_fin}}</td>
+                            <td class="text-center">{{ $proyecto->inicio }}</td>
+                            <td class="text-center">{{ $proyecto->fin}}</td>
                             <td class="text-center">S/ {{ $proyecto->ingreso_estimado }}</td>
                             <td class="text-center">
                                 <ul class="list-inline mb-0">
@@ -58,6 +59,7 @@
                                     @endif
                                 </ul>
                             </td>
+                            <td class="text-center {{ $proyecto->restante > 0 ? 'text-primary' : 'text-danger'}}">{{ $proyecto->restante }} días</td>
                             <td class="text-center">
                                 <a href="javascript:void(0)"  wire:click="Edit({{ $proyecto->id }})" class="btn btn-primary btn-sm" title="Editar"><i class="fas fa-pencil-alt" aria-hidden="true"></i></a>
                                 <a href="{{ route('proyecto.show', $proyecto) }}" class="btn btn-success btn-sm" title="Ver"><i class="far fa-eye"></i></a>

@@ -73,7 +73,7 @@
                         </div>
                         <div class="col-sm-12 col-md-6">
                             <div class="form-group">
-                                <label>Fecha Fin*</label>
+                                <label>Fecha expiracion*</label>
                                 <input type="date" wire:model.defer="state.fecha_fin" class="form-control">
                             </div>
                             @error('fecha_fin') <span class="text-danger er">{{ $message }}</span>@enderror

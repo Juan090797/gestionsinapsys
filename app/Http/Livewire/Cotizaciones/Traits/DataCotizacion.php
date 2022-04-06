@@ -2,33 +2,32 @@
 
 namespace App\Http\Livewire\Cotizaciones\Traits;
 
+use App\Models\Producto;
+
 trait DataCotizacion
 {
-    public $invoiceData = [
-        'producto_id' => '',
-        'cantidad' => 1,
-        'precio' => '',
-        'monto' => '',
-    ];
+    public $nuevo;
+    public $lista = [];
 
-    public $rows = [
-        [
-            'producto_id' => '',
-            'cantidad' => 1,
-            'precio' => '',
-            'monto' => '',
-        ]
-    ];
-
-    public function addNewRow()
+    public function updatedNuevo($value)
     {
-        array_push($this->rows, $this->invoiceData);
+        $pro = Producto::select(['id','codigo','nombre','descripcion','precio_compra'])->find($value)->toarray();
+        $this->lista[] = $this->add_cart_shop($pro);
+        $this->calcularTotalItems();
+    }
+
+    public function add_cart_shop($pro)
+    {
+        $pro['cantidad']    = 1;
+        $pro['precio_u']    = 0.00;
+        $pro['precio_t']    = 0.00;
+        $pro['producto_id'] = $pro['id'];
+        return $pro;
     }
 
     public function deleteRow($index)
     {
-        unset($this->rows[$index]);
-
+        unset($this->lista[$index]);
         $this->calculateSubTotal();
         $this->calculateTaxAmount($this->state['impuesto_id'] ?? null);
         $this->calculateTotal();

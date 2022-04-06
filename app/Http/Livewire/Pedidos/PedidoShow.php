@@ -70,8 +70,8 @@ class PedidoShow extends Component
     }
     public function descargaArchivoComentario(ComentarioPedido $comentarioPedido)
     {
-        $archivopedido = $comentarioPedido->archivo;
-        return Storage::disk('local')->download('pedidos_comentarios/'.$archivopedido);
+        $archivoComentario = $comentarioPedido->archivo;
+        return Storage::disk('local')->download('pedidos_comentarios/'.$archivoComentario);
     }
     public function agregarArchivo()
     {
@@ -88,14 +88,19 @@ class PedidoShow extends Component
         if($this->archivo_p)
         {
             $nombreArchivo = $this->archivo_p->getClientOriginalName();
-            $this->archivo_p->storeAs('pedidos_comentarios', $nombreArchivo);
+            $this->archivo_p->storeAs('pedidos_archivos', $nombreArchivo);
         }
         $this->pedido->archivos()->create([
             'tipo_documento' => $this->tipo,
-            'archivo_p'      => $nombreArchivo,
+            'archivo'       => $nombreArchivo,
         ]);
         $this->resetUI();
         $this->emit('archivo-added');
         $this->alert('success', 'Se agrego archivo',['timerProgressBar' => true]);
+    }
+    public function descargarArchivo(ArchivoPedido $archivoPedido)
+    {
+        $archivopedido = $archivoPedido->archivo;
+        return Storage::disk('local')->download('pedidos_archivos/'.$archivopedido);
     }
 }

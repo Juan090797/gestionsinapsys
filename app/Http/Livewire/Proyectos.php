@@ -6,6 +6,8 @@ use App\Models\Cliente;
 use App\Models\Proyecto;
 use App\Models\ProyectoUser;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 
@@ -27,9 +29,20 @@ class Proyectos extends ComponenteBase
     {
         $this->update();
         if(strlen($this->search) > 3) {
-            $data = Proyecto::where('nombre', 'like', '%' . $this->search . '%')->paginate($this->pagination);
+            $data = Proyecto::where('etapa_id', '<>', 5)->where('user_id', Auth::id())
+                ->where('nombre', 'like', '%' . $this->search . '%')->paginate($this->pagination);
         }else {
-            $data = Proyecto::orderBy('id', 'desc')->paginate($this->pagination);
+            $data = Proyecto::where('etapa_id', '<>', 5)
+                    ->where(function ($query) {
+                        $query->where('user_id', Auth::id())
+                                ->orWhereExists(function ($query) {
+                                    $query->select(DB::raw(1))
+                                        ->from('proyecto_users')
+                                        ->whereColumn('proyecto_users.proyecto_id', 'proyectos.id')
+                                        ->Where('proyecto_users.user_id',Auth::id());
+                                });
+                    })
+                    ->paginate($this->pagination);
         }
         return view('livewire.proyectos.index',['proyectos' => $data])->extends('layouts.tema.app')->section('content');
     }

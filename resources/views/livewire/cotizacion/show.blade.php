@@ -40,8 +40,8 @@
                     <div class="col-4">
                         <p>
                             <b>Cotizacion: #{{ $cotizacion->codigo }}</b><br>
-                            <b>Fecha:</b> {{ $cotizacion->fecha_inicio}}<br>
-                            <b>Vencimiento:</b> {{ $cotizacion->fecha_fin }}<br>
+                            <b>Fecha:</b> {{ $cotizacion->inicio}}<br>
+                            <b>Vencimiento:</b> {{ $cotizacion->fin }}<br>
                             <b>Atencion:</b> {{ $cotizacion->atendido }}<br>
                         </p>
                     </div>
@@ -63,11 +63,11 @@
                                 <th scope="row" style="border-top: 1px solid #000000;">{{$loop->iteration}}</th>
                                 <td style="width:55%;border-top: 1px solid #000000;" class="text-left">
                                     {{$item->producto->nombre}} <br>
-                                    {!! nl2br(htmlspecialchars($item->producto->descripcion)) !!}
+                                    {!! nl2br(htmlspecialchars($item->descripcion)) !!}
                                 </td>
                                 <td class="text-center" style="border-top: 1px solid #000000;">{{$item->cantidad}}</td>
-                                <td class="text-center" style="border-top: 1px solid #000000;">S/ {{number_format($item->precio,2)}}</td>
-                                <td class="text-center" style="border-top: 1px solid #000000;">S/ {{number_format($item->monto,2)}}</td>
+                                <td class="text-center" style="border-top: 1px solid #000000;">S/ {{number_format($item->precio_u,2)}}</td>
+                                <td class="text-center" style="border-top: 1px solid #000000;">S/ {{number_format($item->precio_t,2)}}</td>
                             </tr>
                         @endforeach
                         </tbody>
@@ -107,14 +107,26 @@
                         </p>
                         <p>
                             <b>Condiciones Comerciales:</b><br>
-                            {!! nl2br(htmlspecialchars($cotizacion->condiciones)) !!}
+                            Plazo de entrega: {{$cotizacion->plazo_entrega}} dias a partir de la recepcion de la O/C
+                            <br>
+                            Lugar de entrega: {{$cotizacion->direccion_entrega}}
+                            <br>
+                            Garantia: {{$cotizacion->garantia}} meses contra todo defecto de fabrica
                         </p>
                     </div>
                 </div>
+                @if($cotizacion->archivo_cotizacion)
+                    <div class="row">
+                        <div class="col-4">
+                            <img src="{{ asset("/storage/cotizaciones/$cotizacion->archivo_cotizacion") }}" class="invoice-logo" style="width: 100%">
+                        </div>
+                    </div>
+                @endif
+                <br>
                 @if($cotizacion->foto)
                     <div class="row">
                         <div class="col-4">
-                            <img src="{{ asset('/storage/firmas/grupomarquina.png') }}" class="invoice-logo" style="width: 100%">
+                            <img src="{{ asset('/storage/firmas/firma.png') }}" class="invoice-logo" style="width: 100%">
                         </div>
                     </div>
                 @endif

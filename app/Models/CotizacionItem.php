@@ -8,26 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 class CotizacionItem extends Model
 {
     use HasFactory;
-    protected $fillable = ['cotizacion_id', 'producto_id', 'cantidad', 'precio', 'monto'];
-
-    protected $appends = [
-        'formate_precio',
-        'formate_monto',
-    ];
+    protected $guarded = ['id'];
+    protected $appends = ['nombre'];
 
     public function producto()
     {
         return $this->belongsTo(Producto::class);
     }
-
-    public function getFormatePrecioAttribute()
+    public function getNombreAttribute()
     {
-        return $this->precio;
+        $date = Producto::find($this->producto_id);
+        return $date->nombre;
     }
-
-    public function getFormateMontoAttribute()
-    {
-        return $this->monto;
-    }
-
 }

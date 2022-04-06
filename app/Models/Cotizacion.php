@@ -10,15 +10,18 @@ class Cotizacion extends Model
 {
     use HasFactory;
     protected $guarded = ['id'];
-    protected $appends = [
-        'formate_fechai',
-        'formate_fechac'
-    ];
+    protected $appends = ['inicio','fin'];
 
     public function cliente()
     {
         return $this->belongsTo(Cliente::class);
     }
+
+    public function Cotizaciones()
+    {
+        return $this->hasMany(Cotizacion::class, 'proyecto_id');
+    }
+
 
     public function CotizacionItem()
     {
@@ -36,20 +39,12 @@ class Cotizacion extends Model
             $item->delete();
         });
     }
-    public function getFormateFechaiAttribute()
+    public function getInicioAttribute()
     {
         return Carbon::parse($this->fecha_inicio)->format('d-m-Y');
     }
-    public function getFormateFechacAttribute()
+    public function getFinAttribute()
     {
         return Carbon::parse($this->fecha_fin)->format('d-m-Y');
-    }
-    public function getFechaInicioAttribute($value)
-    {
-        return Carbon::parse($value)->format('d-m-Y');
-    }
-    public function getFechaFinAttribute($value)
-    {
-        return Carbon::parse($value)->format('d-m-Y');
     }
 }

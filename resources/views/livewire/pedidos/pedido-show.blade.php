@@ -25,9 +25,16 @@
                                     <div class="col-4">
                                         <h5 class="text-bold">Pedido:</h5>
                                         <p>
-                                            <b>Codigo:</b> {{$pedido->codigo}}<br>
-                                            <b>Vendedor:</b> {{$pedido->user->name}}<br>
-                                            <b>Fecha:</b> {{ date('d-m-Y', strtotime($pedido->created_at))}}<br>
+                                            <b>Codigo:</b> {{ $pedido->codigo }}<br>
+                                            <b>Vendedor:</b> {{ $pedido->user->name }}<br>
+                                            <b>Fecha:</b> {{ date('d-m-Y', strtotime( $pedido->created_at ))}}<br>
+                                        </p>
+                                    </div>
+                                    <div class="col-4">
+                                        <p>
+                                            <b>Plazo de entrega:</b> {{ $pedido->plazo_entrega }} días<br>
+                                            <b>Garantia:</b> {{ $pedido->garantia }} meses<br>
+                                            <b>Lugar de entrega:</b> {{ $pedido->direccion_entrega }}<br>
                                         </p>
                                     </div>
                                 </div>
@@ -100,32 +107,42 @@
                         <h4 class="text-primary">Documentos</h4>
                     </div>
                     <div class="card-body">
-                        <h5 class="text-bold">Orden compra:</h5>
+                        <h5 class="text-bold">Contratos</h5>
+                        <ul class="list-unstyled">
+                            @foreach($files as $file)
+                                @if($file->tipo_documento == 'CONTRATO')
+                                    <li>
+                                        <a href="javascript:void(0)" wire:click="descargarArchivo({{ $file->id }})" class="btn-link text-secondary"><i class="fa fa-file-text-o" aria-hidden="true"></i> {{ $file->archivo }}</a>
+                                    </li>
+                                @endif
+                            @endforeach
+                        </ul>
+                        <h5 class="text-bold">Orden compra</h5>
                         <ul class="list-unstyled">
                             @foreach($files as $file)
                                 @if($file->tipo_documento == 'ORDEN COMPRA')
                                     <li>
-                                        <a href="" class="btn-link text-secondary"><i class="fa fa-file-text-o" aria-hidden="true"></i> {{ $file->archivo_p }}</a>
+                                        <a href="javascript:void(0)" wire:click="descargarArchivo({{ $file->id }})" class="btn-link text-secondary"><i class="fa fa-file-text-o" aria-hidden="true"></i> {{ $file->archivo }}</a>
                                     </li>
                                 @endif
                             @endforeach
                         </ul>
-                        <h5 class="text-bold">Guia remision:</h5>
+                        <h5 class="text-bold">Guia remision</h5>
                         <ul class="list-unstyled">
                             @foreach($files as $file)
                                 @if($file->tipo_documento == 'GUIA REMISION')
                                     <li>
-                                        <a href="" class="btn-link text-secondary"><i class="fa fa-file-text-o" aria-hidden="true"></i> {{ $file->archivo_p }}</a>
+                                        <a href="javascript:void(0)" wire:click="descargarArchivo({{ $file->id }})" class="btn-link text-secondary"><i class="fa fa-file-text-o" aria-hidden="true"></i> {{ $file->archivo }}</a>
                                     </li>
                                 @endif
                             @endforeach
                         </ul>
-                        <h5 class="text-bold">Facturas:</h5>
+                        <h5 class="text-bold">Facturas</h5>
                         <ul class="list-unstyled">
                             @foreach($files as $file)
                                 @if($file->tipo_documento == 'FACTURA')
                                     <li>
-                                        <a href="" class="btn-link text-secondary"><i class="fa fa-file-text-o" aria-hidden="true"></i> {{ $file->archivo_p }}</a>
+                                        <a href="javascript:void(0)" wire:click="descargarArchivo({{ $file->id }})" class="btn-link text-secondary"><i class="fa fa-file-text-o" aria-hidden="true"></i> {{ $file->archivo }}</a>
                                     </li>
                                 @endif
                             @endforeach
@@ -150,6 +167,7 @@
                                             <option value="ORDEN COMPRA">Orden compra</option>
                                             <option value="GUIA REMISION">Guia remision</option>
                                             <option value="FACTURA">Factura</option>
+                                            <option value="CONTRATO">Contrato</option>
                                         </select>
                                     </div>
                                     @error('tipo') <span class="text-danger er">{{ $message }}</span>@enderror

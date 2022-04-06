@@ -29,7 +29,7 @@ class ShowProyecto extends Component
     public $state = [];
     public $team;
     public $proyecto, $canti, $selected_id, $productoid,$total, $itemsQuantity, $contenido, $archivo, $codigo, $archivo_c;
-    public $archivos, $comentarios, $cotizaciones, $users, $clientes,$etapas;
+    public $archivos, $comentarios, $cotizaciones, $users, $clientes,$etapas,$pedidoNuevo;
 
     protected $listeners = ['deleteRow' => 'Destroy', 'delete' => 'eliminarCotizacion', 'create' => 'CrearPedido'];
 
@@ -99,7 +99,7 @@ class ShowProyecto extends Component
     public function createArchivo()
     {
         $rules = [
-            'archivo' => 'required',
+            'archivo_p' => 'required',
         ];
         $messages =[
             'archivo.required' => 'El archivo es requerido',
@@ -107,7 +107,7 @@ class ShowProyecto extends Component
         $this->validate($rules, $messages);
         $name = $this->archivo->getClientOriginalName();
         $archivo = Archivo::create([
-            'archivo' => $name,
+            'archivo_' => $name,
             'proyecto_id' => $this->state['id']
         ]);
 
@@ -143,30 +143,36 @@ class ShowProyecto extends Component
 
         $fecha = Carbon::now();
         $fecha = $fecha->format('Y-m-d');
-        $pedido = Cotizacion::with('CotizacionItem')->find($cotizacion->id);
+        $coti = Cotizacion::with('CotizacionItem')->find($cotizacion->id);
 
-        $pedido = Pedido::create([
-            'codigo'            => $this->codigo,
-            'cotizacion_id'     => $pedido->id,
-            'fecha_pedido'      => $fecha,
-            'cliente_id'        => $pedido->cliente_id,
-            'subtotal'          => $pedido->subtotal,
-            'total'             => $pedido->total,
-            'total_items'       => $pedido->total_items,
-            'impuesto'          => $pedido->impuesto,
-            'user_id'           => Auth::user()->id,
-        ]);
-
-        foreach ($cotizacion->CotizacionItem as $item){
-            PedidoDetalle::create([
-                'pedido_id'     => $pedido->id,
-                'producto_id'   => $item['producto_id'],
-                'cantidad'      => $item['cantidad'],
-                'precio_u'      => $item['precio'],
-                'precio_t'      => $item['monto'],
+        DB::transaction(function() use($coti,$fecha) {
+            $pedido = Pedido::create([
+                'codigo'            => $this->codigo,
+                'cotizacion_id'     => $coti->id,
+                'fecha_pedido'      => $fecha,
+                'plazo_entrega'     => $coti->plazo_entrega,
+                'garantia'          => $coti->garantia,
+                'direccion_entrega' => $coti->direccion_entrega,
+                'cliente_id'        => $coti->cliente_id,
+                'subtotal'          => $coti->subtotal,
+                'total'             => $coti->total,
+                'total_items'       => $coti->total_items,
+                'impuesto'          => $coti->impuesto,
+                'user_id'           => Auth::user()->id,
             ]);
-        }
-        $this->emit('pedido-creado', 'Pedido Creado');
+            $this->pedidoNuevo = $pedido->codigo;
+            foreach ($coti->CotizacionItem as $item){
+                PedidoDetalle::create([
+                    'pedido_id'     => $pedido->id,
+                    'producto_id'   => $item['producto_id'],
+                    'descripcion'   => $item['descripcion'],
+                    'cantidad'      => $item['cantidad'],
+                    'precio_u'      => $item['precio_u'],
+                    'precio_t'      => $item['precio_t'],
+                ]);
+            }
+        });
+        $this->alert('success', "Se creo el pedido $this->pedidoNuevo",['timerProgressBar' => true]);
     }
     public function eliminarCotizacion(DeletesCotizaciones $deleter, Cotizacion $cotizacion)
     {
