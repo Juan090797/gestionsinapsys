@@ -3,8 +3,8 @@
 namespace App\Http\Livewire;
 
 use App\Models\Cliente;
+use App\Models\Cotizacion;
 use App\Models\Proyecto;
-use App\Models\ProyectoUser;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -14,9 +14,11 @@ use Jantinnerezo\LivewireAlert\LivewireAlert;
 class Proyectos extends ComponenteBase
 {
     use LivewireAlert;
-    public $selected_id, $search;
+    public $selected_id;
     public $state=[];
-    public $clientes,$users;
+    public $clientes,$users,$proyectosAprobadosCount,$proyectosArchivadosCount,$proyectosCompletadosCount,$proyectosDefinidosCount,$proyectosCount;
+    public $status = null;
+    protected $queryString =['status'];
 
     protected $listeners = ['deleteRow' => 'Destroy'];
 
@@ -24,35 +26,32 @@ class Proyectos extends ComponenteBase
     {
         $this->resetPage();
     }
-
     public function render()
     {
         $this->update();
-        if(strlen($this->search) > 3) {
-            $data = Proyecto::where('etapa_id', '<>', 5)->where('user_id', Auth::id())
-                ->where('nombre', 'like', '%' . $this->search . '%')->paginate($this->pagination);
-        }else {
-            $data = Proyecto::where('etapa_id', '<>', 5)
-                    ->where(function ($query) {
-                        $query->where('user_id', Auth::id())
-                                ->orWhereExists(function ($query) {
-                                    $query->select(DB::raw(1))
-                                        ->from('proyecto_users')
-                                        ->whereColumn('proyecto_users.proyecto_id', 'proyectos.id')
-                                        ->Where('proyecto_users.user_id',Auth::id());
-                                });
-                    })
-                    ->paginate($this->pagination);
-        }
+        $data = Proyecto::where(function ($query) {
+            $query->where('user_id', Auth::id())
+                ->orWhereExists(function ($query) {
+                    $query->select(DB::raw(1))
+                        ->from('proyecto_users')
+                        ->whereColumn('proyecto_users.proyecto_id', 'proyectos.id')
+                        ->Where('proyecto_users.user_id',Auth::id());})
+            ;})
+            ->when($this->status, function ($query, $status) {
+                return $query->where('estado', $status);})
+            ->paginate($this->pagination);
         return view('livewire.proyectos.index',['proyectos' => $data])->extends('layouts.tema.app')->section('content');
     }
-
     public function update()
     {
         $this->clients();
         $this->users();
+        $this->proyectosCount();
+        $this->proyectosDefinidosCount();
+        $this->proyectosAprobadosCount();
+        $this->proyectosArchivadosCount();
+        $this->proyectosCompletadosCount();
     }
-
     public function clients()
     {
         $this->clientes = Cliente::all();
@@ -61,36 +60,98 @@ class Proyectos extends ComponenteBase
     {
         $this->users = User::all();
     }
-
+    public function filtroProyectosEstados($status = null)
+    {
+        $this->resetPage();
+        $this->status = $status;
+    }
+    public function proyectosCount()
+    {
+        $this->proyectosCount = Proyecto::where(function ($query) {
+            $query->where('user_id', Auth::id())
+                ->orWhereExists(function ($query) {
+                    $query->select(DB::raw(1))
+                        ->from('proyecto_users')
+                        ->whereColumn('proyecto_users.proyecto_id', 'proyectos.id')
+                        ->Where('proyecto_users.user_id',Auth::id());
+                });
+        })->count();
+    }
+    public function proyectosDefinidosCount()
+    {
+        $this->proyectosDefinidosCount = Proyecto::where('estado','DEFINIDO')->where(function ($query) {
+            $query->where('user_id', Auth::id())
+                ->orWhereExists(function ($query) {
+                    $query->select(DB::raw(1))
+                        ->from('proyecto_users')
+                        ->whereColumn('proyecto_users.proyecto_id', 'proyectos.id')
+                        ->Where('proyecto_users.user_id',Auth::id());
+                });
+        })->count();
+    }
+    public function proyectosAprobadosCount()
+    {
+        $this->proyectosAprobadosCount = Proyecto::where('estado','APROBADO')->where(function ($query) {
+            $query->where('user_id', Auth::id())
+                ->orWhereExists(function ($query) {
+                    $query->select(DB::raw(1))
+                        ->from('proyecto_users')
+                        ->whereColumn('proyecto_users.proyecto_id', 'proyectos.id')
+                        ->Where('proyecto_users.user_id',Auth::id());
+                });
+        })->count();
+    }
+    public function proyectosArchivadosCount()
+    {
+        $this->proyectosArchivadosCount = Proyecto::where('estado','ARCHIVADO')->where(function ($query) {
+            $query->where('user_id', Auth::id())
+                ->orWhereExists(function ($query) {
+                    $query->select(DB::raw(1))
+                        ->from('proyecto_users')
+                        ->whereColumn('proyecto_users.proyecto_id', 'proyectos.id')
+                        ->Where('proyecto_users.user_id',Auth::id());
+                });
+        })->count();
+    }
+    public function proyectosCompletadosCount()
+    {
+        $this->proyectosCompletadosCount = Proyecto::where('estado','COMPLETADO')->where(function ($query) {
+            $query->where('user_id', Auth::id())
+                ->orWhereExists(function ($query) {
+                    $query->select(DB::raw(1))
+                        ->from('proyecto_users')
+                        ->whereColumn('proyecto_users.proyecto_id', 'proyectos.id')
+                        ->Where('proyecto_users.user_id',Auth::id());
+                });
+        })->count();
+    }
     public function Store()
     {
         $validated = Validator::make($this->state, [
-            'nombre'            => 'required|unique:proyectos|min:3',
+            'nombre'            => "required|min:3|unique:proyectos,nombre,{$this->selected_id}",
             'prioridad'         => 'required',
-            'team'              => '',
+            'estado'            => 'required',
             'ingreso_estimado'  => 'required',
             'gasto_estimado'    => 'required',
             'fecha_inicio'      => 'required',
             'fecha_fin'         => 'required',
             'cliente_id'        => 'required',
-            'user_id'           => 'required',
+            'user_id'           => 'required'
         ],[
             'nombre.required'           => 'Nombre del proyecto es requerido',
             'nombre.unique'             => 'Ya existe el nombre del proyecto',
             'nombre.min'                => 'El nombre del proyecto debe tener al menos 3 caracteres',
             'prioridad.required'        => 'La prioridad es requerida',
-            'user_id.riquered'          => 'El lider es requerido',
+            'estado.required'           => 'El estado es requerido',
             'ingreso_estimado.required' => 'El ingreso estimado es requerido',
             'gasto_estimado.required'   => 'El gasto estimado es requerido',
-            'fecha_inicio.required'     => 'La fecha de inicio es requerida',
-            'fecha_fin.required'        => 'La fecha de fin es requerida',
-            'cliente_id.required'       => 'El cliente es requerido'
-
+            'fecha_inicio.required'     => 'La fecha inicio es requerido',
+            'fecha_fin.required'        => 'La fecha expiracion es requerido',
         ])->validate();
         $validated['etapa_id'] = 1;
-        $proyecto = Proyecto::create($validated);
+        Proyecto::create($validated);
         $this->resetUI();
-        $this->emit('proyecto-added');
+        $this->emit('proyecto-hide');
         $this->alert('success', 'Proyecto creado!!',['timerProgressBar' => true]);
     }
 
@@ -106,7 +167,7 @@ class Proyectos extends ComponenteBase
         $validated = Validator::make($this->state, [
             'nombre'            => "required|min:3|unique:proyectos,nombre,{$this->selected_id}",
             'prioridad'         => 'required',
-            'team'              => '',
+            'estado'            => 'required',
             'ingreso_estimado'  => 'required',
             'gasto_estimado'    => 'required',
             'fecha_inicio'      => 'required',
@@ -114,20 +175,23 @@ class Proyectos extends ComponenteBase
             'cliente_id'        => 'required',
             'user_id'           => 'required'
         ],[
-            'nombre.required'       => 'Nombre del proyecto es requerido',
-            'nombre.unique'         => 'Ya existe el nombre del proyecto',
-            'nombre.min'            => 'El nombre del proyecto debe tener al menos 3 caracteres',
-            'prioridad.required'    => 'La prioridad es requerida',
-
+            'nombre.required'           => 'Nombre del proyecto es requerido',
+            'nombre.unique'             => 'Ya existe el nombre del proyecto',
+            'nombre.min'                => 'El nombre del proyecto debe tener al menos 3 caracteres',
+            'prioridad.required'        => 'La prioridad es requerida',
+            'estado.required'           => 'El estado es requerido',
+            'ingreso_estimado.required' => 'El ingreso estimado es requerido',
+            'gasto_estimado.required'   => 'El gasto estimado es requerido',
+            'fecha_inicio.required'     => 'La fecha inicio es requerido',
+            'fecha_fin.required'        => 'La fecha expiracion es requerido',
         ])->validate();
 
         $proyecto = Proyecto::findOrFail($this->state['id']);
         $proyecto->update($validated);
         $this->resetUI();
-        $this->emit('proyecto-updated');
+        $this->emit('proyecto-hide');
         $this->alert('success', 'Proyecto actualizado!!',['timerProgressBar' => true]);
     }
-
     public function resetUI()
     {
         $this->state=[];
@@ -135,19 +199,17 @@ class Proyectos extends ComponenteBase
         $this->selected_id = 0;
         $this->resetValidation();
     }
-
     public function Destroy(Proyecto $proyecto)
     {
-        $cotis = \App\Models\Cotizacion::where('proyecto_id', $proyecto->id)->count();
+        $cotis = Cotizacion::where('proyecto_id', $proyecto->id)->count();
         if($cotis == 0)
         {
             $proyecto->delete();
             $this->resetUI();
-            $this->emit('proyecto-deleted', 'Proyecto Eliminado');
+            $this->alert('success', 'Proyecto eliminado!!',['timerProgressBar' => true]);
         }else {
             $this->resetUI();
-            $this->emit('error', "El proyecto cuenta con $cotis cotizaciones");
+            $this->alert('error', "El proyecto cuenta con $cotis cotizaciones",['timerProgressBar' => true]);
         }
-
     }
 }

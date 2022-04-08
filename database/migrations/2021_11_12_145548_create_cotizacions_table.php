@@ -20,7 +20,9 @@ class CreateCotizacionsTable extends Migration
             $table->date('fecha_fin');
             $table->longText('terminos');
             $table->string('plazo_entrega');
+            $table->string('txt_plazo');
             $table->string('garantia');
+            $table->string('txt_garantia');
             $table->string('direccion_entrega');
             $table->string('atendido');
             $table->boolean('foto')->nullable();

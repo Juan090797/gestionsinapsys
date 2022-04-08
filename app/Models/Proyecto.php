@@ -10,7 +10,6 @@ class Proyecto extends Model
 {
     use HasFactory;
 
-    protected $casts = ['team' => 'array'];
     protected $guarded = ['id'];
     protected $appends = ['fecha_dia','inicio','fin','restante'];
 
@@ -75,5 +74,15 @@ class Proyecto extends Model
             'BAJA'  => 'badge-primary',
         ];
         return $badges[$this->prioridad];
+    }
+    public function getEstadoBadgeAttribute()
+    {
+        $badges= [
+            'DEFINIDO'      => 'badge-success',
+            'APROBADO'      => 'badge-primary',
+            'ARCHIVADO'     => 'badge-danger',
+            'COMPLETADO'    => 'badge-warning',
+        ];
+        return $badges[$this->estado];
     }
 }

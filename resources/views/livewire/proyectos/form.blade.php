@@ -78,6 +78,19 @@
                             </div>
                             @error('fecha_fin') <span class="text-danger er">{{ $message }}</span>@enderror
                         </div>
+                        <div class="col-sm-12 col-md-6">
+                            <div class="form-group">
+                                <label>Estado*</label>
+                                <select wire:model.defer="state.estado" class="form-control">
+                                    <option value="" selected>Elegir</option>
+                                    <option value="DEFINIDO" >DEFINIDO</option>
+                                    <option value="APROBADO" >APROBADO</option>
+                                    <option value="ARCHIVADO" >ARCHIVADO</option>
+                                    <option value="COMPLETADO" >COMPLETADO</option>
+                                </select>
+                            </div>
+                            @error('cliente_id') <span class="text-danger er">{{ $message }}</span>@enderror
+                        </div>
                     </div>
                 </div>
                 @include('common.modalFooter')

@@ -34,9 +34,9 @@ class EditCotizacion extends Component
         $this->state = $cotizacion->toArray();
         $this->lista = $cotizacion->CotizacionItem->toArray();
         $this->total = $cotizacion->total;
+        $this->subTotal = $cotizacion->subtotal;
+        $this->impuestoD = $cotizacion->impuesto;
         $this->cantidadTotal = $cotizacion->total_items;
-        $this->calculateSubTotal();
-        $this->calculateTaxAmount($this->impuesto->id ?? null);
     }
     public function render()
     {
@@ -67,7 +67,9 @@ class EditCotizacion extends Component
             'atendido'          => 'required',
             'terminos'          => 'required',
             'plazo_entrega'     => 'required',
+            'txt_plazo'         => 'required',
             'garantia'          => 'required',
+            'txt_garantia'         => 'required',
             'direccion_entrega' => 'required',
         ],[
             'impuesto_id.required'      => 'El impuesto es requerido',
@@ -76,7 +78,9 @@ class EditCotizacion extends Component
             'atendido.required'         => 'La persona atendida es requerida',
             'terminos.required'         => 'Los terminos son requeridos',
             'plazo_entrega.required'    => 'El plazo de entrega es requerido',
+            'txt_plazo.required'        => 'El texto de plazo de entrega es requerido',
             'garantia.required'         => 'La garantia es requerida',
+            'txt_garantia.required'     => 'La texto de la garantia es requerida',
             'direccion_entrega.required'=> 'La direccion de entrega es requerida',
         ])->validate();
 

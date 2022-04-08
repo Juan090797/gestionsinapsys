@@ -32,8 +32,8 @@
                                     </div>
                                     <div class="col-4">
                                         <p>
-                                            <b>Plazo de entrega:</b> {{ $pedido->plazo_entrega }} días<br>
-                                            <b>Garantia:</b> {{ $pedido->garantia }} meses<br>
+                                            <b>Plazo de entrega:</b> {{ $pedido->plazo_entrega }} días {{$pedido->txt_plazo}}<br>
+                                            <b>Garantia:</b> {{ $pedido->garantia }} meses {{$pedido->txt_garantia}}<br>
                                             <b>Lugar de entrega:</b> {{ $pedido->direccion_entrega }}<br>
                                         </p>
                                     </div>

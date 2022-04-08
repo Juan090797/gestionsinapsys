@@ -6,13 +6,44 @@
     <div class="content-fluid">
         <div class="card">
             <div class="card-header">
-                <div class="row">
-                    <div class="col-4">
+                <div class="row justify-content-between">
+                    <div class="col-sm-12 col-md-4 col-xs-12">
+                        <a href="javascript:void(0)" class="btn btn-sm btn-warning" wire:click="Despachar()">DESPACHAR</a>
+                        <a href="javascript:void(0)" class="btn btn-sm btn-dark" wire:click="Facturar()">FACTURAR</a>
+                        <a href="javascript:void(0)" class="btn btn-sm btn-primary" wire:click="Completar()">COMPLETADO</a>
+                        <a href="javascript:void(0)" class="btn btn-sm btn-info" wire:click="Finalizar()">FINALIZADO</a>
                     </div>
-                    <div class="col-4">
-                    </div>
-                    <div class="col-4">
-
+                    <div class="col-sm-12 col-md-6 col-xs-12">
+                        <div class="btn-group">
+                            <button wire:click="filtroProyectosEstados" type="button" class="btn {{ is_null($status) ? 'btn-secondary' : 'btn-default' }}">
+                                <span class="mr-1">TODOS</span>
+                                <span class="badge badge-pill badge-light">{{ $pedidosCount }}</span>
+                            </button>
+                            <button wire:click="filtroProyectosEstados('EN PROCESO')" type="button" class="btn {{ ($status === 'EN PROCESO') ? 'btn-secondary' : 'btn-default' }}">
+                                <span class="mr-1">EN PROCESO</span>
+                                <span class="badge badge-pill badge-success">{{ $proyectosProcesosCount }}</span>
+                            </button>
+                            <button wire:click="filtroProyectosEstados('FACTURADO')" type="button" class="btn {{ ($status === 'FACTURADO') ? 'btn-secondary' : 'btn-default' }}">
+                                <span class="mr-1">FACTURADO</span>
+                                <span class="badge badge-pill badge-dark">{{ $proyectosFacturadosCount }}</span>
+                            </button>
+                            <button wire:click="filtroProyectosEstados('DESPACHADO')" type="button" class="btn {{ ($status === 'DESPACHADO') ? 'btn-secondary' : 'btn-default' }}">
+                                <span class="mr-1">DESPACHADOS</span>
+                                <span class="badge badge-pill badge-warning">{{ $proyectosDespachadosCount }}</span>
+                            </button>
+                            <button wire:click="filtroProyectosEstados('COMPLETADO')" type="button" class="btn {{ ($status === 'COMPLETADO') ? 'btn-secondary' : 'btn-default' }}">
+                                <span class="mr-1">COMPLETADOS</span>
+                                <span class="badge badge-pill badge-primary">{{ $proyectosCompletadosCount }}</span>
+                            </button>
+                            <button wire:click="filtroProyectosEstados('FINALIZADO')" type="button" class="btn {{ ($status === 'FINALIZADO') ? 'btn-secondary' : 'btn-default' }}">
+                                <span class="mr-1">FINALIZADOS</span>
+                                <span class="badge badge-pill badge-info">{{ $proyectosFinalizadosCount }}</span>
+                            </button>
+                            <button wire:click="filtroProyectosEstados('ANULADO')" type="button" class="btn {{ ($status === 'ANULADO') ? 'btn-secondary' : 'btn-default' }}">
+                                <span class="mr-1">ANULADOS</span>
+                                <span class="badge badge-pill badge-danger">{{ $proyectosAnuladosCount }}</span>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -20,12 +51,14 @@
                 <table class="table table-sm table-hover">
                     <thead class="thead-dark">
                     <tr>
-                        <th scope="col">Estado</th>
+                        <th scope="col"></th>
+                        <th class="text-center">Estado</th>
                         <th class="text-center">N°Pedido</th>
                         <th class="text-center">Fecha pedido</th>
                         <th class="text-center">Cliente</th>
                         <th class="text-center">Importe</th>
                         <th class="text-center">Vendedor</th>
+                        <th class="text-center">Actualizado</th>
                         <th class="text-center">Acciones</th>
                     </tr>
                     </thead>
@@ -33,25 +66,24 @@
                     @foreach($pedidos as $pedido)
                         <tr>
                             <th scope="row">
-                                @if($pedido->estado == 'Facturado')
-                                    <span class="badge badge-primary">{{$pedido->estado}}</span>
-                                @elseif($pedido->estado == 'Anulado')
-                                    <span class="badge badge-danger">{{$pedido->estado}}</span>
-                                @elseif($pedido->estado == 'Despachado')
-                                    <span class="badge badge-info">{{$pedido->estado}}</span>
+                                @if($pedido->estado == 'FINALIZADO' || $pedido->estado == 'ANULADO')
+                                    <input type="checkbox" wire:model="selectedProducts" value="{{ $pedido->id }}" disabled>
                                 @else
-                                    <span class="badge badge-success">{{$pedido->estado}}</span>
+                                    <input type="checkbox" wire:model="selectedProducts" value="{{ $pedido->id }}">
                                 @endif
                             </th>
-                            <td class="text-center">{{$pedido->codigo}}</td>
-                            <th class="text-center">{{$pedido->formate_fecha}}</th>
-                            <td class="text-center">{{$pedido->cliente->razon_social}}</td>
-                            <td class="text-center">S/ {{$pedido->total}}</td>
-                            <td class="text-center">{{$pedido->user->name}}</td>
+                            <th class="text-center"><span class="badge {{$pedido->estado_badge}}">{{$pedido->estado}}</span></th>
+                            <td class="text-center">{{ $pedido->codigo }}</td>
+                            <th class="text-center">{{ $pedido->formate_fecha }}</th>
+                            <td class="text-center">{{ $pedido->cliente->razon_social }}</td>
+                            <td class="text-center">S/ {{ $pedido->total }}</td>
+                            <td class="text-center">{{ $pedido->user->name }}</td>
+                            <td class="text-center">{{ $pedido->updated_at->diffForHumans() }}</td>
                             <td class="text-center">
-                                <a href="javascript:void(0)" wire:click="verPedido('{{ $pedido->id }}')" class="btn btn-success"><i class="fas fa-eye"></i></a>
-                                <a href="{{route('pedido.show', $pedido)}}" class="btn btn-primary"><i class="fas fa-eye"></i></a>
-                                <a href="javascript:void(0)" onclick="Confirm('{{ $pedido->id }}')" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                                <a href="javascript:void(0)" wire:click="verPedido('{{ $pedido->id }}')" class="btn btn-success btn-sm"><i class="fas fa-eye"></i></a>
+                                <a href="{{route('pedido.show', $pedido)}}" class="btn btn-primary btn-sm"><i class="fas fa-eye"></i></a>
+                                <a href="{{route('pedido.edit', $pedido)}}" class="btn btn-warning btn-sm"><i class="fas fa-pencil-alt"></i></a>
+                                <a href="javascript:void(0)" onclick="Confirm('{{ $pedido->id }}')" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a>
                             </td>
                         </tr>
                     @endforeach
@@ -141,46 +173,15 @@
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', function (){
-
             window.Livewire.on('show-modal-pedido', msg =>{
                 $('#theModalPedido').modal('show')
-            });
-            window.Livewire.on('show-modal', msg =>{
-                $('#theModal').modal('show')
-            });
-            window.Livewire.on('show-modal-oc', msg =>{
-                $('#theModalOc').modal('show')
-            });
-            window.livewire.on('oc-added', msg =>{
-                $('#theModalOc').modal('hide');
-                noty(msg)
-            });
-            window.Livewire.on('show-modal-guia', msg =>{
-                $('#theModalG').modal('show')
-            });
-            window.livewire.on('guia-added', msg =>{
-                $('#theModalG').modal('hide');
-                noty(msg)
-            });
-            window.livewire.on('error', msg =>{
-                noty(msg)
-            });
-            window.Livewire.on('show-modal-factura', msg =>{
-                $('#theModalFactura').modal('show')
-            });
-            window.livewire.on('factura-added', msg =>{
-                $('#theModalFactura').modal('hide');
-                noty(msg)
-            });
-            window.livewire.on('despachar', msg =>{
-                noty(msg)
             });
         });
         function Confirm(id)
         {
             Swal.fire({
                 title: 'CONFIRMAR',
-                text: "¿CONFIRMAS ELIMINAR EL REGISTRO?",
+                text: "¿CONFIRMAS ANULAR EL PEDIDO?",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
@@ -190,13 +191,6 @@
                 if(result.value){
                     window.livewire.emit('deleteRow', id)
                     swal.close()
-                }
-                if (result.isConfirmed) {
-                    Swal.fire(
-                        'Eliminado!',
-                        'El registro ha sido eliminado',
-                        'success'
-                    )
                 }
             })
         }

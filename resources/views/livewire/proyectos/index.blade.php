@@ -7,10 +7,27 @@
         <div class="card">
             <div class="card-header">
                 <div class="row justify-content-end">
-                    <div class="col-3">
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Buscar por nombre" wire:model="search">
-                        </div>
+                    <div class="btn-group">
+                        <button wire:click="filtroProyectosEstados" type="button" class="btn {{ is_null($status) ? 'btn-secondary' : 'btn-default' }}">
+                            <span class="mr-1">TODOS</span>
+                            <span class="badge badge-pill badge-info">{{ $proyectosCount }}</span>
+                        </button>
+                        <button wire:click="filtroProyectosEstados('DEFINIDO')" type="button" class="btn {{ ($status === 'DEFINIDO') ? 'btn-secondary' : 'btn-default' }}">
+                            <span class="mr-1">DEFINIDOS</span>
+                            <span class="badge badge-pill badge-success">{{ $proyectosDefinidosCount }}</span>
+                        </button>
+                        <button wire:click="filtroProyectosEstados('APROBADO')" type="button" class="btn {{ ($status === 'APROBADO') ? 'btn-secondary' : 'btn-default' }}">
+                            <span class="mr-1">APROBADOS</span>
+                            <span class="badge badge-pill badge-primary">{{ $proyectosAprobadosCount }}</span>
+                        </button>
+                        <button wire:click="filtroProyectosEstados('ARCHIVADO')" type="button" class="btn {{ ($status === 'ARCHIVADO') ? 'btn-secondary' : 'btn-default' }}">
+                            <span class="mr-1">ARCHIVADOS</span>
+                            <span class="badge badge-pill badge-danger">{{ $proyectosArchivadosCount }}</span>
+                        </button>
+                        <button wire:click="filtroProyectosEstados('COMPLETADO')" type="button" class="btn {{ ($status === 'COMPLETADO') ? 'btn-secondary' : 'btn-default' }}">
+                            <span class="mr-1">COMPLETADOS</span>
+                            <span class="badge badge-pill badge-warning">{{ $proyectosCompletadosCount }}</span>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -20,6 +37,7 @@
                     <tr>
                         <th scope="col">Proyecto</th>
                         <th class="text-center">Prioridad</th>
+                        <th class="text-center">Estado</th>
                         <th class="text-center">Etapa</th>
                         <th class="text-center">Fecha inicio</th>
                         <th class="text-center">Fecha fin</th>
@@ -36,6 +54,7 @@
                         <tr>
                             <td scope="col">{{ $proyecto->nombre }}</td>
                             <td class="text-center"><span class="badge {{ $proyecto->prioridad_badge }}">{{ $proyecto->prioridad }}</span></td>
+                            <td class="text-center"><span class="badge {{ $proyecto->estado_badge }}">{{ $proyecto->estado }}</span></td>
                             <td class="text-center">{{ $proyecto->etapa->nombre }}</td>
                             <td class="text-center">{{ $proyecto->inicio }}</td>
                             <td class="text-center">{{ $proyecto->fin}}</td>
@@ -69,7 +88,7 @@
                     @endforeach
                     </tbody>
                 </table>
-                <div class="py-3">
+                <div class="py-3 float-right">
                     {{$proyectos->links()}}
                 </div>
             </div>
@@ -81,17 +100,8 @@
             window.Livewire.on('show-modal', msg =>{
                 $('#theModal').modal('show')
             });
-            window.livewire.on('proyecto-added', msg =>{
+            window.livewire.on('proyecto-hide', msg =>{
                 $('#theModal').modal('hide');
-            })
-            window.livewire.on('proyecto-updated', msg =>{
-                $('#theModal').modal('hide');
-            })
-            window.livewire.on('proyecto-deleted', msg =>{
-                noty(msg)
-            })
-            window.livewire.on('error', msg =>{
-                noty(msg)
             })
         });
 

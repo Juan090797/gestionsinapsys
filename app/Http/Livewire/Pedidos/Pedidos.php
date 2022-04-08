@@ -21,18 +21,66 @@ class Pedidos extends Component
     public $state= [];
     public $selected_id,$ped;
     public $pedidos;
-    public $clientes;
-    protected $listeners = ['anular' => 'Anular'];
+    public $clientes,$pedidosCount,$proyectosProcesosCount,$proyectosFacturadosCount,$proyectosDespachadosCount,$proyectosFinalizadosCount,$proyectosCompletadosCount,$proyectosAnuladosCount;
+    public $status = null;
+    protected $queryString =['status'];
+    protected $listeners = ['deleteRow' => 'Anular'];
 
     public function render()
     {
         $this->update();
         return view('livewire.pedidos.index')->extends('layouts.tema.app')->section('content');
     }
+
     public function update()
     {
-        $this->pedidos = Pedido::with('pedidoDetalle')->latest()->get();
+        $this->pedidos();
+        $this->pedidosCount();
+        $this->proyectosProcesosCount();
+        $this->proyectosFacturadosCount();
+        $this->proyectosDespachadosCount();
+        $this->proyectosCompletadosCount();
+        $this->proyectosFinalizadosCount();
+        $this->proyectosAnuladosCount();
     }
+    Public function pedidos()
+    {
+        $this->pedidos = Pedido::with('pedidoDetalle')->when($this->status, function ($query, $status) {
+            return $query->where('estado', $status);})->get();
+    }
+    public function filtroProyectosEstados($status = null)
+    {
+        $this->status = $status;
+    }
+    public function pedidosCount()
+    {
+        $this->pedidosCount = Pedido::count();
+    }
+    public function proyectosProcesosCount()
+    {
+        $this->proyectosProcesosCount = Pedido::where('estado', 'EN PROCESO')->count();
+    }
+    public function proyectosFacturadosCount()
+    {
+        $this->proyectosFacturadosCount = Pedido::where('estado', 'FACTURADO')->count();
+    }
+    public function proyectosDespachadosCount()
+    {
+        $this->proyectosDespachadosCount = Pedido::where('estado', 'DESPACHADO')->count();
+    }
+    public function proyectosCompletadosCount()
+    {
+        $this->proyectosCompletadosCount = Pedido::where('estado', 'COMPLETADO')->count();
+    }
+    public function proyectosFinalizadosCount()
+    {
+        $this->proyectosFinalizadosCount = Pedido::where('estado', 'FINALIZADO')->count();
+    }
+    public function proyectosAnuladosCount()
+    {
+        $this->proyectosAnuladosCount = Pedido::where('estado', 'ANULADO')->count();
+    }
+
     public function resetUI()
     {
         $this->selectedProducts =[];
@@ -41,11 +89,9 @@ class Pedidos extends Component
     }
 
     public function Anular(Pedido $pedido){
-        $pedido->update([
-            'estado' => 'Anulado',
-        ]);
+        $pedido->update(['estado' => 'ANULADO',]);
         $this->resetUI();
-        $this->emit('pedido-anulado', 'Pedido Anulado');
+        $this->alert('success', 'Se anulo con exito',['timerProgressBar' => true]);
     }
     public function verPedido($id)
     {
@@ -63,7 +109,7 @@ class Pedidos extends Component
                 if($pr->stock >= $item['cantidad']) {
                     $id_movimiento[] = $this->add_cart_shop($item);
                 }else {
-                    $this->alert('error', 'Lo sentimos no tenemos  stock',['timerProgressBar' => true]);
+                    $this->alert('error', 'Lo sentimos no cuentas con stock',['timerProgressBar' => true]);
                 }
             }
             if( count($pedido->pedidoDetalle) == count($id_movimiento) )
@@ -119,6 +165,45 @@ class Pedidos extends Component
             $this->alert('error', 'Selecciona un registro',['timerProgressBar' => true]);
         }
 
+    }
+    public function Facturar()
+    {
+        if(count($this->selectedProducts)) {
+            $pedido = Pedido::with('pedidoDetalle')->find($this->selectedProducts[0]);
+            $pedido->update([
+                'estado' => 'FACTURADO',
+            ]);
+            $this->resetUI();
+            $this->alert('success', 'Se facturo con exito',['timerProgressBar' => true]);
+        }else{
+            $this->alert('error', 'Selecciona un registro',['timerProgressBar' => true]);
+        }
+    }
+    public function Completar()
+    {
+        if(count($this->selectedProducts)) {
+            $pedido = Pedido::with('pedidoDetalle')->find($this->selectedProducts[0]);
+            $pedido->update([
+                'estado' => 'COMPLETADO',
+            ]);
+            $this->resetUI();
+            $this->alert('success', 'Se facturo con exito',['timerProgressBar' => true]);
+        }else{
+            $this->alert('error', 'Selecciona un registro',['timerProgressBar' => true]);
+        }
+    }
+    public function Finalizar()
+    {
+        if(count($this->selectedProducts)) {
+            $pedido = Pedido::with('pedidoDetalle')->find($this->selectedProducts[0]);
+            $pedido->update([
+                'estado' => 'FINALIZADO',
+            ]);
+            $this->resetUI();
+            $this->alert('success', 'Se facturo con exito',['timerProgressBar' => true]);
+        }else{
+            $this->alert('error', 'Selecciona un registro',['timerProgressBar' => true]);
+        }
     }
     public function add_cart_shop($item)
     {

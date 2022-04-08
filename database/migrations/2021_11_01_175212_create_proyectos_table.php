@@ -17,6 +17,7 @@ class CreateProyectosTable extends Migration
             $table->id();
             $table->string('nombre');
             $table->string('prioridad');
+            $table->string('estado');
             $table->decimal('ingreso_estimado',20,2)->default(0);
             $table->decimal('gasto_estimado',20,2)->default(0);
             $table->date('fecha_inicio')->nullable();

@@ -107,11 +107,11 @@
                         </p>
                         <p>
                             <b>Condiciones Comerciales:</b><br>
-                            Plazo de entrega: {{$cotizacion->plazo_entrega}} dias a partir de la recepcion de la O/C
+                            Plazo de entrega: {{$cotizacion->plazo_entrega}} dias {{$cotizacion->txt_plazo}}
                             <br>
                             Lugar de entrega: {{$cotizacion->direccion_entrega}}
                             <br>
-                            Garantia: {{$cotizacion->garantia}} meses contra todo defecto de fabrica
+                            Garantia: {{$cotizacion->garantia}} meses {{$cotizacion->txt_garantia}}
                         </p>
                     </div>
                 </div>

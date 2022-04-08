@@ -11,7 +11,7 @@ trait DataPedido
 
     public function updatedNuevo($value)
     {
-        $pro = Producto::select(['id','codigo','nombre','precio_compra'])->find($value)->toarray();
+        $pro = Producto::select(['id','codigo','nombre','descripcion','precio_compra'])->find($value)->toarray();
         $this->lista[] = $this->add_cart_shop($pro);
         $this->calcularTotalItems();
     }
@@ -29,7 +29,7 @@ trait DataPedido
     {
         unset($this->lista[$index]);
         $this->calculateSubTotal();
-        $this->calculateTaxAmount($this->state['impuesto_id'] ?? null);
+        $this->calculateTaxAmount();
         $this->calculateTotal();
         $this->calcularTotalItems();
     }

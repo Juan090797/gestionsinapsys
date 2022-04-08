@@ -73,6 +73,10 @@ class ShowProyecto extends Component
     {
         $this->comentarios = Comentario::where('proyecto_id', $this->proyecto->id )->latest()->get();
     }
+    public function comentarios()
+    {
+        $this->comentarios = Comentario::where('proyecto_id', $this->proyecto->id )->latest()->get();
+    }
     public function cotizaciones()
     {
         $this->cotizaciones = Cotizacion::where('proyecto_id', $this->proyecto->id)->get();
@@ -91,9 +95,7 @@ class ShowProyecto extends Component
     }
     public function cambiarEtapa(Etapa $etapa)
     {
-        $this->proyecto->update([
-            'etapa_id' => $etapa->id,
-        ]);
+        $this->proyecto->update(['etapa_id' => $etapa->id,]);
         $this->alert('success', 'Se actualizo la etapa',['timerProgressBar' => true]);
     }
     public function createArchivo()
@@ -113,12 +115,13 @@ class ShowProyecto extends Component
 
         $this->archivo->storeAs('archivos', $name);
         $this->archivo = '';
-        $this->emit('archivo-added', 'Archivo Registrado');
+        $this->emit('archivo-added');
+        $this->alert('success', 'Archivo registrado',['timerProgressBar' => true]);
     }
     public function Destroy(Archivo $archivo)
     {
         $archivo->delete();
-        $this->emit('archivo-deleted', 'Archivo Eliminado');
+        $this->alert('success', 'Archivo eliminado',['timerProgressBar' => true]);
     }
     public function CrearPedido(Cotizacion $cotizacion)
     {
@@ -140,7 +143,6 @@ class ShowProyecto extends Component
         }else{
             $this->codigo = 'PE'. $date. $i;
         }
-
         $fecha = Carbon::now();
         $fecha = $fecha->format('Y-m-d');
         $coti = Cotizacion::with('CotizacionItem')->find($cotizacion->id);
@@ -148,10 +150,13 @@ class ShowProyecto extends Component
         DB::transaction(function() use($coti,$fecha) {
             $pedido = Pedido::create([
                 'codigo'            => $this->codigo,
+                'estado'            => 'EN PROCESO',
                 'cotizacion_id'     => $coti->id,
                 'fecha_pedido'      => $fecha,
                 'plazo_entrega'     => $coti->plazo_entrega,
+                'txt_plazo'         => $coti->txt_plazo,
                 'garantia'          => $coti->garantia,
+                'txt_garantia'      => $coti->txt_garantia,
                 'direccion_entrega' => $coti->direccion_entrega,
                 'cliente_id'        => $coti->cliente_id,
                 'subtotal'          => $coti->subtotal,
@@ -177,7 +182,7 @@ class ShowProyecto extends Component
     public function eliminarCotizacion(DeletesCotizaciones $deleter, Cotizacion $cotizacion)
     {
         $deleter->delete($cotizacion);
-        $this->emit('cotizacion-deleted', 'Cotizacion Eliminada');
+        $this->alert('success', 'Cotizacion eliminada',['timerProgressBar' => true]);
     }
     public function descarga($id)
     {
@@ -215,7 +220,8 @@ class ShowProyecto extends Component
         }
         $this->resetUI();
         $this->archivo_c = '';
-        $this->emit('comentario-added', 'Comentario Registrado');
+        $this->emit('comentario-added');
+        $this->alert('success', 'Comentario agregado',['timerProgressBar' => true]);
     }
     public function descargaArchivoComentario(Comentario $comentario)
     {
@@ -235,10 +241,10 @@ class ShowProyecto extends Component
     {
         if($this->team){
             $this->proyecto->colaboradores()->create(['user_id' => $this->team]);
-            $this->emit('cerrar-modal', 'Comentario Registrado');
+            $this->emit('cerrar-modal');
             $this->alert('success', 'Se agrego el colaborador con exito',['timerProgressBar' => true]);
         }else{
-            $this->emit('cerrar-modal', 'Comentario Registrado');
+            $this->emit('cerrar-modal');
             $this->alert('error', 'No se selecciono colaborador',['timerProgressBar' => true]);
         }
     }

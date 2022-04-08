@@ -53,24 +53,40 @@
                             </div>
                             <div wire:loading wire:target="imagen">Cargando.....</div>
                         </div>
-                        <div class="col-sm-2">
+                        <div class="col-sm-1">
                             <div class="form-group">
-                                <label for="plazo_entrega">Plazo entrega(días)*</label>
+                                <label for="plazo_entrega">P. entrega(días)*</label>
                                 <input id="plazo_entrega" type="number" class="form-control" wire:model.defer="state.plazo_entrega">
                             </div>
                             @error('plazo_entrega') <span class="text-danger er">{{ $message }}</span>@enderror
                         </div>
-                        <div class="col-sm-2">
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label for="txt_plazo">Texto plazo entrega</label>
+                                <input id="txt_plazo" type="text" class="form-control"  placeholder="a partir de la recepcion de la O/C" wire:model.defer="state.txt_plazo">
+                            </div>
+                            @error('txt_plazo') <span class="text-danger er">{{ $message }}</span>@enderror
+                        </div>
+                        <div class="col-sm-1">
                             <div class="form-group">
                                 <label for="garantia">Garantia(meses)*</label>
                                 <input id="garantia" type="number" class="form-control" wire:model.defer="state.garantia">
                             </div>
+                            @error('garantia') <span class="text-danger er">{{ $message }}</span>@enderror
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label for="txt_garantia">Texto Garantia</label>
+                                <input id="txt_garantia" type="text" class="form-control" placeholder="contra todo defecto de fabrica" wire:model.defer="state.txt_garantia">
+                            </div>
+                            @error('txt_garantia') <span class="text-danger er">{{ $message }}</span>@enderror
                         </div>
                         <div class="col-sm-3">
                             <div class="form-group">
                                 <label for="direccion_entrega">Direccion entrega*</label>
-                                <input id="direccion_entrega" type="text" class="form-control" wire:model.defer="state.direccion_entrega">
+                                <input id="direccion_entrega" type="text" class="form-control" placeholder="Los olivos 123" wire:model.defer="state.direccion_entrega">
                             </div>
+                            @error('direccion_entrega') <span class="text-danger er">{{ $message }}</span>@enderror
                         </div>
                         <div class="col-sm-2 mt-5">
                             <div class="custom-control custom-switch">

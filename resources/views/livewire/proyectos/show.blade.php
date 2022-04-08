@@ -403,30 +403,15 @@
             });
             window.livewire.on('archivo-added', msg =>{
                 $('#theModal').modal('hide');
-                noty(msg)
             });
             window.livewire.on('proyecto-updated', msg =>{
                 $('#theModal').modal('hide');
-                noty(msg)
             });
             window.livewire.on('cerrar-modal', msg =>{
                 $('#theModalEquipo').modal('hide');
             });
-            window.livewire.on('archivo-deleted', msg =>{
-                noty(msg)
-            });
-            window.livewire.on('cotizacion-deleted', msg =>{
-                noty(msg)
-            });
-            window.livewire.on('producto-ok', msg =>{
-                noty(msg)
-            });
             window.livewire.on('comentario-added', msg =>{
                 $('#theModalComentario').modal('hide');
-                noty(msg)
-            });
-            window.livewire.on('update-etapa', msg =>{
-                noty(msg)
             });
         });
 

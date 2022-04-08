@@ -10,25 +10,19 @@ class Pedido extends Model
 {
     protected $guarded = ['id'];
     use HasFactory;
-    protected $appends = [
-        'formate_fecha',
-    ];
 
     public function cliente()
     {
         return $this->belongsTo(Cliente::class);
     }
-
     public function pedidoDetalle()
     {
         return $this->hasMany(PedidoDetalle::class);
     }
-
     public function user()
     {
         return $this->belongsTo(User::class);
     }
-
     public function comentarios()
     {
         return $this->hasMany(ComentarioPedido::class,'pedido_id');
@@ -40,6 +34,18 @@ class Pedido extends Model
     public function getFormateFechaAttribute()
     {
         return Carbon::parse($this->created_at)->format('d-m-Y');
+    }
+    public function getEstadoBadgeAttribute()
+    {
+        $badges= [
+            'ANULADO'       => 'badge-danger',
+            'EN PROCESO'    => 'badge-success',
+            'FACTURADO'     => 'badge-dark',
+            'DESPACHADO'    => 'badge-warning',
+            'COMPLETADO'    => 'badge-primary',
+            'FINALIZADO'    => 'badge-info',
+        ];
+        return $badges[$this->estado];
     }
 
 }

@@ -1,10 +1,10 @@
 <div>
     @section('cabezera-contenido')
         <a href="{{route('pedidos')}}" class="btn btn-primary float-right">Atras</a>
-        <h1>Registro de Pedido</h1>
+        <h1>Editar Pedido #{{ $pedido->codigo }}</h1>
     @endsection
     <div class="content-fluid">
-        <form wire:submit.prevent="createPedido">
+        <form wire:submit.prevent="actualizarPedido">
             <div class="card" wire:ignore.self>
                 <div class="card-body">
                     <div class="row">
@@ -165,7 +165,7 @@
             });
             $('.sele').on('change', function () {
                 let data = $(this).val();
-                @this.set('nuevo', $(this).val());
+            @this.set('nuevo', $(this).val());
             });
         });
     </script>

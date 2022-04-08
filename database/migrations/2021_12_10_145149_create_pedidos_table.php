@@ -15,10 +15,13 @@ class CreatePedidosTable extends Migration
     {
         Schema::create('pedidos', function (Blueprint $table) {
             $table->id();
-            $table->string('estado')->default('En Proceso');
+            $table->string('estado')->default('EN PROCESO');
+            $table->string('atendido')->nullable();
             $table->string('codigo')->nullable();
             $table->string('plazo_entrega')->nullable();
+            $table->string('txt_plazo')->nullable();
             $table->string('garantia')->nullable();
+            $table->string('txt_garantia')->nullable();
             $table->string('direccion_entrega')->nullable();
             $table->decimal('total',20,2)->default(0);
             $table->decimal('subtotal',20,2)->default(0);

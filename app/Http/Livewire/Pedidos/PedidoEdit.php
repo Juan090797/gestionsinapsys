@@ -5,49 +5,54 @@ namespace App\Http\Livewire\Pedidos;
 use App\Http\Livewire\Pedidos\Traits\CalcularPedido;
 use App\Http\Livewire\Pedidos\Traits\DataPedido;
 use App\Models\Cliente;
+use App\Models\CompraDetalle;
 use App\Models\Pedido;
 use App\Models\PedidoDetalle;
 use App\Models\Producto;
-use App\Models\TipoDocumento;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 
-class PedidoCreate extends Component
+class PedidoEdit extends Component
 {
     use LivewireAlert;
-    use CalcularPedido;
     use DataPedido;
-    public $state = [];
-    public $clientes,$documentos,$costos,$productos,$code,$pedidoNew;
+    use CalcularPedido;
 
+    public $pedido,$clientes,$productos;
+    public $state = [];
+
+    public function mount(Pedido $pedido)
+    {
+        $this->pedido = $pedido;
+        $this->state = $pedido->toArray();
+        $this->lista = $pedido->pedidoDetalle->toArray();
+        $this->cantidadTotal = $pedido->total_items;
+        $this->subTotal = $pedido->subtotal;
+        $this->impuestoD = $pedido->impuesto;
+        $this->total = $pedido->total;
+    }
     public function render()
     {
         $this->update();
-        return view('livewire.pedidos.pedido-create')->extends('layouts.tema.app')->section('content');
+        return view('livewire.pedidos.pedido-edit')->extends('layouts.tema.app')->section('content');
     }
     public function update()
     {
         $this->clientes();
-        $this->documentos();
         $this->productos();
     }
     public function clientes()
     {
         $this->clientes = Cliente::all();
     }
-    public function documentos()
-    {
-        $this->documentos = TipoDocumento::where('tipo','pago')->get();
-    }
     public function productos()
     {
         $this->productos = Producto::where('clasificacions_id',2)->get();
     }
-    public function createPedido()
+    public function actualizarPedido()
     {
         $validated = Validator::make($this->state, [
             'cliente_id'        => 'required',
@@ -78,59 +83,27 @@ class PedidoCreate extends Component
                 'total'             => $this->total,
                 'impuesto'          => $this->impuestoD,
                 'pedido_items'      => $this->lista,
-                'codigo'            => $this->code,
                 'total_items'       => $this->cantidadTotal,
             ]
         );
-        if(Pedido::count() > 0){
-            $i = Pedido::latest()->first()->id +1;
-        }else{
-            $i = 1;
-        }
-        $date = Carbon::now();
-        $date = $date->Format('ym');
-        if($i <= 9){
-            $this->code = 'PE'. $date .'0000'. $i;
-        }elseif ($i <= 100){
-            $this->code = 'PE'. $date .'000'. $i;
-        }elseif ($i <= 1000){
-            $this->code = 'PE'. $date .'00'. $i;
-        }elseif ($i <= 10000){
-            $this->code = 'PE'. $date .'0'. $i;
-        }else{
-            $this->code = 'PE'. $date. $i;
-        }
         DB::transaction(function() use($creator) {
-            $pedido = Pedido::create([
-                'codigo'            => $this->code,
-                'estado'            => $creator['estado'],
-                'atendido'          => $creator['atendido'],
-                'fecha_pedido'      => $creator['fecha_pedido'],
-                'plazo_entrega'     => $creator['plazo_entrega'],
-                'txt_plazo'         => $creator['txt_plazo'],
-                'garantia'          => $creator['garantia'],
-                'txt_garantia'      => $creator['txt_garantia'],
-                'direccion_entrega' => $creator['direccion_entrega'],
-                'cliente_id'        => $creator['cliente_id'],
-                'subtotal'          => $creator['subtotal'],
-                'total'             => $creator['total'],
-                'total_items'       => $creator['total_items'],
-                'impuesto'          => $creator['impuesto'],
-                'user_id'           => Auth::id(),
-            ]);
-            $this->pedidoNew = $pedido;
-            foreach ($creator['pedido_items'] as $item){
+            $this->pedido->update($creator);
+            $p = $this->pedido;
+            PedidoDetalle::where('pedido_id', $p->id)->delete();
+            collect($creator['pedido_items'])->filter(function ($item) {
+                return $item['producto_id'] !== '';
+            })->each(function($item) use($p) {
                 PedidoDetalle::create([
-                    'pedido_id'     => $pedido->id,
+                    'pedido_id'     => $p->id,
                     'producto_id'   => $item['producto_id'],
                     'descripcion'   => $item['descripcion'],
                     'cantidad'      => $item['cantidad'],
                     'precio_u'      => $item['precio_u'],
                     'precio_t'      => $item['precio_t'],
                 ]);
-            }
+            });
         });
-        $this->alert('success', 'Pedido creado!!',['timerProgressBar' => true]);
-        return redirect()->route('pedido.show',$this->pedidoNew->id);
+        $this->alert('success', 'Se actualizo el pedido con exito',['timerProgressBar' => true]);
+        return redirect()->route('pedido.show',$this->pedido->id);
     }
 }

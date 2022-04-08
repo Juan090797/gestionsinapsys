@@ -43,6 +43,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('pedidos', \App\Http\Livewire\Pedidos\Pedidos::class)->name('pedidos');
     Route::get('pedidocreate', \App\Http\Livewire\Pedidos\PedidoCreate::class)->name('pedido.create');
     Route::get('pedido/{pedido}/show', \App\Http\Livewire\Pedidos\PedidoShow::class)->name('pedido.show');
+    Route::get('pedido/{pedido}/edit', \App\Http\Livewire\Pedidos\PedidoEdit::class)->name('pedido.edit');
     Route::get('unidades', \App\Http\Livewire\UnidadesMedida::class)->name('unidades');
     Route::get('tipoproveedores', \App\Http\Livewire\TipoProveedores::class)->name('tipoproveedores');
     Route::get('proveedores', \App\Http\Livewire\Proveedores::class)->name('proveedores');
