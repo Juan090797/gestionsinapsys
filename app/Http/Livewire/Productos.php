@@ -25,11 +25,12 @@ class Productos extends ComponenteBase
     {
         if(strlen($this->search) > 3) {
             $data = Producto::where('codigo', 'like', '%' . $this->search . '%')
+                ->where('estado', 'ACTIVO')
                 ->orWhere('descripcion', 'like', '%' . $this->search . '%')
                 ->orWhere('nombre', 'like', '%' . $this->search . '%')
                 ->paginate($this->pagination);
         }else {
-            $data = Producto::orderBy('id', 'desc')->paginate($this->pagination);
+            $data = Producto::where('estado', 'ACTIVO')->paginate($this->pagination);
         }
         $this->update();
         return view('livewire.productos.index',['productos' => $data])->extends('layouts.tema.app')->section('content');
@@ -82,7 +83,7 @@ class Productos extends ComponenteBase
 
         Producto::create($validated);
         $this->resetUI();
-        $this->emit('producto-added');
+        $this->emit('hide-modal');
         $this->alert('success', 'Producto creado!!',['timerProgressBar' => true]);
     }
     public function resetUI()
@@ -128,14 +129,13 @@ class Productos extends ComponenteBase
         $producto = Producto::findOrFail($this->state['id']);
         $producto->update($validated);
         $this->resetUI();
-        $this->emit('producto-updated');
+        $this->emit('hide-modal');
         $this->alert('success', 'Producto actualizado!!',['timerProgressBar' => true]);
     }
     public function Destroy(Producto $producto)
     {
-        $producto->delete();
+        $producto->update(['estado' => 'INACTIVO']);
         $this->alert('success', 'Producto eliminado!!',['timerProgressBar' => true]);
         $this->resetUI();
     }
-
 }

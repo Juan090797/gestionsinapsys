@@ -22,9 +22,7 @@
                             <td class="text-center">{{$costo->nombre}}</td>
                             <td class="text-center"><span class="badge {{ $costo->estado == 'ACTIVO' ? 'badge-success' : 'badge-danger'}}">{{$costo->estado}}</span></td>
                             <td class="text-center">
-                                <a href="javascript:void(0)"  wire:click="Edit({{ $costo->id }})" class="btn btn-primary" title="Edit">
-                                    <i class="fas fa-pencil-alt" aria-hidden="true"></i>
-                                </a>
+                                <a href="javascript:void(0)"  wire:click="Edit({{ $costo->id }})" class="btn btn-warning btn-sm" title="Editar"><i class="fas fa-pencil-alt" aria-hidden="true"></i></a>
                             </td>
                         </tr>
                     @endforeach
@@ -39,20 +37,11 @@
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', function (){
-
             window.Livewire.on('show-modal', msg =>{
                 $('#theModal').modal('show')
             });
-            window.livewire.on('marca-added', msg =>{
+            window.livewire.on('hide-modal', msg =>{
                 $('#theModal').modal('hide');
-                noty(msg)
-            })
-            window.livewire.on('marca-updated', msg =>{
-                $('#theModal').modal('hide');
-                noty(msg)
-            })
-            window.livewire.on('marca-deleted', msg =>{
-                noty(msg)
             })
         });
 
@@ -70,13 +59,6 @@
                 if(result.value){
                     window.livewire.emit('deleteRow', id)
                     swal.close()
-                }
-                if (result.isConfirmed) {
-                    Swal.fire(
-                        'Eliminado!',
-                        'El registro ha sido eliminado',
-                        'success'
-                    )
                 }
             })
         }

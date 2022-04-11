@@ -113,14 +113,8 @@
             window.Livewire.on('show-modal', msg =>{
                 $('#theModal').modal('show')
             });
-            window.livewire.on('producto-added', msg =>{
+            window.livewire.on('hide-modal', msg =>{
                 $('#theModal').modal('hide');
-            })
-            window.livewire.on('producto-updated', msg =>{
-                $('#theModal').modal('hide');
-            })
-            window.livewire.on('error', msg =>{
-                noty(msg)
             })
         });
         function Confirm(id)

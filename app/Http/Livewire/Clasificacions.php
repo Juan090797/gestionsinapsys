@@ -5,9 +5,11 @@ namespace App\Http\Livewire;
 use App\Models\Clasificacion;
 use App\Models\Producto;
 use Illuminate\Support\Facades\Validator;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class Clasificacions extends ComponenteBase
 {
+    use LivewireAlert;
     public $search, $selected_id;
     public $state = [];
     protected $listeners = ['deleteRow' => 'Destroy'];
@@ -46,7 +48,8 @@ class Clasificacions extends ComponenteBase
 
         Clasificacion::create($validated);
         $this->resetUI();
-        $this->emit('clasificacion-added', 'Clasificacion Registrada');
+        $this->emit('hide-modal');
+        $this->alert('success', 'Clasificacion registrada!!',['timerProgressBar' => true]);
     }
     public function actualizar()
     {
@@ -64,8 +67,8 @@ class Clasificacions extends ComponenteBase
         $clasificacion = Clasificacion::findOrFail($this->state['id']);
         $clasificacion->update($validated);
         $this->resetUI();
-        $this->emit('clasificacion-updated', 'Clasificacion Actualizada');
-
+        $this->emit('hide-modal');
+        $this->alert('success', 'Clasificacion actualizada!!',['timerProgressBar' => true]);
     }
     public function resetUI()
     {
@@ -80,10 +83,10 @@ class Clasificacions extends ComponenteBase
         if ($pro == 0) {
             $clasificacion->delete();
             $this->resetUI();
-            $this->emit('clasificacion-deleted', 'Clasificacion Eliminada');
+            $this->alert('success', 'Clasificacion eliminada!!',['timerProgressBar' => true]);
         }else {
             $this->resetUI();
-            $this->emit('error', 'La clasificacion esta relacionado con productos, no se puede eliminar');
+            $this->alert('error', 'La clasificacion esta relacionado con productos, no se puede eliminar',['timerProgressBar' => true]);
         }
     }
 }

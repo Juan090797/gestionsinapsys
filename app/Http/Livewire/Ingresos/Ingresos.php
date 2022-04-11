@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Ingresos;
 use App\Http\Livewire\ComponenteBase;
 use App\Models\MovimientoAlmacen;
 use App\Models\Producto;
+use Illuminate\Support\Facades\DB;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class Ingresos extends ComponenteBase
@@ -13,6 +14,7 @@ class Ingresos extends ComponenteBase
     public $selectedProducts = [];
     public $search, $selected_id,$ped;
     public $state = [];
+    protected $listeners = ['deleteRow' => 'anular'];
 
     public function  updatingSearch()
     {
@@ -55,12 +57,26 @@ class Ingresos extends ComponenteBase
             $this->alert('error', 'Selecciona un registro',['timerProgressBar' => true]);
         }
     }
-
     public function resetUI()
     {
         $this->selectedProducts =[];
         $this->selected_id = '';
         $this->resetValidation();
+    }
+    public function anular(MovimientoAlmacen $movimientoAlmacen)
+    {
+        DB::transaction(function() use ($movimientoAlmacen) {
+            $movimientoAlmacen->update([
+                'estado' => 'ANULADO'
+            ]);
+            foreach ($movimientoAlmacen->movimientoDetalles as $item) {
+                $p = Producto::find($item['producto_id']);
+                $item->update([
+                    'stock' => $p->stock - $item['cantidad'],
+                ]);
+            }
+        });
+        $this->alert('success', 'Movimiento anulado y stock ajustado',['timerProgressBar' => true]);
     }
 
 }

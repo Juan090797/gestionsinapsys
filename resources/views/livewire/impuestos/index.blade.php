@@ -24,7 +24,7 @@
                             <td class="text-center">{{$impuesto->valor}}</td>
                             <td class="text-center"><span class="badge {{ $impuesto->estado == 'ACTIVO' ? 'badge-success' : 'badge-danger'}}">{{$impuesto->estado}}</span></td>
                             <td class="text-center">
-                                <a href="javascript:void(0)"  wire:click="Edit({{ $impuesto->id }})" class="btn btn-primary" title="Editar">
+                                <a href="javascript:void(0)"  wire:click="Edit({{ $impuesto->id }})" class="btn btn-warning btn-sm" title="Editar">
                                     <i class="fas fa-pencil-alt" aria-hidden="true"></i>
                                 </a>
                             </td>
@@ -41,20 +41,11 @@
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', function (){
-
             window.Livewire.on('show-modal', msg =>{
                 $('#theModal').modal('show')
             });
-            window.livewire.on('impuesto-added', msg =>{
+            window.livewire.on('hide-modal', msg =>{
                 $('#theModal').modal('hide');
-                noty(msg)
-            })
-            window.livewire.on('impuesto-updated', msg =>{
-                $('#theModal').modal('hide');
-                noty(msg)
-            })
-            window.livewire.on('impuesto-deleted', msg =>{
-                noty(msg)
             })
         });
 
@@ -72,13 +63,6 @@
                 if(result.value){
                     window.livewire.emit('deleteRow', id)
                     swal.close()
-                }
-                if (result.isConfirmed) {
-                    Swal.fire(
-                        'Eliminado!',
-                        'El registro ha sido eliminado',
-                        'success'
-                    )
                 }
             })
         }

@@ -3,8 +3,11 @@
 namespace App\Http\Livewire\Salidas;
 
 use App\Http\Livewire\ComponenteBase;
+use App\Models\Compra;
+use App\Models\CompraDetalle;
 use App\Models\MovimientoAlmacen;
 use App\Models\Producto;
+use Illuminate\Support\Facades\DB;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 
@@ -57,21 +60,21 @@ class Salidas extends ComponenteBase
             $this->alert('error', 'Selecciona un registro',['timerProgressBar' => true]);
         }
     }
-
     public function anular(MovimientoAlmacen $movimientoAlmacen)
     {
-        $movimientoAlmacen->update([
-            'estado' => 'ANULADO'
-        ]);
-
-        foreach ($movimientoAlmacen->movimientoDetalles as $item) {
-            $p = Producto::find($item['producto_id']);
-            $item->update([
-                'stock' => $p->stock + $item['cantidad'],
+        DB::transaction(function() use ($movimientoAlmacen) {
+            $movimientoAlmacen->update([
+                'estado' => 'ANULADO'
             ]);
-        }
+            foreach ($movimientoAlmacen->movimientoDetalles as $item) {
+                $p = Producto::find($item['producto_id']);
+                $item->update([
+                    'stock' => $p->stock + $item['cantidad'],
+                ]);
+            }
+        });
+        $this->alert('success', 'Movimiento anulado y stock ajustado',['timerProgressBar' => true]);
     }
-
     public function resetUI()
     {
         $this->selectedProducts =[];

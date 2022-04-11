@@ -7,10 +7,12 @@ use App\Models\Proveedor;
 use App\Models\TipoDocumento;
 use Illuminate\Support\Facades\Validator;
 use App\Models\TipoProveedor;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Maatwebsite\Excel\Facades\Excel;
 
 class Proveedores extends ComponenteBase
 {
+    use LivewireAlert;
     public $search, $selected_id,$documentos, $tipos;
     public $state = [];
     protected $listeners = ['deleteRow' => 'Destroy'];
@@ -48,10 +50,8 @@ class Proveedores extends ComponenteBase
     {
         $this->selected_id = $proveedor->id;
         $this->state = $proveedor->toArray();
-
-        $this->emit('show-modal', 'show-modal!');
+        $this->emit('show-modal');
     }
-
     public function Store()
     {
         $validated = Validator::make($this->state, [
@@ -81,9 +81,9 @@ class Proveedores extends ComponenteBase
         ])->validate();
         Proveedor::create($validated);
         $this->resetUI();
-        $this->emit('proveedor-added', 'Proveedor Registrado');
+        $this->emit('hide-modal');
+        $this->alert('success', 'Proveedor registrado!!',['timerProgressBar' => true]);
     }
-
     public function actualizar()
     {
         $validated = Validator::make($this->state, [
@@ -115,10 +115,9 @@ class Proveedores extends ComponenteBase
         $proveedor = Proveedor::findOrFail($this->state['id']);
         $proveedor->update($validated);
         $this->resetUI();
-        $this->emit('proveedor-updated', 'Proveedor Actualizado');
-
+        $this->emit('hide-modal');
+        $this->alert('success', 'Proveedor actualizado!!',['timerProgressBar' => true]);
     }
-
     public function resetUI()
     {
         $this->state=[];
@@ -126,14 +125,12 @@ class Proveedores extends ComponenteBase
         $this->selected_id = 0;
         $this->resetValidation();
     }
-
     public function Destroy(Proveedor $proveedor)
     {
         $proveedor->delete();
         $this->resetUI();
-        $this->emit('proveedor-deleted', 'Proveedor Eliminado');
+        $this->alert('success', 'Proveedor eliminado!!',['timerProgressBar' => true]);
     }
-
     public function exportProveedor()
     {
         $reportName = 'Proveedores_' . uniqid() . '.xlsx';

@@ -4,9 +4,11 @@ namespace App\Http\Livewire;
 
 use App\Models\CentroCosto;
 use Illuminate\Support\Facades\Validator;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class CentroCostos extends ComponenteBase
 {
+    use LivewireAlert;
     public $selected_id;
     public $state = [];
     protected $listeners = ['deleteRow' => 'Destroy'];
@@ -37,7 +39,8 @@ class CentroCostos extends ComponenteBase
 
         CentroCosto::create($validated);
         $this->resetUI();
-        $this->emit('marca-added', 'Tipo de proveedor Registrado');
+        $this->emit('hide-modal');
+        $this->alert('success', 'Centro de costo registrado!!',['timerProgressBar' => true]);
     }
 
     public function actualizar()
@@ -55,7 +58,8 @@ class CentroCostos extends ComponenteBase
         $centroCosto = CentroCosto::findOrFail($this->state['id']);
         $centroCosto->update($validated);
         $this->resetUI();
-        $this->emit('marca-updated', 'Centro de costo actualizado');
+        $this->emit('hide-modal');
+        $this->alert('success', 'Centro de costo actualizado!!',['timerProgressBar' => true]);
     }
 
     public function resetUI()
@@ -69,6 +73,7 @@ class CentroCostos extends ComponenteBase
     {
         $centroCosto->delete();
         $this->resetUI();
-        $this->emit('marca-deleted', 'Centro de costo eliminado');
+        $this->alert('success', 'Centro de costo eliminado!!',['timerProgressBar' => true]);
+
     }
 }

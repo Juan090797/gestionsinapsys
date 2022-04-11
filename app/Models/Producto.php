@@ -14,15 +14,12 @@ class Producto extends Model
     {
         return $this->belongsTo(Marca::class);
     }
-
     public function clasificacion()
     {
         return $this->belongsTo(Clasificacion::class, 'clasificacions_id');
     }
-
     public function unidad()
     {
         return $this->belongsTo(UnidadMedida::class, 'unidad_medidas_id');
     }
-
 }

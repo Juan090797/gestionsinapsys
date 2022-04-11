@@ -34,11 +34,7 @@
                     @foreach($salidas as $salida)
                         <tr>
                             <th>
-                                @if($salida->estado == 'APROBADO' || $salida->estado == 'ANULADO')
-                                    <input type="checkbox" wire:model="selectedProducts" value="{{ $salida->id }}" disabled>
-                                @else
-                                    <input type="checkbox" wire:model="selectedProducts" value="{{ $salida->id }}">
-                                @endif
+                                <input type="checkbox" wire:model="selectedProducts" value="{{ $salida->id }}" {{ $salida->estado_disabled }}>
                             </th>
                             <td class="text-center">{{$salida->tipo_documento}}</td>
                             <td class="text-center">{{$salida->numero_guia}}</td>
@@ -47,25 +43,9 @@
                             <td class="text-center">{{$salida->referencia}}</td>
                             <td class="text-center"><span class="badge {{ $salida->estado == 'APROBADO' ? 'badge-success' : 'badge-danger'}}">{{$salida->estado}}</span></td>
                             <td class="text-center">
-                                <a href="{{ route('salida.show',$salida) }}" class="btn btn-primary" title="Ver">
-                                    <i class="far fa-eye" aria-hidden="true"></i>
-                                </a>
-                                @if($salida->estado == 'APROBADO')
-
-                                @else
-                                    <a href="{{route('salida.edit', $salida)}}" class="btn btn-success" title="editar">
-                                        <i class="fas fa-pen"aria-hidden="true"></i>
-                                    </a>
-                                @endif
-                                @if($salida->estado == 'ANULADO')
-                                <button href="javascript:void(0)" onclick="Confirm('{{ $salida->id }}')" class="btn btn-danger" title="Eliminar" disabled>
-                                    <i class="fa fa-trash" aria-hidden="true"></i>
-                                </button>
-                                @else
-                                    <button href="javascript:void(0)" onclick="Confirm('{{ $salida->id }}')" class="btn btn-danger" title="Eliminar">
-                                        <i class="fa fa-trash" aria-hidden="true"></i>
-                                    </button>
-                                @endif
+                                <a href="{{ route('salida.show',$salida) }}" class="btn btn-primary btn-sm" title="Ver"><i class="far fa-eye" aria-hidden="true"></i></a>
+                                <button href="{{route('salida.edit', $salida)}}" class="btn btn-warning btn-sm" title="editar" {{ $salida->estado_disabled }}><i class="fas fa-pen"aria-hidden="true"></i></button>
+                                <button href="javascript:void(0)" onclick="Confirm('{{ $salida->id }}')" class="btn btn-danger btn-sm" title="Eliminar" {{ $salida->estado == 'ANULADO' ? 'disabled' : '' }}><i class="fa fa-trash" aria-hidden="true"></i></button>
                             </td>
                         </tr>
                     @endforeach
@@ -82,23 +62,6 @@
             window.Livewire.on('show-modal', msg =>{
                 $('#theModal').modal('show')
             });
-            window.livewire.on('marca-added', msg =>{
-                $('#theModal').modal('hide');
-                noty(msg)
-            })
-            window.livewire.on('marca-updated', msg =>{
-                $('#theModal').modal('hide');
-                noty(msg)
-            })
-            window.livewire.on('marca-deleted', msg =>{
-                noty(msg)
-            })
-            window.livewire.on('error', msg =>{
-                noty(msg)
-            })
-            window.livewire.on('aprobado', msg =>{
-                noty(msg)
-            })
         });
         function Confirm(id)
         {
@@ -114,13 +77,6 @@
                 if(result.value){
                     window.livewire.emit('deleteRow', id)
                     swal.close()
-                }
-                if (result.isConfirmed) {
-                    Swal.fire(
-                        'Eliminado!',
-                        'El registro ha sido eliminado',
-                        'success'
-                    )
                 }
             })
         }

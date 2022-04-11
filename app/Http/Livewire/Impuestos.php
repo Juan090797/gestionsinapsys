@@ -4,9 +4,11 @@ namespace App\Http\Livewire;
 
 use App\Models\impuesto;
 use Illuminate\Support\Facades\Validator;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class Impuestos extends ComponenteBase
 {
+    use LivewireAlert;
     public $selected_id;
     public $state= [];
     protected $listeners = ['deleteRow' => 'Destroy'];
@@ -33,7 +35,7 @@ class Impuestos extends ComponenteBase
     {
         $this->selected_id = $impuesto->id;
         $this->state = $impuesto->toArray();
-        $this->emit('show-modal', 'show-modal!');
+        $this->emit('show-modal');
     }
     public function actualizar()
     {
@@ -45,20 +47,20 @@ class Impuestos extends ComponenteBase
 
         $tax = impuesto::findOrFail($this->state['id']);
         $tax->update($validated);
-        $this->emit('impuesto-updated', 'Impuesto Registrado');
+        $this->emit('hide-modal');
+        $this->alert('success', 'Impuesto registrado!!',['timerProgressBar' => true]);
     }
-
-    public function Destroy(impuesto $impuesto)
-    {
-        $impuesto->delete();
-        $this->resetUI();
-        $this->emit('impuesto-deleted', 'Impuesto Eliminado');
-    }
-
     public function resetUI()
     {
         $this->state =[];
         $this->selected_id = '';
         $this->resetValidation();
+    }
+    public function Destroy(impuesto $impuesto)
+    {
+        $impuesto->delete();
+        $this->resetUI();
+        $this->emit('hide-modal');
+        $this->alert('success', 'Impuesto eliminado!!',['timerProgressBar' => true]);
     }
 }

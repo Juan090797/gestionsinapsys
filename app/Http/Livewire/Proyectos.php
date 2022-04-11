@@ -151,7 +151,7 @@ class Proyectos extends ComponenteBase
         $validated['etapa_id'] = 1;
         Proyecto::create($validated);
         $this->resetUI();
-        $this->emit('proyecto-hide');
+        $this->emit('hide-modal');
         $this->alert('success', 'Proyecto creado!!',['timerProgressBar' => true]);
     }
 
@@ -159,7 +159,7 @@ class Proyectos extends ComponenteBase
     {
         $this->selected_id  = $proyecto->id;
         $this->state        = $proyecto->toArray();
-        $this->emit('show-modal', 'show-modal!');
+        $this->emit('show-modal');
     }
 
     public function actualizar()
@@ -189,7 +189,7 @@ class Proyectos extends ComponenteBase
         $proyecto = Proyecto::findOrFail($this->state['id']);
         $proyecto->update($validated);
         $this->resetUI();
-        $this->emit('proyecto-hide');
+        $this->emit('hide-modal');
         $this->alert('success', 'Proyecto actualizado!!',['timerProgressBar' => true]);
     }
     public function resetUI()
@@ -201,15 +201,8 @@ class Proyectos extends ComponenteBase
     }
     public function Destroy(Proyecto $proyecto)
     {
-        $cotis = Cotizacion::where('proyecto_id', $proyecto->id)->count();
-        if($cotis == 0)
-        {
-            $proyecto->delete();
-            $this->resetUI();
-            $this->alert('success', 'Proyecto eliminado!!',['timerProgressBar' => true]);
-        }else {
-            $this->resetUI();
-            $this->alert('error', "El proyecto cuenta con $cotis cotizaciones",['timerProgressBar' => true]);
-        }
+        $proyecto->update(['estado' => 'ARCHIVADO']);
+        $this->resetUI();
+        $this->alert('success', 'Proyecto archivado!!',['timerProgressBar' => true]);
     }
 }

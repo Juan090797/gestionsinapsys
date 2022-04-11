@@ -82,8 +82,8 @@
                             <td class="text-center">
                                 <a href="javascript:void(0)" wire:click="verPedido('{{ $pedido->id }}')" class="btn btn-success btn-sm"><i class="fas fa-eye"></i></a>
                                 <a href="{{route('pedido.show', $pedido)}}" class="btn btn-primary btn-sm"><i class="fas fa-eye"></i></a>
-                                <a href="{{route('pedido.edit', $pedido)}}" class="btn btn-warning btn-sm"><i class="fas fa-pencil-alt"></i></a>
-                                <a href="javascript:void(0)" onclick="Confirm('{{ $pedido->id }}')" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a>
+                                <button href="{{route('pedido.edit', $pedido)}}" class="btn btn-warning btn-sm" {{ $pedido->estado_disabled }}><i class="fas fa-pencil-alt"></i></button>
+                                <button href="javascript:void(0)" onclick="Confirm('{{ $pedido->id }}')" class="btn btn-danger btn-sm" {{ $pedido->estado_disabled }}><i class="fas fa-trash"></i></button>
                             </td>
                         </tr>
                     @endforeach

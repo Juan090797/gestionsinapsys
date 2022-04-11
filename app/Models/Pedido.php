@@ -47,5 +47,17 @@ class Pedido extends Model
         ];
         return $badges[$this->estado];
     }
+    public function getEstadoDisabledAttribute()
+    {
+        $badges= [
+            'ANULADO'       => 'disabled',
+            'EN PROCESO'    => '',
+            'FACTURADO'     => 'disabled',
+            'DESPACHADO'    => 'disabled',
+            'COMPLETADO'    => 'disabled',
+            'FINALIZADO'    => 'disabled',
+        ];
+        return $badges[$this->estado];
+    }
 
 }

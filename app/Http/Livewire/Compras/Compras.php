@@ -45,7 +45,6 @@ class Compras extends ComponenteBase
         if(count($this->selectedProducts))
         {
             $compra = Compra::with('compraDetalles')->find($this->selectedProducts)->first();
-
             //crea el movimiento de almacen, si esque se crea la compra
             if($compra->estado == 'PENDIENTE'){
                 $i = 1;
@@ -130,11 +129,12 @@ class Compras extends ComponenteBase
 
     public function delete(Compra $compra)
     {
-        DB::transaction(function() use($compra) {
-            CompraDetalle::where('compra_id', $compra->id)->delete();
-            $compra->delete();
+        DB::transaction(function() use ($compra) {
+            $compra->update([
+                'estado' => 'ANULADO'
+            ]);
         });
         $this->resetUI();
-        $this->alert('success', 'Se elimino la compra con exito',['timerProgressBar' => true]);
+        $this->alert('success', 'Compra anulado',['timerProgressBar' => true]);
     }
 }

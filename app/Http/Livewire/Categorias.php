@@ -5,9 +5,11 @@ namespace App\Http\Livewire;
 use App\Models\Categoria;
 use App\Models\Cliente;
 use Illuminate\Support\Facades\Validator;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class Categorias extends ComponenteBase
 {
+    use LivewireAlert;
     public $search, $selected_id;
     public $state=[];
     protected $listeners = ['deleteRow' => 'Destroy'];
@@ -30,9 +32,8 @@ class Categorias extends ComponenteBase
     {
         $this->selected_id = $categoria->id;
         $this->state = $categoria->toArray();
-        $this->emit('show-modal', 'show-modal!');
+        $this->emit('show-modal');
     }
-
     public function Store()
     {
         $validated = Validator::make($this->state, [
@@ -47,9 +48,9 @@ class Categorias extends ComponenteBase
 
         Categoria::create($validated);
         $this->resetUI();
-        $this->emit('categoria-added', 'Categoria Registrada');
+        $this->emit('hide-modal');
+        $this->alert('success', 'Categoria registrada!!',['timerProgressBar' => true]);
     }
-
     public function actualizar()
     {
         $validated = Validator::make($this->state, [
@@ -60,15 +61,14 @@ class Categorias extends ComponenteBase
             'nombre.unique'     => 'Ya existe el nombre de la categoria',
             'nombre.min'        => 'El nombre de la categoria debe tener al menos 3 caracteres',
             'estado.required'   => 'El estado es requerido',
-
         ])->validate();
 
         $categoria = Categoria::findOrFail($this->state['id']);
         $categoria->update($validated);
         $this->resetUI();
-        $this->emit('categoria-updated', 'Categoria Actualizada');
+        $this->emit('hide-modal');
+        $this->alert('success', 'Categoria actualizada!!',['timerProgressBar' => true]);
     }
-
     public function resetUI()
     {
         $this->state=[];
@@ -76,7 +76,6 @@ class Categorias extends ComponenteBase
         $this->selected_id = 0;
         $this->resetValidation();
     }
-
     public function Destroy(Categoria $categoria)
     {
         $clientes = Cliente::where('categoria_id', $categoria->id)->count();
@@ -84,10 +83,10 @@ class Categorias extends ComponenteBase
         {
             $categoria->delete();
             $this->resetUI();
+            $this->alert('success', 'Categoria eliminada',['timerProgressBar' => true]);
         }else{
             $this->resetUI();
-            $this->emit('error', 'La categoria tiene clientes relacionados, no se puede eliminar');
+            $this->alert('success', 'La categoria tiene clientes relacionados, no se puede eliminar',['timerProgressBar' => true]);
         }
-
     }
 }

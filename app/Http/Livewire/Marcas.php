@@ -5,9 +5,11 @@ namespace App\Http\Livewire;
 use App\Models\Marca;
 use App\Models\Producto;
 use Illuminate\Support\Facades\Validator;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class Marcas extends ComponenteBase
 {
+    use LivewireAlert;
     public $search, $selected_id;
     public $state = [];
     protected $listeners = ['deleteRow' => 'Destroy'];
@@ -29,7 +31,7 @@ class Marcas extends ComponenteBase
     {
         $this->selected_id = $marca->id;
         $this->state = $marca->toArray();
-        $this->emit('show-modal', 'show-modal!');
+        $this->emit('show-modal');
     }
     public function Store()
     {
@@ -45,7 +47,8 @@ class Marcas extends ComponenteBase
 
         Marca::create($validated);
         $this->resetUI();
-        $this->emit('marca-added', 'Marca Registrada');
+        $this->emit('hide-modal');
+        $this->alert('success', 'Marca registrada!!',['timerProgressBar' => true]);
     }
     public function actualizar()
     {
@@ -62,8 +65,8 @@ class Marcas extends ComponenteBase
         $marca = Marca::findOrFail($this->state['id']);
         $marca->update($validated);
         $this->resetUI();
-        $this->emit('marca-updated', 'Marca Actualizada');
-
+        $this->emit('hide-modal');
+        $this->alert('success', 'Marca actualizada!!',['timerProgressBar' => true]);
     }
     public function resetUI()
     {
@@ -78,10 +81,10 @@ class Marcas extends ComponenteBase
         if ($pro == 0) {
             $marca->delete();
             $this->resetUI();
-            $this->emit('marca-deleted', 'Marca Eliminada');
+            $this->alert('success', 'Marca eliminada!!',['timerProgressBar' => true]);
         }else {
             $this->resetUI();
-            $this->emit('error', 'La marca esta relacionado con productos, no se puede eliminar');
+            $this->alert('success', 'La marca esta relacionado con productos, no se puede eliminar',['timerProgressBar' => true]);
         }
     }
 

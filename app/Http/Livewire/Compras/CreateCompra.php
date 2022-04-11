@@ -104,6 +104,5 @@ class CreateCompra extends Component
         });
         $this->alert('success', 'Compra Registrada',['timerProgressBar' => true]);
         return redirect()->route('compras');
-
     }
 }

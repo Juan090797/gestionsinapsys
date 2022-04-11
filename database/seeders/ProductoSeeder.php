@@ -17,7 +17,7 @@ class ProductoSeeder extends Seeder
         DB::table('productos')->insert([
             'codigo'            => '0000000001',
             'modelo'            => 'Modelo 1',
-            'estado'            => 'Activo',
+            'estado'            => 'ACTIVO',
             'nombre'            => 'Nombre del producto 1',
             'descripcion'       => 'descripcion del producto 1',
             'precio_venta'      => '98000.00',
@@ -29,7 +29,7 @@ class ProductoSeeder extends Seeder
         DB::table('productos')->insert([
             'codigo'            => '0000000002',
             'modelo'            => 'Modelo 2',
-            'estado'            => 'Activo',
+            'estado'            => 'ACTIVO',
             'nombre'            => 'Nombre del producto 2',
             'descripcion'       => 'descripcion del producto 2',
             'precio_venta'      => '25000.00',
@@ -41,7 +41,7 @@ class ProductoSeeder extends Seeder
         DB::table('productos')->insert([
             'codigo'            => '0000000003',
             'modelo'            => 'Modelo 3',
-            'estado'            => 'Activo',
+            'estado'            => 'ACTIVO',
             'nombre'            => 'Nombre del producto 3',
             'descripcion'       => 'descripcion del producto 3',
             'precio_venta'      => '55000.00',
@@ -53,7 +53,7 @@ class ProductoSeeder extends Seeder
         DB::table('productos')->insert([
             'codigo'            => '0000000004',
             'modelo'            => 'Modelo 4',
-            'estado'            => 'Activo',
+            'estado'            => 'ACTIVO',
             'nombre'            => 'Lapicero Negro',
             'descripcion'       => 'lapicero',
             'precio_venta'      => '0.00',
@@ -66,7 +66,7 @@ class ProductoSeeder extends Seeder
         DB::table('productos')->insert([
             'codigo'            => '0000000005',
             'modelo'            => 'Modelo 5',
-            'estado'            => 'Activo',
+            'estado'            => 'ACTIVO',
             'nombre'            => 'Martillo',
             'descripcion'       => 'martillo generico con mango de madera',
             'precio_venta'      => '0.00',

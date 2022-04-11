@@ -38,11 +38,7 @@
                     @foreach($compras as $compra)
                         <tr>
                             <th>
-                                @if($compra->estado == 'APROBADO')
-                                    <input type="checkbox" wire:model="selectedProducts" value="{{ $compra->id }}" disabled>
-                                @else
-                                    <input type="checkbox" wire:model="selectedProducts" value="{{ $compra->id }}">
-                                @endif
+                                <input type="checkbox" wire:model="selectedProducts" value="{{ $compra->id }}" {{ $compra->estado_disabled }}>
                             </th>
                             <td class="text-center"><span class="badge {{ $compra->estado == 'APROBADO' ? 'badge-success' : 'badge-danger'}}">{{$compra->estado}}</span></td>
                             <td class="text-center">{{ $compra->proveedor->razon_social }}</td>
@@ -53,8 +49,8 @@
                             <td class="text-center">{{ $compra->numero_documento }}</td>
                             <td class="text-center">S/ {{ number_format($compra->total,2) }}</td>
                             <td class="text-center">
-                                <a href="{{route('compra.edit', $compra)}}" class="btn btn-primary" title="Editar"><i class="fas fa-pencil-alt" aria-hidden="true"></i></a>
-                                <a href="javascript:void(0)" onclick="Confirm('{{ $compra->id }}')" class="btn btn-danger" title="Eliminar"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                <button href="{{route('compra.edit', $compra)}}" class="btn btn-warning btn-sm" title="Editar" {{ $compra->estado_disabled }}><i class="fas fa-pencil-alt" aria-hidden="true"></i></button>
+                                <button href="javascript:void(0)" onclick="Confirm('{{ $compra->id }}')" class="btn btn-danger btn-sm" title="Eliminar" {{ $compra->estado == 'ANULADO' ? 'disabled' : '' }}><i class="fa fa-trash" aria-hidden="true"></i></button>
                             </td>
                         </tr>
                     @endforeach
@@ -71,17 +67,6 @@
             window.Livewire.on('show-modal', msg =>{
                 $('#theModal').modal('show')
             });
-            window.livewire.on('marca-added', msg =>{
-                $('#theModal').modal('hide');
-                noty(msg)
-            })
-            window.livewire.on('marca-updated', msg =>{
-                $('#theModal').modal('hide');
-                noty(msg)
-            })
-            window.livewire.on('marca-deleted', msg =>{
-                noty(msg)
-            })
         });
         function Confirm(id)
         {

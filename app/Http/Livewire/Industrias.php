@@ -5,9 +5,11 @@ namespace App\Http\Livewire;
 use App\Models\Cliente;
 use App\Models\Industria;
 use Illuminate\Support\Facades\Validator;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class Industrias extends ComponenteBase
 {
+    use LivewireAlert;
     public $search, $selected_id;
     public $state=[];
     protected $listeners = ['deleteRow' => 'Destroy'];
@@ -32,7 +34,7 @@ class Industrias extends ComponenteBase
     {
         $this->selected_id = $industria->id;
         $this->state = $industria->toArray();
-        $this->emit('show-modal', 'show-modal!');
+        $this->emit('show-modal');
     }
 
     public function Store()
@@ -50,7 +52,8 @@ class Industrias extends ComponenteBase
 
         Industria::create($validated);
         $this->resetUI();
-        $this->emit('industria-added', 'Industria Registrada');
+        $this->emit('hide-modal');
+        $this->alert('success', 'Industria registrada!!',['timerProgressBar' => true]);
     }
 
     public function actualizar()
@@ -69,8 +72,8 @@ class Industrias extends ComponenteBase
         $industria = Industria::findOrFail($this->state['id']);
         $industria->update($validated);
         $this->resetUI();
-        $this->emit('industria-updated', 'Industria Actualizada');
-
+        $this->emit('hide-modal');
+        $this->alert('success', 'Industria actualizada!!',['timerProgressBar' => true]);
     }
 
     public function resetUI()
@@ -84,14 +87,13 @@ class Industrias extends ComponenteBase
     public function Destroy(Industria $industria)
     {
         $clientes = Cliente::where('industria_id', $industria->id)->count();
-
         if ($clientes == 0){
             $industria->delete();
             $this->resetUI();
-            $this->emit('industria-deleted', 'Industria Eliminada');
+            $this->alert('success', 'Industria eliminada!!',['timerProgressBar' => true]);
         }else {
             $this->resetUI();
-            $this->emit('error', 'La industria tiene clientes relacionados, no se puede eliminar');
+            $this->alert('error', 'La industria tiene clientes relacionados, no se puede eliminar',['timerProgressBar' => true]);
         }
 
     }

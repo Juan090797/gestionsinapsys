@@ -8,55 +8,57 @@ use App\Models\Industria;
 use App\Models\TipoDocumento;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class Clientes extends Component
+class Clientes extends ComponenteBase
 {
-    use WithPagination;
+    use LivewireAlert;
     public $state= [];
-    public $search, $selected_id,$documentos;
-    protected $paginationTheme = 'bootstrap';
-    Private $pagination = 10;
+    public $search, $selected_id,$documentos,$industrias,$categorias;
     protected $listeners = ['deleteRow' => 'Destroy'];
 
     public function  updatingSearch()
     {
         $this->resetPage();
     }
-
     public function mount()
     {
         $this->selected_id = 0;
         $this->state= ['usuario_auditoria' => Auth::user()->name,];
     }
-
     public function render()
     {
         if(strlen($this->search) > 0) {
             $data = Cliente::where('razon_social', 'like', '%' . $this->search . '%')
+                            ->where('estado','ACTIVO')
                             ->orWhere('ruc', 'like', '%' . $this->search . '%')
                             ->paginate($this->pagination);
         }else {
-            $data = Cliente::orderBy('id', 'desc')->paginate($this->pagination);
+            $data = Cliente::where('estado','ACTIVO')->paginate($this->pagination);
         }
         $this->update();
-        return view('livewire.clientes.clientes',[
-            'clientes' => $data,
-            'industrias' => Industria::all(),
-            'categorias' => Categoria::all(),
-        ])->extends('layouts.tema.app')->section('content');
+        return view('livewire.clientes.clientes',['clientes' => $data,])->extends('layouts.tema.app')->section('content');
     }
-
     public function update()
     {
         $this->documentos();
+        $this->industrias();
+        $this->categorias();
     }
     public function documentos()
     {
         $this->documentos = TipoDocumento::where('tipo', 'identidad')->get();
     }
-
+    public function industrias()
+    {
+        $this->industrias = Industria::all();
+    }
+    public function categorias()
+    {
+        $this->categorias = Categoria::all();
+    }
     public function resetUI()
     {
         $this->state = [];
@@ -64,7 +66,6 @@ class Clientes extends Component
         $this->selected_id = 0;
         $this->resetValidation();
     }
-
     public function Store()
     {
         $validated = Validator::make($this->state, [
@@ -103,18 +104,17 @@ class Clientes extends Component
         ])->validate();
 
         Cliente::create($validated);
-
         $this->resetUI();
-        $this->emit('cliente-added', 'Cliente Registrado');
+        $this->emit('hide-modal');
+        $this->alert('success', 'Cliente registrado!!',['timerProgressBar' => true]);
     }
 
     public function Edit(Cliente $cliente)
     {
         $this->selected_id = $cliente->id;
         $this->state = $cliente->toArray();
-        $this->emit('show-modal', 'show-modal!');
+        $this->emit('show-modal');
     }
-
     public function actualizar()
     {
         $validated = Validator::make($this->state, [
@@ -155,14 +155,15 @@ class Clientes extends Component
         $cliente = Cliente::findOrFail($this->state['id']);
         $cliente->update($validated);
         $this->resetUI();
-        $this->emit('cliente-updated', 'Cliente Actualizado');
+        $this->emit('hide-modal');
+        $this->alert('success', 'Cliente actualizado!!',['timerProgressBar' => true]);
     }
 
     public function Destroy(Cliente $cliente)
     {
-        $cliente->delete();
+        $cliente->update(['estado' => 'INACTIVO']);
         $this->resetUI();
-        $this->emit('cliente-deleted', 'Cliente Eliminado');
+        $this->alert('success', 'Cliente eliminado!!',['timerProgressBar' => true]);
     }
 
 }

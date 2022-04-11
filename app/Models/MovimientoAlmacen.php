@@ -31,5 +31,14 @@ class MovimientoAlmacen extends Model
     {
         return $this->belongsTo(CentroCosto::class, 'centro_costo_id');
     }
+    public function getEstadoDisabledAttribute()
+    {
+        $badges= [
+            'ANULADO'       => 'disabled',
+            'PENDIENTE'     => '',
+            'APROBADO'      => 'disabled',
+        ];
+        return $badges[$this->estado];
+    }
 
 }

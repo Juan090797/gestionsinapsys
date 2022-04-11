@@ -33,4 +33,13 @@ class Compra extends Model
     {
         return $this->belongsTo(TipoDocumento::class, 'tipo_documento_id');
     }
+    public function getEstadoDisabledAttribute()
+    {
+        $badges= [
+            'ANULADO'       => 'disabled',
+            'PENDIENTE'     => '',
+            'APROBADO'      => 'disabled',
+        ];
+        return $badges[$this->estado];
+    }
 }

@@ -31,12 +31,8 @@
                         <td class="text-center">{{$categoria->nombre}}</td>
                         <td class="text-center"><span class="badge {{ $categoria->estado == 'ACTIVO' ? 'badge-success' : 'badge-danger'}}">{{$categoria->estado}}</span></td>
                         <td class="text-center">
-                            <a href="javascript:void(0)"  wire:click="Edit({{ $categoria->id }})" class="btn btn-primary" title="Edit">
-                                <i class="fas fa-pencil-alt" aria-hidden="true"></i>
-                            </a>
-                            <a href="javascript:void(0)" onclick="Confirm('{{ $categoria->id }}')" class="btn btn-danger" title="Delet">
-                                <i class="fa fa-trash" aria-hidden="true"></i>
-                            </a>
+                            <a href="javascript:void(0)"  wire:click="Edit({{ $categoria->id }})" class="btn btn-primary btn-sm" title="Editar"><i class="fas fa-pencil-alt" aria-hidden="true"></i></a>
+                            <a href="javascript:void(0)" onclick="Confirm('{{ $categoria->id }}')" class="btn btn-danger btn-sm" title="Eliminar"><i class="fa fa-trash" aria-hidden="true"></i></a>
                         </td>
                     </tr>
                     @endforeach
@@ -51,20 +47,11 @@
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', function (){
-
             window.Livewire.on('show-modal', msg =>{
                 $('#theModal').modal('show')
             });
-            window.livewire.on('categoria-added', msg =>{
+            window.livewire.on('hide-modal', msg =>{
                 $('#theModal').modal('hide');
-                noty(msg)
-            })
-            window.livewire.on('categoria-updated', msg =>{
-                $('#theModal').modal('hide');
-                noty(msg)
-            })
-            window.livewire.on('error', msg =>{
-                noty(msg)
             })
         });
         function Confirm(id)
@@ -80,16 +67,7 @@
             }).then((result) => {
                 if(result.value){
                     window.livewire.emit('deleteRow', id)
-                    Swal.fire(
-                        'Eliminado!',
-                        'El registro ha sido eliminado',
-                        'success'
-                    )
-                }else {
-                    Swal.fire({
-                        title: 'Operación Cancelada!',
-                        icon: 'success'
-                    });
+                    swal.close()
                 }
             })
         }

@@ -5,9 +5,11 @@ namespace App\Http\Livewire;
 use App\Models\Producto;
 use App\Models\UnidadMedida;
 use Illuminate\Support\Facades\Validator;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class UnidadesMedida extends ComponenteBase
 {
+    use LivewireAlert;
     public $search, $selected_id;
     public $state = [];
     protected $listeners = ['deleteRow' => 'Destroy'];
@@ -22,7 +24,7 @@ class UnidadesMedida extends ComponenteBase
     {
         $this->selected_id = $unidadMedida->id;
         $this->state = $unidadMedida->toArray();
-        $this->emit('show-modal', 'show-modal!');
+        $this->emit('show-modal');
     }
     public function Store()
     {
@@ -38,7 +40,8 @@ class UnidadesMedida extends ComponenteBase
 
         UnidadMedida::create($validated);
         $this->resetUI();
-        $this->emit('unidad-added', 'Unidad Registrada');
+        $this->emit('hide-modal' );
+        $this->alert('success', 'Unidad registrada!!',['timerProgressBar' => true]);
     }
     public function actualizar()
     {
@@ -55,7 +58,8 @@ class UnidadesMedida extends ComponenteBase
         $unidad = UnidadMedida::findOrFail($this->state['id']);
         $unidad->update($validated);
         $this->resetUI();
-        $this->emit('unidad-updated', 'Unidad Actualizada');
+        $this->emit('hide-modal');
+        $this->alert('success', 'Unidad actualizada!!',['timerProgressBar' => true]);
     }
     public function resetUI()
     {
@@ -70,10 +74,10 @@ class UnidadesMedida extends ComponenteBase
         if ($pro == 0) {
             $unidadMedida->delete();
             $this->resetUI();
-            $this->emit('unidad-deleted', 'Unidad Eliminada');
+            $this->alert('success', 'Unidad eliminada!!',['timerProgressBar' => true]);
         }else {
             $this->resetUI();
-            $this->emit('error', 'La unidad esta relacionado con productos, no se puede eliminar');
+            $this->alert('error', 'La unidad esta relacionado con productos, no se puede eliminar!!',['timerProgressBar' => true]);
         }
 
     }

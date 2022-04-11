@@ -34,11 +34,7 @@
                     @foreach($ingresos as $ingreso)
                         <tr>
                             <th>
-                                @if($ingreso->estado == 'APROBADO')
-                                    <input type="checkbox" wire:model="selectedProducts" value="{{ $ingreso->id }}" disabled>
-                                @else
-                                    <input type="checkbox" wire:model="selectedProducts" value="{{ $ingreso->id }}">
-                                @endif
+                                <input type="checkbox" wire:model="selectedProducts" value="{{ $ingreso->id }}" {{ $ingreso->estado_disabled}}>
                             </th>
                             <td class="text-center">{{$ingreso->tipo_documento}}</td>
                             <td class="text-center">{{$ingreso->numero_guia}}</td>
@@ -47,15 +43,9 @@
                             <td class="text-center">{{$ingreso->referencia}}</td>
                             <td class="text-center"><span class="badge {{ $ingreso->estado == 'APROBADO' ? 'badge-success' : 'badge-danger'}}">{{$ingreso->estado}}</span></td>
                             <td class="text-center">
-                                <a href="{{route('ingreso.show', $ingreso)}}" class="btn btn-primary" title="Ver">
-                                    <i class="far fa-eye" aria-hidden="true"></i>
-                                </a>
-                                <a href="{{route('ingreso.edit', $ingreso)}}" class="btn btn-success" title="editar">
-                                    <i class="fas fa-pen"aria-hidden="true"></i>
-                                </a>
-                                <a href="javascript:void(0)" onclick="Confirm('{{ $ingreso->id }}')" class="btn btn-danger" title="Eliminar">
-                                    <i class="fa fa-trash" aria-hidden="true"></i>
-                                </a>
+                                <a href="{{route('ingreso.show', $ingreso)}}" class="btn btn-primary btn-sm" title="Ver"><i class="far fa-eye" aria-hidden="true"></i></a>
+                                <button href="{{route('ingreso.edit', $ingreso)}}" class="btn btn-warning btn-sm" title="editar" {{ $ingreso->estado_disabled }}><i class="fas fa-pen"aria-hidden="true"></i></button>
+                                <button href="javascript:void(0)" onclick="Confirm('{{ $ingreso->id }}')" class="btn btn-danger btn-sm" title="Eliminar" {{ $ingreso->estado == 'ANULADO' ? 'disabled' : ''}}><i class="fa fa-trash" aria-hidden="true"></i></button>
                             </td>
                         </tr>
                     @endforeach
@@ -73,26 +63,6 @@
             window.Livewire.on('show-modal-ingreso', msg =>{
                 $('#theModalPedido').modal('show')
             });
-            window.Livewire.on('show-modal', msg =>{
-                $('#theModal').modal('show')
-            });
-            window.livewire.on('marca-added', msg =>{
-                $('#theModal').modal('hide');
-                noty(msg)
-            })
-            window.livewire.on('marca-updated', msg =>{
-                $('#theModal').modal('hide');
-                noty(msg)
-            })
-            window.livewire.on('marca-deleted', msg =>{
-                noty(msg)
-            })
-            window.livewire.on('error', msg =>{
-                noty(msg)
-            })
-            window.livewire.on('aprobado', msg =>{
-                noty(msg)
-            })
         });
 
         function Confirm(id)
@@ -109,13 +79,6 @@
                 if(result.value){
                     window.livewire.emit('deleteRow', id)
                     swal.close()
-                }
-                if (result.isConfirmed) {
-                    Swal.fire(
-                        'Eliminado!',
-                        'El registro ha sido eliminado',
-                        'success'
-                    )
                 }
             })
         }

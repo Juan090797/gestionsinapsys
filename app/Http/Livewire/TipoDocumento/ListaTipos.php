@@ -54,4 +54,29 @@ class ListaTipos extends Component
         $this->emit('tipo-added');
         $this->alert('success', 'Tipo documento Registrado',['timerProgressBar' => true]);
     }
+    public function Edit(TipoDocumento $tipoDocumento)
+    {
+        $this->selected_id = $tipoDocumento->id;
+        $this->state = $tipoDocumento->toArray();
+        $this->emit('show-modal');
+    }
+    public function actualizar()
+    {
+        $validated = Validator::make($this->state, [
+            'nombre'    => 'required|unique:centro_costos|min:3',
+            'codigo'    => 'required',
+            'tipo'      => 'required',
+        ],[
+            'nombre.required'   => 'El nombre del centro de costo es requerido',
+            'nombre.unique'     => 'Ya existe el nombre del centro de costo',
+            'nombre.min'        => 'El nombre del centro de costo debe tener al menos 3 caracteres',
+            'codigo.required'   => 'El codigo es requerido',
+            'tipo.required'     => 'El tipo es requerido',
+        ])->validate();
+        $tipo = TipoDocumento::findOrFail($this->state['id']);
+        $tipo->update($validated);
+        $this->resetUI();
+        $this->emit('hide-modal');
+        $this->alert('success', 'Tipo documento actualizado!!',['timerProgressBar' => true]);
+    }
 }

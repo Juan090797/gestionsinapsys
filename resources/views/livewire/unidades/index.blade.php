@@ -20,12 +20,12 @@
                         <tr>
                             <th scope="row">{{$unidades->firstItem() + $index}}</th>
                             <td class="text-center">{{$unidad->nombre}}</td>
-                            <td class="text-center"><span class="badge {{ $unidad->estado == 'Activo' ? 'badge-success' : 'badge-danger'}}">{{$unidad->estado}}</span></td>
+                            <td class="text-center"><span class="badge {{ $unidad->estado == 'ACTIVO' ? 'badge-success' : 'badge-danger'}}">{{$unidad->estado}}</span></td>
                             <td class="text-center">
-                                <a href="javascript:void(0)"  wire:click="Edit({{ $unidad->id }})" class="btn btn-primary" title="Edit">
+                                <a href="javascript:void(0)"  wire:click="Edit({{ $unidad->id }})" class="btn btn-warning btn-sm" title="Editar">
                                     <i class="fas fa-pencil-alt" aria-hidden="true"></i>
                                 </a>
-                                <a href="javascript:void(0)" onclick="Confirm('{{ $unidad->id }}')" class="btn btn-danger" title="Delet">
+                                <a href="javascript:void(0)" onclick="Confirm('{{ $unidad->id }}')" class="btn btn-danger btn-sm" title="Eliminar">
                                     <i class="fa fa-trash" aria-hidden="true"></i>
                                 </a>
                             </td>
@@ -45,19 +45,8 @@
             window.Livewire.on('show-modal', msg =>{
                 $('#theModal').modal('show')
             });
-            window.livewire.on('unidad-added', msg =>{
+            window.livewire.on('hide-modal', msg =>{
                 $('#theModal').modal('hide');
-                noty(msg)
-            })
-            window.livewire.on('unidad-updated', msg =>{
-                $('#theModal').modal('hide');
-                noty(msg)
-            })
-            window.livewire.on('unidad-deleted', msg =>{
-                noty(msg)
-            })
-            window.livewire.on('error', msg =>{
-                noty(msg)
             })
         });
         function Confirm(id)
@@ -74,13 +63,6 @@
                 if(result.value){
                     window.livewire.emit('deleteRow', id)
                     swal.close()
-                }
-                if (result.isConfirmed) {
-                    Swal.fire(
-                        'Eliminado!',
-                        'El registro ha sido eliminado',
-                        'success'
-                    )
                 }
             })
         }

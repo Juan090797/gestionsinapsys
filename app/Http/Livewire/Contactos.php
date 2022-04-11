@@ -3,25 +3,32 @@
 namespace App\Http\Livewire;
 
 use App\Models\Contacto;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 
 class Contactos extends Component
 {
-    public $nombre, $celular_cont, $correo_cont, $area_cont, $cargo_cont, $estado_cont, $selected_id, $cliente_id, $cliente;
+    use LivewireAlert;
+    public $nombre, $celular_cont, $correo_cont, $area_cont, $cargo_cont, $estado_cont, $selected_id, $cliente_id, $clientem,$contactos;
 
     public function mount($cliente)
     {
         $this->cliente_id = $cliente->id;
         $this->selected_id = 0;
     }
-
     public function render()
     {
-        return view('livewire.contactos.contactos',[
-            'contactos' => Contacto::where('cliente_id',$this->cliente_id)->get()
-        ]);
+        $this->update();
+        return view('livewire.contactos.contactos');
     }
-
+    public function update()
+    {
+        $this->contactos();
+    }
+    public function contactos()
+    {
+        $this->contactos = Contacto::where('cliente_id',$this->cliente_id)->get();
+    }
     public function Store()
     {
         $rules = [
@@ -39,7 +46,6 @@ class Contactos extends Component
         ];
 
         $this->validate($rules, $messages);
-
         $contacto = Contacto::create([
             'nombre' => $this->nombre,
             'celular_cont' => $this->celular_cont,
@@ -51,7 +57,8 @@ class Contactos extends Component
         ]);
 
         $this->resetUI();
-        $this->emit('contacto-added', 'Contacto Registrado');
+        $this->emit('hide-modal');
+        $this->alert('success', 'Contacto registrado!!',['timerProgressBar' => true]);
     }
 
     public function Edit($id)
@@ -68,7 +75,7 @@ class Contactos extends Component
         $this->emit('show-modal', 'show-modal!');
     }
 
-    public function Update()
+    public function actualizar()
     {
         $rules = [
             'nombre' => "required|min:3|unique:contactos,nombre,{$this->selected_id}",
@@ -95,8 +102,8 @@ class Contactos extends Component
         ]);
 
         $this->resetUI();
-        $this->emit('contacto-updated', 'Contacto Actualizado');
-
+        $this->emit('hide-modal');
+        $this->alert('success', 'Contacto actualizado!!',['timerProgressBar' => true]);
     }
 
     protected $listeners = ['deleteRow' => 'Destroy'];
@@ -104,9 +111,8 @@ class Contactos extends Component
     public function Destroy(Contacto $contacto)
     {
         $contacto->delete();
-
         $this->resetUI();
-        $this->emit('contacto-deleted', 'Contacto Eliminado');
+        $this->alert('success', 'Contacto eliminado!!',['timerProgressBar' => true]);
     }
 
     public function resetUI()
