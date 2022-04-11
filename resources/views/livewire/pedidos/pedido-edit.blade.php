@@ -62,6 +62,20 @@
                             </div>
                             @error('txt_garantia') <span class="text-danger er">{{ $message }}</span>@enderror
                         </div>
+                        <div class="col-sm-1">
+                            <div class="form-group">
+                                <label for="num_mantenimiento"># Mantenimientos</label>
+                                <input id="num_mantenimiento" type="number" class="form-control" placeholder="#" wire:model.defer="state.num_mantenimiento">
+                            </div>
+                            @error('num_mantenimiento') <span class="text-danger er">{{ $message }}</span>@enderror
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label for="txt_mantenimiento">Texto Mantenimientos</label>
+                                <input id="txt_mantenimiento" type="text" class="form-control"  placeholder="Una vez al año, durante el periodo de garantía" wire:model.defer="state.txt_mantenimiento">
+                            </div>
+                            @error('txt_mantenimiento') <span class="text-danger er">{{ $message }}</span>@enderror
+                        </div>
                         <div class="col-sm-2">
                             <div class="form-group">
                                 <label for="direccion_entrega">Direccion entrega</label>

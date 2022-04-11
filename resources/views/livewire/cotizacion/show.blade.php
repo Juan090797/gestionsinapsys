@@ -112,6 +112,10 @@
                             Lugar de entrega: {{$cotizacion->direccion_entrega}}
                             <br>
                             Garantia: {{$cotizacion->garantia}} meses {{$cotizacion->txt_garantia}}
+                            <br>
+                            @if($cotizacion->txt_mantenimiento)
+                                Mantenimientos preventivos: {{$cotizacion->txt_mantenimiento}}
+                            @endif
                         </p>
                     </div>
                 </div>

@@ -57,6 +57,8 @@ class PedidoCreate extends Component
             'txt_plazo'         => 'required',
             'garantia'          => 'required',
             'txt_garantia'      => 'required',
+            'num_mantenimiento' => '',
+            'txt_mantenimiento' => '',
             'direccion_entrega' => 'required',
         ],[
             'cliente_id.required'       => 'El cliente es requerido',
@@ -110,6 +112,8 @@ class PedidoCreate extends Component
                 'txt_plazo'         => $creator['txt_plazo'],
                 'garantia'          => $creator['garantia'],
                 'txt_garantia'      => $creator['txt_garantia'],
+                'num_mantenimiento' => $creator['num_mantenimiento'],
+                'txt_mantenimiento' => $creator['txt_mantenimiento'],
                 'direccion_entrega' => $creator['direccion_entrega'],
                 'cliente_id'        => $creator['cliente_id'],
                 'subtotal'          => $creator['subtotal'],

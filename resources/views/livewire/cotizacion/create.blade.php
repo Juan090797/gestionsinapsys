@@ -56,13 +56,13 @@
                     <div class="col-sm-1">
                         <div class="form-group">
                             <label for="plazo_entrega">P. entrega(días)*</label>
-                            <input id="plazo_entrega" type="number" class="form-control" wire:model.defer="state.plazo_entrega">
+                            <input id="plazo_entrega" type="number" class="form-control" placeholder="# dias" wire:model.defer="state.plazo_entrega">
                         </div>
                         @error('plazo_entrega') <span class="text-danger er">{{ $message }}</span>@enderror
                     </div>
                     <div class="col-sm-3">
                         <div class="form-group">
-                            <label for="txt_plazo">Texto plazo entrega</label>
+                            <label for="txt_plazo">Texto plazo entrega*</label>
                             <input id="txt_plazo" type="text" class="form-control"  placeholder="a partir de la recepcion de la O/C" wire:model.defer="state.txt_plazo">
                         </div>
                         @error('txt_plazo') <span class="text-danger er">{{ $message }}</span>@enderror
@@ -70,16 +70,22 @@
                     <div class="col-sm-1">
                         <div class="form-group">
                             <label for="garantia">Garantia(meses)*</label>
-                            <input id="garantia" type="number" class="form-control" wire:model.defer="state.garantia">
+                            <input id="garantia" type="number" class="form-control" placeholder="# meses" wire:model.defer="state.garantia">
                         </div>
                         @error('garantia') <span class="text-danger er">{{ $message }}</span>@enderror
                     </div>
                     <div class="col-sm-3">
                         <div class="form-group">
-                            <label for="txt_garantia">Texto Garantia</label>
+                            <label for="txt_garantia">Texto Garantia*</label>
                             <input id="txt_garantia" type="text" class="form-control" placeholder="contra todo defecto de fabrica" wire:model.defer="state.txt_garantia">
                         </div>
                         @error('txt_garantia') <span class="text-danger er">{{ $message }}</span>@enderror
+                    </div>
+                    <div class="col-sm-1 mt-5">
+                        <div class="custom-control custom-switch">
+                            <input wire:model.defer="state.foto" type="checkbox" class="custom-control-input" id="sidebarCollapse1">
+                            <label class="custom-control-label" for="sidebarCollapse1">Firma</label>
+                        </div>
                     </div>
                     <div class="col-sm-3">
                         <div class="form-group">
@@ -88,11 +94,19 @@
                         </div>
                         @error('direccion_entrega') <span class="text-danger er">{{ $message }}</span>@enderror
                     </div>
-                    <div class="col-sm-2 mt-5">
-                        <div class="custom-control custom-switch">
-                            <input wire:model.defer="state.foto" type="checkbox" class="custom-control-input" id="sidebarCollapse1">
-                            <label class="custom-control-label" for="sidebarCollapse1">Firma</label>
+                    <div class="col-sm-1">
+                        <div class="form-group">
+                            <label for="num_mantenimiento"># Mantenimientos</label>
+                            <input id="num_mantenimiento" type="number" class="form-control" placeholder="#" wire:model.defer="state.num_mantenimiento">
                         </div>
+                        @error('num_mantenimiento') <span class="text-danger er">{{ $message }}</span>@enderror
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="txt_mantenimiento">Texto Mantenimientos</label>
+                            <input id="txt_mantenimiento" type="text" class="form-control"  placeholder="Una vez al año, durante el periodo de garantía" wire:model.defer="state.txt_mantenimiento">
+                        </div>
+                        @error('txt_mantenimiento') <span class="text-danger er">{{ $message }}</span>@enderror
                     </div>
                 </div>
                 <div class="row">

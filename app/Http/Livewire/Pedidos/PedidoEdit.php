@@ -62,6 +62,8 @@ class PedidoEdit extends Component
             'txt_plazo'         => 'required',
             'garantia'          => 'required',
             'txt_garantia'      => 'required',
+            'num_mantenimiento' => '',
+            'txt_mantenimiento' => '',
             'direccion_entrega' => 'required',
         ],[
             'cliente_id.required'       => 'El cliente es requerido',

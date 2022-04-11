@@ -22,19 +22,22 @@
                                             <b>Direccion:</b> {{$pedido->cliente->direccion}}<br>
                                         </p>
                                     </div>
-                                    <div class="col-4">
+                                    <div class="col-3">
                                         <h5 class="text-bold">Pedido:</h5>
                                         <p>
                                             <b>Codigo:</b> {{ $pedido->codigo }}<br>
+                                            <b>Atendido:</b> {{ $pedido->atendido }}<br>
                                             <b>Vendedor:</b> {{ $pedido->user->name }}<br>
                                             <b>Fecha:</b> {{ date('d-m-Y', strtotime( $pedido->created_at ))}}<br>
                                         </p>
                                     </div>
-                                    <div class="col-4">
+                                    <div class="col-5">
                                         <p>
                                             <b>Plazo de entrega:</b> {{ $pedido->plazo_entrega }} días {{$pedido->txt_plazo}}<br>
                                             <b>Garantia:</b> {{ $pedido->garantia }} meses {{$pedido->txt_garantia}}<br>
                                             <b>Lugar de entrega:</b> {{ $pedido->direccion_entrega }}<br>
+                                            <b>#Mantenimientos:</b> {{ $pedido->num_mantenimiento }}<br>
+                                            <b>txt mantenimiento:</b> {{ $pedido->txt_mantenimiento }}<br>
                                         </p>
                                     </div>
                                 </div>

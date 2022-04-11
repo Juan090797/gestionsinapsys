@@ -73,10 +73,6 @@ class ShowProyecto extends Component
     {
         $this->comentarios = Comentario::where('proyecto_id', $this->proyecto->id )->latest()->get();
     }
-    public function comentarios()
-    {
-        $this->comentarios = Comentario::where('proyecto_id', $this->proyecto->id )->latest()->get();
-    }
     public function cotizaciones()
     {
         $this->cotizaciones = Cotizacion::where('proyecto_id', $this->proyecto->id)->get();
@@ -152,11 +148,14 @@ class ShowProyecto extends Component
                 'codigo'            => $this->codigo,
                 'estado'            => 'EN PROCESO',
                 'cotizacion_id'     => $coti->id,
+                'atendido'          => $coti->atendido,
                 'fecha_pedido'      => $fecha,
                 'plazo_entrega'     => $coti->plazo_entrega,
                 'txt_plazo'         => $coti->txt_plazo,
                 'garantia'          => $coti->garantia,
                 'txt_garantia'      => $coti->txt_garantia,
+                'num_mantenimiento' => $coti->num_mantenimiento,
+                'txt_mantenimiento' => $coti->txt_mantenimiento,
                 'direccion_entrega' => $coti->direccion_entrega,
                 'cliente_id'        => $coti->cliente_id,
                 'subtotal'          => $coti->subtotal,

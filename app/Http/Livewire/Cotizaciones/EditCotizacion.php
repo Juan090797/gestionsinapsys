@@ -69,7 +69,9 @@ class EditCotizacion extends Component
             'plazo_entrega'     => 'required',
             'txt_plazo'         => 'required',
             'garantia'          => 'required',
-            'txt_garantia'         => 'required',
+            'txt_garantia'      => 'required',
+            'num_mantenimiento' => '',
+            'txt_mantenimiento' => '',
             'direccion_entrega' => 'required',
         ],[
             'impuesto_id.required'      => 'El impuesto es requerido',

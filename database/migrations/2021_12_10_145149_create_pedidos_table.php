@@ -23,6 +23,8 @@ class CreatePedidosTable extends Migration
             $table->string('garantia')->nullable();
             $table->string('txt_garantia')->nullable();
             $table->string('direccion_entrega')->nullable();
+            $table->string('num_mantenimiento')->nullable();
+            $table->string('txt_mantenimiento')->nullable();
             $table->decimal('total',20,2)->default(0);
             $table->decimal('subtotal',20,2)->default(0);
             $table->decimal('impuesto',20,2)->default(0);

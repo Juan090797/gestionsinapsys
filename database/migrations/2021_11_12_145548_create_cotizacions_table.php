@@ -24,6 +24,8 @@ class CreateCotizacionsTable extends Migration
             $table->string('garantia');
             $table->string('txt_garantia');
             $table->string('direccion_entrega');
+            $table->string('num_mantenimiento')->nullable();
+            $table->string('txt_mantenimiento')->nullable();
             $table->string('atendido');
             $table->boolean('foto')->nullable();
             $table->string('archivo_cotizacion')->nullable();

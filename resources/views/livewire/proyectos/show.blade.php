@@ -274,7 +274,7 @@
                                                 <td class="text-center">{{$cotizacion->updated_at->diffForHumans()}}</td>
                                                 <td class="text-center">
                                                     <a href="{{ route('cotizacion.show',$cotizacion) }}" class="btn btn-success btn-sm"><i class="far fa-eye"></i></a>
-                                                    <a href="{{ route('cotizacion.edit', $cotizacion) }}" class="btn btn-primary btn-sm"><i class="fas fa-pencil-alt"></i></a>
+                                                    <a href="{{ route('cotizacion.edit', $cotizacion) }}" class="btn btn-warning btn-sm"><i class="fas fa-pencil-alt"></i></a>
                                                     <a href="javascript:void(0)" onclick="Confirmar('{{ $cotizacion->id }}')" class="btn btn-danger btn-sm"><i class="far fa-trash-alt"></i></a>
                                                     <a href="javascript:void(0)" onclick="Confirmacion('{{ $cotizacion->id }}')" class="btn btn-info btn-sm"><i class="fas fa-clipboard-check"></i></a>
                                                 </td>
