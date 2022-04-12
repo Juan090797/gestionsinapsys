@@ -7,7 +7,7 @@
         <div class="card">
             <div class="card-header">
                 <div class="col-4">
-                    <a class="btn btn-success" href="{{ route('factura.export') }}"><i class="fas fa-file-excel"></i> Excel</a>
+                    <a class="btn btn-success" wire:click="exportFacturas()"><i class="fas fa-file-excel"></i> Excel</a>
                 </div>
             </div>
             <div class="card-body table-responsive">
@@ -39,12 +39,8 @@
                             <td class="text-center">S/ {{ number_format($factura->igv,2) }}</td>
                             <td class="text-center">S/ {{ number_format($factura->total,2) }}</td>
                             <td class="text-center">
-                                <a href="javascript:void(0)"  wire:click="Edit({{ $factura->id }})" class="btn btn-primary" title="Edit">
-                                    <i class="fas fa-pencil-alt" aria-hidden="true"></i>
-                                </a>
-                                <a href="javascript:void(0)"  onclick="Confirm('{{ $factura->id }}')" class="btn btn-danger" title="Eliminar">
-                                    <i class="fas fa-trash" aria-hidden="true"></i>
-                                </a>
+                                <a href="javascript:void(0)"  wire:click="Edit({{ $factura->id }})" class="btn btn-warning btn-sm" title="Edit"><i class="fas fa-pencil-alt" aria-hidden="true"></i></a>
+                                <a href="javascript:void(0)"  onclick="Confirm('{{ $factura->id }}')" class="btn btn-danger btn-sm" title="Eliminar"><i class="fas fa-trash" aria-hidden="true"></i></a>
                             </td>
                         </tr>
                     @endforeach
@@ -62,14 +58,10 @@
             window.Livewire.on('show-modal', msg =>{
                 $('#theModal').modal('show')
             });
-            window.livewire.on('factura-added', msg =>{
-                $('#theModal').modal('hide');
-            })
-            window.livewire.on('factura-updated', msg =>{
+            window.livewire.on('hide-modal', msg =>{
                 $('#theModal').modal('hide');
             })
         });
-
         function Confirm(id)
         {
             Swal.fire({

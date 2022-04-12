@@ -9,7 +9,7 @@
                 <div class="row justify-content-between">
                     <div class="col-4">
                         <a href="javascript:void(0)" class="btn btn-primary" wire:click="AprobarMovimiento()">Aprobar</a>
-                        <a class="btn btn-success" href="{{ route('compra.export') }}"><i class="fas fa-file-excel"></i> Excel</a>
+                        <a class="btn btn-success" wire:click="exportCompras()"><i class="fas fa-file-excel"></i> Excel</a>
                     </div>
                     <div class="col-4">
                         <div class="input-group">

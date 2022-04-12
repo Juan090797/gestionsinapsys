@@ -2,10 +2,12 @@
 
 namespace App\Http\Livewire\Empresas;
 use App\Models\Empresa;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 
 class Empresas extends Component
 {
+    use LivewireAlert;
     public $nombre, $ruc, $celular, $correo, $telefono, $direccion;
 
     public function mount()
@@ -30,8 +32,7 @@ class Empresas extends Component
             'celular' => $this->celular,
             'correo' => $this->correo,
         ]);
-
-        $this->emit('empresa-ok', 'Empresa actualizada');
+        $this->alert('success', 'Empresa actualizada!!',['timerProgressBar' => true]);
     }
     public function render()
     {

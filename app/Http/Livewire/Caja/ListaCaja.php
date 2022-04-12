@@ -30,7 +30,6 @@ class ListaCaja extends ComponenteBase
         $this->cajas();
         $this->usuarios();
     }
-
     public function cajas()
     {
         $this->cajas = Caja::with('user')->get();
@@ -39,14 +38,12 @@ class ListaCaja extends ComponenteBase
     {
         $this->usuarios = User::all();
     }
-
     public function resetUI()
     {
         $this->selectedProducts =[];
         $this->selected_id = '';
         $this->resetValidation();
     }
-
     public function Store()
     {
         $validated = Validator::make($this->state, [
@@ -60,17 +57,15 @@ class ListaCaja extends ComponenteBase
 
         Caja::create($validated);
         $this->resetUI();
-        $this->emit('movimiento-added');
+        $this->emit('hide-modal');
         $this->alert('success', 'Caja registrada',['timerProgressBar' => true]);
     }
-
     public function Edit(Caja $caja)
     {
         $this->selected_id = $caja->id;
         $this->state = $caja->toArray();
         $this->emit('show-modal', 'show-modal!');
     }
-
     public function actualizar()
     {
         $validated = Validator::make($this->state, [
@@ -85,10 +80,9 @@ class ListaCaja extends ComponenteBase
         $caja = Caja::find($this->state['id']);
         $caja->update($validated);
         $this->resetUI();
-        $this->emit('movimiento-updated');
+        $this->emit('hide-modal');
         $this->alert('success', 'Caja actualizada',['timerProgressBar' => true]);
     }
-
     public function Destroy(Caja $caja)
     {
         $contador = $caja->withCount('movimientos')->get();
@@ -101,7 +95,5 @@ class ListaCaja extends ComponenteBase
             $this->resetUI();
             $this->alert('success', 'Caja eliminada',['timerProgressBar' => true]);
         }
-
     }
-
 }

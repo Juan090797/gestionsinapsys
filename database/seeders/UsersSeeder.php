@@ -21,7 +21,7 @@ class UsersSeeder extends Seeder
             'name'      => 'Juan Marquina',
             'email'     => 'sistemas@gruposinapsys.pe',
             'dni'       => '70037937',
-            'estado'    => 'Activo',
+            'estado'    => 'ACTIVO',
             'area'      => 'Sistemas',
             'perfil'    => 'Administrador',
             'password'  => bcrypt('989688456')
@@ -32,7 +32,7 @@ class UsersSeeder extends Seeder
             'name' => 'Roberto Guzman',
             'email' => 'r.guzman@gruposinapsys.pe',
             'dni'       => '70037938',
-            'estado'    => 'Activo',
+            'estado'    => 'ACTIVO',
             'area'      => 'Gerencia',
             'perfil'    => 'Gerencia',
             'password' => bcrypt('989688456')
@@ -43,7 +43,7 @@ class UsersSeeder extends Seeder
             'name' => 'Diana Guzman',
             'email' => 'd.guzman@gruposinapsys.pe',
             'dni'       => '70037939',
-            'estado'    => 'Activo',
+            'estado'    => 'ACTIVO',
             'area'      => 'Soporte Tecnico',
             'perfil'    => 'Soporte',
             'password' => bcrypt('989688456')
@@ -54,7 +54,7 @@ class UsersSeeder extends Seeder
             'name' => 'Marco Nolasco',
             'email' => 'm.nolasco@gruposinapsys.pe',
             'dni'       => '70037931',
-            'estado'    => 'Activo',
+            'estado'    => 'ACTIVO',
             'area'      => 'Soporte Tecnico',
             'perfil'    => 'Soporte',
             'password' => bcrypt('989688456')
@@ -65,7 +65,7 @@ class UsersSeeder extends Seeder
             'name' => 'Elizabeth Puyen',
             'email' => 'e.puyen@gruposinapsys.pe',
             'dni'       => '70037932',
-            'estado'    => 'Activo',
+            'estado'    => 'ACTIVO',
             'area'      => 'Ventas',
             'perfil'    => 'Ventas',
             'password' => bcrypt('989688456')
@@ -76,7 +76,7 @@ class UsersSeeder extends Seeder
             'name' => 'Caroline Sanchez',
             'email' => 'c.sanchez@gruposinapsys.pe',
             'dni'       => '70037933',
-            'estado'    => 'Activo',
+            'estado'    => 'ACTIVO',
             'area'      => 'Administracion',
             'perfil'    => 'Contabilidad',
             'password' => bcrypt('989688456')
@@ -84,12 +84,12 @@ class UsersSeeder extends Seeder
         $user->assignRole('Contabilidad');
 
         $user = User::create([
-            'name' => 'Evelyn Laura',
-            'email' => 'e.laura@gruposinapsys.pe',
+            'name' => 'Aracely Alvarado',
+            'email' => 'a.alvarado@gruposinapsys.pe',
             'dni'       => '70037934',
-            'estado'    => 'Activo',
-            'area'      => 'Ventas',
-            'perfil'    => 'Ventas',
+            'estado'    => 'ACTIVO',
+            'area'      => 'Legal',
+            'perfil'    => 'Legal',
             'password' => bcrypt('989688456')
         ]);
         $user->assignRole('Ventas');
@@ -98,7 +98,7 @@ class UsersSeeder extends Seeder
             'name' => 'Grimaneza Castro',
             'email' => 'g.castro@gruposinapsys.pe',
             'dni'       => '70037935',
-            'estado'    => 'Activo',
+            'estado'    => 'ACTIVO',
             'area'      => 'Post Venta',
             'perfil'    => 'Postventa',
             'password' => bcrypt('989688456')
@@ -109,7 +109,7 @@ class UsersSeeder extends Seeder
             'name' => 'Rodrigo Alvarado',
             'email' => 'r.alvarado@gruposinapsys.pe',
             'dni'       => '70017936',
-            'estado'    => 'Activo',
+            'estado'    => 'ACTIVO',
             'area'      => 'Soporte Tecnico',
             'perfil'    => 'Soporte',
             'password' => bcrypt('989688456')
@@ -120,7 +120,7 @@ class UsersSeeder extends Seeder
             'name' => 'Jeremias Salas',
             'email' => 'j.salas@gruposinapsys.pe',
             'dni'       => '72037936',
-            'estado'    => 'Activo',
+            'estado'    => 'ACTIVO',
             'area'      => 'Soporte Tecnico',
             'perfil'    => 'Soporte',
             'password' => bcrypt('989688456')
@@ -131,7 +131,7 @@ class UsersSeeder extends Seeder
             'name' => 'Yorch Pajuelo',
             'email' => 'y.pajuelo@gruposinapsys.pe',
             'dni'       => '70037947',
-            'estado'    => 'Activo',
+            'estado'    => 'ACTIVO',
             'area'      => 'Soporte Tecnico',
             'perfil'    => 'Soporte',
             'password' => bcrypt('989688456')
@@ -142,7 +142,7 @@ class UsersSeeder extends Seeder
             'name' => 'Joannelly Reyes',
             'email' => 'j.reyes@gruposinapsys.pe',
             'dni'       => '70037957',
-            'estado'    => 'Activo',
+            'estado'    => 'ACTIVO',
             'area'      => 'Recepecion',
             'perfil'    => 'Recepcion',
             'password' => bcrypt('989688456')
@@ -153,7 +153,7 @@ class UsersSeeder extends Seeder
             'name' => 'Nerida Lumbreras',
             'email' => 'n.lumbreras@gruposinapsys.pe',
             'dni'       => '70037958',
-            'estado'    => 'Activo',
+            'estado'    => 'ACTIVO',
             'area'      => 'Servicios',
             'perfil'    => 'Servicios',
             'password' => bcrypt('989688456')
@@ -164,7 +164,7 @@ class UsersSeeder extends Seeder
             'name' => 'Crismar Sanchez',
             'email' => 'c.silva@gruposinapsys.pe',
             'dni'       => '70937958',
-            'estado'    => 'Activo',
+            'estado'    => 'ACTIVO',
             'area'      => 'Servicios',
             'perfil'    => 'Ventas',
             'password' => bcrypt('989688456')

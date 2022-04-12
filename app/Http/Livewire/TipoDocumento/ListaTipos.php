@@ -12,20 +12,20 @@ class ListaTipos extends Component
     use LivewireAlert;
     public $selected_id;
     public $state = [];
+    protected $listeners =['deleteRow' => 'borrar'];
 
     public function render()
     {
         $this->update();
         return view('livewire.tipo-documento.lista-tipos')->extends('layouts.tema.app')->section('content');
     }
-
     public function update()
     {
         $this->documentos();
     }
     public function documentos()
     {
-        $this->documentos = TipoDocumento::all();
+        $this->documentos = TipoDocumento::where('estado','ACTIVO')->get();
     }
     public function resetUI()
     {
@@ -34,12 +34,12 @@ class ListaTipos extends Component
         $this->selected_id = 0;
         $this->resetValidation();
     }
-
     public function Store()
     {
         $validated = Validator::make($this->state, [
             'nombre'    => 'required|unique:centro_costos|min:3',
             'codigo'    => 'required',
+            'estado'    => '',
             'tipo'      => 'required',
         ],[
             'nombre.required'   => 'El nombre del centro de costo es requerido',
@@ -51,7 +51,7 @@ class ListaTipos extends Component
 
         TipoDocumento::create($validated);
         $this->resetUI();
-        $this->emit('tipo-added');
+        $this->emit('hide-modal');
         $this->alert('success', 'Tipo documento Registrado',['timerProgressBar' => true]);
     }
     public function Edit(TipoDocumento $tipoDocumento)
@@ -65,6 +65,7 @@ class ListaTipos extends Component
         $validated = Validator::make($this->state, [
             'nombre'    => 'required|unique:centro_costos|min:3',
             'codigo'    => 'required',
+            'estado'    => '',
             'tipo'      => 'required',
         ],[
             'nombre.required'   => 'El nombre del centro de costo es requerido',
@@ -78,5 +79,10 @@ class ListaTipos extends Component
         $this->resetUI();
         $this->emit('hide-modal');
         $this->alert('success', 'Tipo documento actualizado!!',['timerProgressBar' => true]);
+    }
+    public function borrar(TipoDocumento $tipoDocumento)
+    {
+        $tipoDocumento->update(['estado' => 'INACTIVO']);
+        $this->alert('success', 'Tipo documento eliminado!!',['timerProgressBar' => true]);
     }
 }

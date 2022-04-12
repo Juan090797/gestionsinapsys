@@ -19,28 +19,24 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach($usuarios as $index => $usuario)
+                    @foreach($usuarios as $usuario)
                         <tr>
-                            <th scope="row">{{$usuarios->firstItem() + $index}}</th>
+                            <th scope="row">{{$usuario->id}}</th>
                             <td class="text-center">{{$usuario->name}}</td>
                             <td class="text-center">{{$usuario->email}}</td>
                             <td class="text-center">{{$usuario->area}}</td>
                             <td class="text-center">{{$usuario->perfil}}</td>
-                            <td class="text-center"><span class="badge {{ $usuario->estado == 'Activo' ? 'badge-success' : 'badge-danger'}}">{{$usuario->estado}}</span></td>
+                            <td class="text-center"><span class="badge {{ $usuario->estado == 'ACTIVO' ? 'badge-success' : 'badge-danger'}}">{{$usuario->estado}}</span></td>
                             <td class="text-center">
-                                <a href="javascript:void(0)"  wire:click="Edit({{ $usuario->id }})" class="btn btn-primary" title="Editar">
-                                    <i class="fas fa-pencil-alt" aria-hidden="true"></i>
-                                </a>
-                                <a href="javascript:void(0)" onclick="Confirm('{{ $usuario->id }}')" class="btn btn-danger" title="Eliminar">
-                                    <i class="fa fa-trash" aria-hidden="true"></i>
-                                </a>
+                                <a href="javascript:void(0)"  wire:click="Edit({{ $usuario->id }})" class="btn btn-warning btn-sm" title="Editar"><i class="fas fa-pencil-alt" aria-hidden="true"></i></a>
+                                <a href="javascript:void(0)" onclick="Confirm('{{ $usuario->id }}')" class="btn btn-danger btn-sm" title="Eliminar"><i class="fa fa-trash" aria-hidden="true"></i></a>
                             </td>
                         </tr>
                     @endforeach
                     </tbody>
                 </table>
                 <div class="py-3 float-right">
-                    {{$usuarios->links()}}
+
                 </div>
             </div>
         </div>
@@ -51,16 +47,8 @@
             window.Livewire.on('show-modal', msg =>{
                 $('#theModal').modal('show')
             });
-            window.livewire.on('user-added', msg =>{
+            window.livewire.on('hide-modal', msg =>{
                 $('#theModal').modal('hide');
-                noty(msg)
-            })
-            window.livewire.on('user-updated', msg =>{
-                $('#theModal').modal('hide');
-                noty(msg)
-            })
-            window.livewire.on('user-deleted', msg =>{
-                noty(msg)
             })
         });
         function Confirm(id)
@@ -77,13 +65,6 @@
                 if(result.value){
                     window.livewire.emit('deleteRow', id)
                     swal.close()
-                }
-                if (result.isConfirmed) {
-                    Swal.fire(
-                        'Eliminado!',
-                        'El registro ha sido eliminado',
-                        'success'
-                    )
                 }
             })
         }

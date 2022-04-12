@@ -12,8 +12,6 @@
                         <th scope="col">#ID</th>
                         <th class="text-center">Nombre</th>
                         <th class="text-center">Estado</th>
-                        <th class="text-center">Fecha creado</th>
-                        <th class="text-center">Fecha Actualizado</th>
                         <th class="text-center">Acciones</th>
                     </tr>
                     </thead>
@@ -22,16 +20,10 @@
                         <tr>
                             <th scope="row">{{$tipos->firstItem() + $index}}</th>
                             <td class="text-center">{{$tipo->nombre}}</td>
-                            <td class="text-center"><span class="badge {{$tipo->estado == 'Activo' ? 'badge-success' : 'badge-danger'}}">{{$tipo->estado}}</span></td>
-                            <td class="text-center">{{$tipo->created_at}}</td>
-                            <td class="text-center">{{$tipo->updated_at}}</td>
+                            <td class="text-center"><span class="badge {{$tipo->estado == 'ACTIVO' ? 'badge-success' : 'badge-danger'}}">{{$tipo->estado}}</span></td>
                             <td class="text-center">
-                                <a href="javascript:void(0)"  wire:click="Edit({{$tipo->id}})" class="btn btn-primary" title="Editar">
-                                    <i class="fas fa-pencil-alt" aria-hidden="true"></i>
-                                </a>
-                                <a href="javascript:void(0)" onclick="Confirm('{{$tipo->id}}')" class="btn btn-danger" title="Eliminar">
-                                    <i class="fa fa-trash" aria-hidden="true"></i>
-                                </a>
+                                <a href="javascript:void(0)"  wire:click="Edit({{$tipo->id}})" class="btn btn-warning btn-sm" title="Editar"><i class="fas fa-pencil-alt" aria-hidden="true"></i></a>
+                                <a href="javascript:void(0)" onclick="Confirm('{{$tipo->id}}')" class="btn btn-danger btn-sm" title="Eliminar"><i class="fa fa-trash" aria-hidden="true"></i></a>
                             </td>
                         </tr>
                     @endforeach
@@ -50,22 +42,10 @@
             window.Livewire.on('show-modal', msg =>{
                 $('#theModal').modal('show')
             });
-            window.livewire.on('proveedor-added', msg =>{
+            window.livewire.on('hide-modal', msg =>{
                 $('#theModal').modal('hide');
-                noty(msg)
-            })
-            window.livewire.on('proveedor-updated', msg =>{
-                $('#theModal').modal('hide');
-                noty(msg)
-            })
-            window.livewire.on('proveedor-deleted', msg =>{
-                noty(msg)
-            })
-            window.livewire.on('error', msg =>{
-                noty(msg)
             })
         });
-
         function Confirm(id)
         {
             Swal.fire({
@@ -80,13 +60,6 @@
                 if(result.value){
                     window.livewire.emit('deleteRow', id)
                     swal.close()
-                }
-                if (result.isConfirmed) {
-                    Swal.fire(
-                        'Eliminado!',
-                        'El registro ha sido eliminado',
-                        'success'
-                    )
                 }
             })
         }

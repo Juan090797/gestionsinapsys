@@ -121,7 +121,7 @@ class Compras extends ComponenteBase
         $this->resetValidation();
     }
 
-    public function exportCompra()
+    public function exportCompras()
     {
         $reportName = 'Compras_' . uniqid() . '.xlsx';
         return Excel::download(new ComprasExport, $reportName);

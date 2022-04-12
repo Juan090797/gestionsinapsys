@@ -8,11 +8,26 @@
             <div class="card-header">
                 <div class="row justify-content-between">
                     <div class="col-4">
-                        <a href="javascript:void(0)" class="btn btn-success" wire:click="AprobarMovimiento()">Aprobar</a>
+                        <a href="javascript:void(0)" class="btn btn-success" wire:click="aprobar()">Aprobar</a>
                     </div>
                     <div class="col-4">
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Buscar por nombre del proveedor" wire:model="search">
+                        <div class="btn-group float-right">
+                            <button wire:click="filtroProyectosEstados" type="button" class="btn {{ is_null($status) ? 'btn-secondary' : 'btn-default' }}">
+                                <span class="mr-1">TODOS</span>
+                                <span class="badge badge-pill badge-light">{{ $ordenesCount }}</span>
+                            </button>
+                            <button wire:click="filtroProyectosEstados('PENDIENTE')" type="button" class="btn {{ ($status === 'PENDIENTE') ? 'btn-secondary' : 'btn-default' }}">
+                                <span class="mr-1">PENDIENTE</span>
+                                <span class="badge badge-pill badge-primary">{{ $ordenesPendienteCount }}</span>
+                            </button>
+                            <button wire:click="filtroProyectosEstados('APROBADO')" type="button" class="btn {{ ($status === 'APROBADO') ? 'btn-secondary' : 'btn-default' }}">
+                                <span class="mr-1">APROBADO</span>
+                                <span class="badge badge-pill badge-success">{{ $ordenesAprobadoCount }}</span>
+                            </button>
+                            <button wire:click="filtroProyectosEstados('ANULADO')" type="button" class="btn {{ ($status === 'ANULADO') ? 'btn-secondary' : 'btn-default' }}">
+                                <span class="mr-1">ANULADO</span>
+                                <span class="badge badge-pill badge-danger">{{ $ordenesAnuladoCount }}</span>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -22,13 +37,13 @@
                     <thead class="thead-dark">
                     <tr>
                         <th scope="col"></th>
+                        <th class="text-center">Estado</th>
                         <th class="text-center">codigo</th>
                         <th class="text-center">Proveedor</th>
                         <th class="text-center">Fecha</th>
                         <th class="text-center">Referencia</th>
                         <th class="text-center">IGV</th>
                         <th class="text-center">Total</th>
-                        <th class="text-center">Estado</th>
                         <th class="text-center">Acciones</th>
                     </tr>
                     </thead>
@@ -36,29 +51,23 @@
                     @foreach($ordenes as $orden)
                         <tr>
                             <th>
-                                @if($orden->estado == 'APROBADO')
+                                @if($orden->estado == 'APROBADO' || $orden->estado == 'ANULADO')
                                     <input type="checkbox" wire:model="selectedProducts" value="{{ $orden->id }}" disabled>
                                 @else
                                     <input type="checkbox" wire:model="selectedProducts" value="{{ $orden->id }}">
                                 @endif
                             </th>
+                            <td class="text-center"><span class="badge {{ $orden->estado == 'APROBADO' ? 'badge-success' : 'badge-danger'}}">{{$orden->estado}}</span></td>
                             <td class="text-center">{{$orden->codigo}}</td>
                             <td class="text-center">{{$orden->proveedor->razon_social}}</td>
                             <td class="text-center">{{$orden->created_at}}</td>
                             <td class="text-center">{{$orden->referencia}}</td>
                             <td class="text-center">S/ {{$orden->impuesto}}</td>
                             <td class="text-center">S/ {{$orden->total}}</td>
-                            <td class="text-center"><span class="badge {{ $orden->estado == 'APROBADO' ? 'badge-success' : 'badge-danger'}}">{{$orden->estado}}</span></td>
                             <td class="text-center">
-                                <a href="{{route('orden.show', $orden)}}" class="btn btn-primary" title="Ver">
-                                    <i class="far fa-eye" aria-hidden="true"></i>
-                                </a>
-                                <a href="javascript:void(0)"  wire:click="Edit({{ $orden->id }})" class="btn btn-primary" title="Editar">
-                                    <i class="fas fa-pencil-alt" aria-hidden="true"></i>
-                                </a>
-                                <a href="javascript:void(0)" onclick="Confirm('{{ $orden->id }}')" class="btn btn-danger" title="Eliminar">
-                                    <i class="fa fa-trash" aria-hidden="true"></i>
-                                </a>
+                                <a href="{{route('orden.show', $orden)}}" class="btn btn-primary btn-sm" title="Ver"><i class="far fa-eye" aria-hidden="true"></i></a>
+                                <button href="javascript:void(0)"  wire:click="Edit({{ $orden->id }})" class="btn btn-warning btn-sm" title="Editar" {{$orden->estado == 'APROBADO' ? 'disabled' : ''}}><i class="fas fa-pencil-alt" aria-hidden="true"></i></button>
+                                <a href="javascript:void(0)" onclick="Confirm('{{ $orden->id }}')" class="btn btn-danger btn-sm" title="Eliminar"><i class="fa fa-trash" aria-hidden="true"></i></a>
                             </td>
                         </tr>
                     @endforeach
@@ -75,19 +84,10 @@
             window.Livewire.on('show-modal', msg =>{
                 $('#theModal').modal('show')
             });
-            window.livewire.on('marca-added', msg =>{
+            window.livewire.on('hide-modal', msg =>{
                 $('#theModal').modal('hide');
-                noty(msg)
-            })
-            window.livewire.on('marca-updated', msg =>{
-                $('#theModal').modal('hide');
-                noty(msg)
-            })
-            window.livewire.on('marca-deleted', msg =>{
-                noty(msg)
             })
         });
-
         function Confirm(id)
         {
             Swal.fire({
@@ -102,13 +102,6 @@
                 if(result.value){
                     window.livewire.emit('deleteRow', id)
                     swal.close()
-                }
-                if (result.isConfirmed) {
-                    Swal.fire(
-                        'Eliminado!',
-                        'El registro ha sido eliminado',
-                        'success'
-                    )
                 }
             })
         }

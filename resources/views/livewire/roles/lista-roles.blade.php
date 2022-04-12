@@ -20,12 +20,8 @@
                             <th scope="row">{{$roles->firstItem() + $index}}</th>
                             <td class="text-center">{{$role->name}}</td>
                             <td class="text-center">
-                                <a href="javascript:void(0)"  wire:click="Edit({{ $role->id }})" class="btn btn-primary" title="Editar">
-                                    <i class="fas fa-pencil-alt" aria-hidden="true"></i>
-                                </a>
-                                <a href="javascript:void(0)" onclick="Confirm('{{ $role->id }}')" class="btn btn-danger" title="Eliminar">
-                                    <i class="fa fa-trash" aria-hidden="true"></i>
-                                </a>
+                                <a href="javascript:void(0)"  wire:click="Edit({{ $role->id }})" class="btn btn-warning btn-sm" title="Editar"><i class="fas fa-pencil-alt" aria-hidden="true"></i></a>
+                                <a href="javascript:void(0)" onclick="Confirm('{{ $role->id }}')" class="btn btn-danger btn-sm" title="Eliminar"><i class="fa fa-trash" aria-hidden="true"></i></a>
                             </td>
                         </tr>
                     @endforeach
@@ -43,16 +39,8 @@
             window.Livewire.on('show-modal', msg =>{
                 $('#theModal').modal('show')
             });
-            window.livewire.on('rol-added', msg =>{
+            window.livewire.on('hide-modal', msg =>{
                 $('#theModal').modal('hide');
-                noty(msg)
-            })
-            window.livewire.on('rol-updated', msg =>{
-                $('#theModal').modal('hide');
-                noty(msg)
-            })
-            window.livewire.on('rol-deleted', msg =>{
-                noty(msg)
             })
         });
         function Confirm(id)
@@ -69,13 +57,6 @@
                 if(result.value){
                     window.livewire.emit('deleteRow', id)
                     swal.close()
-                }
-                if (result.isConfirmed) {
-                    Swal.fire(
-                        'Eliminado!',
-                        'El registro ha sido eliminado',
-                        'success'
-                    )
                 }
             })
         }

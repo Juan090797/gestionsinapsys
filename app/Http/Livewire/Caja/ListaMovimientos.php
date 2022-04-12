@@ -157,7 +157,6 @@ class ListaMovimientos extends Component
         $this->alert('success', 'Se elimino la compra con exito',['timerProgressBar' => true]);
 
     }
-
     public function aprobar()
     {
         if(count($this->selectedProducts))
@@ -178,8 +177,7 @@ class ListaMovimientos extends Component
             $this->alert('error', 'Selecciona un movimiento',['timerProgressBar' => true]);
         }
     }
-
-    public function exportMovimiento(Caja $caja)
+    public function exportMovimientos(Caja $caja)
     {
         $reportName = 'Movimientos_' . uniqid() . '.xlsx';
         return Excel::download(new CajaChicaExport($caja), $reportName);

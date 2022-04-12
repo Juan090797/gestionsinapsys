@@ -8,24 +8,24 @@
             <div class="card-header">
                 <div class="row">
                     <div class="col-4">
-                        <input wire:model="search" class="form-control" placeholder="Buscar por nombre o ruc de un cliente">
-                    </div>
-                    <div class="col-4">
-                        <a class="btn btn-success" href="{{ url('clientes/exports/') }}"><i class="fas fa-file-excel"></i> Excel</a>
-                    </div>
-                    <div class="col-4">
-                        <form method="post" action="{{url('clientes/imports/')}}" enctype="multipart/form-data">
-                            {{csrf_field()}}
+                        <form wire:submit.prevent="importCliente">
                             <div class="input-group">
                                 <div class="custom-file">
-                                    <input name="file" type="file" class="custom-file-input" required>
-                                    <label name="file" id="file" class="custom-file-label">Seleccionar archivo excel ....</label>
+                                    <input name="file" type="file" class="custom-file-input" wire:model="file" required>
+                                    <label name="file" id="file" class="custom-file-label">{{$file}}</label>
                                 </div>
                                 <div class="input-group-append">
                                     <button class="btn btn-outline-secondary" type="submit">Insertar</button>
                                 </div>
                             </div>
+                            <div wire:loading wire:target="file">Cargando.....</div>
                         </form>
+                    </div>
+                    <div class="col-4">
+                        <a class="btn btn-success" wire:click="exportClientes()"><i class="fas fa-file-excel"></i> Excel</a>
+                    </div>
+                    <div class="col-4">
+                        <input wire:model="search" class="form-control" placeholder="Buscar por nombre o ruc de un cliente">
                     </div>
                 </div>
             </div>
@@ -50,8 +50,8 @@
                             <td class="text-center">{{$cliente->telefono}}</td>
                             <td class="text-center"><span class="badge {{ $cliente->estado == 'ACTIVO' ? 'badge-success' : 'badge-danger'}}">{{$cliente->estado}}</span></td>
                             <td class="text-center">
-                                <a href="javascript:void(0)"  wire:click="Edit({{ $cliente->id }})" class="btn btn-primary btn-sm" title="Edit"><i class="fas fa-pencil-alt" aria-hidden="true"></i></a>
-                                <a href="{{ route('clients.show', $cliente) }}" class="btn btn-success btn-sm"><i class="far fa-eye"></i></a>
+                                <a href="javascript:void(0)"  wire:click="Edit({{ $cliente->id }})" class="btn btn-warning btn-sm" title="Edit"><i class="fas fa-pencil-alt" aria-hidden="true"></i></a>
+                                <a href="{{ route('clients.show', $cliente) }}" class="btn btn-primary btn-sm"><i class="far fa-eye"></i></a>
                                 <a href="javascript:void(0)" onclick="Confirm('{{ $cliente->id }}')" class="btn btn-danger btn-sm" title="Eliminar"><i class="fa fa-trash" aria-hidden="true"></i></a>
                             </td>
                         </tr>

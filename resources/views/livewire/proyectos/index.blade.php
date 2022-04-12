@@ -44,7 +44,6 @@
                         <th class="text-center">Ingreso Estimado</th>
                         <th class="text-center">Jefe Proyecto</th>
                         <th class="text-center">Cliente</th>
-                        <th class="text-center">Equipo</th>
                         <th class="text-center">Dias restantes</th>
                         <th class="text-center">Acciones</th>
                     </tr>
@@ -65,23 +64,10 @@
                                 </ul>
                             </td>
                             <td class="text-center">{{ $proyecto->cliente->razon_social }}</td>
-                            <td class="text-center">
-                                <ul class="list-inline mb-0">
-                                    @if($proyecto->colaboradores)
-                                        @foreach($proyecto->colaboradores as $r)
-                                            <li class="list-inline-item user-panel">
-                                                <img src="{{ $r->usuario->profile_photo_url }}" class="img-circle" alt="{{ $r->usuario->name }}" title="{{ $r->usuario->name }}">
-                                            </li>
-                                        @endforeach
-                                    @else
-                                        <p class="text-danger text-center">Sin Equipo</p>
-                                    @endif
-                                </ul>
-                            </td>
                             <td class="text-center {{ $proyecto->restante > 0 ? 'text-primary' : 'text-danger'}}">{{ $proyecto->restante }} días</td>
                             <td class="text-center">
-                                <a href="javascript:void(0)"  wire:click="Edit({{ $proyecto->id }})" class="btn btn-primary btn-sm" title="Editar"><i class="fas fa-pencil-alt" aria-hidden="true"></i></a>
-                                <a href="{{ route('proyecto.show', $proyecto) }}" class="btn btn-success btn-sm" title="Ver"><i class="far fa-eye"></i></a>
+                                <a href="javascript:void(0)"  wire:click="Edit({{ $proyecto->id }})" class="btn btn-warning btn-sm" title="Editar"><i class="fas fa-pencil-alt" aria-hidden="true"></i></a>
+                                <a href="{{ route('proyecto.show', $proyecto) }}" class="btn btn-primary btn-sm" title="Ver"><i class="far fa-eye"></i></a>
                                 <a href="javascript:void(0)" onclick="Confirm('{{ $proyecto->id }}')" class="btn btn-danger btn-sm" title="Eliminar"><i class="fa fa-trash" aria-hidden="true"></i></a>
                             </td>
                         </tr>

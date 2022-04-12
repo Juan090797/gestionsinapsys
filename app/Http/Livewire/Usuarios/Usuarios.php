@@ -5,21 +5,34 @@ namespace App\Http\Livewire\Usuarios;
 use App\Http\Livewire\ComponenteBase;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Spatie\Permission\Models\Role;
 
 class Usuarios extends ComponenteBase
 {
-    public $selected_id;
+    use LivewireAlert;
+    public $selected_id,$usuarios,$roles;
     public $state = [];
     protected $listeners = ['deleteRow' => 'Destroy'];
 
     public function render()
     {
-        $usuarios = User::latest()->paginate($this->pagination);
-        $roles = Role::orderBy('name', 'asc')->get();
-        return view('livewire.usuarios.index', ['usuarios' => $usuarios, 'roles' => $roles])->extends('layouts.tema.app')->section('content');
+        $this->update();
+        return view('livewire.usuarios.index')->extends('layouts.tema.app')->section('content');
     }
-
+    public function update()
+    {
+        $this->usuarios();
+        $this->roles();
+    }
+    public function usuarios()
+    {
+        $this->usuarios = User::where('estado','ACTIVO')->get();
+    }
+    public function roles()
+    {
+        $this->roles = Role::all();
+    }
     public function Store()
     {
         $validated = Validator::make($this->state, [
@@ -40,7 +53,8 @@ class Usuarios extends ComponenteBase
         $user = User::create($validated);
         $user->syncRoles($validated['perfil']);
         $this->resetUI();
-        $this->emit('user-added', 'Usuario Registrado');
+        $this->emit('hide-modal');
+        $this->alert('success', 'Usuario creado!!',['timerProgressBar' => true]);
     }
     public function Edit(User $user)
     {
@@ -69,9 +83,9 @@ class Usuarios extends ComponenteBase
         $user->update($validated);
         $user->assignRole($validated['perfil']);
         $this->resetUI();
-        $this->emit('user-updated', 'Usuario actualizado');
+        $this->emit('hide-modal');
+        $this->alert('success', 'Usuario actualizado!!',['timerProgressBar' => true]);
     }
-
     public function resetUI()
     {
         $this->state=[];
@@ -79,11 +93,10 @@ class Usuarios extends ComponenteBase
         $this->resetValidation();
         $this->resetPage();
     }
-
     public function Destroy(User $user)
     {
-        $user->delete();
+        $user->update(['estado'=>'INACTIVO']);
         $this->resetUI();
-        $this->emit('user-deleted', 'Usuario eliminado');
+        $this->alert('success', 'Usuario eliminado!!',['timerProgressBar' => true]);
     }
 }

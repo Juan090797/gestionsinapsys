@@ -3,17 +3,20 @@
 namespace App\Http\Livewire;
 
 use App\Exports\ProveedorsExport;
+use App\Imports\ProveedorImport;
 use App\Models\Proveedor;
 use App\Models\TipoDocumento;
 use Illuminate\Support\Facades\Validator;
 use App\Models\TipoProveedor;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Maatwebsite\Excel\Facades\Excel;
+use Livewire\WithFileUploads;
 
 class Proveedores extends ComponenteBase
 {
     use LivewireAlert;
-    public $search, $selected_id,$documentos, $tipos;
+    use WithFileUploads;
+    public $search, $selected_id,$documentos, $tipos,$file;
     public $state = [];
     protected $listeners = ['deleteRow' => 'Destroy'];
 
@@ -123,6 +126,7 @@ class Proveedores extends ComponenteBase
         $this->state=[];
         $this->search = '';
         $this->selected_id = 0;
+        $this->file = null;
         $this->resetValidation();
     }
     public function Destroy(Proveedor $proveedor)
@@ -131,9 +135,22 @@ class Proveedores extends ComponenteBase
         $this->resetUI();
         $this->alert('success', 'Proveedor eliminado!!',['timerProgressBar' => true]);
     }
-    public function exportProveedor()
+    public function exportProveedores()
     {
         $reportName = 'Proveedores_' . uniqid() . '.xlsx';
         return Excel::download(new ProveedorsExport, $reportName);
+    }
+    public function importProveedor()
+    {
+        $import = new ProveedorImport();
+        $import->import($this->file);
+        if ($import->failures()->isNotEmpty())
+        {
+            $this->resetUI();
+            $this->alert('error', 'Error en la importacion!!',['timerProgressBar' => true]);
+        }else{
+            $this->resetUI();
+            $this->alert('success', 'Importacion exitosa!!',['timerProgressBar' => true]);
+        }
     }
 }

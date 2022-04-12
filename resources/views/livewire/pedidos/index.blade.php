@@ -14,7 +14,7 @@
                         <a href="javascript:void(0)" class="btn btn-sm btn-info" wire:click="Finalizar()">FINALIZADO</a>
                     </div>
                     <div class="col-sm-12 col-md-6 col-xs-12">
-                        <div class="btn-group">
+                        <div class="btn-group float-right">
                             <button wire:click="filtroProyectosEstados" type="button" class="btn {{ is_null($status) ? 'btn-secondary' : 'btn-default' }}">
                                 <span class="mr-1">TODOS</span>
                                 <span class="badge badge-pill badge-light">{{ $pedidosCount }}</span>

@@ -31,7 +31,7 @@
                             <td class="text-center">{{$industria->nombre}}</td>
                             <td class="text-center"><span class="badge {{ $industria->estado == 'ACTIVO' ? 'badge-success' : 'badge-danger'}}">{{$industria->estado}}</span></td>
                             <td class="text-center">
-                                <a href="javascript:void(0)"  wire:click="Edit({{ $industria->id }})" class="btn btn-primary btn-sm" title="Editar"><i class="fas fa-pencil-alt" aria-hidden="true"></i></a>
+                                <a href="javascript:void(0)"  wire:click="Edit({{ $industria->id }})" class="btn btn-warning btn-sm" title="Editar"><i class="fas fa-pencil-alt" aria-hidden="true"></i></a>
                                 <a href="javascript:void(0)" onclick="Confirm('{{ $industria->id }}')" class="btn btn-danger btn-sm" title="Eliminar"><i class="fa fa-trash" aria-hidden="true"></i></a>
                             </td>
                         </tr>

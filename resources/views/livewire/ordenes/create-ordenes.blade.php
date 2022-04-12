@@ -1,7 +1,7 @@
 <div>
     @section('cabezera-contenido')
         <a href="{{route('compras')}}" class="btn btn-primary float-right">Atras</a>
-        <h1>Registro de Compra</h1>
+        <h1>Registro de Orden Compra</h1>
     @endsection
     <div class="content-fluid">
         <form wire:submit.prevent="createOrden">
@@ -81,7 +81,7 @@
                                         <input type="text" class="form-control text-center" name="monto" value="{{ $rows[$key]['formate_monto'] ?? 0 }}" size="5" disabled>
                                     </td>
                                     <td class="text-center">
-                                        <a href="javascript:void(0)" class="btn btn-danger" wire:click="deleteRow({{ $key }})"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                        <a href="javascript:void(0)" class="btn btn-danger btn-sm" wire:click="deleteRow({{ $key }})"><i class="fa fa-trash" aria-hidden="true"></i></a>
                                     </td>
                                 </tr>
                             @endforeach

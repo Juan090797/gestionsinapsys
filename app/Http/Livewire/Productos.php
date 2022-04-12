@@ -2,17 +2,22 @@
 
 namespace App\Http\Livewire;
 
+use App\Exports\ProductosExport;
+use App\Imports\ProductosImport;
 use App\Models\Marca;
 use App\Models\Producto;
 use App\Models\Clasificacion;
 use App\Models\UnidadMedida;
 use Illuminate\Support\Facades\Validator;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
+use Livewire\WithFileUploads;
+use Maatwebsite\Excel\Facades\Excel;
 
 class Productos extends ComponenteBase
 {
+    use WithFileUploads;
     use LivewireAlert;
-    public $search, $selected_id;
+    public $search, $selected_id,$file;
     public $state = [];
     public $marcas,$clasificaciones,$unidades;
     protected $listeners = ['deleteRow' => 'Destroy'];
@@ -91,6 +96,7 @@ class Productos extends ComponenteBase
         $this->state=[];
         $this->search = '';
         $this->selected_id = 0;
+        $this->file = null;
         $this->resetValidation();
     }
     public function Edit(Producto $producto)
@@ -137,5 +143,24 @@ class Productos extends ComponenteBase
         $producto->update(['estado' => 'INACTIVO']);
         $this->alert('success', 'Producto eliminado!!',['timerProgressBar' => true]);
         $this->resetUI();
+    }
+    public function exportarProductos()
+    {
+        $reportName = 'Productos_' . uniqid() . '.xlsx';
+        return Excel::download(new ProductosExport, $reportName);
+    }
+    public function importProducto()
+    {
+        $import = new ProductosImport();
+        $import->import($this->file);
+
+        if ($import->failures()->isNotEmpty())
+        {
+            $this->resetUI();
+            $this->alert('error', 'Error en la importacion!!',['timerProgressBar' => true]);
+        }else{
+            $this->resetUI();
+            $this->alert('success', 'Importacion exitosa!!',['timerProgressBar' => true]);
+        }
     }
 }

@@ -1,41 +1,5 @@
 <div>
     @section('cabezera-contenido')
-        @if(session()->has('message'))
-            <div class="alert alert-success" role="alert">
-                {{ session('message') }}
-            </div>
-        @endif
-        @if(isset($errors) && $errors->any())
-            <div class="alert alert-danger" role="alert">
-                @foreach($errors->all() as $error)
-                    {{ $error }}
-                @endforeach
-            </div>
-        @endif
-        @if(session()->has('failures'))
-            <table class="table table-danger">
-                <tr>
-                    <th>Columna</th>
-                    <th>Atributos</th>
-                    <th>Error</th>
-                    <th>Valor</th>
-                </tr>
-                @foreach(session()->get('failures') as $validation)
-                    <tr>
-                        <td>{{ $validation->row() }}</td>
-                        <td>{{ $validation->attribute() }}</td>
-                        <td>
-                            <ul>
-                                @foreach($validation->errors() as $e)
-                                    <li>{{ $e }}</li>
-                                @endforeach
-                            </ul>
-                        </td>
-                        <td>{{ $validation->values()[$validation->attribute()]}}</td>
-                    </tr>
-                @endforeach
-            </table>
-        @endif
         <a href="javascript:void(0)" class="btn btn-primary float-right" data-toggle="modal" data-target="#theModal">Agregar</a>
         <h1>Lista de Productos</h1>
     @endsection
@@ -43,22 +7,22 @@
         <div class="card">
             <div class="card-header">
                 <div class="row">
-                    <div class="col-md-3 col-sm-12">
-                        <form method="post" action="{{url('productos/imports/')}}" enctype="multipart/form-data">
-                            {{csrf_field()}}
+                    <div class="col-md-4 col-sm-12">
+                        <form wire:submit.prevent="importProducto">
                             <div class="input-group">
                                 <div class="custom-file">
-                                    <input name="file" type="file" class="custom-file-input" required>
-                                    <label name="file" id="file" class="custom-file-label">Seleccionar....</label>
+                                    <input name="file" type="file" class="custom-file-input" wire:model="file" required>
+                                    <label name="file" id="file" class="custom-file-label">{{$file}}</label>
                                 </div>
                                 <div class="input-group-append">
                                     <button class="btn btn-outline-secondary" type="submit">Insertar</button>
                                 </div>
                             </div>
+                            <div wire:loading wire:target="file">Cargando.....</div>
                         </form>
                     </div>
-                    <div class="col-md-5 col-sm-12">
-                        <a class="btn btn-success" href="{{ url('productos/exports/') }}"><i class="fas fa-file-excel"></i> Excel</a>
+                    <div class="col-md-4 col-sm-12">
+                        <a class="btn btn-success" wire:click="exportarProductos()"><i class="fas fa-file-excel"></i> Excel</a>
                     </div>
                     <div class="col-md-4 col-sm-12">
                         <input class="form-control" placeholder="Buscar por codigo, descripcion o nombre del producto" wire:model="search">

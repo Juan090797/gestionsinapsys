@@ -9,7 +9,7 @@
                 <div class="row">
                     <div class="col-4">
                         <a href="javascript:void(0)" class="btn btn-primary" wire:click="aprobar()">Aprobar</a>
-                        <a class="btn btn-success" href="{{route('cajachica.export', $caja)}}"><i class="fas fa-file-excel"></i> Excel</a>
+                        <a class="btn btn-success" wire:click="exportMovimientos({{$caja}})"><i class="fas fa-file-excel"></i> Excel</a>
                     </div>
                     <div class="col-2">
                         <p class="text-primary"><b>Suma Ingresos:</b> S/ {{ number_format($sumaIngresos,2)}}</p>

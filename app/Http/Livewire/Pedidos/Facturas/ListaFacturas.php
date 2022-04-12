@@ -24,7 +24,6 @@ class ListaFacturas extends Component
         $this->update();
         return view('livewire.pedidos.facturas.lista-facturas')->extends('layouts.tema.app')->section('content');
     }
-
     public function update()
     {
         $this->pedidos();
@@ -51,7 +50,6 @@ class ListaFacturas extends Component
         $this->selected_id = 0;
         $this->resetValidation();
     }
-
     public function Store()
     {
         $validated = Validator::make($this->state, [
@@ -82,7 +80,7 @@ class ListaFacturas extends Component
         FacturaVenta::create($validated);
 
         $this->resetUI();
-        $this->emit('factura-added');
+        $this->emit('hide-modal');
         $this->alert('success', 'Factura Registrada',['timerProgressBar' => true]);
     }
     public function Edit(FacturaVenta $facturaVenta)
@@ -121,7 +119,7 @@ class ListaFacturas extends Component
         $factura = FacturaVenta::findOrFail($this->state['id']);
         $factura->update($validated);
         $this->resetUI();
-        $this->emit('factura-updated');
+        $this->emit('hide-modal');
         $this->alert('success', 'Factura actualizada',['timerProgressBar' => true]);
     }
     public function Destroy(FacturaVenta $facturaVenta)
@@ -130,7 +128,7 @@ class ListaFacturas extends Component
         $this->resetUI();
         $this->alert('success', 'Se elimino la factura con exito',['timerProgressBar' => true]);
     }
-    public function exportFactura()
+    public function exportFacturas()
     {
         $reportName = 'Facturas_' . uniqid() . '.xlsx';
         return Excel::download(new FacturaVentaExport, $reportName);

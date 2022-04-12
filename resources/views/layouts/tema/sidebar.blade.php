@@ -109,8 +109,8 @@
                 </li>
                 @endhasanyrole
                 @role('Administrador')
-                <li class="nav-item {{ request()->is('impuestos') ? 'menu-open' : '' }} {{ request()->is('empresa') ? 'menu-open' : '' }} {{ request()->is('centrocostos') ? 'menu-open' : '' }}">
-                    <a href="#" class="nav-link {{ request()->is('impuestos') ? 'active' : '' }} {{ request()->is('empresa') ? 'active' : '' }} {{ request()->is('centrocostos') ? 'active' : '' }}">
+                <li class="nav-item {{ request()->is('impuestos') ? 'menu-open' : '' }} {{ request()->is('empresa') ? 'menu-open' : '' }} {{ request()->is('centrocostos') ? 'menu-open' : '' }} {{ request()->is('tipo-documentos') ? 'menu-open' : '' }}">
+                    <a href="#" class="nav-link {{ request()->is('impuestos') ? 'active' : '' }} {{ request()->is('empresa') ? 'active' : '' }} {{ request()->is('centrocostos') ? 'active' : '' }} {{ request()->is('tipo-documentos') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-cogs" style="color: white"></i>
                         <p style="color: white">
                             Configuracion
@@ -146,7 +146,7 @@
                 </li>
                 @endrole
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="#" class="nav-link {{ request()->is('pedidos') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-cash-register" style="color:white"></i>
                         <p style="color:white">
                             Ventas
@@ -155,7 +155,7 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{ url('pedidos') }}" class="nav-link">
+                            <a href="{{ url('pedidos') }}" class="nav-link {{ request()->is('pedidos') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Pedidos</p>
                             </a>
@@ -163,8 +163,8 @@
                     </ul>
                 </li>
                 @hasanyrole('Logistica|Administrador')
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
+                <li class="nav-item {{ request()->is('compras') ? 'menu-open' : '' }} {{ request()->is('importaciones') ? 'menu-open' : '' }} {{ request()->is('ordenes') ? 'menu-open' : '' }}">
+                    <a href="#" class="nav-link {{ request()->is('compras') ? 'active' : '' }} {{ request()->is('importaciones') ? 'active' : '' }} {{ request()->is('ordenes') ? 'active' : '' }}">
                         <i class="nav-icon far fa-money-bill-alt" style="color: white"></i>
                         <p style="color: white">
                             Compras
@@ -173,19 +173,19 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{ url('compras') }}" class="nav-link">
+                            <a href="{{ url('compras') }}" class="nav-link {{ request()->is('compras') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Registros Compras</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ url('pedidos') }}" class="nav-link">
+                            <a href="#" class="nav-link {{ request()->is('importaciones') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Importaciones</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ url('ordenes') }}" class="nav-link">
+                            <a href="{{ url('ordenes') }}" class="nav-link {{ request()->is('ordenes') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Ordenes Compras</p>
                             </a>
@@ -194,8 +194,8 @@
                 </li>
                 @endhasanyrole
                 @hasanyrole('Logistica|Administrador')
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
+                <li class="nav-item {{ request()->is('tipoproveedores') ? 'menu-open' : '' }} {{ request()->is('proveedores') ? 'menu-open' : '' }}">
+                    <a href="#" class="nav-link {{ request()->is('tipoproveedores') ? 'active' : '' }} {{ request()->is('proveedores') ? 'active' : '' }}">
                         <i class="nav-icon far fas fa-dolly-flatbed" style="color:white"></i>
                         <p style="color:white">
                             Proveedores
@@ -204,13 +204,13 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{ url('proveedores') }}" class="nav-link">
+                            <a href="{{ url('proveedores') }}" class="nav-link {{ request()->is('proveedores') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Proveedores</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ url('tipoproveedores') }}" class="nav-link">
+                            <a href="{{ url('tipoproveedores') }}" class="nav-link {{ request()->is('tipoproveedores') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Tipos Proveedores</p>
                             </a>
@@ -218,7 +218,7 @@
                     </ul>
                 </li>
                 @endhasanyrole
-                <li class="nav-item {{ request()->is('caja') ? 'menu-open' : '' }} {{ request()->is('unidades') ? 'menu-open' : '' }}">
+                <li class="nav-item {{ request()->is('caja') ? 'menu-open' : '' }}">
                     <a href="#" class="nav-link {{ request()->is('caja') ? 'active' : '' }}">
                         <i class="nav-icon fa fa-tag" style="color: white"></i>
                         <p style="color: white">
@@ -235,8 +235,8 @@
                         </li>
                     </ul>
                 </li>
-                <li class="nav-item {{ request()->is('compras-administrativos') ? 'menu-open' : '' }}">
-                    <a href="#" class="nav-link {{ request()->is('compras-administrativos') ? 'active' : '' }}">
+                <li class="nav-item {{ request()->is('facturas') ? 'menu-open' : '' }}">
+                    <a href="#" class="nav-link {{ request()->is('facturas') ? 'active' : '' }}">
                         <i class="nav-icon fa fa-tag" style="color:white"></i>
                         <p style="color:white">
                             Contabilidad
@@ -253,8 +253,8 @@
                     </ul>
                 </li>
                 @role('Administrador')
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
+                <li class="nav-item {{ request()->is('ingresos') ? 'menu-open' : '' }} {{ request()->is('salidas') ? 'menu-open' : '' }}">
+                    <a href="#" class="nav-link {{ request()->is('ingresos') ? 'active' : '' }} {{ request()->is('salidas') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-box-open" style="color: white"></i>
                         <p style="color: white">
                             Almacen
@@ -263,19 +263,19 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{ url('ingresos') }}" class="nav-link">
+                            <a href="{{ url('ingresos') }}" class="nav-link {{ request()->is('ingresos') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Ingresos</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ url('salidas') }}" class="nav-link">
+                            <a href="{{ url('salidas') }}" class="nav-link {{ request()->is('salidas') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Salidas</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ url('salidas') }}" class="nav-link">
+                            <a href="{{ url('requerimientos') }}" class="nav-link {{ request()->is('requerimientos') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Requerimientos</p>
                             </a>
@@ -284,8 +284,8 @@
                 </li>
                 @endrole
                 @role('Administrador')
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
+                <li class="nav-item {{ request()->is('usuarios') ? 'menu-open' : '' }} {{ request()->is('roles') ? 'menu-open' : '' }} {{ request()->is('permisos') ? 'menu-open' : '' }}">
+                    <a href="#" class="nav-link {{ request()->is('usuarios') ? 'active' : '' }} {{ request()->is('roles') ? 'active' : '' }} {{ request()->is('permisos') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-key" style="color: white"></i>
                         <p style="color: white">
                             Seguridad
@@ -294,19 +294,19 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{ url('usuarios') }}" class="nav-link">
+                            <a href="{{ url('usuarios') }}" class="nav-link {{ request()->is('usuarios') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Usuarios</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ url('roles') }}" class="nav-link">
+                            <a href="{{ url('roles') }}" class="nav-link {{ request()->is('roles') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Roles</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="#" class="nav-link {{ request()->is('permisos') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Permisos</p>
                             </a>

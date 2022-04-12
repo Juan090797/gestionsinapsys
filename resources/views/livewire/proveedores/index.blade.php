@@ -8,21 +8,21 @@
             <div class="card-header">
                 <div class="row">
                     <div class="col-md-4 col-sm-12">
-                        <form method="post" action="{{url('proveedors/imports/')}}" enctype="multipart/form-data">
-                            {{csrf_field()}}
+                        <form wire:submit.prevent="importProveedor">
                             <div class="input-group">
                                 <div class="custom-file">
-                                    <input name="file" type="file" class="custom-file-input" required>
-                                    <label name="file" id="file" class="custom-file-label">Seleccionar archivo excel ....</label>
+                                    <input name="file" type="file" class="custom-file-input" wire:model="file" required>
+                                    <label name="file" id="file" class="custom-file-label">{{$file}}</label>
                                 </div>
                                 <div class="input-group-append">
                                     <button class="btn btn-outline-secondary" type="submit">Cargar</button>
                                 </div>
                             </div>
+                            <div wire:loading wire:target="file">Cargando.....</div>
                         </form>
                     </div>
                     <div class="col-md-4 col-sm-12">
-                        <a class="btn btn-success" href="{{ route('proveedor.export') }}"><i class="fas fa-file-excel"></i> Excel</a>
+                        <a class="btn btn-success" wire:click="exportProveedores()"><i class="fas fa-file-excel"></i> Excel</a>
                     </div>
                     <div class="col-md-4 col-sm-12">
                         <input wire:model="search" class="form-control" placeholder="Buscar por ruc">
@@ -56,12 +56,8 @@
                             <td class="text-center">{{$proveedor->tipo->nombre}}</td>
                             <td class="text-center"><span class="badge {{ $proveedor->estado == 'ACTIVO' ? 'badge-success' : 'badge-danger'}}">{{$proveedor->estado}}</span></td>
                             <td class="text-center">
-                                <a href="javascript:void(0)"  wire:click="Edit({{ $proveedor->id }})" class="btn btn-primary" title="Editar">
-                                    <i class="fas fa-pencil-alt" aria-hidden="true"></i>
-                                </a>
-                                <a href="javascript:void(0)" onclick="Confirm('{{ $proveedor->id }}')" class="btn btn-danger" title="Eliminar">
-                                    <i class="fa fa-trash" aria-hidden="true"></i>
-                                </a>
+                                <a href="javascript:void(0)"  wire:click="Edit({{ $proveedor->id }})" class="btn btn-warning btn-sm" title="Editar"><i class="fas fa-pencil-alt" aria-hidden="true"></i></a>
+                                <a href="javascript:void(0)" onclick="Confirm('{{ $proveedor->id }}')" class="btn btn-danger btn-sm" title="Eliminar"><i class="fa fa-trash" aria-hidden="true"></i></a>
                             </td>
                         </tr>
                     @endforeach
@@ -83,7 +79,6 @@
                 $('#theModal').modal('hide');
             })
         });
-
         function Confirm(id)
         {
             Swal.fire({
@@ -98,13 +93,6 @@
                 if(result.value){
                     window.livewire.emit('deleteRow', id)
                     swal.close()
-                }
-                if (result.isConfirmed) {
-                    Swal.fire(
-                        'Eliminado!',
-                        'El registro ha sido eliminado',
-                        'success'
-                    )
                 }
             })
         }

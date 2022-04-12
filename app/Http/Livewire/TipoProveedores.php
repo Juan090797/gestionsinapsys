@@ -5,16 +5,18 @@ namespace App\Http\Livewire;
 use App\Models\Proveedor;
 use App\Models\TipoProveedor;
 use Illuminate\Support\Facades\Validator;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class TipoProveedores extends ComponenteBase
 {
+    use LivewireAlert;
     public $selected_id;
     public $state = [];
     protected $listeners = ['deleteRow' => 'Destroy'];
 
     public function render()
     {
-        $tipos = TipoProveedor::orderBy('id', 'desc')->paginate($this->pagination);
+        $tipos = TipoProveedor::where('estado', 'ACTIVO')->paginate($this->pagination);
         return view('livewire.tipoproveedores.index', ['tipos' => $tipos])->extends('layouts.tema.app')->section('content');
     }
 
@@ -22,9 +24,8 @@ class TipoProveedores extends ComponenteBase
     {
         $this->selected_id = $tipoProveedor->id;
         $this->state = $tipoProveedor->toArray();
-        $this->emit('show-modal', 'show-modal!');
+        $this->emit('show-modal');
     }
-
     public function Store()
     {
         $validated = Validator::make($this->state, [
@@ -39,9 +40,9 @@ class TipoProveedores extends ComponenteBase
 
         TipoProveedor::create($validated);
         $this->resetUI();
-        $this->emit('proveedor-added', 'Tipo de proveedor Registrado');
+        $this->emit('hide-modal');
+        $this->alert('success', 'Tipo de proveedor creado!!',['timerProgressBar' => true]);
     }
-
     public function Update()
     {
         $validated = Validator::make($this->state, [
@@ -57,8 +58,8 @@ class TipoProveedores extends ComponenteBase
         $tipoProveedor = TipoProveedor::findOrFail($this->state['id']);
         $tipoProveedor->update($validated);
         $this->resetUI();
-        $this->emit('proveedor-updated', 'Tipo de proveedor Actualizado');
-
+        $this->emit('hide-modal');
+        $this->alert('success', 'Tipo de proveedor actualizado!!',['timerProgressBar' => true]);
     }
     public function resetUI()
     {
@@ -68,14 +69,8 @@ class TipoProveedores extends ComponenteBase
     }
     public function Destroy(TipoProveedor $tipoProveedor)
     {
-        $pro = Proveedor::where('tipo_proveedors_id', $tipoProveedor->id)->count();
-        if ($pro == 0) {
-            $tipoProveedor->delete();
-            $this->resetUI();
-            $this->emit('proveedor-deleted', 'Tipo de proveedor eliminado');
-        }else {
-            $this->resetUI();
-            $this->emit('error', 'El tipo esta relacionado con proveedor, no se puede eliminar');
-        }
+        $tipoProveedor->update(['estado' => 'INACTIVO']);
+        $this->resetUI();
+        $this->alert('success', 'Tipo de proveedor eliminado!!',['timerProgressBar' => true]);
     }
 }

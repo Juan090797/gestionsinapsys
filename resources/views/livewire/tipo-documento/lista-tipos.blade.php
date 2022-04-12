@@ -25,7 +25,7 @@
                             <td class="text-center">{{ $documento->tipo }}</td>
                             <td class="text-center">
                                 <a href="javascript:void(0)" wire:click="Edit({{ $documento->id }})" class="btn btn-warning btn-sm" title="Editar"><i class="fas fa-pencil-alt" aria-hidden="true"></i></a>
-                                <a href="javascript:void(0)" wire:click="Edit({{ $documento->id }})" class="btn btn-danger btn-sm" title="Eliminar"><i class="fas fa-trash" aria-hidden="true"></i></a>
+                                <a href="javascript:void(0)" onclick="Confirm('{{ $documento->id }}')" class="btn btn-danger btn-sm" title="Eliminar"><i class="fas fa-trash" aria-hidden="true"></i></a>
                             </td>
                         </tr>
                     @endforeach
@@ -47,7 +47,6 @@
                 $('#theModal').modal('hide');
             })
         });
-
         function Confirm(id)
         {
             Swal.fire({

@@ -24,15 +24,9 @@
                             <td class="text-center">{{ $caja->user->name }}</td>
                             <td class="text-center">S/ {{ number_format($caja->saldo,2) }}</td>
                             <td class="text-center">
-                                <a href="{{ route('caja-movimientos',$caja) }}" class="btn btn-success" title="Ver">
-                                    <i class="fas fa-eye" aria-hidden="true"></i>
-                                </a>
-                                <a href="javascript:void(0)"  wire:click="Edit({{ $caja->id }})" class="btn btn-primary" title="Editar">
-                                    <i class="fas fa-pencil-alt" aria-hidden="true"></i>
-                                </a>
-                                <a href="javascript:void(0)"  onclick="Confirm('{{ $caja->id }}')" class="btn btn-danger" title="Eliminar">
-                                    <i class="fas fa-trash" aria-hidden="true"></i>
-                                </a>
+                                <a href="{{ route('caja-movimientos',$caja) }}" class="btn btn-success btn-sm" title="Ver"><i class="fas fa-eye" aria-hidden="true"></i></a>
+                                <a href="javascript:void(0)"  wire:click="Edit({{ $caja->id }})" class="btn btn-warning btn-sm" title="Editar"><i class="fas fa-pencil-alt" aria-hidden="true"></i></a>
+                                <a href="javascript:void(0)"  onclick="Confirm('{{ $caja->id }}')" class="btn btn-danger btn-sm" title="Eliminar"><i class="fas fa-trash" aria-hidden="true"></i></a>
                             </td>
                         </tr>
                     @endforeach
@@ -47,19 +41,11 @@
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', function (){
-
-            window.Livewire.on('show-modal', msg =>{
+            window.livewire.on('show-modal', msg =>{
                 $('#theModal').modal('show')
             });
-            window.livewire.on('movimiento-added', msg =>{
+            window.livewire.on('hide-modal', msg =>{
                 $('#theModal').modal('hide');
-                noty(msg)
-            })
-            window.livewire.on('movimiento-updated', msg =>{
-                $('#theModal').modal('hide');
-            })
-            window.livewire.on('movimiento-deleted', msg =>{
-                noty(msg)
             })
         });
 

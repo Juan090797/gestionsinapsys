@@ -2,6 +2,8 @@
 
 namespace App\Http\Livewire;
 
+use App\Exports\ClienteExport;
+use App\Imports\ClienteImport;
 use App\Models\Categoria;
 use App\Models\Cliente;
 use App\Models\Industria;
@@ -10,13 +12,16 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 use Livewire\WithPagination;
+use Maatwebsite\Excel\Facades\Excel;
 
 class Clientes extends ComponenteBase
 {
+    use WithFileUploads;
     use LivewireAlert;
     public $state= [];
-    public $search, $selected_id,$documentos,$industrias,$categorias;
+    public $search, $selected_id,$documentos,$industrias,$categorias,$file;
     protected $listeners = ['deleteRow' => 'Destroy'];
 
     public function  updatingSearch()
@@ -65,6 +70,7 @@ class Clientes extends ComponenteBase
         $this->search = '';
         $this->selected_id = 0;
         $this->resetValidation();
+        $this->file = null;
     }
     public function Store()
     {
@@ -164,6 +170,24 @@ class Clientes extends ComponenteBase
         $cliente->update(['estado' => 'INACTIVO']);
         $this->resetUI();
         $this->alert('success', 'Cliente eliminado!!',['timerProgressBar' => true]);
+    }
+    public function exportClientes()
+    {
+        $reportName = 'Clientes_' . uniqid() . '.xlsx';
+        return Excel::download(new ClienteExport, $reportName);
+    }
+    public function importCliente()
+    {
+        $import = new ClienteImport();
+        $import->import($this->file);
+        if ($import->failures()->isNotEmpty())
+        {
+            $this->resetUI();
+            $this->alert('error', 'Error en la importacion!!',['timerProgressBar' => true]);
+        }else{
+            $this->resetUI();
+            $this->alert('success', 'Clientes importados!!',['timerProgressBar' => true]);
+        }
     }
 
 }

@@ -4,10 +4,12 @@ namespace App\Http\Livewire\Roles;
 
 use App\Http\Livewire\ComponenteBase;
 use Illuminate\Support\Facades\Validator;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Spatie\Permission\Models\Role;
 
 class ListaRoles extends ComponenteBase
 {
+    use LivewireAlert;
     public $selected_id;
     public $state = [];
     protected $listeners = ['deleteRow' => 'Destroy'];
@@ -29,7 +31,8 @@ class ListaRoles extends ComponenteBase
 
         Role::create($validated);
         $this->resetUI();
-        $this->emit('rol-added', 'Rol Registrado');
+        $this->emit('hide-modal');
+        $this->alert('success', 'Rol creado!!',['timerProgressBar' => true]);
     }
     public function resetUI()
     {

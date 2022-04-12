@@ -31,13 +31,6 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('cotizacion/{proyecto}', \App\Http\Livewire\Cotizaciones\CreateCotizacion::class)->name('cotizacion.create');
     Route::get('cotizacion/{cotizacion}/show', \App\Http\Livewire\Cotizaciones\ShowCotizacion::class)->name('cotizacion.show');
     Route::get('cotizacion/{cotizacion}/edit', \App\Http\Livewire\Cotizaciones\EditCotizacion::class)->name('cotizacion.edit');
-    Route::get('clientes/exports/', [\App\Http\Controllers\ExportController::class, 'exportCliente']);
-    Route::post('clientes/imports/', [\App\Http\Controllers\ImportController::class, 'importCliente']);
-    Route::get('productos/exports/', [\App\Http\Controllers\ExportController::class, 'exportProducto']);
-    Route::post('productos/imports/', [\App\Http\Controllers\ImportController::class, 'importProducto']);
-    Route::post('proveedors/imports/', [\App\Http\Controllers\ImportController::class, 'importProveedor']);
-    Route::get('proveedors/exports/', [\App\Http\Livewire\Proveedores::class, 'exportProveedor'])->name('proveedor.export');
-    Route::get('compras/exports/', [\App\Http\Livewire\Compras\Compras::class, 'exportCompra'])->name('compra.export');
     Route::get('impuestos', \App\Http\Livewire\Impuestos::class);
     Route::get('empresa', \App\Http\Livewire\Empresas\Empresas::class);
     Route::get('pedidos', \App\Http\Livewire\Pedidos\Pedidos::class)->name('pedidos');
@@ -70,9 +63,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('caja', \App\Http\Livewire\Caja\ListaCaja::class)->name('caja');
     Route::get('caja/{caja}/movimientos', \App\Http\Livewire\Caja\ListaMovimientos::class)->name('caja-movimientos');
     Route::get('movimiento/{movimiento}/show', \App\Http\Livewire\Caja\ShowMovimiento::class)->name('movimiento-show');
-    Route::get('cajachica/{caja}/exports/', [\App\Http\Livewire\Caja\ListaMovimientos::class, 'exportMovimiento'])->name('cajachica.export');
-    Route::get('tipo-documentos', \App\Http\Livewire\TipoDocumento\ListaTipos::class)->name('tipo.documentos');
+    Route::get('tipo-documentos', \App\Http\Livewire\TipoDocumento\ListaTipos::class)->name('tipo-documentos');
     Route::get('facturas', \App\Http\Livewire\Pedidos\Facturas\ListaFacturas::class)->name('facturas');
-    Route::get('facturas/exports/', [\App\Http\Livewire\Pedidos\Facturas\ListaFacturas::class, 'exportFactura'])->name('factura.export');
 });
 

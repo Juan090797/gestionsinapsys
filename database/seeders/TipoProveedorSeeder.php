@@ -16,67 +16,67 @@ class TipoProveedorSeeder extends Seeder
     {
         DB::table('tipo_proveedors')->insert([
             'nombre' => 'Agente de Aduanas',
-            'estado' => 'Activo',
+            'estado' => 'ACTIVO',
         ]);
         DB::table('tipo_proveedors')->insert([
             'nombre' => 'Agente de Carga Internacional',
-            'estado' => 'Activo',
+            'estado' => 'ACTIVO',
         ]);
         DB::table('tipo_proveedors')->insert([
             'nombre' => 'Almacen',
-            'estado' => 'Activo',
+            'estado' => 'ACTIVO',
         ]);
         DB::table('tipo_proveedors')->insert([
             'nombre' => 'Banco',
-            'estado' => 'Activo',
+            'estado' => 'ACTIVO',
         ]);
         DB::table('tipo_proveedors')->insert([
             'nombre' => 'Broker',
-            'estado' => 'Activo',
+            'estado' => 'ACTIVO',
         ]);
         DB::table('tipo_proveedors')->insert([
             'nombre' => 'Cliente',
-            'estado' => 'Activo',
+            'estado' => 'ACTIVO',
         ]);
         DB::table('tipo_proveedors')->insert([
             'nombre' => 'Comerciante',
-            'estado' => 'Activo',
+            'estado' => 'ACTIVO',
         ]);
         DB::table('tipo_proveedors')->insert([
             'nombre' => 'Compañia Area',
-            'estado' => 'Activo',
+            'estado' => 'ACTIVO',
         ]);
         DB::table('tipo_proveedors')->insert([
             'nombre' => 'Distribuidor',
-            'estado' => 'Activo',
+            'estado' => 'ACTIVO',
         ]);
         DB::table('tipo_proveedors')->insert([
             'nombre' => 'Extranjero',
-            'estado' => 'Activo',
+            'estado' => 'ACTIVO',
         ]);
         DB::table('tipo_proveedors')->insert([
             'nombre' => 'Fabricante',
-            'estado' => 'Activo',
+            'estado' => 'ACTIVO',
         ]);
         DB::table('tipo_proveedors')->insert([
             'nombre' => 'Operador Logistico Internacional',
-            'estado' => 'Activo',
+            'estado' => 'ACTIVO',
         ]);
         DB::table('tipo_proveedors')->insert([
             'nombre' => 'Otros',
-            'estado' => 'Activo',
+            'estado' => 'ACTIVO',
         ]);
         DB::table('tipo_proveedors')->insert([
             'nombre' => 'Representante',
-            'estado' => 'Activo',
+            'estado' => 'ACTIVO',
         ]);
         DB::table('tipo_proveedors')->insert([
             'nombre' => 'Transporte',
-            'estado' => 'Activo',
+            'estado' => 'ACTIVO',
         ]);
         DB::table('tipo_proveedors')->insert([
             'nombre' => 'Tributario',
-            'estado' => 'Activo',
+            'estado' => 'ACTIVO',
         ]);
     }
 }
