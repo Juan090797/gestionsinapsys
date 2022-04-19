@@ -5,8 +5,10 @@ namespace App\Http\Livewire\Pedidos;
 use App\Models\ArchivoPedido;
 use App\Models\Comentario;
 use App\Models\ComentarioPedido;
+use App\Models\Garantia;
 use App\Models\Pedido;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
@@ -28,7 +30,6 @@ class PedidoShow extends Component
         $this->update();
         return view('livewire.pedidos.pedido-show')->extends('layouts.tema.app')->section('content');
     }
-
     public function update()
     {
         $this->comentarios();
@@ -51,7 +52,6 @@ class PedidoShow extends Component
         $this->tipo         = '';
         $this->resetValidation();
     }
-
     public function createComentario()
     {
         if($this->archivo)
@@ -102,5 +102,29 @@ class PedidoShow extends Component
     {
         $archivopedido = $archivoPedido->archivo;
         return Storage::disk('local')->download('pedidos_archivos/'.$archivopedido);
+    }
+    public function crearCronogramaGarantia(Pedido $pedido)
+    {
+        $oc= null;
+        $mant = $pedido->num_mantenimiento > 0 ? true : false;
+        foreach($pedido->archivos as $item){
+            if($item == 'ORDEN DE COMPRA'){
+                $oc = $item['archivo'];
+            }
+        }
+        DB::transaction(function() use($pedido,$mant,$oc) {
+            foreach ($pedido->pedidoDetalle as $item){
+                Garantia::create([
+                    'orden_compra'      => $oc,
+                    'tiempo_garantia'   => $pedido->garantia,
+                    'if_mantenimiento'  => $mant,
+                    'mant_total'        => $pedido->num_mantenimiento,
+                    'cliente_id'        => $pedido->cliente_id,
+                    'producto_id'       => $item['producto_id'],
+                    'pedido_id'         => $pedido->id,
+                ]);
+            }
+        });
+        $this->alert('success', 'Se genero los registros de garantias',['timerProgressBar' => true]);
     }
 }

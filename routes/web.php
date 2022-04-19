@@ -65,5 +65,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('movimiento/{movimiento}/show', \App\Http\Livewire\Caja\ShowMovimiento::class)->name('movimiento-show');
     Route::get('tipo-documentos', \App\Http\Livewire\TipoDocumento\ListaTipos::class)->name('tipo-documentos');
     Route::get('facturas', \App\Http\Livewire\Pedidos\Facturas\ListaFacturas::class)->name('facturas');
+    Route::get('garantias', \App\Http\Livewire\Garantias\ListaGarantias::class)->name('garantias');
+    Route::get('garantia/{garantia}/show', \App\Http\Livewire\Garantias\ShowGarantia::class)->name('garantia.show');
 });
 

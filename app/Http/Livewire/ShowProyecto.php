@@ -8,6 +8,7 @@ use App\Models\Cliente;
 use App\Models\Comentario;
 use App\Models\Cotizacion;
 use App\Models\Etapa;
+use App\Models\Garantia;
 use App\Models\Pedido;
 use App\Models\PedidoDetalle;
 use App\Models\Proyecto;

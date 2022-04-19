@@ -24,6 +24,5 @@
                 @livewire('contactos', ['cliente' => $cliente])
             </div>
         </div>
-
     </div>
 @endsection

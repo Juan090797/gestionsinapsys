@@ -252,6 +252,29 @@
                         </li>
                     </ul>
                 </li>
+                <li class="nav-item {{ request()->is('garantias') ? 'menu-open' : '' }}">
+                    <a href="#" class="nav-link {{ request()->is('garantias') ? 'active' : '' }}">
+                        <i class="fa fa-american-sign-language-interpreting nav-icon" aria-hidden="true" style="color:white"></i>
+                        <p style="color:white">
+                            PostVenta
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ url('garantias') }}" class="nav-link {{ request()->is('garantias') ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Garantias</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Incidencias</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
                 @role('Administrador')
                 <li class="nav-item {{ request()->is('ingresos') ? 'menu-open' : '' }} {{ request()->is('salidas') ? 'menu-open' : '' }}">
                     <a href="#" class="nav-link {{ request()->is('ingresos') ? 'active' : '' }} {{ request()->is('salidas') ? 'active' : '' }}">

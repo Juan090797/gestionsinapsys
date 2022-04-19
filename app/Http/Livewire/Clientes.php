@@ -114,7 +114,6 @@ class Clientes extends ComponenteBase
         $this->emit('hide-modal');
         $this->alert('success', 'Cliente registrado!!',['timerProgressBar' => true]);
     }
-
     public function Edit(Cliente $cliente)
     {
         $this->selected_id = $cliente->id;
@@ -164,7 +163,6 @@ class Clientes extends ComponenteBase
         $this->emit('hide-modal');
         $this->alert('success', 'Cliente actualizado!!',['timerProgressBar' => true]);
     }
-
     public function Destroy(Cliente $cliente)
     {
         $cliente->update(['estado' => 'INACTIVO']);
@@ -189,5 +187,4 @@ class Clientes extends ComponenteBase
             $this->alert('success', 'Clientes importados!!',['timerProgressBar' => true]);
         }
     }
-
 }

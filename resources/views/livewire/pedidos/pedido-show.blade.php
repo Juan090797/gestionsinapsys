@@ -8,6 +8,7 @@
             <div class="col-sm-8 col-xs-12">
                 <div class="card">
                     <div class="card-header">
+                        <a href="javascript:void(0)" wire:click="crearCronogramaGarantia({{ $pedido }})" class="btn btn-primary float-right">Generar Garantia</a>
                         <h4 class="text-primary">Detalle del pedido</h4>
                     </div>
                     <div class="card-body table-responsive">
