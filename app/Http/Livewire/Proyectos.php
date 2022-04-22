@@ -19,7 +19,6 @@ class Proyectos extends ComponenteBase
     public $clientes,$users,$proyectosAprobadosCount,$proyectosArchivadosCount,$proyectosCompletadosCount,$proyectosDefinidosCount,$proyectosCount;
     public $status = null;
     protected $queryString =['status'];
-
     protected $listeners = ['deleteRow' => 'Destroy'];
 
     public function  updatingSearch()
@@ -36,8 +35,7 @@ class Proyectos extends ComponenteBase
                         ->from('proyecto_users')
                         ->whereColumn('proyecto_users.proyecto_id', 'proyectos.id')
                         ->Where('proyecto_users.user_id',Auth::id());})
-            ;})
-            ->when($this->status, function ($query, $status) {
+            ;})->when($this->status, function ($query, $status) {
                 return $query->where('estado', $status);})
             ->paginate($this->pagination);
         return view('livewire.proyectos.index',['proyectos' => $data])->extends('layouts.tema.app')->section('content');
@@ -154,14 +152,12 @@ class Proyectos extends ComponenteBase
         $this->emit('hide-modal');
         $this->alert('success', 'Proyecto creado!!',['timerProgressBar' => true]);
     }
-
     public function Edit(Proyecto $proyecto)
     {
         $this->selected_id  = $proyecto->id;
         $this->state        = $proyecto->toArray();
         $this->emit('show-modal');
     }
-
     public function actualizar()
     {
         $validated = Validator::make($this->state, [

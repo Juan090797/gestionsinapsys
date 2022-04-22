@@ -8,7 +8,8 @@
             <div class="col-sm-8 col-xs-12">
                 <div class="card">
                     <div class="card-header">
-                        <a href="javascript:void(0)" wire:click="crearCronogramaGarantia({{ $pedido }})" class="btn btn-primary float-right">Generar Garantia</a>
+                        <a href="javascript:void(0)" wire:click="crearCronogramaGarantia({{ $pedido }})" class="btn btn-primary float-right ml-3">Generar Garantia</a>
+                        <a href="javascript:void(0)" wire:click="crearInstalacion({{ $pedido }})" class="btn btn-info float-right">Generar Entrega e Instalacion</a>
                         <h4 class="text-primary">Detalle del pedido</h4>
                     </div>
                     <div class="card-body table-responsive">
@@ -83,16 +84,12 @@
                                             <div class="post">
                                                 <div class="user-block">
                                                     <img class="img-circle img-bordered-sm" src="{{ $comentario->user->profile_photo_url }}">
-                                                    <span class="username">
-                                                        <a href="#">{{$comentario->user->name}}</a>
-                                                    </span>
+                                                    <span class="username"><a href="#">{{$comentario->user->name}}</a></span>
                                                     <span class="description">{{ $comentario->created_at->diffForHumans() }}</span>
                                                 </div>
                                                 <p>{{ $comentario->contenido }}</p>
                                                 @if($comentario->archivo)
-                                                <p>
-                                                    <a href="javascript:void(0)" wire:click="descargaArchivoComentario({{ $comentario->id }})" class="link-black text-sm"><i class="fas fa-link mr-1"></i> {{ $comentario->archivo }}</a>
-                                                </p>
+                                                <p><a href="javascript:void(0)" wire:click="descargaArchivoComentario({{ $comentario->id }})" class="link-black text-sm"><i class="fas fa-link mr-1"></i> {{ $comentario->archivo }}</a></p>
                                                 @endif
                                             </div>
                                             @endforeach

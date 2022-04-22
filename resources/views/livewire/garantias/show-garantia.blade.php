@@ -35,7 +35,7 @@
                                     Tiempo: {{$garantia->tiempo_garantia}} meses<br>
                                     Fecha fin de la garantia: {{$garantia->fin_garantia}}<br>
                                     Estado: <span class="badge {{ $garantia->estado == 'CG' ? 'badge-success' : 'badge-danger'}}">{{$garantia->estado}}</span><br>
-                                    Mantenimientos totales: {{$garantia->mant_pendientes}}<br>
+                                    Mantenimientos totales: {{$garantia->mant_total}}<br>
                                     Mantenimientos realizados: {{$garantia->mant_realizados}}<br>
                                     Mantenimientos Pendientes: {{$garantia->mant_pendientes - $garantia->mant_realizados}}
                                 </p>

@@ -67,5 +67,11 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('facturas', \App\Http\Livewire\Pedidos\Facturas\ListaFacturas::class)->name('facturas');
     Route::get('garantias', \App\Http\Livewire\Garantias\ListaGarantias::class)->name('garantias');
     Route::get('garantia/{garantia}/show', \App\Http\Livewire\Garantias\ShowGarantia::class)->name('garantia.show');
+    Route::get('incidencias', \App\Http\Livewire\Incidencias\ListaIncidencias::class)->name('incidencias');
+    Route::get('tareas', \App\Http\Livewire\Tareas\ListaTareas::class)->name('tareas');
+    Route::get('incidencia/{incidencia}/show', \App\Http\Livewire\Tareas\VerIncidencia::class)->name('incidencia.show');
+    Route::get('mantenimiento/{mantenimiento}/show', \App\Http\Livewire\Tareas\VerMantenimiento::class)->name('mantenimiento.show');
+    Route::get('instalaciones', \App\Http\Livewire\Instalaciones\ListaInstalaciones::class)->name('instalaciones');
+    Route::get('instalacion/{instalacion}/show', \App\Http\Livewire\Tareas\VerInstalacion::class)->name('instalacion.show');
 });
 

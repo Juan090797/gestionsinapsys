@@ -2,7 +2,6 @@
 
 namespace App\Http\Livewire\Mantenimientos;
 
-use App\Models\Categoria;
 use App\Models\Garantia;
 use App\Models\Mantenimiento;
 use App\Models\User;

@@ -252,8 +252,8 @@
                         </li>
                     </ul>
                 </li>
-                <li class="nav-item {{ request()->is('garantias') ? 'menu-open' : '' }}">
-                    <a href="#" class="nav-link {{ request()->is('garantias') ? 'active' : '' }}">
+                <li class="nav-item {{ request()->is('garantias') ? 'menu-open' : '' }} {{ request()->is('incidencias') ? 'menu-open' : '' }} {{ request()->is('instalaciones') ? 'menu-open' : '' }}">
+                    <a href="#" class="nav-link {{ request()->is('garantias') ? 'active' : '' }} {{ request()->is('incidencias') ? 'active' : '' }} {{ request()->is('instalaciones') ? 'menu-open' : '' }}">
                         <i class="fa fa-american-sign-language-interpreting nav-icon" aria-hidden="true" style="color:white"></i>
                         <p style="color:white">
                             PostVenta
@@ -268,9 +268,32 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="{{ url('incidencias') }}" class="nav-link {{ request()->is('incidencias') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Incidencias</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ url('instalaciones') }}" class="nav-link {{ request()->is('instalaciones') ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Instalaciones</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item {{ request()->is('tareas') ? 'menu-open' : '' }}">
+                    <a href="#" class="nav-link {{ request()->is('tareas') ? 'active' : '' }}">
+                        <i class="fa fa-user-md nav-icon" aria-hidden="true" style="color:white"></i>
+                        <p style="color:white">
+                            Soporte Tecnico
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ url('tareas') }}" class="nav-link {{ request()->is('tareas') ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Tareas</p>
                             </a>
                         </li>
                     </ul>

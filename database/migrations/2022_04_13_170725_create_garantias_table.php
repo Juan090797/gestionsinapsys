@@ -20,9 +20,9 @@ class CreateGarantiasTable extends Migration
             $table->date('fin_garantia')->nullable();
             $table->string('estado')->default('CG');
             $table->boolean('if_mantenimiento')->nullable();
-            $table->string('mant_total')->default(0);
-            $table->string('mant_realizados')->default(0);
-            $table->string('mant_pendientes')->default(0);
+            $table->float('mant_total',10,0)->default(0);
+            $table->float('mant_realizados',10,0)->default(0);
+            $table->float('mant_pendientes',10,0)->default(0);
             $table->string('prioridad')->default('REGULAR');
             $table->longText('comentarios')->nullable();
             $table->foreignId('cliente_id')->constrained();

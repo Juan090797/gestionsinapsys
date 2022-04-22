@@ -21,7 +21,7 @@
                     <div class="col-sm-12 col-md-6">
                         <div class="form-group">
                             <label for="fecha_ejecucion">Fecha Ejecucion*</label>
-                            <input type="date" class="form-control" wire:model.defer="state.fecha_ejecucion">
+                            <input type="datetime-local" class="form-control" wire:model.defer="state.fecha_ejecucion">
                         </div>
                         @error('fecha_ejecucion') <span class="text-danger er">{{ $message }}</span>@enderror
                     </div>

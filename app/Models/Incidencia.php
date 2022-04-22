@@ -2,43 +2,41 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Mantenimiento extends Model
+class Incidencia extends Model
 {
     use HasFactory;
     protected $guarded = ['id'];
-    public function pedido()
+    public function cliente()
     {
-        return $this->belongsTo(Pedido::class);
+        return $this->belongsTo(Cliente::class);
     }
-    public function garantia()
+    public function producto()
     {
-        return $this->belongsTo(Garantia::class);
+        return $this->belongsTo(Producto::class);
     }
     public function tecnico()
     {
         return $this->belongsTo(User::class,'user_id');
     }
+    public function contacto()
+    {
+        return $this->belongsTo(Contacto::class,'contacto_id');
+    }
     public function comentarios()
     {
-        return $this->hasMany(ComentarioMantenimiento::class,'mantenimiento_id');
+        return $this->hasMany(ComentarioIncidencia::class,'incidencia_id');
     }
     public function getEstadoBadgeAttribute()
     {
         $badges= [
             'ASIGNADO'          => 'badge-info',
             'EN PROCESO'        => 'badge-primary',
-            'TERMINADO'         => 'badge-success',
-            'REPROGRAMADO'      => 'badge-warning',
+            'SOLUCIONADO'       => 'badge-success',
             'ANULADO'           => 'badge-danger',
         ];
         return $badges[$this->estado];
-    }
-    public function getEjecucionAttribute()
-    {
-        return Carbon::parse($this->fecha_ejecucion)->format('d-m-Y H:i A');
     }
 }

@@ -61,10 +61,10 @@ class ListaGarantias extends ComponenteBase
             'orden_compra'      => '',
             'mant_total'        => '',
         ],[
-            'cliente_id.required'   => 'Nombre de la categoria es requerido',
-            'producto_id.unique'    => 'Ya existe el nombre de la categoria',
-            'estado.min'            => 'El nombre de la categoria debe tener al menos 3 caracteres',
-            'prioridad.required'    => 'El estado es requerido',
+            'cliente_id.required'   => 'El cliente es requerido',
+            'producto_id.unique'    => 'El producto es requerido',
+            'estado.min'            => 'El estado es requerido',
+            'prioridad.required'    => 'La prioridad es requerida',
         ])->validate();
 
         $garantia = Garantia::findOrFail($this->state['id']);

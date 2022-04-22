@@ -6,6 +6,7 @@ use App\Models\ArchivoPedido;
 use App\Models\Comentario;
 use App\Models\ComentarioPedido;
 use App\Models\Garantia;
+use App\Models\Instalacion;
 use App\Models\Pedido;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -105,26 +106,34 @@ class PedidoShow extends Component
     }
     public function crearCronogramaGarantia(Pedido $pedido)
     {
-        $oc= null;
         $mant = $pedido->num_mantenimiento > 0 ? true : false;
-        foreach($pedido->archivos as $item){
-            if($item == 'ORDEN DE COMPRA'){
-                $oc = $item['archivo'];
-            }
-        }
-        DB::transaction(function() use($pedido,$mant,$oc) {
+        DB::transaction(function() use($pedido,$mant) {
             foreach ($pedido->pedidoDetalle as $item){
-                Garantia::create([
-                    'orden_compra'      => $oc,
-                    'tiempo_garantia'   => $pedido->garantia,
-                    'if_mantenimiento'  => $mant,
-                    'mant_total'        => $pedido->num_mantenimiento,
-                    'cliente_id'        => $pedido->cliente_id,
-                    'producto_id'       => $item['producto_id'],
-                    'pedido_id'         => $pedido->id,
-                ]);
+                for ($i = 1; $i <= $item['cantidad']; $i++) {
+                    Garantia::create([
+                        'tiempo_garantia'   => $pedido->garantia,
+                        'if_mantenimiento'  => $mant,
+                        'mant_total'        => $pedido->num_mantenimiento,
+                        'cliente_id'        => $pedido->cliente_id,
+                        'producto_id'       => $item['producto_id'],
+                        'pedido_id'         => $pedido->id,
+                    ]);
+                }
             }
         });
-        $this->alert('success', 'Se genero los registros de garantias',['timerProgressBar' => true]);
+        $this->alert('success', 'Se genero los registros de garantias!!',['timerProgressBar' => true]);
+    }
+    public function crearInstalacion(Pedido $pedido)
+    {
+        DB::transaction(function() use($pedido) {
+            foreach ($pedido->pedidoDetalle as $item){
+                    Instalacion::create([
+                        'cliente_id'    => $pedido->cliente_id,
+                        'producto_id'   => $item['producto_id'],
+                        'pedido_id'     => $pedido->id,
+                    ]);
+                }
+        });
+        $this->alert('success', 'Se genero los registros de instalaciones!!',['timerProgressBar' => true]);
     }
 }

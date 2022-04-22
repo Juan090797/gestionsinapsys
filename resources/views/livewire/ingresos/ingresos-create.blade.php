@@ -10,7 +10,7 @@
                     <div class="col-sm-3 invoice-col">
                         <div class="form-group">
                             <label for="motivo_id">Motivo</label>
-                            <select wire:model="state.motivo_id" class="form-control">
+                            <select class="form-control" wire:model="state.motivo_id">
                                 <option value="0">Elegir</option>
                                 @foreach($motivos as $motivo)
                                     <option value="{{$motivo->id}}">{{$motivo->nombre}}</option>
