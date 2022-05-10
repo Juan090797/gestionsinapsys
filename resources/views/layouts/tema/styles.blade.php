@@ -15,6 +15,7 @@
 <!-- select2 -->
 <link rel="stylesheet" href="{{ asset('plugins/select2/css/select2.min.css') }}">
 <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
 
 <style>
     .select2-container--default .select2-selection--multiple .select2-selection__choice {

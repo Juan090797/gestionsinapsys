@@ -14,17 +14,9 @@ class Marcas extends ComponenteBase
     public $state = [];
     protected $listeners = ['deleteRow' => 'Destroy'];
 
-    public function  updatingSearch()
-    {
-        $this->resetPage();
-    }
     public function render()
     {
-        if(strlen($this->search) > 3) {
-            $data = Marca::where('nombre', 'like', '%' . $this->search . '%')->paginate($this->pagination);
-        }else {
-            $data = Marca::orderBy('id', 'desc')->paginate($this->pagination);
-        }
+        $data = Marca::all();
         return view('livewire.marcas.marcas', ['marcas' => $data])->extends('layouts.tema.app')->section('content');
     }
     public function Edit(Marca $marca)

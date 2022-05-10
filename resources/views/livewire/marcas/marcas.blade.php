@@ -5,29 +5,20 @@
     @endsection
     <div class="content-fluid">
         <div class="card">
-            <div class="card-header">
-                <div class="row justify-content-end">
-                    <div class="col-3">
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Buscar por nombre" wire:model="search">
-                        </div>
-                    </div>
-                </div>
-            </div>
             <div class="card-body table-responsive">
-                <table class="table table-sm table-hover">
+                <table id="tabla" class="table compact hover stripe">
                     <thead class="thead-dark">
                         <tr>
-                            <th scope="col">#ID</th>
+                            <th>#ID</th>
                             <th class="text-center">Nombre</th>
                             <th class="text-center">Estado</th>
                             <th class="text-center">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
-                    @foreach($marcas as $index => $marca)
+                    @foreach($marcas as $marca)
                         <tr>
-                            <th scope="row">{{$marcas->firstItem() + $index}}</th>
+                            <th>{{$marca->id}}</th>
                             <td class="text-center">{{$marca->nombre}}</td>
                             <td class="text-center"><span class="badge {{ $marca->estado == 'ACTIVO' ? 'badge-success' : 'badge-danger'}}">{{$marca->estado}}</span></td>
                             <td class="text-center">
@@ -38,9 +29,6 @@
                     @endforeach
                     </tbody>
                 </table>
-                <div class="py-3 float-right">
-                    {{$marcas->links()}}
-                </div>
             </div>
         </div>
         @include('livewire.marcas.form')

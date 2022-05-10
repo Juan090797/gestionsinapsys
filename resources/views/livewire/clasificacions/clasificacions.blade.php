@@ -5,15 +5,6 @@
     @endsection
     <div class="content-fluid">
         <div class="card">
-            <div class="card-header">
-                <div class="row justify-content-end">
-                    <div class="col-3">
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Buscar por nombre" wire:model="search">
-                        </div>
-                    </div>
-                </div>
-            </div>
             <div class="card-body table-responsive">
                 <table class="table table-sm table-hover">
                     <thead class="thead-dark">
