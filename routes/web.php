@@ -73,5 +73,10 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('mantenimiento/{mantenimiento}/show', \App\Http\Livewire\Tareas\VerMantenimiento::class)->name('mantenimiento.show');
     Route::get('instalaciones', \App\Http\Livewire\Instalaciones\ListaInstalaciones::class)->name('instalaciones');
     Route::get('instalacion/{instalacion}/show', \App\Http\Livewire\Tareas\VerInstalacion::class)->name('instalacion.show');
+    Route::get('purchases', \App\Http\Livewire\Importaciones\ListaPurcharse::class)->name('purchases');
+    Route::get('purchase-create', \App\Http\Livewire\Importaciones\CreatePurcharse::class)->name('purchase.create');
+    Route::get('purchase/{purchase}/show', \App\Http\Livewire\Importaciones\ShowPurcharse::class)->name('purchase.show');
+    Route::get('purchase/{purchase}/costo-create', \App\Http\Livewire\Importaciones\CreateCosto::class)->name('costo.create');
+    Route::get('purchase/{purchase}/costo-show', \App\Http\Livewire\Importaciones\ShowCosto::class)->name('costo.show');
 });
 

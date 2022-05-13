@@ -162,6 +162,23 @@
                         </li>
                     </ul>
                 </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link {{ request()->is('purchases') ? 'active' : '' }}">
+                        <i class="nav-icon fa fa-plane" aria-hidden="true" style="color:white"></i>
+                        <p style="color:white">
+                            Importaciones
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ url('purchases') }}" class="nav-link {{ request()->is('purchases') ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Purshase Orders</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
                 @hasanyrole('Logistica|Administrador')
                 <li class="nav-item {{ request()->is('compras') ? 'menu-open' : '' }} {{ request()->is('importaciones') ? 'menu-open' : '' }} {{ request()->is('ordenes') ? 'menu-open' : '' }}">
                     <a href="#" class="nav-link {{ request()->is('compras') ? 'active' : '' }} {{ request()->is('importaciones') ? 'active' : '' }} {{ request()->is('ordenes') ? 'active' : '' }}">

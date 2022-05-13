@@ -16,23 +16,18 @@ class Cotizacion extends Model
     {
         return $this->belongsTo(Cliente::class);
     }
-
     public function Cotizaciones()
     {
         return $this->hasMany(Cotizacion::class, 'proyecto_id');
     }
-
-
     public function CotizacionItem()
     {
         return $this->hasMany(CotizacionItem::class);
     }
-
     public function Impuesto()
     {
         return $this->belongsTo(impuesto::class);
     }
-
     public function deleteItems(): void
     {
         $this->CotizacionItem->each(function($item) {
