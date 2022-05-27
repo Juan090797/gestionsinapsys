@@ -9,4 +9,9 @@ class Gasto extends Model
 {
     use HasFactory;
     protected $guarded = ['id'];
+
+    public function costo()
+    {
+        return $this->belongsTo(Costo::class);
+    }
 }

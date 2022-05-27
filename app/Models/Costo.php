@@ -26,4 +26,8 @@ class Costo extends Model
     {
         return $this->morphTo();
     }
+    public function gastos()
+    {
+        return $this->hasMany(Gasto::class);
+    }
 }

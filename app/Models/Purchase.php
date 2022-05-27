@@ -22,4 +22,12 @@ class Purchase extends Model
     {
         return $this->belongsTo(User::class);
     }
+    public function costos()
+    {
+        return $this->hasMany(Costo::class);
+    }
+    public function gastos()
+    {
+        return $this->hasManyThrough(Gasto::class, Costo::class);
+    }
 }

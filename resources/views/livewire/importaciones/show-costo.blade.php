@@ -1,14 +1,14 @@
 <div>
     @section('cabezera-contenido')
-        <a href="{{route('purchase.create')}}" class="btn btn-primary float-right">Agregar Gasto</a>
-        <h1>Costeos</h1>
+        <a href="javascript:void(0)" class="btn btn-primary float-right" data-toggle="modal" data-target="#theModal">Agregar Gasto</a>
+        <a href="{{route('purchases')}}" class="btn btn-secondary float-left mr-3">Atras</a><h1>Costeos</h1>
     @endsection
     <div class="content-fluid">
         <div class="row">
             <div class="col-12">
-                @foreach($costos as $costo)
+                @foreach($orden->costos as $costo)
                 <div class="card">
-                    <div class="card-header"><h5>{{$costo->tipo_costeo}}</h5></div>
+                    <div class="card-header"><h5>COSTEO {{$costo->tipo_costeo}}#{{$costo->id}}</h5></div>
                     <div class="card-body">
                         <div class="row">
                             <div class="col-6">
@@ -100,7 +100,6 @@
                                 </table>
                             </div>
                         </div>
-
                     </div>
                 </div>
                 @endforeach
@@ -114,82 +113,31 @@
                         <table class="table table-sm table-hover table-bordered">
                             <thead>
                             <tr>
-                                <th scope="col"></th>
-                                <th scope="col">Cantidad</th>
-                                <th scope="col">Subtotal</th>
-                                <th scope="col">IGV</th>
-                                <th scope="col">Total</th>
+                                <th scope="col">Concepto</th>
+                                <th class="text-center">Cantidad</th>
+                                <th class="text-center">Subtotal</th>
+                                <th class="text-center">IGV</th>
+                                <th class="text-center">Total</th>
                             </tr>
                             </thead>
                             <tbody>
+                            @foreach($orden->gastos as $gasto)
+                                @if($gasto->tipo == 'ORIGEN')
+                                    <tr>
+                                        <th scope="row">{{$gasto->concepto}}</th>
+                                        <td class="text-center">{{$gasto->cantidad}}</td>
+                                        <td class="text-center">{{number_format($gasto->subtotal,2)}}</td>
+                                        <td class="text-center">{{number_format($gasto->igv,2)}}</td>
+                                        <td class="text-center">{{number_format($gasto->total,2)}}</td>
+                                    </tr>
+                                @endif
+                            @endforeach
                             <tr>
-                                <th scope="row">Precio de compra</th>
-                                <td>100</td>
-                                <td>50</td>
-                                <td>100</td>
-                                <td>200</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">Flete</th>
-                                <td>100</td>
-                                <td>50</td>
-                                <td>100</td>
-                                <td>200</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">Seguro</th>
-                                <td>100</td>
-                                <td>50</td>
-                                <td>100</td>
-                                <td>200</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">Pick-up</th>
-                                <td>100</td>
-                                <td>50</td>
-                                <td>100</td>
-                                <td>200</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">Embalaje</th>
-                                <td>100</td>
-                                <td>50</td>
-                                <td>100</td>
-                                <td>200</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">SHA</th>
-                                <td>100</td>
-                                <td>50</td>
-                                <td>100</td>
-                                <td>200</td>
-                            <tr>
-                                <th scope="row">OUR</th>
-                                <td>100</td>
-                                <td>50</td>
-                                <td>100</td>
-                                <td>200</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">AWB</th>
-                                <td>100</td>
-                                <td>50</td>
-                                <td>100</td>
-                                <td>200</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">CCA</th>
-                                <td>100</td>
-                                <td>50</td>
-                                <td>100</td>
-                                <td>200</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">AS agreed</th>
-                                <td>100</td>
-                                <td>50</td>
-                                <td>100</td>
-                                <td>200</td>
+                                <th scope="row"></th>
+                                <td class="text-center"></td>
+                                <td class="text-center"></td>
+                                <td class="text-center">TOTAL</td>
+                                <td class="bg-primary text-center">{{number_format($sumaOrigen,2)}}</td>
                             </tr>
                             </tbody>
                         </table>
@@ -205,82 +153,28 @@
                         <table class="table table-sm table-hover table-bordered">
                             <thead>
                             <tr>
-                                <th scope="col"></th>
-                                <th scope="col">Cantidad</th>
-                                <th scope="col">Subtotal</th>
-                                <th scope="col">IGV</th>
-                                <th scope="col">Total</th>
+                                <th scope="col">Concepto</th>
+                                <th class="text-center">Subtotal</th>
+                                <th class="text-center">IGV</th>
+                                <th class="text-center">Total</th>
                             </tr>
                             </thead>
                             <tbody>
+                            @foreach($orden->gastos as $gasto)
+                                @if($gasto->tipo == 'DESTINO')
+                                    <tr>
+                                        <th scope="row">{{$gasto->concepto}}</th>
+                                        <td class="text-center">{{number_format($gasto->subtotal,2)}}</td>
+                                        <td class="text-center">{{number_format($gasto->igv,2)}}</td>
+                                        <td class="text-center">{{number_format($gasto->total,2)}}</td>
+                                    </tr>
+                                @endif
+                            @endforeach
                             <tr>
-                                <th scope="row">Precio de compra</th>
-                                <td>100</td>
-                                <td>50</td>
-                                <td>100</td>
-                                <td>200</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">Flete</th>
-                                <td>100</td>
-                                <td>50</td>
-                                <td>100</td>
-                                <td>200</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">Seguro</th>
-                                <td>100</td>
-                                <td>50</td>
-                                <td>100</td>
-                                <td>200</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">Pick-up</th>
-                                <td>100</td>
-                                <td>50</td>
-                                <td>100</td>
-                                <td>200</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">Embalaje</th>
-                                <td>100</td>
-                                <td>50</td>
-                                <td>100</td>
-                                <td>200</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">SHA</th>
-                                <td>100</td>
-                                <td>50</td>
-                                <td>100</td>
-                                <td>200</td>
-                            <tr>
-                                <th scope="row">OUR</th>
-                                <td>100</td>
-                                <td>50</td>
-                                <td>100</td>
-                                <td>200</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">AWB</th>
-                                <td>100</td>
-                                <td>50</td>
-                                <td>100</td>
-                                <td>200</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">CCA</th>
-                                <td>100</td>
-                                <td>50</td>
-                                <td>100</td>
-                                <td>200</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">AS agreed</th>
-                                <td>100</td>
-                                <td>50</td>
-                                <td>100</td>
-                                <td>200</td>
+                                <th scope="row"></th>
+                                <td class="text-center"></td>
+                                <td class="text-center">TOTAL</td>
+                                <td class="bg-primary text-center">{{number_format($sumaDestino,2)}}</td>
                             </tr>
                             </tbody>
                         </table>
@@ -293,7 +187,34 @@
                         <h5>Gasto de agenciamiento</h5>
                     </div>
                     <div class="card-body">
-
+                        <table class="table table-sm table-hover table-bordered">
+                            <thead>
+                            <tr>
+                                <th scope="col">Concepto</th>
+                                <th class="text-center">Subtotal</th>
+                                <th class="text-center">IGV</th>
+                                <th class="text-center">Total</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($orden->gastos as $gasto)
+                                @if($gasto->tipo == 'AGENCIAMIENTO')
+                                    <tr>
+                                        <th scope="row">{{$gasto->concepto}}</th>
+                                        <td class="text-center">{{number_format($gasto->subtotal,2)}}</td>
+                                        <td class="text-center">{{number_format($gasto->igv,2)}}</td>
+                                        <td class="text-center">{{number_format($gasto->total,2)}}</td>
+                                    </tr>
+                                @endif
+                            @endforeach
+                            <tr>
+                                <th scope="row"></th>
+                                <td class="text-center"></td>
+                                <td class="text-center">TOTAL</td>
+                                <td class="bg-primary text-center">{{number_format($sumaAgenciamiento,2)}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -303,16 +224,47 @@
                         <h5>Gasto de derechos</h5>
                     </div>
                     <div class="card-body">
-
+                        <table class="table table-sm table-hover table-bordered">
+                            <thead>
+                            <tr>
+                                <th scope="col">Concepto</th>
+                                <th class="text-center">Subtotal</th>
+                                <th class="text-center">IGV</th>
+                                <th class="text-center">Total</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($orden->gastos as $gasto)
+                                @if($gasto->tipo == 'DERECHOS')
+                                    <tr>
+                                        <th scope="row">{{$gasto->concepto}}</th>
+                                        <td class="text-center">{{number_format($gasto->subtotal,2)}}</td>
+                                        <td class="text-center">{{number_format($gasto->igv,2)}}</td>
+                                        <td class="text-center">{{number_format($gasto->total,2)}}</td>
+                                    </tr>
+                                @endif
+                            @endforeach
+                            <tr>
+                                <th scope="row"></th>
+                                <td class="text-center"></td>
+                                <td class="text-center">TOTAL</td>
+                                <td class="bg-primary text-center">{{number_format($sumaDerecho,2)}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
+        @include('livewire.importaciones.form')
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', function (){
-            window.livewire.on('empresa-ok', msg =>{
-                noty(msg)
+            window.Livewire.on('show-modal', msg =>{
+                $('#theModal').modal('show')
+            });
+            window.livewire.on('hide-modal', msg =>{
+                $('#theModal').modal('hide');
             })
         });
     </script>
